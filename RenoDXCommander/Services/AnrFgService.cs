@@ -145,7 +145,7 @@ public class AnrFgService
     /// </summary>
     public string? Install(string gameInstallPath)
     {
-        if (!IsStagingReady) return "ANR FG isn't downloaded yet.";
+        if (!IsStagingReady) return "ANR FG가 아직 다운로드되지 않았습니다.";
         var dest = GetInstallDir(gameInstallPath);
         try
         {
@@ -167,7 +167,7 @@ public class AnrFgService
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
             CrashReporter.Log($"[AnrFgService.Install] '{dest}' — {ex.Message}");
-            return $"Couldn't copy ANR FG into the game: {ex.Message}";
+            return $"ANR FG를 게임에 복사할 수 없습니다: {ex.Message}";
         }
     }
 

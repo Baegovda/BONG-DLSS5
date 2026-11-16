@@ -72,9 +72,9 @@ public sealed partial class MainWindow
 
             FrameworkElement? liliumPresetRow = null;
             ComboBox? variantCombo = null;
-            variantCombo = cog.AddCombo("Variant",
-                "Lilium HDR (default) is an HDR-focused build. Development is the latest nightly build, Stable the last release. " +
-                "Changing it on a game with DXVK installed uninstalls DXVK so you can install the new variant.",
+            variantCombo = cog.AddCombo("변형",
+                "Lilium HDR(기본값)은 HDR 중심 빌드입니다. Development는 최신 나이틀리 빌드, Stable은 마지막 릴리스입니다. " +
+                "DXVK가 설치된 게임에서 변경하면 새 변형을 설치할 수 있도록 DXVK가 제거됩니다.",
                 variantItems, variantIdx, i =>
                 {
                     var selected = variantItems[i];
@@ -93,9 +93,9 @@ public sealed partial class MainWindow
             var presetNames = presetArray.Select(p => p.Name).ToList();
             int currentPresetIdx = ViewModel.GetLiliumPreset(gameName, store);
 
-            var liliumPresetCombo = cog.AddCombo("Lilium Preset",
-                "Safest only upgrades the swap chain and works almost everywhere. Higher tiers also upgrade back buffers and " +
-                "render targets for better HDR, but may cause visual issues. Changing it rewrites dxvk.conf.",
+            var liliumPresetCombo = cog.AddCombo("Lilium 프리셋",
+                "Safest는 스왑 체인만 업그레이드하며 거의 모든 곳에서 작동합니다. 상위 단계는 백 버퍼와 " +
+                "렌더 타깃도 업그레이드해 HDR이 더 좋아지지만 시각적 문제가 생길 수 있습니다. 변경하면 dxvk.conf를 다시 작성합니다.",
                 presetNames,
                 currentPresetIdx >= 0 && currentPresetIdx < presetNames.Count ? currentPresetIdx : 0,
                 idx =>
@@ -105,7 +105,7 @@ public sealed partial class MainWindow
                     if (!string.IsNullOrEmpty(card.InstallPath))
                         _ = DxvkCogWriteLiliumConfAsync(cog, card.InstallPath, isDx9Api, idx, presetNames[idx]);
                     else
-                        cog.SetSuccess($"Lilium preset set to {presetNames[idx]}.");
+                        cog.SetSuccess($"Lilium 프리셋을 {presetNames[idx]}(으)로 설정했습니다.");
                 });
             // AddRow puts the combo in a grid inside the row panel: hide the whole row when not Lilium
             liliumPresetRow = (liliumPresetCombo.Parent as FrameworkElement)?.Parent as FrameworkElement;
@@ -114,30 +114,30 @@ public sealed partial class MainWindow
 
             // ── Deploy dxvk.conf button ───────────────────────────────────────────
             cog.AddSection("dxvk.conf");
-            cog.AddButtons(cog.MakeButton("Deploy dxvk.conf", CogButtonKind.Primary, () =>
+            cog.AddButtons(cog.MakeButton("dxvk.conf 배포", CogButtonKind.Primary, () =>
             {
                 var error = ViewModel.CopyDxvkConf(card);
-                if (error == null) cog.SetSuccess("dxvk.conf copied to the game folder.");
-                else cog.SetError($"Couldn't copy dxvk.conf: {error}");
+                if (error == null) cog.SetSuccess("dxvk.conf를 게임 폴더에 복사했습니다.");
+                else cog.SetError($"dxvk.conf를 복사할 수 없습니다: {error}");
             }));
-            cog.AddNote("Copies dxvk.conf into the game folder: the selected Lilium preset for Lilium HDR installs, otherwise your dxvk.conf template.");
+            cog.AddNote("dxvk.conf를 게임 폴더에 복사합니다: Lilium HDR 설치에는 선택한 Lilium 프리셋을, 그 외에는 dxvk.conf 템플릿을 사용합니다.");
 
             // ── Vulkan/OpenGL Present Method ──────────────────────────────────────
-            cog.AddSection("NVIDIA Driver Profile");
+            cog.AddSection("NVIDIA 드라이버 프로필");
 
             var flagOptions = new (string Label, uint Value)[]
             {
-                ("Standard",    0x000802A5u),
-                ("Alternative", 0x00080004u),
+                ("표준",    0x000802A5u),
+                ("대체", 0x00080004u),
             };
             bool presentIsYes = currentPresentMethod == 0x00000001;
             ComboBox? flagsCombo = null;
 
             // Prefer DXGI Swapchain: No = 0x00000002 (Auto), Yes = 0x00000001 (Preferred layered on DXGI Swapchain)
             cog.AddCombo("Prefer DXGI Swapchain",
-                "Sets the Vulkan/OpenGL present method to 'Prefer layered on DXGI Swapchain' in the game's NVIDIA driver profile. " +
-                "Recommended for DXVK: better compatibility and HDR support.",
-                new List<string> { "No", "Yes" }, presentIsYes ? 1 : 0, i =>
+                "게임의 NVIDIA 드라이버 프로필에서 Vulkan/OpenGL 표시 방식을 'Prefer layered on DXGI Swapchain'으로 설정합니다. " +
+                "DXVK에 권장: 호환성과 HDR 지원이 더 좋습니다.",
+                new List<string> { "아니요", "예" }, presentIsYes ? 1 : 0, i =>
                 {
                     bool isYes = i == 1;
                     uint value = isYes ? 0x00000001u : 0x00000002u;
@@ -170,7 +170,7 @@ public sealed partial class MainWindow
                 flagsIdx = flagMatch >= 0 ? flagMatch : 0; // default to Standard
             }
             flagsCombo = cog.AddCombo("DXVK as Native",
-                "Standard treats DXVK as native. Alternative allows DXVK promotion and DirectFlip. Only used when Prefer DXGI Swapchain is Yes.",
+                "표준은 DXVK를 네이티브로 처리합니다. 대체는 DXVK 승격과 DirectFlip을 허용합니다. Prefer DXGI Swapchain이 예일 때만 사용됩니다.",
                 flagOptions.Select(f => f.Label).ToList(), flagsIdx, i =>
                 {
                     var capturedName = card.GameName; var capturedPath = card.InstallPath ?? "";
@@ -212,7 +212,7 @@ public sealed partial class MainWindow
             if (wasInstalled)
             {
                 // Already installed — uninstall first so user can install the new variant
-                cog.SetStatus("Uninstalling DXVK...");
+                cog.SetStatus("DXVK 제거 중...");
                 await ViewModel.HandleDxvkToggleAsync(card, false, Content.XamlRoot);
             }
             card.DxvkVariantPending = true;
@@ -221,14 +221,14 @@ public sealed partial class MainWindow
             BuildOverridesPanel(card);
 
             cog.SetSuccess(wasInstalled
-                ? $"Variant set to {selected}. DXVK was uninstalled; install it again to use the new variant."
-                : $"Variant set to {selected}. It will be used when you install DXVK.");
+                ? $"변형을 {selected}(으)로 설정했습니다. DXVK가 제거되었으니 새 변형을 사용하려면 다시 설치하세요."
+                : $"변형을 {selected}(으)로 설정했습니다. DXVK를 설치할 때 사용됩니다.");
             CrashReporter.Log($"[MainWindow.DxvkCogChangeVariantAsync] '{gameName}' variant → {variantValue} (wasInstalled={wasInstalled})");
         }
         catch (Exception ex)
         {
             CrashReporter.Log($"[MainWindow.DxvkCogChangeVariantAsync] Failed for '{gameName}' — {ex.Message}\n{ex.StackTrace}");
-            cog.SetError($"Couldn't change the variant: {ex.Message}");
+            cog.SetError($"변형을 변경할 수 없습니다: {ex.Message}");
         }
         finally
         {
@@ -246,12 +246,12 @@ public sealed partial class MainWindow
         try
         {
             await Task.Run(() => File.WriteAllText(confPath, confContent));
-            cog.SetSuccess($"Lilium preset set to {presetName}. dxvk.conf updated.");
+            cog.SetSuccess($"Lilium 프리셋을 {presetName}(으)로 설정했습니다. dxvk.conf가 업데이트되었습니다.");
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
             CrashReporter.Log($"[DxvkCog.LiliumPreset] Failed to write dxvk.conf — {ex.Message}");
-            cog.SetError($"Lilium preset saved, but dxvk.conf couldn't be written: {ex.Message}");
+            cog.SetError($"Lilium 프리셋은 저장되었지만 dxvk.conf를 쓸 수 없습니다: {ex.Message}");
         }
     }
 
@@ -261,13 +261,13 @@ public sealed partial class MainWindow
         try
         {
             bool ok = await Task.Run(write);
-            if (ok) cog.SetSuccess($"{settingName} saved to the NVIDIA driver profile.");
-            else cog.SetError($"Couldn't save {settingName} to the NVIDIA driver profile. See the log for details.");
+            if (ok) cog.SetSuccess($"{settingName}을(를) NVIDIA 드라이버 프로필에 저장했습니다.");
+            else cog.SetError($"{settingName}을(를) NVIDIA 드라이버 프로필에 저장할 수 없습니다. 자세한 내용은 로그를 확인하세요.");
         }
         catch (Exception ex)
         {
             CrashReporter.Log($"[MainWindow.DxvkCogProfileWriteAsync] {settingName} write failed — {ex.Message}");
-            cog.SetError($"Couldn't save {settingName}: {ex.Message}");
+            cog.SetError($"{settingName}을(를) 저장할 수 없습니다: {ex.Message}");
         }
     }
 }

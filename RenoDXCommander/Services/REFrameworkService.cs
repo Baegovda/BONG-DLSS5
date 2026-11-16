@@ -73,7 +73,7 @@ public class REFrameworkService : IREFrameworkService
         try
         {
             // ── Download game-specific ZIP ────────────────────────────────────
-            progress?.Report(("Downloading RE Framework...", 10));
+            progress?.Report(("RE Framework 다운로드 중...", 10));
             CrashReporter.Log($"[REFrameworkService.InstallAsync] Downloading {downloadUrl}");
 
             using var response = await _http.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead);
@@ -86,7 +86,7 @@ public class REFrameworkService : IREFrameworkService
             var zipSize = new FileInfo(zipPath).Length;
             CrashReporter.Log($"[REFrameworkService.InstallAsync] Downloaded {zipName} ({zipSize:N0} bytes)");
 
-            progress?.Report(("Extracting dinput8.dll...", 50));
+            progress?.Report(("dinput8.dll 압축 해제 중...", 50));
 
             // ── Extract dinput8.dll from ZIP ──────────────────────────────────
             ExtractDllFromZip(zipPath, cachedDll);
@@ -99,7 +99,7 @@ public class REFrameworkService : IREFrameworkService
             }
 
             // ── Copy cached DLL to game directory ─────────────────────────────
-            progress?.Report(("Installing dinput8.dll...", 80));
+            progress?.Report(("dinput8.dll 설치 중...", 80));
             AuxInstallService.SentinelBackup(destPath);
             File.Copy(cachedDll, destPath, overwrite: true);
 
@@ -107,7 +107,7 @@ public class REFrameworkService : IREFrameworkService
             var version = await GetLatestVersionAsync() ?? "unknown";
             CrashReporter.Log($"[REFrameworkService.InstallAsync] Installed RE Framework build {version} ({zipName} {zipSize:N0} bytes, {DllFileName} {new FileInfo(destPath).Length:N0} bytes) for '{gameName}' in '{installPath}'");
 
-            progress?.Report(("RE Framework installed!", 100));
+            progress?.Report(("RE Framework 설치 완료!", 100));
 
             // ── Update History (an install over an older build; first installs aren't updates) ──
             var previousVersion = LoadRecords().FirstOrDefault(r =>
@@ -321,7 +321,7 @@ public class REFrameworkService : IREFrameworkService
             Directory.CreateDirectory(tempDir);
 
             // ── Download outer ZIP from nightly.link ──────────────────────────
-            progress?.Report(("Downloading PD-Upscaler REFramework...", 10));
+            progress?.Report(("PD-Upscaler REFramework 다운로드 중...", 10));
             CrashReporter.Log($"[REFrameworkService.InstallPdUpscalerAsync] Downloading {downloadUrl}");
 
             var outerZipPath = Path.Combine(tempDir, $"{artifactName}_outer.zip");
@@ -332,7 +332,7 @@ public class REFrameworkService : IREFrameworkService
                 await response.Content.CopyToAsync(fs);
             }
 
-            progress?.Report(("Extracting PD-Upscaler REFramework...", 40));
+            progress?.Report(("PD-Upscaler REFramework 압축 해제 중...", 40));
 
             // ── Extract outer ZIP → inner {artifactName}.zip ──────────────────
             var outerExtractDir = Path.Combine(tempDir, "outer");
@@ -356,7 +356,7 @@ public class REFrameworkService : IREFrameworkService
                 throw new FileNotFoundException(
                     $"{DllFileName} not found inside pd-upscaler inner ZIP for {artifactName}");
 
-            progress?.Report(("Backing up standard REFramework...", 60));
+            progress?.Report(("표준 REFramework 백업 중...", 60));
 
             // ── Back up existing standard dinput8.dll ─────────────────────────
             if (File.Exists(destDll) && !File.Exists(backupPath))
@@ -366,7 +366,7 @@ public class REFrameworkService : IREFrameworkService
             }
 
             // ── Copy pd-upscaler DLL to game folder ──────────────────────────
-            progress?.Report(("Installing PD-Upscaler REFramework...", 80));
+            progress?.Report(("PD-Upscaler REFramework 설치 중...", 80));
             File.Copy(extractedDll, destDll, overwrite: true);
 
             // ── Update install record with PD-Upscaler version ───────────────
@@ -395,7 +395,7 @@ public class REFrameworkService : IREFrameworkService
                 }
             }
 
-            progress?.Report(("PD-Upscaler REFramework installed!", 100));
+            progress?.Report(("PD-Upscaler REFramework 설치 완료!", 100));
             CrashReporter.Log($"[REFrameworkService.InstallPdUpscalerAsync] PD-Upscaler installed for '{gameName}'");
         }
         catch (Exception ex)

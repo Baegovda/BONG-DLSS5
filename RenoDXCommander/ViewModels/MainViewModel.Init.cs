@@ -187,7 +187,7 @@ public partial class MainViewModel
     private async Task FullRefreshCoreAsync(IProgress<string>? progress)
     {
         // Clear all caches so every game is re-scanned from disk.
-        progress?.Report("Clearing caches...");
+        progress?.Report("캐시 지우는 중...");
         _engineTypeCache.Clear();
         _resolvedPathCache.Clear();
         _addonFileCache.Clear();
@@ -196,7 +196,7 @@ public partial class MainViewModel
         _dlssStreamlineService.ClearScanCaches();
 
         // Validate installed.json — remove records where the addon file no longer exists on disk
-        progress?.Report("Validating install records...");
+        progress?.Report("설치 기록 확인 중...");
         try
         {
             var records = _installer.LoadAll();
@@ -369,14 +369,14 @@ public partial class MainViewModel
             bool hasCachedLibrary = savedLib != null && !forceRescan;
             if (hasCachedLibrary)
             {
-                StatusText    = $"Library loaded ({savedLib!.Games.Count} games, scanned {FormatAge(savedLib.LastScanned)})";
-                SubStatusText = "Checking for new games and fetching latest mod info...";
+                StatusText    = $"라이브러리 불러옴 (게임 {savedLib!.Games.Count}개, 검색: {FormatAge(savedLib.LastScanned)})";
+                SubStatusText = "새 게임을 확인하고 최신 모드 정보를 가져오는 중...";
                 addonCache    = savedLib.AddonScanCache;
             }
             else
             {
-                StatusText    = "Scanning game library...";
-                SubStatusText = "Running store scans + wiki fetch simultaneously...";
+                StatusText    = "게임 라이브러리 검색 중...";
+                SubStatusText = "스토어 검색과 위키 가져오기를 동시에 실행하는 중...";
                 addonCache    = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
             }
 
@@ -568,7 +568,7 @@ public partial class MainViewModel
             });
 
             // 3. Await detection first — this never needs network
-            progress?.Report("Detecting games...");
+            progress?.Report("게임 감지 중...");
             var freshGames = await detectTask;
 
             // 4. Await network tasks individually so failures don't block game display
@@ -797,7 +797,7 @@ public partial class MainViewModel
             // a visual gap where the update badge disappears until the network check completes.
             // (prevUpdateStatus was captured at the top of InitializeAsync before _allCards.Clear())
 
-            SubStatusText = "Matching mods and checking install status...";
+            SubStatusText = "모드를 매칭하고 설치 상태를 확인하는 중...";
 
             // Ensure Nexus Mods dictionary and PCGW AppID cache are ready before building cards
             await nexusInitTask;
@@ -807,7 +807,7 @@ public partial class MainViewModel
             await ultraPlusInitTask;
 
             _crashReporter.Log($"[MainViewModel.InitializeAsync] Building cards for {allGames.Count} games...");
-            progress?.Report($"Building cards for {allGames.Count} games...");
+            progress?.Report($"게임 {allGames.Count}개의 카드 생성 중...");
             _allCards = await Task.Run(() => BuildCards(allGames, records, auxRecords, addonCache, _genericNotes));
             _allCards = WithoutRemovedGames(_allCards);
             PropagateDispatcherToCards();

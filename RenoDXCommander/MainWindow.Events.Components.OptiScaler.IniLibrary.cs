@@ -17,18 +17,18 @@ public sealed partial class MainWindow
     private Button BuildOsSaveIniButton(OsCogContext ctx, string? iniPath, Action<string, bool> showStatus)
     {
         var card = ctx.Card;
-        var btn = CogDialog.StyledButton("Save ini...", CogButtonKind.Secondary);
+        var btn = CogDialog.StyledButton("ini 저장...", CogButtonKind.Secondary);
         ToolTipService.SetToolTip(btn,
-            "Save this game's OptiScaler.ini under a name of your choice. Load it into any game with Load saved ini.");
+            "이 게임의 OptiScaler.ini를 원하는 이름으로 저장합니다. 저장된 ini 불러오기로 어떤 게임에든 불러올 수 있습니다.");
 
-        var nameBox = CogDialog.MakeTextBox("", "Name, for example F5 super ini");
+        var nameBox = CogDialog.MakeTextBox("", "이름 (예: F5 super ini)");
         nameBox.MaxLength = OsIniLibrary.MaxNameLength;
         var note = MakeOsFooterNote("");
-        var saveBtn = CogDialog.StyledButton("Save", CogButtonKind.Primary, compact: true);
+        var saveBtn = CogDialog.StyledButton("저장", CogButtonKind.Primary, compact: true);
         var panel = new StackPanel { Spacing = 8, Width = 300 };
         panel.Children.Add(new TextBlock
         {
-            Text = "Save this game's OptiScaler.ini as:",
+            Text = "이 게임의 OptiScaler.ini를 다음 이름으로 저장:",
             TextWrapping = TextWrapping.Wrap,
             FontSize = 12,
         });
@@ -52,7 +52,7 @@ public sealed partial class MainWindow
         nameBox.TextChanged += (_, _) =>
         {
             var name = OsIniLibrary.CleanName(nameBox.Text);
-            ShowNote(name != null && OsIniLibrary.Exists(name) ? $"Replaces your saved ini \"{name}\"." : "", false);
+            ShowNote(name != null && OsIniLibrary.Exists(name) ? $"저장된 ini \"{name}\"을(를) 대체합니다." : "", false);
         };
 
         async Task SaveAsync()
@@ -60,19 +60,19 @@ public sealed partial class MainWindow
             try
             {
                 var name = OsIniLibrary.CleanName(nameBox.Text);
-                if (name == null) { ShowNote("Type a name first.", true); return; }
-                if (iniPath == null || !File.Exists(iniPath)) { ShowNote("This game has no OptiScaler.ini to save.", true); return; }
+                if (name == null) { ShowNote("먼저 이름을 입력하세요.", true); return; }
+                if (iniPath == null || !File.Exists(iniPath)) { ShowNote("이 게임에는 저장할 OptiScaler.ini가 없습니다.", true); return; }
                 bool replaced = OsIniLibrary.Exists(name);
                 await Task.Run(() => OsIniLibrary.Save(name, iniPath));
                 // The game now matches the saved ini, so a reinstall puts it back
                 ViewModel.SetOsIniProfile(card.GameName, name, ctx.Store);
                 flyout.Hide();
-                showStatus(replaced ? $"Saved ini \"{name}\" replaced." : $"Saved as \"{name}\". Load it into any game with Load saved ini.", true);
+                showStatus(replaced ? $"저장된 ini \"{name}\"을(를) 대체했습니다." : $"\"{name}\"(으)로 저장했습니다. 저장된 ini 불러오기로 어떤 게임에든 불러올 수 있습니다.", true);
             }
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
                 CrashReporter.Log($"[MainWindow.BuildOsSaveIniButton] Save failed — {ex.Message}");
-                ShowNote($"Couldn't save: {ex.Message}", true);
+                ShowNote($"저장할 수 없습니다: {ex.Message}", true);
             }
         }
 
@@ -90,9 +90,9 @@ public sealed partial class MainWindow
     {
         var card = ctx.Card;
         var store = ctx.Store;
-        var btn = CogDialog.StyledButton("Load saved ini...", CogButtonKind.Secondary);
+        var btn = CogDialog.StyledButton("저장된 ini 불러오기...", CogButtonKind.Secondary);
         ToolTipService.SetToolTip(btn,
-            "Use one of your saved inis as this game's OptiScaler.ini. RHI remembers it and puts it back after a reinstall or update.");
+            "저장된 ini 중 하나를 이 게임의 OptiScaler.ini로 사용합니다. RHI가 이를 기억해 재설치나 업데이트 후 다시 적용합니다.");
 
         var panel = new StackPanel { Spacing = 8, Width = 320 };
         var flyout = new Flyout { Content = panel };
@@ -110,8 +110,8 @@ public sealed partial class MainWindow
                 note.Foreground = UIFactory.Brush(error ? ResourceKeys.AccentRedBrush : ResourceKeys.TextTertiaryBrush);
             }
 
-            var addBtn = CogDialog.StyledButton("Add from file...", CogButtonKind.Secondary, compact: true);
-            ToolTipService.SetToolTip(addBtn, "Add an OptiScaler.ini from anywhere on your PC (a build's own ini, one shared on Discord, ...) to your saved inis.");
+            var addBtn = CogDialog.StyledButton("파일에서 추가...", CogButtonKind.Secondary, compact: true);
+            ToolTipService.SetToolTip(addBtn, "PC의 어느 위치에 있는 OptiScaler.ini(빌드 자체 ini, Discord에서 공유된 ini 등)든 저장된 ini에 추가합니다.");
             addBtn.Click += async (_, _) =>
             {
                 try
@@ -125,7 +125,7 @@ public sealed partial class MainWindow
                         ofn.filter = "INI files (*.ini)\0*.ini\0All Files (*.*)\0*.*\0";
                         ofn.file = new string(new char[260]);
                         ofn.maxFile = ofn.file.Length;
-                        ofn.title = "Add an OptiScaler.ini";
+                        ofn.title = "OptiScaler.ini 추가";
                         ofn.flags = 0x00080000 | 0x00001000; // OFN_EXPLORER | OFN_FILEMUSTEXIST
                         return NativeInterop.GetOpenFileName(ref ofn) ? ofn.file.TrimEnd('\0') : null;
                     });
@@ -134,17 +134,17 @@ public sealed partial class MainWindow
                     await Task.Run(() => OsIniLibrary.Save(name, file));
                     Fill();
                     flyout.ShowAt(btn);
-                    showStatus($"Added \"{name}\" to your saved inis.", true);
+                    showStatus($"\"{name}\"을(를) 저장된 ini에 추가했습니다.", true);
                 }
                 catch (Exception ex)
                 {
                     CrashReporter.Log($"[MainWindow.BuildOsLoadIniButton] Add from file failed — {ex.Message}");
-                    ShowNote($"Couldn't add the file: {ex.Message}", true);
+                    ShowNote($"파일을 추가할 수 없습니다: {ex.Message}", true);
                 }
             };
 
-            var folderBtn = CogDialog.StyledButton("Open folder", CogButtonKind.Secondary, compact: true);
-            ToolTipService.SetToolTip(folderBtn, "Open the folder your saved inis are kept in. You can rename or copy them there too.");
+            var folderBtn = CogDialog.StyledButton("폴더 열기", CogButtonKind.Secondary, compact: true);
+            ToolTipService.SetToolTip(folderBtn, "저장된 ini가 보관된 폴더를 엽니다. 거기서 이름을 바꾸거나 복사할 수도 있습니다.");
             folderBtn.Click += async (_, _) =>
             {
                 try
@@ -155,7 +155,7 @@ public sealed partial class MainWindow
                 catch (Exception ex)
                 {
                     CrashReporter.Log($"[MainWindow.BuildOsLoadIniButton] Open folder failed — {ex.Message}");
-                    ShowNote($"Couldn't open the folder: {ex.Message}", true);
+                    ShowNote($"폴더를 열 수 없습니다: {ex.Message}", true);
                 }
             };
 
@@ -163,7 +163,7 @@ public sealed partial class MainWindow
             {
                 panel.Children.Add(new TextBlock
                 {
-                    Text = "No saved inis yet. Save one from a game with Save ini, or add one from a file.",
+                    Text = "아직 저장된 ini가 없습니다. 게임에서 ini 저장으로 저장하거나 파일에서 추가하세요.",
                     TextWrapping = TextWrapping.Wrap,
                     FontSize = 12,
                 });
@@ -179,13 +179,13 @@ public sealed partial class MainWindow
             var combo = CogDialog.MakeCombo(names, Math.Max(0, names.FindIndex(n => n.Equals(current, StringComparison.OrdinalIgnoreCase))));
             combo.HorizontalAlignment = HorizontalAlignment.Stretch;
 
-            var useBtn = CogDialog.StyledButton("Use for this game", CogButtonKind.Primary, compact: true);
+            var useBtn = CogDialog.StyledButton("이 게임에 사용", CogButtonKind.Primary, compact: true);
             useBtn.Click += async (_, _) =>
             {
                 if (combo.SelectedItem is not string name || string.IsNullOrEmpty(card.InstallPath)) return;
                 var gameDir = card.InstallPath;
                 var err = await Task.Run(() => OsIniLibrary.Deploy(name, gameDir, ViewModel.Settings.OsHotkey));
-                if (err != null) { ShowNote($"Couldn't load it: {err}", true); return; }
+                if (err != null) { ShowNote($"불러올 수 없습니다: {err}", true); return; }
 
                 ViewModel.SetOsIniProfile(card.GameName, name, store);
                 // Edits applied to the old ini don't belong to this one
@@ -193,12 +193,12 @@ public sealed partial class MainWindow
                 SyncOsFgSettingsFromIni(card.GameName, store, gameDir);
                 CrashReporter.Log($"[MainWindow.BuildOsLoadIniButton] '{card.GameName}' now uses saved ini '{name}'");
                 flyout.Hide();
-                _osCogNotice = $"Loaded \"{name}\" as this game's OptiScaler.ini. It's put back after a reinstall or update.";
+                _osCogNotice = $"\"{name}\"을(를) 이 게임의 OptiScaler.ini로 불러왔습니다. 재설치나 업데이트 후 다시 적용됩니다.";
                 ReopenOsCog(ctx); // every setting above now reads the new ini
             };
 
             // Deleting asks for a second click
-            var deleteBtn = CogDialog.StyledButton("Delete", CogButtonKind.Danger, compact: true);
+            var deleteBtn = CogDialog.StyledButton("삭제", CogButtonKind.Danger, compact: true);
             bool armed = false;
             deleteBtn.Click += async (_, _) =>
             {
@@ -206,8 +206,8 @@ public sealed partial class MainWindow
                 if (!armed)
                 {
                     armed = true;
-                    deleteBtn.Content = "Click again to delete";
-                    ShowNote($"Delete \"{name}\" from your saved inis? Games already using it keep their OptiScaler.ini.", false);
+                    deleteBtn.Content = "한 번 더 클릭하여 삭제";
+                    ShowNote($"저장된 ini에서 \"{name}\"을(를) 삭제할까요? 이미 사용 중인 게임은 OptiScaler.ini를 유지합니다.", false);
                     return;
                 }
                 try
@@ -215,25 +215,25 @@ public sealed partial class MainWindow
                     await Task.Run(() => OsIniLibrary.Delete(name));
                     if (name.Equals(ViewModel.GetOsIniProfile(card.GameName, store), StringComparison.OrdinalIgnoreCase))
                         ViewModel.SetOsIniProfile(card.GameName, null, store);
-                    showStatus($"Deleted saved ini \"{name}\".", true);
+                    showStatus($"저장된 ini \"{name}\"을(를) 삭제했습니다.", true);
                     Fill();
                 }
                 catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
                 {
                     CrashReporter.Log($"[MainWindow.BuildOsLoadIniButton] Delete failed — {ex.Message}");
-                    ShowNote($"Couldn't delete it: {ex.Message}", true);
+                    ShowNote($"삭제할 수 없습니다: {ex.Message}", true);
                 }
             };
             combo.SelectionChanged += (_, _) =>
             {
                 armed = false;
-                deleteBtn.Content = "Delete";
+                deleteBtn.Content = "삭제";
                 ShowNote("", false);
             };
 
             panel.Children.Add(new TextBlock
             {
-                Text = "Use a saved ini as this game's OptiScaler.ini. The current one is backed up first.",
+                Text = "저장된 ini를 이 게임의 OptiScaler.ini로 사용합니다. 현재 파일은 먼저 백업됩니다.",
                 TextWrapping = TextWrapping.Wrap,
                 FontSize = 12,
             });

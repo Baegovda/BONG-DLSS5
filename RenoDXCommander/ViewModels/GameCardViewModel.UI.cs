@@ -32,8 +32,8 @@ public partial class GameCardViewModel
         get
         {
             var tip = GameName;
-            if (IsRunning) tip += "\nRunning now (green background).";
-            if (!IsSidebarRsInstalled) tip += "\nReShade isn't installed for this game.";
+            if (IsRunning) tip += "\n현재 실행 중 (녹색 배경).";
+            if (!IsSidebarRsInstalled) tip += "\n이 게임에 ReShade가 설치되어 있지 않습니다.";
             return tip;
         }
     }
@@ -78,17 +78,17 @@ public partial class GameCardViewModel
             var effectiveStatus = Status;
             var effectiveInstalling = IsInstalling;
 
-            if (effectiveInstalling) return "Installing...";
+            if (effectiveInstalling) return "설치 중...";
             if (IsManaged)
             {
                 // Any component has an update available → show update icon
                 if (effectiveStatus == GameStatus.UpdateAvailable
                     || RsStatus == GameStatus.UpdateAvailable
                     || LumaStatus == GameStatus.UpdateAvailable)
-                    return "⬆  Manage";
-                return "↺  Manage";
+                    return "⬆  관리";
+                return "↺  관리";
             }
-            return "⬇  Install";
+            return "⬇  설치";
         }
     }
 
@@ -133,12 +133,12 @@ public partial class GameCardViewModel
 
     // ── Derived display ───────────────────────────────────────────────────────────
 
-    public string WikiStatusLabel => WikiStatus == "✅" ? "✅ Working"
-                                   : WikiStatus == "🚧" ? "🚧 In Progress"
-                                   : WikiStatus == "?"  ? "⚠️ May Work"
+    public string WikiStatusLabel => WikiStatus == "✅" ? "✅ 작동함"
+                                   : WikiStatus == "🚧" ? "🚧 작업 중"
+                                   : WikiStatus == "?"  ? "⚠️ 작동할 수 있음"
                                    : WikiStatus == "💬" ? "💬 Discord"
                                    : WikiStatus == "🌐" ? "🌐 Nexus"
-                                   : WikiStatus == "—" && IsGenericMod ? "⚠️ May Work"
+                                   : WikiStatus == "—" && IsGenericMod ? "⚠️ 작동할 수 있음"
                                    : "";
 
     /// <summary>
@@ -231,7 +231,7 @@ public partial class GameCardViewModel
     public bool HasUwFixUrl        => !string.IsNullOrEmpty(UwFixUrl);
     public bool HasUltraPlusUrl    => !string.IsNullOrEmpty(UltraPlusUrl);
     public bool HasNameUrl            => !string.IsNullOrEmpty(NameUrl);
-    public string HideButtonLabel     => IsHidden ? "👁 Show" : "🚫 Hide";
+    public string HideButtonLabel     => IsHidden ? "👁 표시" : "🚫 숨기기";
     public string StarForeground       => IsFavourite ? "#FFD700" : "#282840";
     public Visibility IsFavouriteVisibility      => IsFavourite ? Visibility.Visible : Visibility.Collapsed;
     public Visibility IsNotFavouriteVisibility   => IsFavourite ? Visibility.Collapsed : Visibility.Visible;

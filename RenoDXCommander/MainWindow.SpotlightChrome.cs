@@ -62,7 +62,7 @@ public sealed partial class MainWindow
         t.Badge.Visibility = update ? Visibility.Visible : Visibility.Collapsed;
         t.Cover.BorderBrush = TabsTheme.B(CoverOutline(t));
         ToolTipService.SetToolTip(t.Root, t.Card == null ? null
-            : update ? $"{t.Card.GameName}: update available" : t.Card.GameName);
+            : update ? $"{t.Card.GameName}: 업데이트 있음" : t.Card.GameName);
     }
 
     private void WatchCard(ShelfTile t, GameCardViewModel? card)
@@ -259,11 +259,11 @@ public sealed partial class MainWindow
         try
         {
             var menu = new MenuFlyout();
-            var bottom = new ToggleMenuFlyoutItem { Text = "Covers below the game page", IsChecked = ViewModel.Settings.SpotlightShelfAtBottom };
-            ToolTipService.SetToolTip(bottom, "Move the search, filters and game covers below the game page");
+            var bottom = new ToggleMenuFlyoutItem { Text = "게임 페이지 아래에 커버 표시", IsChecked = ViewModel.Settings.SpotlightShelfAtBottom };
+            ToolTipService.SetToolTip(bottom, "검색, 필터 및 게임 커버를 게임 페이지 아래로 이동");
             bottom.Click += (s, a) => SetShelfAtBottom(bottom.IsChecked);
-            var plain = new ToggleMenuFlyoutItem { Text = "No background", IsChecked = ViewModel.Settings.SpotlightShelfPlain };
-            ToolTipService.SetToolTip(plain, "The game list uses the page colour instead of its own panel colour");
+            var plain = new ToggleMenuFlyoutItem { Text = "배경 없음", IsChecked = ViewModel.Settings.SpotlightShelfPlain };
+            ToolTipService.SetToolTip(plain, "게임 목록이 자체 패널 색 대신 페이지 색을 사용합니다");
             plain.Click += (s, a) =>
             {
                 ViewModel.Settings.SpotlightShelfPlain = plain.IsChecked;
@@ -484,7 +484,7 @@ public sealed partial class MainWindow
             Visibility = Visibility.Collapsed,
             Child = new TextBlock
             {
-                Text = "Update",
+                Text = "업데이트",
                 FontSize = 11,
                 FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                 Foreground = TabsTheme.B("#E4D8FF"),
@@ -601,20 +601,20 @@ public sealed partial class MainWindow
     private MenuFlyoutSubItem BuildArtworkMenu(GameCardViewModel card)
     {
         var key = ArtKey(card);
-        var sub = new MenuFlyoutSubItem { Text = "Artwork" };
+        var sub = new MenuFlyoutSubItem { Text = "아트워크" };
         void Add(string text, Action action)
         {
             var item = new MenuFlyoutItem { Text = text };
             item.Click += (s, e) => action();
             sub.Items.Add(item);
         }
-        Add("Set custom cover...", () => _ = PickCustomArtAsync(card, SteamArtworkService.Kind.Cover));
-        Add("Set custom banner...", () => _ = PickCustomArtAsync(card, SteamArtworkService.Kind.Hero));
+        Add("사용자 지정 커버 설정...", () => _ = PickCustomArtAsync(card, SteamArtworkService.Kind.Cover));
+        Add("사용자 지정 배너 설정...", () => _ = PickCustomArtAsync(card, SteamArtworkService.Kind.Hero));
         bool customCover = SteamArtworkService.TryGetCustom(key, SteamArtworkService.Kind.Cover) != null;
         bool customHero = SteamArtworkService.TryGetCustom(key, SteamArtworkService.Kind.Hero) != null;
         if (customCover || customHero) sub.Items.Add(new MenuFlyoutSeparator());
-        if (customCover) Add("Use Steam cover", () => ResetCustomArt(card, SteamArtworkService.Kind.Cover));
-        if (customHero) Add("Use Steam banner", () => ResetCustomArt(card, SteamArtworkService.Kind.Hero));
+        if (customCover) Add("Steam 커버 사용", () => ResetCustomArt(card, SteamArtworkService.Kind.Cover));
+        if (customHero) Add("Steam 배너 사용", () => ResetCustomArt(card, SteamArtworkService.Kind.Hero));
         return sub;
     }
 
@@ -624,14 +624,14 @@ public sealed partial class MainWindow
         {
             var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
             var title = kind == SteamArtworkService.Kind.Cover
-                ? $"Cover for {card.GameName} (tall image, about 2:3)"
-                : $"Banner for {card.GameName} (wide image)";
+                ? $"{card.GameName} 커버 (세로 이미지, 약 2:3)"
+                : $"{card.GameName} 배너 (가로 이미지)";
             var file = await Task.Run(() =>
             {
                 var ofn = new NativeInterop.OpenFileName();
                 ofn.structSize = System.Runtime.InteropServices.Marshal.SizeOf(ofn);
                 ofn.hwndOwner = hwnd;
-                ofn.filter = "Images (*.jpg;*.jpeg;*.png;*.webp;*.bmp)\0*.jpg;*.jpeg;*.png;*.webp;*.bmp\0All Files (*.*)\0*.*\0";
+                ofn.filter = "이미지 (*.jpg;*.jpeg;*.png;*.webp;*.bmp)\0*.jpg;*.jpeg;*.png;*.webp;*.bmp\0모든 파일 (*.*)\0*.*\0";
                 ofn.file = new string(new char[260]);
                 ofn.maxFile = ofn.file.Length;
                 ofn.title = title;
@@ -643,7 +643,7 @@ public sealed partial class MainWindow
             var saved = await Task.Run(() => SteamArtworkService.SetCustom(ArtKey(card), kind, file));
             if (saved == null)
             {
-                ShowStatusBarMessage($"Couldn't save the image for {card.GameName}", TimeSpan.FromSeconds(8));
+                ShowStatusBarMessage($"{card.GameName}의 이미지를 저장할 수 없습니다", TimeSpan.FromSeconds(8));
                 return;
             }
             ShowArtChange(card, kind);
@@ -665,11 +665,11 @@ public sealed partial class MainWindow
             var saved = await Task.Run(() => SteamArtworkService.SetCustom(ArtKey(card), SteamArtworkService.Kind.Hero, file));
             if (saved == null)
             {
-                ShowStatusBarMessage($"Couldn't set the banner for {card.GameName}", TimeSpan.FromSeconds(8));
+                ShowStatusBarMessage($"{card.GameName}의 배너를 설정할 수 없습니다", TimeSpan.FromSeconds(8));
                 return;
             }
             ShowArtChange(card, SteamArtworkService.Kind.Hero);
-            ShowStatusBarMessage($"Banner set for {card.GameName}. Right-click the banner › Artwork › Use Steam banner to undo.", TimeSpan.FromSeconds(8));
+            ShowStatusBarMessage($"{card.GameName}의 배너를 설정했습니다. 되돌리려면 배너를 마우스 오른쪽 버튼으로 클릭 › 아트워크 › Steam 배너 사용을 선택하세요.", TimeSpan.FromSeconds(8));
         }
         catch (Exception ex)
         {

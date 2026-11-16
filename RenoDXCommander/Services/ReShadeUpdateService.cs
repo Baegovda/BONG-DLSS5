@@ -85,7 +85,7 @@ public class ReShadeUpdateService : IReShadeUpdateService
         CrashReporter.Log("[ReShadeUpdateService.EnsureLatestAsync] Started");
         Directory.CreateDirectory(CacheDir);
 
-        progress?.Report(("Checking for ReShade updates...", 5));
+        progress?.Report(("ReShade 업데이트 확인 중...", 5));
         var latest = await CheckLatestVersionAsync();
         if (latest == null)
         {
@@ -104,7 +104,7 @@ public class ReShadeUpdateService : IReShadeUpdateService
             && new FileInfo(AuxInstallService.RsStagedPath32).Length > 1_000_000)
         {
             CrashReporter.Log($"[ReShadeUpdateService.EnsureLatestAsync] Already have v{version}");
-            progress?.Report(($"ReShade {version} is current", 100));
+            progress?.Report(($"ReShade {version} 최신 상태", 100));
             return false;
         }
 
@@ -114,7 +114,7 @@ public class ReShadeUpdateService : IReShadeUpdateService
 
         if (!File.Exists(exePath))
         {
-            progress?.Report(($"Downloading ReShade {version}...", 15));
+            progress?.Report(($"ReShade {version} 다운로드 중...", 15));
             CrashReporter.Log($"[ReShadeUpdateService.EnsureLatestAsync] Downloading {url}");
 
             try
@@ -145,7 +145,7 @@ public class ReShadeUpdateService : IReShadeUpdateService
                         if (totalBytes > 0)
                         {
                             var pct = 15.0 + (downloaded / (double)totalBytes * 60.0);
-                            progress?.Report(($"Downloading ReShade {version}... {downloaded / 1024}KB", pct));
+                            progress?.Report(($"ReShade {version} 다운로드 중... {downloaded / 1024}KB", pct));
                         }
                     }
                 }
@@ -207,7 +207,7 @@ public class ReShadeUpdateService : IReShadeUpdateService
         }
 
         // Extract DLLs from the exe (it has an appended ZIP archive)
-        progress?.Report(("Extracting ReShade DLLs...", 80));
+        progress?.Report(("ReShade DLL 압축 해제 중...", 80));
         try
         {
             await _extractor.ExtractFileAsync(exePath, "ReShade64.dll", AuxInstallService.RsStagedPath64);
@@ -241,7 +241,7 @@ public class ReShadeUpdateService : IReShadeUpdateService
         }
         catch (Exception ex) { CrashReporter.Log($"[ReShadeUpdateService.EnsureLatestAsync] Failed to clean up old installers — {ex.Message}"); }
 
-        progress?.Report(($"ReShade {version} ready!", 100));
+        progress?.Report(($"ReShade {version} 준비 완료!", 100));
         CrashReporter.Log($"[ReShadeUpdateService.EnsureLatestAsync] Staged v{version} successfully");
         App.Services.GetRequiredService<IUpdateLogService>().Record(new Models.UpdateLogEntry
         {

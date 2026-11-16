@@ -53,7 +53,7 @@ public partial class SettingsHandler
             // Sync toggle state with ViewModel
             // (without triggering the change handler, which confirms and redeploys shaders)
             SyncShaderModeCombo();
-            _window.AboutVersionText.Text = $"v{CrashReporter.AppVersion}  ·  Simplified PC Gaming by RankFTW";
+            _window.AboutVersionText.Text = $"v{CrashReporter.AppVersion}  ·  RankFTW의 간편한 PC 게이밍";
             // Show installed Windows App Runtime version
             // Populate addon watch folder textbox
             _window.AddonWatchFolderBox.Text = ViewModel.Settings.AddonWatchFolder;
@@ -344,7 +344,7 @@ public partial class SettingsHandler
 
         // Global ReBAR Enable
         var isAdminForReBar = VulkanLayerService.IsRunningAsAdmin();
-        _window.GlobalReBarEnableCombo.ItemsSource = new[] { "Auto (Default)", "Off", "On" };
+        _window.GlobalReBarEnableCombo.ItemsSource = new[] { "자동 (기본값)", "꺼짐", "켜짐" };
         var globalReBarMode = snapshot.ReBarEnableMode ?? 1; // 0=Off, 1=Auto, 2=On
         _window.GlobalReBarEnableCombo.SelectedIndex = globalReBarMode == 0 ? 1 : globalReBarMode == 2 ? 2 : 0;
         _window.GlobalReBarEnableCombo.IsEnabled = isAdminForReBar;

@@ -41,23 +41,23 @@ internal sealed partial class OverlayWindow
         var settings = _settings();
         if (!settings.SteamAchievements && !settings.XboxAchievements)
         {
-            _achBox.Children.Add(MakeCard("Achievements", SmallText(
-                "Achievements are off. Turn them on in RHI's Settings › Achievements (Steam and Xbox).")));
+            _achBox.Children.Add(MakeCard("도전 과제", SmallText(
+                "도전 과제가 꺼져 있습니다. RHI의 설정 › 도전 과제(Steam 및 Xbox)에서 켜세요.")));
             return;
         }
         var load = AchievementLoader(card);
         if (load == null)
         {
-            _achBox.Children.Add(MakeCard("Achievements", SmallText("RHI can't find achievements for this game.")));
+            _achBox.Children.Add(MakeCard("도전 과제", SmallText("RHI가 이 게임의 도전 과제를 찾을 수 없습니다.")));
             return;
         }
 
         _ovAchSummary = new Border();
-        _ovAchSearch = new TextBox { PlaceholderText = "Search achievements", FontSize = 15 };
+        _ovAchSearch = new TextBox { PlaceholderText = "도전 과제 검색", FontSize = 15 };
         TabsTheme.StyleInput(_ovAchSearch);
         _ovAchSearch.FontSize = 15;
         _ovAchSearch.MinHeight = 40;
-        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(_ovAchSearch, "Search achievements");
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(_ovAchSearch, "도전 과제 검색");
         _ovAchSearch.TextChanged += (_, _) => RenderAchievementList();
         _ovAchList = new StackPanel { Spacing = 8 };
         _achBox.Children.Add(_ovAchSummary);
@@ -76,7 +76,7 @@ internal sealed partial class OverlayWindow
         else
         {
             _ovAchSet = null;
-            _ovAchSummary.Child = SmallText("Loading achievements…");
+            _ovAchSummary.Child = SmallText("도전 과제 불러오는 중…");
         }
 
         // Always re-read (cheap when unchanged): new unlocks show up each time the page opens
@@ -101,12 +101,12 @@ internal sealed partial class OverlayWindow
     private Button MakeHiddenAchToggle(Grid row)
     {
         bool on = _settings().ShowHiddenAchievements;
-        var b = new Button { Content = "Show hidden", Padding = new Thickness(16, 0, 16, 0), VerticalAlignment = VerticalAlignment.Stretch };
+        var b = new Button { Content = "숨김 표시", Padding = new Thickness(16, 0, 16, 0), VerticalAlignment = VerticalAlignment.Stretch };
         TabsTheme.Apply(b, DetailLayoutHost.ToggleLook(on), height: double.NaN, fontSize: 15);
         ToolTipService.SetToolTip(b, on
-            ? "Hidden achievements show their name and description. Click to hide them again."
-            : "Show the name and description of hidden achievements (may spoil the story).");
-        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(b, on ? "Show hidden achievements: on" : "Show hidden achievements: off");
+            ? "숨겨진 도전 과제의 이름과 설명이 표시됩니다. 다시 숨기려면 클릭하세요."
+            : "숨겨진 도전 과제의 이름과 설명을 표시합니다 (스토리 스포일러가 있을 수 있음).");
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(b, on ? "숨겨진 도전 과제 표시: 켜짐" : "숨겨진 도전 과제 표시: 꺼짐");
         b.Click += (_, _) =>
         {
             _settings().ShowHiddenAchievements = !on;
@@ -129,8 +129,8 @@ internal sealed partial class OverlayWindow
         _ovAchGameKey = key;
         if (set == null)
         {
-            _ovAchSummary.Child = SmallText("No achievements found for this game. Steam lists them once you've run the game on this PC; "
-                + "for Xbox games, open the game's page in the Xbox app once.");
+            _ovAchSummary.Child = SmallText("이 게임의 도전 과제를 찾을 수 없습니다. Steam은 이 PC에서 게임을 한 번 실행하면 표시하며, "
+                + "Xbox 게임은 Xbox 앱에서 게임 페이지를 한 번 열어 주세요.");
             _ovAchList?.Children.Clear();
             return;
         }
@@ -144,15 +144,15 @@ internal sealed partial class OverlayWindow
         var top = new Grid();
         top.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         top.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-        top.Children.Add(BigText($"{set.Unlocked} of {set.Total} earned"));
+        top.Children.Add(BigText($"{set.Total}개 중 {set.Unlocked}개 달성"));
         var pct = BigText($"{set.PercentDone}%");
         Grid.SetColumn(pct, 1);
         top.Children.Add(pct);
         body.Children.Add(top);
         body.Children.Add(ProgressBar(set));
         if (set.HasGamerscore)
-            body.Children.Add(SmallText($"{set.GamerscoreEarned:N0} of {set.GamerscoreTotal:N0} Gamerscore"));
-        _ovAchSummary.Child = MakeCard("Achievements", body, stretch: true);
+            body.Children.Add(SmallText($"Gamerscore {set.GamerscoreTotal:N0} 중 {set.GamerscoreEarned:N0}"));
+        _ovAchSummary.Child = MakeCard("도전 과제", body, stretch: true);
         RenderAchievementList();
     }
 
@@ -165,7 +165,7 @@ internal sealed partial class OverlayWindow
         {
             if (query.Length == 0) return true;
             bool masked = a.IsMasked(showHidden);
-            return (masked ? "Hidden achievement" : a.Name).Contains(query, StringComparison.OrdinalIgnoreCase)
+            return (masked ? "숨겨진 도전 과제" : a.Name).Contains(query, StringComparison.OrdinalIgnoreCase)
                 || (!masked && a.Description.Contains(query, StringComparison.OrdinalIgnoreCase));
         }
         var unlocked = set.Items.Where(a => a.Unlocked && Matches(a)).ToList();
@@ -176,15 +176,15 @@ internal sealed partial class OverlayWindow
         var rows = new List<Func<FrameworkElement>>();
         if (locked.Count > 0)
         {
-            rows.Add(() => Heading(set.HasRarity ? $"Locked ({locked.Count}), most earned first" : $"Locked ({locked.Count})"));
+            rows.Add(() => Heading(set.HasRarity ? $"잠김 ({locked.Count}), 달성률 높은 순" : $"잠김 ({locked.Count})"));
             rows.AddRange(locked.Select(a => (Func<FrameworkElement>)(() => AchievementRow(set, a))));
         }
         if (unlocked.Count > 0)
         {
-            rows.Add(() => Heading($"Unlocked ({unlocked.Count})"));
+            rows.Add(() => Heading($"달성 ({unlocked.Count})"));
             rows.AddRange(unlocked.Select(a => (Func<FrameworkElement>)(() => AchievementRow(set, a))));
         }
-        if (rows.Count == 0) rows.Add(() => SmallText("No achievements match your search."));
+        if (rows.Count == 0) rows.Add(() => SmallText("검색과 일치하는 도전 과제가 없습니다."));
 
         // Built in chunks so hundreds of achievements don't stall the overlay
         int seq = ++_ovAchListSeq;
@@ -226,20 +226,20 @@ internal sealed partial class OverlayWindow
         var text = new StackPanel { Spacing = 3, VerticalAlignment = VerticalAlignment.Center };
         text.Children.Add(new TextBlock
         {
-            Text = masked ? "Hidden achievement" : a.Name,
+            Text = masked ? "숨겨진 도전 과제" : a.Name,
             FontSize = 17,
             FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
             TextWrapping = TextWrapping.Wrap,
             Foreground = TabsTheme.B(a.Unlocked ? TabsTheme.TextPrimary : TabsTheme.TextSecondary),
         });
-        var desc = masked ? "Details are shown once you unlock it." : a.Description;
+        var desc = masked ? "달성하면 세부 정보가 표시됩니다." : a.Description;
         if (desc.Length > 0)
             text.Children.Add(new TextBlock { Text = desc, FontSize = 14, TextWrapping = TextWrapping.Wrap, Foreground = TabsTheme.B(TabsTheme.TextSecondary) });
         var c = System.Globalization.CultureInfo.CurrentCulture;
         var facts = new List<string>();
-        if (a.ProgressPercent is int done && !masked) facts.Add($"{done}% done");
+        if (a.ProgressPercent is int done && !masked) facts.Add($"{done}% 완료");
         if (a.Gamerscore is int g) facts.Add($"{g} Gamerscore");
-        if (a.Percent is double p) facts.Add($"{p.ToString("0.0", c)}% of players have it");
+        if (a.Percent is double p) facts.Add($"플레이어의 {p.ToString("0.0", c)}%가 달성");
         if (facts.Count > 0)
             text.Children.Add(new TextBlock { Text = string.Join(" · ", facts), FontSize = 13, Foreground = TabsTheme.B(TabsTheme.TextMuted) });
 

@@ -45,7 +45,7 @@ internal sealed class CogDialog
     private readonly TextBlock _status;
     private bool _hasContent;
     private string? _primaryText;
-    private string _closeText = "Close";
+    private string _closeText = "닫기";
 
     // The scrolling body: cards and loose text, top to bottom
     private readonly StackPanel _root;
@@ -84,7 +84,7 @@ internal sealed class CogDialog
     /// <param name="componentName">Display name, e.g. "ReShade". The title becomes "ReShade Settings".</param>
     public CogDialog(string componentName, XamlRoot xamlRoot)
     {
-        _title = componentName.EndsWith(" Settings", StringComparison.Ordinal) ? componentName : componentName + " Settings";
+        _title = componentName.EndsWith(" Settings", StringComparison.Ordinal) || componentName.EndsWith(" 설정", StringComparison.Ordinal) ? componentName : componentName + " 설정";
         _xamlRoot = xamlRoot;
         _root = new StackPanel { Spacing = 14, Width = BodyWidth };
         _status = new TextBlock
@@ -125,7 +125,7 @@ internal sealed class CogDialog
     /// <summary>Body text for components with nothing to configure.</summary>
     public TextBlock AddEmpty(string? text = null)
     {
-        var tb = Text(text ?? "This component has no settings.", 12, ResourceKeys.TextSecondaryBrush);
+        var tb = Text(text ?? "이 구성 요소에는 설정이 없습니다.", 12, ResourceKeys.TextSecondaryBrush);
         Add(tb);
         return tb;
     }
@@ -221,7 +221,7 @@ internal sealed class CogDialog
             catch (Exception ex)
             {
                 CrashReporter.Log($"[CogDialog] '{_title}' / '{label}' change failed — {ex.Message}");
-                SetError($"Couldn't change {label}: {ex.Message}");
+                SetError($"{label}을(를) 변경할 수 없습니다: {ex.Message}");
                 keep = false;
             }
             if (keep) { last = combo.SelectedIndex; return; }
@@ -275,7 +275,7 @@ internal sealed class CogDialog
             catch (Exception ex)
             {
                 CrashReporter.Log($"[CogDialog] '{_title}' / '{label}' change failed — {ex.Message}");
-                SetError($"Couldn't change {label}: {ex.Message}");
+                SetError($"{label}을(를) 변경할 수 없습니다: {ex.Message}");
                 keep = false;
             }
             if (keep) { last = combo.SelectedIndex; return; }
@@ -370,7 +370,7 @@ internal sealed class CogDialog
             catch (Exception ex)
             {
                 CrashReporter.Log($"[CogDialog] '{_title}' / '{text}' failed — {ex}");
-                SetError($"{text} failed: {ex.Message}");
+                SetError($"{text} 실패: {ex.Message}");
             }
         };
         return b;
@@ -385,7 +385,7 @@ internal sealed class CogDialog
     {
         var b = MakeButton(text, CogButtonKind.Secondary, async () =>
         {
-            if (string.IsNullOrEmpty(path) || !File.Exists(path)) { SetError($"{Path.GetFileName(path)} wasn't found."); return; }
+            if (string.IsNullOrEmpty(path) || !File.Exists(path)) { SetError($"{Path.GetFileName(path)}을(를) 찾을 수 없습니다."); return; }
             await Windows.System.Launcher.LaunchUriAsync(new Uri(path));
         });
         b.IsEnabled = !string.IsNullOrEmpty(path) && File.Exists(path);
@@ -397,7 +397,7 @@ internal sealed class CogDialog
     {
         var b = MakeButton(text, CogButtonKind.Secondary, async () =>
         {
-            if (string.IsNullOrEmpty(path) || !File.Exists(path)) { SetError($"{Path.GetFileName(path)} wasn't found."); return; }
+            if (string.IsNullOrEmpty(path) || !File.Exists(path)) { SetError($"{Path.GetFileName(path)}을(를) 찾을 수 없습니다."); return; }
             string content;
             using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (var sr = new StreamReader(fs))
@@ -405,7 +405,7 @@ internal sealed class CogDialog
             var dp = new Windows.ApplicationModel.DataTransfer.DataPackage();
             dp.SetText(content);
             Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dp);
-            SetSuccess($"Copied {Path.GetFileName(path)} to the clipboard.");
+            SetSuccess($"{Path.GetFileName(path)}을(를) 클립보드에 복사했습니다.");
         });
         b.IsEnabled = !string.IsNullOrEmpty(path) && File.Exists(path);
         return b;
@@ -467,7 +467,7 @@ internal sealed class CogDialog
     /// Apply / Cancel instead of Close. Only for dialogs where applying on every change would be
     /// too expensive (sliders that write to the driver).
     /// </summary>
-    public void UseApplyButton(string applyText = "Apply", string cancelText = "Cancel")
+    public void UseApplyButton(string applyText = "적용", string cancelText = "취소")
     {
         _primaryText = applyText;
         _closeText = cancelText;

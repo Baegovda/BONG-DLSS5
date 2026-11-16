@@ -204,7 +204,7 @@ public class UpdateService : IUpdateService
             using var transfer = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             transfer.CancelAfter(TimeSpan.FromMinutes(10));
             var token = transfer.Token;
-            progress?.Report(("Downloading update...", 0));
+            progress?.Report(("업데이트 다운로드 중...", 0));
 
             using var request = new HttpRequestMessage(HttpMethod.Get, downloadUrl);
             request.Headers.UserAgent.Add(new ProductInfoHeaderValue("RHI", CurrentVersion.ToString()));
@@ -235,13 +235,13 @@ public class UpdateService : IUpdateService
                 if (totalBytes > 0)
                 {
                     var pct = (double)totalRead / totalBytes * 100;
-                    progress?.Report(($"Downloading update... {pct:F0}%", pct));
+                    progress?.Report(($"업데이트 다운로드 중... {pct:F0}%", pct));
                 }
             }
 
             if (totalBytes >= 0 && totalRead != totalBytes)
                 throw new IOException($"Incomplete installer download: expected {totalBytes} bytes, received {totalRead}.");
-            progress?.Report(("Download complete.", 100));
+            progress?.Report(("다운로드 완료.", 100));
             CrashReporter.Log($"[UpdateService.DownloadInstallerAsync] Downloaded installer to {tempPath} ({totalRead:N0} bytes)");
             return tempPath;
         }
@@ -253,7 +253,7 @@ public class UpdateService : IUpdateService
                 try { File.Delete(tempPath); }
                 catch (Exception cleanupError) { CrashReporter.Log($"[UpdateService] Partial download cleanup failed — {cleanupError.Message}"); }
             }
-            progress?.Report(($"Download failed: {ex.Message}", 0));
+            progress?.Report(($"다운로드 실패: {ex.Message}", 0));
             return null;
         }
     }

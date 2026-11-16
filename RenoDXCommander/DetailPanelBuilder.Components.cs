@@ -65,7 +65,7 @@ public partial class DetailPanelBuilder
             HorizontalAlignment = HorizontalAlignment.Left,
             VerticalAlignment = VerticalAlignment.Center,
         };
-        ToolTipService.SetToolTip(arrow, "This game has notes, see Info.");
+        ToolTipService.SetToolTip(arrow, "이 게임에는 참고 사항이 있습니다. 정보를 확인하세요.");
         grid.Children.Add(arrow);
 
         return grid;
@@ -83,14 +83,14 @@ public partial class DetailPanelBuilder
             tip = null;
         else if (update)
             tip = clickTarget != null
-                ? $"Update available. Click to open {clickTarget}."
-                : "Installed. An update is available.";
+                ? $"업데이트 있음. 클릭하면 {clickTarget}을(를) 엽니다."
+                : "설치됨. 업데이트가 있습니다.";
         else if (installed)
             tip = clickTarget != null
-                ? $"Installed version. Click to open {clickTarget}."
-                : "Installed version.";
+                ? $"설치된 버전. 클릭하면 {clickTarget}을(를) 엽니다."
+                : "설치된 버전.";
         else if (status.Text == "Ready")
-            tip = "Not installed.";
+            tip = "설치 안 됨.";
         else
             tip = null;
         ToolTipService.SetToolTip(status, tip);
@@ -156,7 +156,7 @@ public partial class DetailPanelBuilder
                 : Windows.UI.Text.TextDecorations.None;
             SetComponentStatusTooltip(_window.DetailRefStatus, card.IsRefInstalled,
                 card.RefStatus == GameStatus.UpdateAvailable,
-                card.IsRefInstalled ? "the REFramework nightly releases page" : null);
+                card.IsRefInstalled ? "REFramework 나이틀리 릴리스 페이지" : null);
             _window.DetailRefInstallBtn.Tag = card;
             _window.DetailRefInstallBtn.Content = WithInfoArrow(card.RefActionLabel, HasRealInfoContent(card, AddonType.REFramework), card.RefStatus == GameStatus.UpdateAvailable, _window.DetailRefInstallBtn);
             _window.DetailRefInstallBtn.IsEnabled = card.IsRefNotInstalling;
@@ -282,8 +282,8 @@ public partial class DetailPanelBuilder
             SetComponentStatusTooltip(_window.DetailUlStatus, card.IsUlInstalled,
                 card.UlStatus == GameStatus.UpdateAvailable,
                 card.UlStatus == GameStatus.UpdateAvailable && _window.ViewModel.LatestUlReleasePageUrl != null
-                    ? "the latest ReLimiter release page"
-                    : card.IsUlInstalled ? "the ReLimiter feature guide" : null);
+                    ? "최신 ReLimiter 릴리스 페이지"
+                    : card.IsUlInstalled ? "ReLimiter 기능 가이드" : null);
             _window.DetailUlInstallBtn.Tag = card;
             var ulLabel = WithInfoArrow(card.UlActionLabel, HasRealInfoContent(card, AddonType.ReLimiter), card.UlStatus == GameStatus.UpdateAvailable, _window.DetailUlInstallBtn);
             if (card.IsDcInstalled || card.UseNormalReShade)
@@ -336,7 +336,7 @@ public partial class DetailPanelBuilder
             _window.DetailDcStatus.Opacity = dcGreyed ? 0.35 : 1.0;
             SetComponentStatusTooltip(_window.DetailDcStatus, card.IsDcInstalled,
                 card.DcStatus == GameStatus.UpdateAvailable,
-                card.IsDcInstalled ? "the Display Commander latest build page" : null);
+                card.IsDcInstalled ? "Display Commander 최신 빌드 페이지" : null);
             _window.DetailDcInstallBtn.Tag = card;
             var dcLabel = WithInfoArrow(card.DcActionLabel, HasRealInfoContent(card, AddonType.DisplayCommander), card.DcStatus == GameStatus.UpdateAvailable, _window.DetailDcInstallBtn);
             if (card.IsUlInstalled || card.UseNormalReShade)
@@ -383,7 +383,7 @@ public partial class DetailPanelBuilder
             SetComponentStatusTooltip(_window.DetailDofFixStatus, card.IsDofFixInstalled,
                 card.DofFixStatus == GameStatus.UpdateAvailable,
                 card.IsDofFixInstalled && !string.IsNullOrEmpty(card.DofFixInstalledVersion)
-                    ? "the installed version's release page" : null);
+                    ? "설치된 버전의 릴리스 페이지" : null);
             _window.DetailDofFixInstallBtn.Tag = card;
             _window.DetailDofFixInstallBtn.Content = WithInfoArrow(card.DofFixActionLabel, true, card.DofFixStatus == GameStatus.UpdateAvailable, _window.DetailDofFixInstallBtn);
             _window.DetailDofFixInstallBtn.IsEnabled = card.DofFixInstallEnabled && !dofGreyed;
@@ -437,7 +437,7 @@ public partial class DetailPanelBuilder
                 _window.DetailRdxStatus.Opacity = rdxGreyed ? 0.35 : 1.0;
                 SetComponentStatusTooltip(_window.DetailRdxStatus, card.IsRdxInstalled,
                     card.Status == GameStatus.UpdateAvailable,
-                    card.IsRdxInstalled ? "the mod's page" : null);
+                    card.IsRdxInstalled ? "모드 페이지" : null);
                 var extLabel = WithInfoArrow(card.ExternalDisplayLabel, HasRealInfoContent(card, AddonType.RenoDX), card.Status == GameStatus.UpdateAvailable, _window.DetailRdxInstallBtn);
                 _window.DetailRdxInstallBtn.Content = card.UseNormalReShade
                     ? (object)new TextBlock { Text = card.ExternalDisplayLabel, TextDecorations = Windows.UI.Text.TextDecorations.Strikethrough }
@@ -477,7 +477,7 @@ public partial class DetailPanelBuilder
                 _window.DetailRdxStatus.Opacity = rdxGreyed ? 0.35 : 1.0;
                 SetComponentStatusTooltip(_window.DetailRdxStatus, card.IsRdxInstalled,
                     card.Status == GameStatus.UpdateAvailable,
-                    card.IsRdxInstalled ? "the mod's page" : null);
+                    card.IsRdxInstalled ? "모드 페이지" : null);
                 var rdxLabel = WithInfoArrow(card.InstallActionLabel, HasRealInfoContent(card, AddonType.RenoDX), card.Status == GameStatus.UpdateAvailable, _window.DetailRdxInstallBtn);
                 _window.DetailRdxInstallBtn.Content = card.UseNormalReShade
                     ? (object)new TextBlock { Text = card.InstallActionLabel, TextDecorations = Windows.UI.Text.TextDecorations.Strikethrough }
@@ -512,7 +512,7 @@ public partial class DetailPanelBuilder
                 : Windows.UI.Text.TextDecorations.None;
             SetComponentStatusTooltip(_window.DetailLumaStatus, card.IsLumaInstalled,
                 card.LumaStatus == GameStatus.UpdateAvailable,
-                card.IsLumaInstalled ? "the Luma releases page" : null);
+                card.IsLumaInstalled ? "Luma 릴리스 페이지" : null);
             _window.DetailLumaInstallBtn.Tag = card;
             _window.DetailLumaInstallBtn.Content = WithInfoArrow(card.LumaActionLabel, HasRealInfoContent(card, AddonType.Luma), card.LumaStatus == GameStatus.UpdateAvailable, _window.DetailLumaInstallBtn);
             _window.DetailLumaInstallBtn.IsEnabled = card.IsLumaNotInstalling;

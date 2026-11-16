@@ -87,16 +87,16 @@ public sealed partial class MainWindow
 
             var cog = new CogDialog("RTX HDR", Content.XamlRoot);
             cog.UseApplyButton();
-            cog.AddIntro("These settings are written to the game's NVIDIA driver profile when you click Apply.");
+            cog.AddIntro("적용을 클릭하면 이 설정이 게임의 NVIDIA 드라이버 프로필에 기록됩니다.");
 
-            cog.AddSection("Picture");
+            cog.AddSection("화면");
 
             // ── Peak Brightness ───────────────────────────────────────────────────
             var nitsSlider = new Slider { Minimum = 400, Maximum = 2000, StepFrequency = 10, Value = peakBrightnessDisplay };
             var nitsValue = HdrCogValueText($"{peakBrightnessDisplay} nits", 64);
-            cog.AddRow("Peak Brightness", CogDialog.Inline(nitsSlider, nitsValue),
-                "Set this to your display's peak brightness in nits.");
-            var nitsWarning = HdrCogControlText("High values may look unnatural", ResourceKeys.AccentAmberBrush,
+            cog.AddRow("최대 밝기", CogDialog.Inline(nitsSlider, nitsValue),
+                "디스플레이의 최대 밝기(nits)로 설정하세요.");
+            var nitsWarning = HdrCogControlText("높은 값은 부자연스러워 보일 수 있습니다", ResourceKeys.AccentAmberBrush,
                 peakBrightnessDisplay > 600 ? 1.0 : 0.0);
             cog.Body.Children.Add(nitsWarning);
             nitsSlider.ValueChanged += (s, ev) =>
@@ -109,12 +109,12 @@ public sealed partial class MainWindow
             var contrastSlider = new Slider { Minimum = -100, Maximum = 100, StepFrequency = 1, Value = contrastDisplay };
             var contrastValue = HdrCogValueText(HdrCogSigned(contrastDisplay));
             contrastSlider.ValueChanged += (s, ev) => contrastValue.Text = HdrCogSigned((int)contrastSlider.Value);
-            cog.AddRow("Contrast", CogDialog.Inline(contrastSlider, contrastValue),
-                "0 is gamma 2.0 (default), +25 is gamma 2.2 and +50 is gamma 2.4. Higher values give deeper shadows.");
+            cog.AddRow("대비", CogDialog.Inline(contrastSlider, contrastValue),
+                "0은 감마 2.0(기본값), +25는 감마 2.2, +50은 감마 2.4입니다. 값이 높을수록 그림자가 깊어집니다.");
 
             // Gamma preset buttons
             var gammaButtons = new List<Button>();
-            foreach (var (label, value) in new[] { ("Gamma 2.0", 0), ("Gamma 2.2", 25), ("Gamma 2.4", 50) })
+            foreach (var (label, value) in new[] { ("감마 2.0", 0), ("감마 2.2", 25), ("감마 2.4", 50) })
             {
                 var btn = CogDialog.StyledButton(label, CogButtonKind.Secondary, compact: true);
                 var capturedValue = value;
@@ -170,8 +170,8 @@ public sealed partial class MainWindow
 
             var mgSlider = new Slider { Minimum = 10, Maximum = 100, StepFrequency = 1, Value = mgInitial };
             var mgValue = HdrCogValueText(mgInitial.ToString());
-            cog.AddRow("Middle Grey", CogDialog.Inline(mgSlider, mgValue),
-                "Sets how bright mid-tones and paper white look. Auto works it out from Peak Brightness and Contrast; the number buttons aim for that paper white in nits.");
+            cog.AddRow("중간 회색", CogDialog.Inline(mgSlider, mgValue),
+                "중간 톤과 종이 흰색의 밝기를 설정합니다. 자동은 최대 밝기와 대비로 계산하며, 숫자 버튼은 해당 nits의 종이 흰색을 목표로 합니다.");
 
             // Paper white readout + washed-out warning, aligned with the control column
             var mgInfoPanel = new StackPanel
@@ -181,7 +181,7 @@ public sealed partial class MainWindow
                 Margin = new Thickness(CogDialog.LabelColumnWidth + CogDialog.ColumnGap, -4, 0, 0),
             };
             var mgPaperWhite = new TextBlock { FontSize = 11, Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush) };
-            var mgWarning = new TextBlock { Text = "High values may look washed out", FontSize = 11, Foreground = UIFactory.Brush(ResourceKeys.AccentAmberBrush) };
+            var mgWarning = new TextBlock { Text = "높은 값은 색이 바래 보일 수 있습니다", FontSize = 11, Foreground = UIFactory.Brush(ResourceKeys.AccentAmberBrush) };
             mgInfoPanel.Children.Add(mgPaperWhite);
             mgInfoPanel.Children.Add(mgWarning);
             cog.Body.Children.Add(mgInfoPanel);
@@ -191,7 +191,7 @@ public sealed partial class MainWindow
                 int mg = (int)mgSlider.Value;
                 int pw = CalcPerceivedPaperwhite(mg, (int)contrastSlider.Value);
                 mgValue.Text = mg.ToString();
-                mgPaperWhite.Text = $"Paper white about {pw} nits";
+                mgPaperWhite.Text = $"종이 흰색 약 {pw} nits";
                 mgWarning.Opacity = pw > 203 ? 1.0 : 0.0;
             }
             UpdateMiddleGreyReadout();
@@ -201,8 +201,8 @@ public sealed partial class MainWindow
 
             // Auto button + paper white preset buttons
             var mgButtons = new List<Button>();
-            var autoMgBtn = CogDialog.StyledButton("Auto", CogButtonKind.Secondary, compact: true);
-            ToolTipService.SetToolTip(autoMgBtn, "Calculate Middle Grey from Peak Brightness and Gamma using the ITU formula");
+            var autoMgBtn = CogDialog.StyledButton("자동", CogButtonKind.Secondary, compact: true);
+            ToolTipService.SetToolTip(autoMgBtn, "ITU 공식을 사용해 최대 밝기와 감마로 중간 회색을 계산합니다");
             autoMgBtn.Click += (s, ev) =>
             {
                 mgSlider.Value = CalcAutoMiddleGrey((int)nitsSlider.Value, (int)contrastSlider.Value);
@@ -213,7 +213,7 @@ public sealed partial class MainWindow
             {
                 var presetBtn = CogDialog.StyledButton(presetPw.ToString(), CogButtonKind.Secondary, compact: true);
                 var capturedPw = presetPw;
-                ToolTipService.SetToolTip(presetBtn, $"Set Middle Grey to achieve about {presetPw} nits paper white");
+                ToolTipService.SetToolTip(presetBtn, $"종이 흰색이 약 {presetPw} nits가 되도록 중간 회색을 설정합니다");
                 presetBtn.Click += (s, ev) =>
                 {
                     // Reverse formula: midGrey = paperwhite × (0.5 ^ gamma)
@@ -229,17 +229,17 @@ public sealed partial class MainWindow
             var satSlider = new Slider { Minimum = -100, Maximum = 100, StepFrequency = 1, Value = saturationDisplay };
             var satValue = HdrCogValueText(HdrCogSigned(saturationDisplay));
             satSlider.ValueChanged += (s, ev) => satValue.Text = HdrCogSigned((int)satSlider.Value);
-            cog.AddRow("Saturation", CogDialog.Inline(satSlider, satValue),
-                "-25 gives neutral saturation. Higher values make colours more vivid, lower values more muted.");
+            cog.AddRow("채도", CogDialog.Inline(satSlider, satValue),
+                "-25는 중립 채도입니다. 값이 높을수록 색이 선명해지고, 낮을수록 차분해집니다.");
 
             // ── Debanding ─────────────────────────────────────────────────────────
             var debandingOptions = new (string name, uint value)[]
             {
-                ("No Debanding", 0x06),
-                ("Low Debanding", 0x0A),
-                ("High Debanding", 0x02),
-                ("High Debanding (Indicator)", 0x03),
-                ("High Debanding (Indicator + Debug)", 0x23),
+                ("디밴딩 없음", 0x06),
+                ("디밴딩 낮음", 0x0A),
+                ("디밴딩 높음", 0x02),
+                ("디밴딩 높음 (표시기)", 0x03),
+                ("디밴딩 높음 (표시기 + 디버그)", 0x23),
             };
             bool isAdmin = VulkanLayerService.IsRunningAsAdmin();
             int selectedDbIndex = 0;
@@ -247,10 +247,10 @@ public sealed partial class MainWindow
                 if (currentDebanding == (int)debandingOptions[i].value) selectedDbIndex = i;
             var debandingCombo = CogDialog.MakeCombo(debandingOptions.Select(o => o.name).ToList(), selectedDbIndex, isAdmin);
             debandingCombo.Opacity = isAdmin ? 1.0 : CogDialog.DisabledOpacity;
-            cog.AddRow("Debanding", debandingCombo,
-                "Smooths colour banding in gradients. The Indicator options add an on-screen indicator, useful for testing.");
+            cog.AddRow("디밴딩", debandingCombo,
+                "그라데이션의 색 밴딩을 부드럽게 합니다. 표시기 옵션은 화면에 표시기를 추가하며 테스트에 유용합니다.");
             if (!isAdmin)
-                cog.Body.Children.Add(HdrCogControlText("Requires admin mode to change.", ResourceKeys.AccentAmberBrush));
+                cog.Body.Children.Add(HdrCogControlText("변경하려면 관리자 모드가 필요합니다.", ResourceKeys.AccentAmberBrush));
 
             // ── Default preset buttons ────────────────────────────────────────────
             var defaultsPath = System.IO.Path.Combine(
@@ -260,14 +260,14 @@ public sealed partial class MainWindow
             // Load current defaults (if any) to show whether "Set Default" is available
             bool hasDefaults = File.Exists(defaultsPath);
 
-            cog.AddSection("Defaults");
-            cog.AddNote("Save as Default stores these values as your RTX HDR preset. Set Default loads that preset into the sliders; click Apply to write it.");
+            cog.AddSection("기본값");
+            cog.AddNote("기본값으로 저장은 이 값을 RTX HDR 프리셋으로 저장합니다. 기본값 불러오기는 해당 프리셋을 슬라이더에 불러오며, 기록하려면 적용을 클릭하세요.");
 
-            var saveDefaultBtn = CogDialog.StyledButton("Save as Default", CogButtonKind.Secondary);
-            ToolTipService.SetToolTip(saveDefaultBtn, "Save current slider values as your default RTX HDR preset");
-            var setDefaultBtn = CogDialog.StyledButton("Set Default", CogButtonKind.Secondary);
+            var saveDefaultBtn = CogDialog.StyledButton("기본값으로 저장", CogButtonKind.Secondary);
+            ToolTipService.SetToolTip(saveDefaultBtn, "현재 슬라이더 값을 기본 RTX HDR 프리셋으로 저장합니다");
+            var setDefaultBtn = CogDialog.StyledButton("기본값 불러오기", CogButtonKind.Secondary);
             setDefaultBtn.IsEnabled = hasDefaults;
-            ToolTipService.SetToolTip(setDefaultBtn, hasDefaults ? "Apply your saved default preset to the sliders" : "No default saved yet. Use Save as Default first.");
+            ToolTipService.SetToolTip(setDefaultBtn, hasDefaults ? "저장된 기본 프리셋을 슬라이더에 적용합니다" : "저장된 기본값이 없습니다. 먼저 기본값으로 저장을 사용하세요.");
 
             saveDefaultBtn.Click += (s, ev) =>
             {
@@ -285,13 +285,13 @@ public sealed partial class MainWindow
                     File.WriteAllText(defaultsPath, JsonSerializer.Serialize(defaults,
                         new JsonSerializerOptions { WriteIndented = true }));
                     setDefaultBtn.IsEnabled = true;
-                    ToolTipService.SetToolTip(setDefaultBtn, "Apply your saved default preset to the sliders");
-                    cog.SetSuccess("Saved as your default RTX HDR preset.");
+                    ToolTipService.SetToolTip(setDefaultBtn, "저장된 기본 프리셋을 슬라이더에 적용합니다");
+                    cog.SetSuccess("기본 RTX HDR 프리셋으로 저장했습니다.");
                 }
                 catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or NotSupportedException)
                 {
                     CrashReporter.Log($"[RtxHdrConfigButton_Click] Failed to save defaults — {ex.Message}");
-                    cog.SetError($"Couldn't save the default preset: {ex.Message}");
+                    cog.SetError($"기본 프리셋을 저장할 수 없습니다: {ex.Message}");
                 }
             };
 
@@ -320,13 +320,13 @@ public sealed partial class MainWindow
                         }
                     }
                     UpdateMiddleGreyReadout();
-                    cog.SetStatus("Default preset loaded. Click Apply to write it.");
+                    cog.SetStatus("기본 프리셋을 불러왔습니다. 기록하려면 적용을 클릭하세요.");
                 }
                 catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or JsonException
                                               or InvalidOperationException or FormatException)
                 {
                     CrashReporter.Log($"[RtxHdrConfigButton_Click] Failed to apply defaults — {ex.Message}");
-                    cog.SetError($"Couldn't load the default preset: {ex.Message}");
+                    cog.SetError($"기본 프리셋을 불러올 수 없습니다: {ex.Message}");
                 }
             };
 
@@ -352,7 +352,7 @@ public sealed partial class MainWindow
                 dlssPresetService.SetRtxHdrDebanding(card.GameName, card.InstallPath, debanding);
                 CrashReporter.Log($"[RtxHdrConfigButton_Click] Applied RTX HDR settings for '{card.GameName}': PeakNits={peakNits}, Contrast={contrastStored}, Sat={satStored}, MidGrey={middleGrey}, Deband=0x{debanding:X2}");
             });
-            card.ActionMessage = "✅ RTX HDR settings applied.";
+            card.ActionMessage = "✅ RTX HDR 설정이 적용되었습니다.";
             card.FadeMessage(m => card.ActionMessage = m, card.ActionMessage);
         }
         catch (Exception ex)
@@ -392,14 +392,14 @@ public sealed partial class MainWindow
 
             var cog = new CogDialog("Auto HDR", Content.XamlRoot);
             cog.UseApplyButton();
-            cog.AddIntro("Windows Auto HDR settings for this game. Changes take effect on the next game launch.");
+            cog.AddIntro("이 게임의 Windows Auto HDR 설정입니다. 변경 사항은 다음 게임 실행 시 적용됩니다.");
 
             // ── Brightness / Intensity ────────────────────────────────────────────
             var strengthSlider = new Slider { Minimum = 0, Maximum = 100, StepFrequency = 1, Value = currentStrength };
             var strengthValue = HdrCogValueText(currentStrength.ToString());
-            cog.AddRow("Brightness", CogDialog.Inline(strengthSlider, strengthValue),
-                "How much Auto HDR brightens the game. 0 is no boost, 50 is the default and 100 is the maximum (about 1000 nits peak).");
-            var strengthWarning = HdrCogControlText("High values may look unnatural", ResourceKeys.AccentAmberBrush,
+            cog.AddRow("밝기", CogDialog.Inline(strengthSlider, strengthValue),
+                "Auto HDR이 게임을 얼마나 밝게 할지 정합니다. 0은 증가 없음, 50은 기본값, 100은 최대(최대 약 1000 nits)입니다.");
+            var strengthWarning = HdrCogControlText("높은 값은 부자연스러워 보일 수 있습니다", ResourceKeys.AccentAmberBrush,
                 currentStrength > 75 ? 1.0 : 0.0);
             cog.Body.Children.Add(strengthWarning);
             strengthSlider.ValueChanged += (s, ev) =>
@@ -410,7 +410,7 @@ public sealed partial class MainWindow
 
             // ── Preset buttons ────────────────────────────────────────────────────
             var presetButtons = new List<Button>();
-            foreach (var (label, value) in new[] { ("Low (25)", 25), ("Default (50)", 50), ("High (75)", 75), ("Max (100)", 100) })
+            foreach (var (label, value) in new[] { ("낮음 (25)", 25), ("기본값 (50)", 50), ("높음 (75)", 75), ("최대 (100)", 100) })
             {
                 var btn = CogDialog.StyledButton(label, CogButtonKind.Secondary, compact: true);
                 var capturedValue = value;
@@ -420,7 +420,7 @@ public sealed partial class MainWindow
             cog.Body.Children.Add(HdrCogPresetRow(presetButtons.ToArray()));
 
             if (string.IsNullOrEmpty(exePath))
-                cog.AddWarning("Couldn't find the game's exe, so this setting won't be written to the Windows registry.");
+                cog.AddWarning("게임의 exe를 찾을 수 없어 이 설정이 Windows 레지스트리에 기록되지 않습니다.");
             else
                 cog.AddNote($"Exe: {exePath}");
 
@@ -441,7 +441,7 @@ public sealed partial class MainWindow
                 });
             }
 
-            card.ActionMessage = "✅ Auto HDR settings applied.";
+            card.ActionMessage = "✅ Auto HDR 설정이 적용되었습니다.";
             card.FadeMessage(m => card.ActionMessage = m, card.ActionMessage);
         }
         catch (Exception ex)

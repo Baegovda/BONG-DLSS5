@@ -132,7 +132,7 @@ internal sealed partial class DetailLayoutHost
 
         // Drag the bottom edge to set the height (saved); double-click goes back to automatic
         var grip = new Controls.ResizeGrip { VerticalAlignment = VerticalAlignment.Bottom, Reference = () => _window.LayoutRoot };
-        ToolTipService.SetToolTip(grip, "Drag to resize the banner. Double-click to reset.");
+        ToolTipService.SetToolTip(grip, "끌어서 배너 크기를 조절합니다. 두 번 클릭하면 초기화됩니다.");
         double dragStart = 0;
         grip.DragStarted += () => dragStart = layers.ActualHeight;
         grip.DragDelta += dy =>
@@ -192,10 +192,10 @@ internal sealed partial class DetailLayoutHost
 
         _spotBody = new StackPanel { Spacing = 18 };
         var status = new StackPanel { Spacing = 10 };
-        status.Children.Add(TabsTheme.SectionHeading("What's installed"));
+        status.Children.Add(TabsTheme.SectionHeading("설치된 항목"));
         status.Children.Add(_statusGrid);
         var tune = new StackPanel { Spacing = 10 };
-        tune.Children.Add(TabsTheme.SectionHeading("Tune this game"));
+        tune.Children.Add(TabsTheme.SectionHeading("이 게임 조정"));
         tune.Children.Add(_tuneGrid);
         _spotBody.Children.Add(status);
         _spotBody.Children.Add(tune);
@@ -317,7 +317,7 @@ internal sealed partial class DetailLayoutHost
         };
         var close = TabsTheme.MakeIconButton(TabsTheme.GlyphClose, TabsTheme.IconButton, 12);
         close.Click += (s, e) => ClosePanel();
-        ToolTipService.SetToolTip(close, "Close");
+        ToolTipService.SetToolTip(close, "닫기");
         var head = new Grid { Padding = new Thickness(24, 20, 20, 12) };
         head.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         head.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
@@ -392,8 +392,8 @@ internal sealed partial class DetailLayoutHost
         _panelHost!.Children.Add(content);
         content.Visibility = Visibility.Visible;
         _panelKey = key;
-        _panelTitle!.Text = key == OverviewKey ? "Components" : key == AchievementsKey ? "Achievements"
-            : key == ScreenshotsKey ? "Screenshots" : key == GameSettingsKey ? "Game settings" : GetTitle(key);
+        _panelTitle!.Text = key == OverviewKey ? "구성 요소" : key == AchievementsKey ? "도전 과제"
+            : key == ScreenshotsKey ? "스크린샷" : key == GameSettingsKey ? "게임 설정" : GetTitle(key);
         if (key == OverviewKey) RefreshOverviewCards();
 
         // Re-adding the sheet replays its slide-in transition
@@ -510,7 +510,7 @@ internal sealed partial class DetailLayoutHost
                 Child = grid,
             };
             TabsTheme.UseHandCursor(card);
-            TabsTheme.SetHandTip(card, "Manage components");
+            TabsTheme.SetHandTip(card, "구성 요소 관리");
             Root = TabsTheme.WrapTile(card, () => _host.OpenPanel(OverviewKey));
             Root.Visibility = Visibility.Collapsed;
         }
@@ -524,8 +524,8 @@ internal sealed partial class DetailLayoutHost
             var installed = visible.FirstOrDefault(r => r.Delete.IsHitTestVisible && r.Delete.Opacity > 0.05);
             if (visible.Count > 1 && installed == null)
             {
-                _name.Text = "Frame limiter";
-                _status.Text = "Choose " + string.Join(" or ", visible.Select(Name));
+                _name.Text = "프레임 제한기";
+                _status.Text = string.Join(" 또는 ", visible.Select(Name)) + " 중 선택";
                 _dot.Fill = TabsTheme.B("#3A4458");
                 return;
             }
@@ -535,10 +535,10 @@ internal sealed partial class DetailLayoutHost
             var tone = TabsTheme.ToneOf(r.Status.Foreground);
             bool notInstalled = status.Length == 0 || status == "—"
                 || string.Equals(status, "Ready", StringComparison.OrdinalIgnoreCase);
-            _status.Text = notInstalled ? "Not installed"
+            _status.Text = notInstalled ? "설치 안 됨"
                 : tone != TabsTheme.Tone.Purple ? status
-                : status.StartsWith("Update", StringComparison.OrdinalIgnoreCase) ? "Update available"
-                : $"Update available · {status}";
+                : status.StartsWith("Update", StringComparison.OrdinalIgnoreCase) ? "업데이트 있음"
+                : $"업데이트 있음 · {status}";
             _dot.Fill = TabsTheme.B(notInstalled ? "#3A4458" : tone switch
             {
                 TabsTheme.Tone.Purple => "#B898E8",

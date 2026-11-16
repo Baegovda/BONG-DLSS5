@@ -144,11 +144,11 @@ public partial class DetailPanelBuilder
                 _                       => effectiveMethod,
             };
             if (nrAnyInstalled)
-                nrSummaryEntries.Add(("NR Method", methodLabel));
+                nrSummaryEntries.Add(("NR 방식", methodLabel));
             if (nrDllPresent)
                 nrSummaryEntries.Add(("NR DLL", nrDllVersion));
             nrSummary = DetailPanelBuilder.MakeSectionSummaryInlines(nrSummaryEntries,
-                "Installed Neural Rendering method and NR DLL (nvngx_dlssnr.dll) version.\n"
+                "설치된 Neural Rendering 방식 및 NR DLL (nvngx_dlssnr.dll) 버전.\n"
                 + "DLSS Tool (SF) = ShortFuse DLSS Tool.");
             if (nrSummary != null)
             {
@@ -186,7 +186,7 @@ public partial class DetailPanelBuilder
 
         // Method combo (col 0)
         var methodStack = new StackPanel { Spacing = 2 };
-        methodStack.Children.Add(new TextBlock { Text = "Method", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush) });
+        methodStack.Children.Add(new TextBlock { Text = "방식", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush) });
 
         var methodCombo = new ComboBox
         {
@@ -208,24 +208,24 @@ public partial class DetailPanelBuilder
         // Reasons mirror the Enabled conditions in methodItems above.
         var greyedReasons = new List<string>();
         if (is32Bit)
-            greyedReasons.Add("ShortFuse DLSS Tool, DLSS5 Tool and DX11 Bridge need a 64-bit game.");
+            greyedReasons.Add("ShortFuse DLSS Tool, DLSS5 Tool, DX11 Bridge는 64비트 게임이 필요합니다.");
         else
         {
             if (card.GraphicsApi == GraphicsApiType.OpenGL)
-                greyedReasons.Add("ShortFuse DLSS Tool isn't available for OpenGL games.");
+                greyedReasons.Add("ShortFuse DLSS Tool은 OpenGL 게임에서 사용할 수 없습니다.");
             if (!hasDlss)
-                greyedReasons.Add("DLSS5 Tool and DX11 Bridge need a game with native DLSS.");
+                greyedReasons.Add("DLSS5 Tool과 DX11 Bridge는 네이티브 DLSS가 있는 게임이 필요합니다.");
             else if (!(isDx11 || isVulkan))
-                greyedReasons.Add("DLSS5 Tool + DX11 Bridge needs a DX11 or Vulkan game.");
+                greyedReasons.Add("DLSS5 Tool + DX11 Bridge는 DX11 또는 Vulkan 게임이 필요합니다.");
         }
         var methodTip =
-            "DLSS5 Tool: for DX12 native-DLSS games.\n" +
-            "DLSS5 Tool + DX11 Bridge: for DX11/Vulkan native-DLSS games.\n" +
-            "ShortFuse DLSS Tool: alternative full-stack install for native-DLSS games.\n" +
-            "DLSS5 Feeder: for games with no native DLSS (DX11, DX12, Vulkan, 32-bit).\n" +
-            "GITC Uplift: Neural Rendering on any game, built for ease of use and performance (also great for virtual photography).";
+            "DLSS5 Tool: 네이티브 DLSS가 있는 DX12 게임용.\n" +
+            "DLSS5 Tool + DX11 Bridge: 네이티브 DLSS가 있는 DX11/Vulkan 게임용.\n" +
+            "ShortFuse DLSS Tool: 네이티브 DLSS 게임용 전체 스택 설치 대안.\n" +
+            "DLSS5 Feeder: 네이티브 DLSS가 없는 게임용 (DX11, DX12, Vulkan, 32비트).\n" +
+            "GITC Uplift: 모든 게임에서 Neural Rendering 사용, 사용 편의성과 성능 중심 (가상 사진 촬영에도 좋음).";
         if (greyedReasons.Count > 0)
-            methodTip += "\n\nGreyed out for this game:\n" + string.Join("\n", greyedReasons);
+            methodTip += "\n\n이 게임에서 비활성화된 항목:\n" + string.Join("\n", greyedReasons);
         ToolTipService.SetToolTip(methodCombo, methodTip);
         methodStack.Children.Add(methodCombo);
         Grid.SetColumn(methodStack, 0);
@@ -233,7 +233,7 @@ public partial class DetailPanelBuilder
 
         // Pack version combo (col 1) — Feeder version or Bridge version, always "Latest" (managed by AddonPackService)
         var packVersionLabel = new TextBlock { FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush) };
-        packVersionLabel.Text = effectiveMethod == NrMethodFeeder ? "Feeder Version" : "Bridge Version";
+        packVersionLabel.Text = effectiveMethod == NrMethodFeeder ? "Feeder 버전" : "Bridge 버전";
         var packVersionStack = new StackPanel { Spacing = 2, Visibility = isFeederOrBridge ? Visibility.Visible : Visibility.Collapsed };
         packVersionStack.Children.Add(packVersionLabel);
         var packVersionCombo = new ComboBox
@@ -322,7 +322,7 @@ public partial class DetailPanelBuilder
                 _window.DispatcherQueue?.TryEnqueue(() =>
                 {
                     installBtn.IsEnabled = false;
-                    installBtn.Content   = "Swapping addon...";
+                    installBtn.Content   = "애드온 교체 중...";
                 });
 
                 try
@@ -403,8 +403,8 @@ public partial class DetailPanelBuilder
 
         ToolTipService.SetToolTip(packVersionStack,
             effectiveMethod == NrMethodFeeder
-                ? "Version of dlss5-feed.addon64 to install."
-                : "Version of dlss5-bridge.addon64 to install.");
+                ? "설치할 dlss5-feed.addon64 버전."
+                : "설치할 dlss5-bridge.addon64 버전.");
         packVersionStack.Children.Add(packVersionCombo);        Grid.SetColumn(packVersionStack, 1);
         row1.Children.Add(packVersionStack);
 
@@ -416,13 +416,13 @@ public partial class DetailPanelBuilder
         string AddonTypeForSel(string key) =>
             foveatedOn && IsDlss5ToolMethod(key) ? Renodx5AddonService.FoveatedSubDir : AddonTypeFor(key);
         string Dlss5VersionLabel(string key) =>
-            foveatedOn && IsDlss5ToolMethod(key) ? "DLSS5 Tool Version (Foveated)" : "DLSS5 Tool Version";
+            foveatedOn && IsDlss5ToolMethod(key) ? "DLSS5 Tool 버전 (Foveated)" : "DLSS5 Tool 버전";
 
         // DLSS5 Tool / SF version combo (col 2)
         var addonVersionLabel = new TextBlock { FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush) };
-        addonVersionLabel.Text = effectiveMethod == NrMethodShortFuse ? "SF Version"
-                                : effectiveMethod == NrMethodUplift    ? "Uplift Version"
-                                : effectiveMethod == NrMethodFeeder    ? "DLSS5 Tool Version"
+        addonVersionLabel.Text = effectiveMethod == NrMethodShortFuse ? "SF 버전"
+                                : effectiveMethod == NrMethodUplift    ? "Uplift 버전"
+                                : effectiveMethod == NrMethodFeeder    ? "DLSS5 Tool 버전"
                                 : Dlss5VersionLabel(effectiveMethod);
         var addonVersionStack = new StackPanel { Spacing = 2 };
         addonVersionStack.Children.Add(addonVersionLabel);
@@ -490,7 +490,7 @@ public partial class DetailPanelBuilder
                         addonSwapInProgress = true;
                         var prevUp = installBtn.Content;
                         installBtn.IsEnabled = false;
-                        installBtn.Content   = "Swapping GITC Uplift...";
+                        installBtn.Content   = "GITC Uplift 교체 중...";
                         try { await SwapUpliftVersionAsync(card, useLatest ? null : sel, upliftSvc).ConfigureAwait(false); }
                         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or InvalidOperationException)
                         { CrashReporter.Log($"[NeuralRendering.AddonSwap] Uplift swap failed — {ex.Message}"); }
@@ -517,7 +517,7 @@ public partial class DetailPanelBuilder
                     _window.DispatcherQueue?.TryEnqueue(() =>
                     {
                         installBtn.IsEnabled = false;
-                        installBtn.Content   = "Swapping addon...";
+                        installBtn.Content   = "애드온 교체 중...";
                     });
 
                     try
@@ -633,15 +633,15 @@ public partial class DetailPanelBuilder
 
         ToolTipService.SetToolTip(addonVersionCombo,
             effectiveMethod == NrMethodFeeder
-                ? "Version of renodx-dlss5.addon64 deployed as the neural consumer. The Feeder addon itself always uses the latest version."
-                : "Addon version to install. 'Latest' always installs the newest available and auto-updates.");
+                ? "뉴럴 소비자로 배포되는 renodx-dlss5.addon64 버전. Feeder 애드온 자체는 항상 최신 버전을 사용합니다."
+                : "설치할 애드온 버전. 'Latest'는 항상 사용 가능한 최신 버전을 설치하고 자동 업데이트합니다.");
         addonVersionStack.Children.Add(addonVersionCombo);
         Grid.SetColumn(addonVersionStack, 2);
         row1.Children.Add(addonVersionStack);
 
         // NR version combo (col 3)
         var nrVersionStack = new StackPanel { Spacing = 2 };
-        nrVersionStack.Children.Add(new TextBlock { Text = "NR DLL Version", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush) });
+        nrVersionStack.Children.Add(new TextBlock { Text = "NR DLL 버전", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush) });
 
         var nrVersionCombo = new ComboBox
         {
@@ -650,7 +650,7 @@ public partial class DetailPanelBuilder
             CornerRadius = new CornerRadius(6),
             MaxDropDownHeight = 300,
         };
-        ToolTipService.SetToolTip(nrVersionCombo, "NR DLL version to deploy. 'Latest' always uses the newest available. Change while installed to swap the NR DLL in-place.");
+        ToolTipService.SetToolTip(nrVersionCombo, "배포할 NR DLL 버전. 'Latest'는 항상 사용 가능한 최신 버전을 사용합니다. 설치된 상태에서 변경하면 NR DLL을 그 자리에서 교체합니다.");
         nrVersionStack.Children.Add(nrVersionCombo);
         Grid.SetColumn(nrVersionStack, 3);
         row1.Children.Add(nrVersionStack);
@@ -706,7 +706,7 @@ public partial class DetailPanelBuilder
                     addonSwapInProgress = true;
                     var prevUp = installBtn.Content;
                     installBtn.IsEnabled = false;
-                    installBtn.Content   = "Swapping NR DLL...";
+                    installBtn.Content   = "NR DLL 교체 중...";
                     try
                     {
                         var src = await ResolveNrDllSourceAsync(sel, dlssSvc).ConfigureAwait(false);
@@ -735,7 +735,7 @@ public partial class DetailPanelBuilder
                 _window.DispatcherQueue?.TryEnqueue(() =>
                 {
                     installBtn.IsEnabled = false;
-                    installBtn.Content   = "Swapping NR DLL...";
+                    installBtn.Content   = "NR DLL 교체 중...";
                 });
 
                 try
@@ -948,8 +948,8 @@ public partial class DetailPanelBuilder
                 };
                 if (text.StartsWith("✓", StringComparison.Ordinal) || text.StartsWith("✗", StringComparison.Ordinal))
                     ToolTipService.SetToolTip(tagText, ok
-                        ? "Found in the game folder."
-                        : "Not found in the game folder.");
+                        ? "게임 폴더에서 찾았습니다."
+                        : "게임 폴더에서 찾지 못했습니다.");
                 statusPanel.Children.Add(tagText);
             }
 
@@ -1007,7 +1007,7 @@ public partial class DetailPanelBuilder
                     Tag(feedFxPresent    ? "✓ Feed.fx"    : "✗ Feed.fx",    feedFxPresent);
                     // Feeder 2.0.0+ has its own motion vectors (DLSS5_MV_PROVIDER=5): LumeniteFX only matters for 3 / 4
                     if (feederMv is int mv && !FeederPreset.NeedsLumenite(mv))
-                        Tag(mv == FeederPreset.BuiltInProvider ? "✓ Built-in motion vectors" : $"Motion vectors: provider {mv}", true);
+                        Tag(mv == FeederPreset.BuiltInProvider ? "✓ 내장 모션 벡터" : $"모션 벡터: 제공자 {mv}", true);
                     else
                         Tag(lumeniteFxPresent ? "✓ LumeniteFX" : "✗ LumeniteFX", lumeniteFxPresent);
                     if (isDx9Feeder)
@@ -1015,7 +1015,7 @@ public partial class DetailPanelBuilder
                     break;
                 case NrMethodUplift:
                     Tag(uplift.Addon
-                        ? $"✓ GITC Uplift{(uplift.Version != null ? $" {uplift.Version}" : "")}{(uplift.Pinned ? " (pinned)" : "")}"
+                        ? $"✓ GITC Uplift{(uplift.Version != null ? $" {uplift.Version}" : "")}{(uplift.Pinned ? " (고정됨)" : "")}"
                         : "✗ GITC Uplift", uplift.Addon);
                     Tag(uplift.Helper  ? "✓ Helper"      : "✗ Helper",      uplift.Helper);
                     Tag(uplift.Dll     ? $"✓ NR DLL {uplift.DllVersion}" : "✗ NR DLL", uplift.Dll);
@@ -1024,7 +1024,7 @@ public partial class DetailPanelBuilder
                         Tag(lp ? "✓ Launchpad" : "✗ Launchpad", lp);
                     break;
                 default:
-                    Tag("Not installed", false);
+                    Tag("설치 안 됨", false);
                     break;
             }
         }
@@ -1064,43 +1064,43 @@ public partial class DetailPanelBuilder
             {
                 case NrMethodDlss5Tool:
                     descText.Text = hasDlss
-                        ? "For DX12 games with native DLSS. Deploys the DLSS5 Tool ReShade addon and nvngx_dlssnr.dll. Lighter alternative to ShortFuse DLSS Tool when you don't need the full Streamline stack."
-                        : "For DX12 games with native DLSS. This game has no detected DLSS — consider ShortFuse DLSS Tool instead.";
-                    descLink.Content = "DLSS5 Tool info →";
+                        ? "네이티브 DLSS가 있는 DX12 게임용. DLSS5 Tool ReShade 애드온과 nvngx_dlssnr.dll을 배포합니다. 전체 Streamline 스택이 필요 없을 때 ShortFuse DLSS Tool보다 가벼운 대안입니다."
+                        : "네이티브 DLSS가 있는 DX12 게임용. 이 게임에서는 DLSS가 감지되지 않았습니다 — 대신 ShortFuse DLSS Tool을 고려하세요.";
+                    descLink.Content = "DLSS5 Tool 정보 →";
                     descLink.NavigateUri = new Uri("https://discord.com/channels/1408098019194310818/1543802634991968366");
                     break;
                 case NrMethodDlss5ToolBridge:
-                    descText.Text = "For DX11 and Vulkan games with native DLSS. The bridge mirrors the game's DLSS onto a private DX12 session so the NR addon can hook it.";
-                    descLink.Content = "DX11 Bridge info →";
+                    descText.Text = "네이티브 DLSS가 있는 DX11 및 Vulkan 게임용. 브리지가 게임의 DLSS를 별도의 DX12 세션에 미러링하여 NR 애드온이 연결할 수 있게 합니다.";
+                    descLink.Content = "DX11 Bridge 정보 →";
                     descLink.NavigateUri = new Uri("https://github.com/NIGos/dlss5-bridge");
                     break;
                 case NrMethodShortFuse:
-                    descText.Text = "Recommended for most games with native DLSS. Deploys the full DLSS SR/RR/FG/NR stack and Streamline alongside the ReShade addon. Supports DX12, DX11, DX9, and Vulkan.";
-                    descLink.Content = "ShortFuse DLSS Tool info →";
+                    descText.Text = "네이티브 DLSS가 있는 대부분의 게임에 권장. ReShade 애드온과 함께 전체 DLSS SR/RR/FG/NR 스택과 Streamline을 배포합니다. DX12, DX11, DX9, Vulkan을 지원합니다.";
+                    descLink.Content = "ShortFuse DLSS Tool 정보 →";
                     descLink.NavigateUri = new Uri("https://discord.com/channels/1408098019194310818/1543975158937821315");
                     break;
                 case NrMethodFeeder:
                     descText.Text = (is32Bit
-                        ? "For 32-bit games. Feeds a synthetic DLSS contract from ReShade depth and motion vectors. Deploys the Feeder addon and its 64-bit host, DLSS5 Tool (neural consumer), NR DLL, DLSS SR DLL and DLSS5_Feed.fx."
-                        : "For games with no native DLSS (DX11, DX12, Vulkan, OpenGL). Feeds a synthetic DLSS contract from ReShade depth and motion vectors. Deploys the Feeder addon, DLSS5 Tool (neural consumer), NR DLL, DLSS SR DLL and DLSS5_Feed.fx.")
-                        + " New installs use the motion vectors built into DLSS5_Feed.fx; one that already uses LumeniteFX keeps it. Press Alt+C in the game for the Feeder menu.";
-                    descLink.Content = "Feeder setup guide →";
+                        ? "32비트 게임용. ReShade 깊이 및 모션 벡터로 합성 DLSS 입력을 공급합니다. Feeder 애드온과 64비트 호스트, DLSS5 Tool (뉴럴 소비자), NR DLL, DLSS SR DLL, DLSS5_Feed.fx를 배포합니다."
+                        : "네이티브 DLSS가 없는 게임용 (DX11, DX12, Vulkan, OpenGL). ReShade 깊이 및 모션 벡터로 합성 DLSS 입력을 공급합니다. Feeder 애드온, DLSS5 Tool (뉴럴 소비자), NR DLL, DLSS SR DLL, DLSS5_Feed.fx를 배포합니다.")
+                        + " 새로 설치하면 DLSS5_Feed.fx에 내장된 모션 벡터를 사용하며, 이미 LumeniteFX를 사용 중이면 그대로 유지합니다. 게임에서 Alt+C를 누르면 Feeder 메뉴가 열립니다.";
+                    descLink.Content = "Feeder 설정 가이드 →";
                     descLink.NavigateUri = new Uri("https://github.com/jlrouzies-fr/DLSS5-Feeder");
                     break;
                 case NrMethodUplift:
                     descText.Text = (is32Bit || isDx9 || card.GraphicsApi == GraphicsApiType.DirectX10 || card.GraphicsApi == GraphicsApiType.OpenGL
-                            ? "Note: its DLSS-based options need a 64-bit DX11, DX12 or Vulkan game; in this game only the rest of it works.\n"
+                            ? "참고: DLSS 기반 옵션은 64비트 DX11, DX12 또는 Vulkan 게임이 필요하므로, 이 게임에서는 나머지 기능만 작동합니다.\n"
                             : "")
-                        + "Neural Rendering through a ReShade addon, built for ease of use, stability and performance, and works with any game, no DLSS needed. It also works well for virtual photography. "
-                        + "Deploys the Uplift addon, its 64-bit helper, the NR DLL (in its GITC-Uplift folder) and its shaders. "
-                        + "In the game, open ReShade (Home), go to the GITC Uplift tab and tick Enable. "
-                        + "From Uplift 2.0, NR starts off every time the game starts (games with their own DLSS lose it when NR starts with them); "
-                        + "the NR on/off key in Settings › Components › GITC Uplift turns it on and off in game."
+                        + "ReShade 애드온을 통한 Neural Rendering으로, 사용 편의성·안정성·성능 중심으로 만들어졌으며 DLSS 없이 모든 게임에서 작동합니다. 가상 사진 촬영에도 잘 맞습니다. "
+                        + "Uplift 애드온, 64비트 도우미, NR DLL (GITC-Uplift 폴더 내), 셰이더를 배포합니다. "
+                        + "게임에서 ReShade(Home)를 열고 GITC Uplift 탭에서 Enable을 체크하세요. "
+                        + "Uplift 2.0부터는 게임을 시작할 때마다 NR이 꺼진 상태로 시작합니다 (자체 DLSS가 있는 게임은 NR이 함께 시작되면 DLSS를 잃습니다). "
+                        + "설정 › 구성 요소 › GITC Uplift의 NR 켜기/끄기 키로 게임 중에 켜고 끌 수 있습니다."
                         + (card.HasDlssUpscaler
-                            ? " This game has DLSS: Uplift uses DLSS's motion vectors only while the game renders with DLSS, so set its upscaler to DLSS, or turn on iMMERSE Launchpad below."
+                            ? " 이 게임에는 DLSS가 있습니다: Uplift는 게임이 DLSS로 렌더링할 때만 DLSS 모션 벡터를 사용하므로, 업스케일러를 DLSS로 설정하거나 아래의 iMMERSE Launchpad를 켜세요."
                             : "")
-                        + (isVulkan || card.GraphicsApi == GraphicsApiType.OpenGL ? " Vulkan and OpenGL need ReShade 6.8 or newer." : "");
-                    descLink.Content = "GITC Uplift guide →";
+                        + (isVulkan || card.GraphicsApi == GraphicsApiType.OpenGL ? " Vulkan과 OpenGL은 ReShade 6.8 이상이 필요합니다." : "");
+                    descLink.Content = "GITC Uplift 가이드 →";
                     descLink.NavigateUri = new Uri(UpliftService.ReleasesPage);
                     break;
             }
@@ -1145,10 +1145,10 @@ public partial class DetailPanelBuilder
             BorderBrush = UIFactory.Brush(ResourceKeys.AccentRedBrush),
             Content = new TextBlock { Text = "✕", FontSize = 12, HorizontalAlignment = HorizontalAlignment.Center, Foreground = UIFactory.Brush(ResourceKeys.AccentRedBrush) },
         };
-        ToolTipService.SetToolTip(removeBtn, "Remove the installed Neural Rendering method from this game.");
+        ToolTipService.SetToolTip(removeBtn, "이 게임에서 설치된 Neural Rendering 방식을 제거합니다.");
 
         // Cog button — always shown, opens method-specific settings
-        var sfCogBtn = CogDialog.MakeCogButton("ShortFuse DLSS Tool settings");
+        var sfCogBtn = CogDialog.MakeCogButton("ShortFuse DLSS Tool 설정");
         sfCogBtn.Height = 34; // matches the 34 px install and remove buttons in this row
         sfCogBtn.Visibility = effectiveMethod == NrMethodShortFuse ? Visibility.Visible : Visibility.Collapsed;
         sfCogBtn.Click += async (s, e) =>
@@ -1158,22 +1158,22 @@ public partial class DetailPanelBuilder
                 bool currentEnabled = _window.ViewModel.GetSfAutoConfigEnabled(gameName, store);
 
                 var cog = new CogDialog("ShortFuse DLSS Tool", _window.Content.XamlRoot);
-                cog.AddCombo("Auto-configure ReShade for FrameGen",
-                    "When On, installing ShortFuse DLSS Tool also sets ReShade up so FrameGen works correctly after ReShade. " +
-                    "Not needed on ShortFuse DLSS Tool v0.54 and above.",
-                    new[] { "Off", "On" }, currentEnabled ? 1 : 0, i =>
+                cog.AddCombo("FrameGen용 ReShade 자동 구성",
+                    "켜면 ShortFuse DLSS Tool 설치 시 ReShade 이후에 FrameGen이 올바르게 작동하도록 ReShade도 설정합니다. " +
+                    "ShortFuse DLSS Tool v0.54 이상에서는 필요 없습니다.",
+                    new[] { "꺼짐", "켜짐" }, currentEnabled ? 1 : 0, i =>
                     {
                         bool enabled = i == 1;
                         _window.ViewModel.SetSfAutoConfigEnabled(gameName, enabled, store);
                         CrashReporter.Log($"[DetailPanelBuilder.SfCog] Auto-configure ReShade for FrameGen = {enabled} for '{gameName}'");
                         cog.SetSuccess(enabled
-                            ? "Saved. Applies the next time ShortFuse DLSS Tool is installed or updated."
-                            : "Saved.");
+                            ? "저장했습니다. 다음에 ShortFuse DLSS Tool을 설치하거나 업데이트할 때 적용됩니다."
+                            : "저장했습니다.");
                     });
-                cog.AddNote("When On, installing ShortFuse DLSS Tool will:");
-                cog.AddNote("• Rename ReShade to Reshade64.asi");
-                cog.AddNote("• Install ASI Loader (winmm, then version, then dinput8)");
-                cog.AddNote("• Write HookStreamline=1 and HookDirectX=1 to reshade.ini");
+                cog.AddNote("켜면 ShortFuse DLSS Tool 설치 시 다음을 수행합니다:");
+                cog.AddNote("• ReShade 이름을 Reshade64.asi로 변경");
+                cog.AddNote("• ASI Loader 설치 (winmm, version, dinput8 순)");
+                cog.AddNote("• reshade.ini에 HookStreamline=1 및 HookDirectX=1 기록");
                 await cog.ShowAsync();
             }
             catch (Exception ex)
@@ -1203,21 +1203,21 @@ public partial class DetailPanelBuilder
             // Install button appearance
             if (isFeeder)
             {
-                installBtn.Content = "Install Feeder Addon";
+                installBtn.Content = "Feeder 애드온 설치";
                 installBtn.Background  = UIFactory.Brush(ResourceKeys.AccentBlueBgBrush);
                 installBtn.Foreground  = UIFactory.Brush(ResourceKeys.AccentBlueBrush);
                 installBtn.BorderBrush = UIFactory.Brush(ResourceKeys.AccentBlueBorderBrush);
             }
             else if (anyInstalled)
             {
-                installBtn.Content = "Reinstall";
+                installBtn.Content = "재설치";
                 installBtn.Background  = UIFactory.Brush(ResourceKeys.SurfaceOverlayBrush);
                 installBtn.Foreground  = UIFactory.Brush(ResourceKeys.TextSecondaryBrush);
                 installBtn.BorderBrush = UIFactory.Brush(ResourceKeys.BorderDefaultBrush);
             }
             else
             {
-                installBtn.Content = "Install Neural Rendering";
+                installBtn.Content = "Neural Rendering 설치";
                 installBtn.Background  = UIFactory.Brush(ResourceKeys.AccentBlueBgBrush);
                 installBtn.Foreground  = UIFactory.Brush(ResourceKeys.AccentBlueBrush);
                 installBtn.BorderBrush = UIFactory.Brush(ResourceKeys.AccentBlueBorderBrush);
@@ -1232,19 +1232,19 @@ public partial class DetailPanelBuilder
             // Pack version column (Feeder/Bridge only)
             bool showPackVersion = selKey == NrMethodFeeder || selKey == NrMethodDlss5ToolBridge;
             packVersionStack.Visibility = showPackVersion ? Visibility.Visible : Visibility.Collapsed;
-            packVersionLabel.Text = selKey == NrMethodFeeder ? "Feeder Version" : "Bridge Version";
+            packVersionLabel.Text = selKey == NrMethodFeeder ? "Feeder 버전" : "Bridge 버전";
             if (showPackVersion)
             {
                 PopulatePackVersionCombo(selKey);
                 ToolTipService.SetToolTip(packVersionStack,
                     selKey == NrMethodFeeder
-                        ? "Version of dlss5-feed.addon64 to install."
-                        : "Version of dlss5-bridge.addon64 to install.");
+                        ? "설치할 dlss5-feed.addon64 버전."
+                        : "설치할 dlss5-bridge.addon64 버전.");
             }
 
             // DLSS5 Tool / SF / Uplift version label
-            addonVersionLabel.Text = selKey == NrMethodShortFuse ? "SF Version"
-                                   : selKey == NrMethodUplift    ? "Uplift Version"
+            addonVersionLabel.Text = selKey == NrMethodShortFuse ? "SF 버전"
+                                   : selKey == NrMethodUplift    ? "Uplift 버전"
                                    : Dlss5VersionLabel(selKey);
             if (foveatedGroup != null)
                 foveatedGroup.Visibility = IsDlss5ToolMethod(selKey) ? Visibility.Visible : Visibility.Collapsed;
@@ -1255,12 +1255,12 @@ public partial class DetailPanelBuilder
             addonVersionStack.Opacity   = 1.0;
             addonVersionCombo.IsEnabled = true;
             ToolTipService.SetToolTip(addonVersionStack, selKey == NrMethodUplift
-                ? "GITC Uplift version. 'Latest' installs the newest and keeps it up to date; a picked version stays as it is. Changing while installed swaps it in place."
+                ? "GITC Uplift 버전. 'Latest'는 최신 버전을 설치하고 계속 최신 상태로 유지하며, 선택한 버전은 그대로 유지됩니다. 설치된 상태에서 변경하면 그 자리에서 교체합니다."
                 : selKey == NrMethodFeeder
-                ? "Version of renodx-dlss5.addon64 deployed as the neural consumer. Changing while installed swaps the file in-place."
+                ? "뉴럴 소비자로 배포되는 renodx-dlss5.addon64 버전. 설치된 상태에서 변경하면 파일을 그 자리에서 교체합니다."
                 : selKey == NrMethodShortFuse
-                    ? "ShortFuse DLSS Tool (SF) addon version. Changing while installed swaps the file in-place without a full reinstall."
-                    : "Addon version to install. Changing while installed swaps the file in-place without a full reinstall.");
+                    ? "ShortFuse DLSS Tool (SF) 애드온 버전. 설치된 상태에서 변경하면 전체 재설치 없이 파일을 그 자리에서 교체합니다."
+                    : "설치할 애드온 버전. 설치된 상태에서 변경하면 전체 재설치 없이 파일을 그 자리에서 교체합니다.");
 
             // Pack version combo — enabled always when visible (swap-in-place supported while installed)
             packVersionStack.Opacity   = showPackVersion ? 1.0 : 0.4;
@@ -1312,7 +1312,7 @@ public partial class DetailPanelBuilder
             methodCombo.IsEnabled  = false;
             installBtn.IsEnabled   = false;
             removeBtn.IsEnabled    = false;
-            installBtn.Content     = "Removing...";
+            installBtn.Content     = "제거 중...";
 
             try
             {
@@ -1419,7 +1419,7 @@ public partial class DetailPanelBuilder
         {
             installBtn.IsEnabled = false;
             removeBtn.IsEnabled  = false;
-            installBtn.Content   = "Installing...";
+            installBtn.Content   = "설치 중...";
 
             var selKey = (methodCombo.SelectedItem as ComboBoxItem)?.Tag as string ?? effectiveMethod;
 
@@ -1445,7 +1445,7 @@ public partial class DetailPanelBuilder
                 // Ensure ReShade is installed first — all NR methods require it
                 if (!card.IsRsInstalled)
                 {
-                    _window.DispatcherQueue?.TryEnqueue(() => installBtn.Content = "Installing ReShade...");
+                    _window.DispatcherQueue?.TryEnqueue(() => installBtn.Content = "ReShade 설치 중...");
 
                     // For DX9 Feeder: dgVoodoo2 will own d3d9.dll, so ReShade must be dxgi.dll.
                     // Call InstallReShadeInternalAsync directly with the forced filename instead of
@@ -1466,7 +1466,7 @@ public partial class DetailPanelBuilder
                     && card.RsRecord?.InstalledAs?.Equals("d3d9.dll", StringComparison.OrdinalIgnoreCase) == true)
                 {
                     // ReShade already installed as d3d9.dll (wrong for dgVoodoo) — reinstall as dxgi.dll
-                    _window.DispatcherQueue?.TryEnqueue(() => installBtn.Content = "Fixing ReShade filename...");
+                    _window.DispatcherQueue?.TryEnqueue(() => installBtn.Content = "ReShade 파일 이름 수정 중...");
                     await _window.ViewModel.InstallReShadeInternalAsync(card, "dxgi.dll").ConfigureAwait(false);
                     await Task.Delay(300).ConfigureAwait(false);
                 }
@@ -1542,7 +1542,7 @@ public partial class DetailPanelBuilder
             catch (Exception ex)
             {
                 CrashReporter.Log($"[NeuralRendering.Install] Failed for '{gameName}' — {ex.Message}");
-                _window.DispatcherQueue?.TryEnqueue(() => installBtn.Content = "Install failed");
+                _window.DispatcherQueue?.TryEnqueue(() => installBtn.Content = "설치 실패");
             }
             finally
             {
@@ -1740,38 +1740,38 @@ public partial class DetailPanelBuilder
         // The toggle is disabled in some states and WinUI shows no tooltip on disabled
         // controls, so the reason is appended to this visible label's tooltip.
         var costScalerLabelTip =
-            "When On, installing a Neural Rendering method will also deploy the DLSS NR Cost Scaler proxy. " +
-            "Runs the neural model at reduced resolution (default 75%) for significant GPU savings while keeping native detail.";
+            "켜면 Neural Rendering 방식을 설치할 때 DLSS NR Cost Scaler 프록시도 함께 배포합니다. " +
+            "뉴럴 모델을 낮은 해상도(기본값 75%)로 실행하여 네이티브 디테일을 유지하면서 GPU 부담을 크게 줄입니다.";
         if (!costScalerSvc.IsStagingReady)
-            costScalerLabelTip += "\n\nNot available yet: the Cost Scaler hasn't been downloaded. It will be available after the next launch.";
+            costScalerLabelTip += "\n\n아직 사용할 수 없음: Cost Scaler가 다운로드되지 않았습니다. 다음 실행 후 사용할 수 있습니다.";
         else if (nrMethodInstalled)
-            costScalerLabelTip += "\n\nLocked while a Neural Rendering method is installed. Remove it first, set Cost Scaler On, then install again.";
+            costScalerLabelTip += "\n\nNeural Rendering 방식이 설치된 동안에는 잠겨 있습니다. 먼저 제거하고 Cost Scaler를 켠 후 다시 설치하세요.";
         ToolTipService.SetToolTip(costScalerLabel, costScalerLabelTip);
         var costScalerToggle = new ToggleSwitch
         {
             IsOn = costScalerPref,
-            OnContent = "On", OffContent = "Off",
+            OnContent = "켜짐", OffContent = "꺼짐",
             VerticalAlignment = VerticalAlignment.Center,
             MinWidth = 0,
             IsEnabled = costScalerToggleEnabled,
             Opacity = costScalerToggleEnabled ? 1.0 : 0.45,
         };
         if (!costScalerSvc.IsStagingReady)
-            ToolTipService.SetToolTip(costScalerToggle, "Cost Scaler not yet staged — will be available after first launch");
+            ToolTipService.SetToolTip(costScalerToggle, "Cost Scaler가 아직 준비되지 않았습니다 — 첫 실행 후 사용할 수 있습니다");
         else if (nrMethodInstalled)
-            ToolTipService.SetToolTip(costScalerToggle, "Remove the installed NR method first, then toggle Cost Scaler On before reinstalling");
+            ToolTipService.SetToolTip(costScalerToggle, "먼저 설치된 NR 방식을 제거한 다음, 재설치 전에 Cost Scaler를 켜세요");
 
         // Installed indicator
         bool costScalerInstalled = DlssNrCostScalerService.IsInstalled(installPath);
         var costScalerStatus = new TextBlock
         {
-            Text = costScalerInstalled ? "Installed" : "",
+            Text = costScalerInstalled ? "설치됨" : "",
             FontSize = 11,
             Foreground = UIFactory.GetBrush("#5ECB7D"),
             VerticalAlignment = VerticalAlignment.Center,
         };
         if (costScalerInstalled)
-            ToolTipService.SetToolTip(costScalerStatus, "The NR Cost Scaler is in the game folder.");
+            ToolTipService.SetToolTip(costScalerStatus, "NR Cost Scaler가 게임 폴더에 있습니다.");
 
         // Toggle saves preference only — never installs or uninstalls
         costScalerToggle.Toggled += (s, ev) =>
@@ -1787,13 +1787,13 @@ public partial class DetailPanelBuilder
         // ── Foveated toggle (DLSS5 Tool / Bridge) — same row as Cost Scaler ──
         {
             const string foveatedTip =
-                "When On, the DLSS5 Tool uses FoveatedDLSS5 (by maximedgoulet) instead of the stock add-on. " +
-                "Neural Rendering runs at full resolution in the centre of the screen, at lower resolution around it, " +
-                "and is off at the edges, for a large performance gain (biggest on ultrawide screens).\n\n" +
-                "Pre-release. Based on an older DLSS5 Tool (7.5.0-rc5), so newer stock fixes may be missing. " +
-                "Works only when NR runs after upscaling. Turn on foveation and set the zones in the add-on's settings " +
-                "in the ReShade overlay (Add-ons > DLSS 5 Neural Rendering).\n\n" +
-                "Switching while installed swaps the add-on in place. The version list switches to Foveated releases.";
+                "켜면 DLSS5 Tool이 기본 애드온 대신 FoveatedDLSS5 (maximedgoulet 제작)를 사용합니다. " +
+                "Neural Rendering이 화면 중앙에서는 전체 해상도로, 주변에서는 낮은 해상도로 실행되고, " +
+                "가장자리에서는 꺼져 성능이 크게 향상됩니다 (울트라와이드 화면에서 가장 큼).\n\n" +
+                "사전 릴리스. 이전 DLSS5 Tool (7.5.0-rc5) 기반이라 최신 기본 버전의 수정 사항이 빠져 있을 수 있습니다. " +
+                "NR이 업스케일링 이후에 실행될 때만 작동합니다. ReShade 오버레이의 애드온 설정에서 " +
+                "(Add-ons > DLSS 5 Neural Rendering) Foveation을 켜고 영역을 설정하세요.\n\n" +
+                "설치된 상태에서 전환하면 애드온을 그 자리에서 교체합니다. 버전 목록은 Foveated 릴리스로 바뀝니다.";
             foveatedGroup = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 10 };
             foveatedGroup.Children.Add(new Border { Width = 1, Background = UIFactory.Brush(ResourceKeys.BorderDefaultBrush), VerticalAlignment = VerticalAlignment.Stretch, Margin = new Thickness(4, 0, 4, 0) });
             var foveatedLabel = new TextBlock
@@ -1808,7 +1808,7 @@ public partial class DetailPanelBuilder
             var foveatedToggle = new ToggleSwitch
             {
                 IsOn = foveatedOn,
-                OnContent = "On", OffContent = "Off",
+                OnContent = "켜짐", OffContent = "꺼짐",
                 VerticalAlignment = VerticalAlignment.Center,
                 MinWidth = 0,
             };
@@ -1837,7 +1837,7 @@ public partial class DetailPanelBuilder
                     addonSwapInProgress = true;
                     var prevContent = installBtn.Content;
                     installBtn.IsEnabled = false;
-                    installBtn.Content   = on ? "Switching to Foveated..." : "Switching to stock...";
+                    installBtn.Content   = on ? "Foveated로 전환 중..." : "기본 버전으로 전환 중...";
                     bool ok = false;
                     try
                     {
@@ -1851,7 +1851,7 @@ public partial class DetailPanelBuilder
                     {
                         addonSwapInProgress = false;
                         installBtn.IsEnabled = true;
-                        installBtn.Content   = ok ? prevContent : "Switch failed";
+                        installBtn.Content   = ok ? prevContent : "전환 실패";
                         RefreshStatus();
                     }
                 }
@@ -1872,11 +1872,11 @@ public partial class DetailPanelBuilder
         {
             bool launchpadPref = _window.ViewModel.GetUpliftLaunchpad(gameName, card.HasDlssUpscaler, store);
             const string launchpadTip =
-                "Gives GITC Uplift motion vectors from iMMERSE Launchpad (by Marty McFly), a ReShade effect. " +
-                "RHI installs Launchpad and turns it on above the Uplift effect.\n\n" +
-                "On by default in games without DLSS, which have no motion vectors of their own. " +
-                "Games with DLSS use the game's motion vectors; turn this on if those look wrong in a game. " +
-                "Launchpad costs some performance.";
+                "ReShade 효과인 iMMERSE Launchpad (Marty McFly 제작)의 모션 벡터를 GITC Uplift에 제공합니다. " +
+                "RHI가 Launchpad를 설치하고 Uplift 효과보다 위에서 켭니다.\n\n" +
+                "자체 모션 벡터가 없는 DLSS 미지원 게임에서는 기본적으로 켜집니다. " +
+                "DLSS가 있는 게임은 게임의 모션 벡터를 사용하며, 결과가 이상해 보이면 이 옵션을 켜세요. " +
+                "Launchpad는 성능을 다소 소모합니다.";
             launchpadRow = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 10, Margin = new Thickness(0, 4, 0, 0) };
             var launchpadLabel = new TextBlock
             {
@@ -1889,7 +1889,7 @@ public partial class DetailPanelBuilder
             var launchpadToggle = new ToggleSwitch
             {
                 IsOn = launchpadPref,
-                OnContent = "On", OffContent = "Off",
+                OnContent = "켜짐", OffContent = "꺼짐",
                 VerticalAlignment = VerticalAlignment.Center,
                 MinWidth = 0,
             };
@@ -1912,20 +1912,20 @@ public partial class DetailPanelBuilder
                 {
                     if (!await Task.Run(() => UpliftService.IsRhiInstalled(installPath))) return; // applied at install
                     launchpadToggle.IsEnabled = false;
-                    launchpadStatus.Text = on ? "Installing..." : "Removing...";
+                    launchpadStatus.Text = on ? "설치 중..." : "제거 중...";
                     if (on && !UpliftService.LaunchpadStaged)
                         await _shaderPackService.EnsurePacksAsync(new[] { UpliftService.LaunchpadPackId });
                     bool ok = (!on || UpliftService.LaunchpadStaged)
                               && await Task.Run(() => upliftSvc.SetLaunchpad(installPath, on));
                     if (ok) await _window.ViewModel.DeployShadersForCardAsync(gameName);
                     else CrashReporter.Log($"[NeuralRendering.LaunchpadToggle] Launchpad {(on ? "on" : "off")} failed for '{gameName}'");
-                    launchpadStatus.Text = ok ? "" : "Failed";
+                    launchpadStatus.Text = ok ? "" : "실패";
                     RefreshStatus();
                 }
                 catch (Exception ex)
                 {
                     CrashReporter.Log($"[NeuralRendering.LaunchpadToggle] Unhandled error — {ex.Message}");
-                    launchpadStatus.Text = "Failed";
+                    launchpadStatus.Text = "실패";
                 }
                 finally { launchpadToggle.IsEnabled = true; }
             };
@@ -1944,11 +1944,11 @@ public partial class DetailPanelBuilder
             bool sfZzzPref = _window.ViewModel.GetSfZzzMode(gameName, store);
             costScalerRow.Children.Add(new Border { Width = 1, Background = UIFactory.Brush(ResourceKeys.BorderDefaultBrush), VerticalAlignment = VerticalAlignment.Stretch, Margin = new Thickness(4, 0, 4, 0) });
             const string zzzTip =
-                "When On, the ShortFuse addon is deployed as zzz_renodx-dlss.addon64 so it loads last in the ReShade addon order. " +
-                "Required for some games where other addons must initialise before the DLSS Tool.";
+                "켜면 ShortFuse 애드온을 zzz_renodx-dlss.addon64로 배포하여 ReShade 애드온 순서에서 마지막에 로드되게 합니다. " +
+                "다른 애드온이 DLSS Tool보다 먼저 초기화되어야 하는 일부 게임에 필요합니다.";
             var zzzLabel = new TextBlock
             {
-                Text = "ZZZ Load Order",
+                Text = "ZZZ 로드 순서",
                 FontSize = 12,
                 Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
                 VerticalAlignment = VerticalAlignment.Center,
@@ -1958,7 +1958,7 @@ public partial class DetailPanelBuilder
             var zzzToggle = new ToggleSwitch
             {
                 IsOn = sfZzzPref,
-                OnContent = "On", OffContent = "Off",
+                OnContent = "켜짐", OffContent = "꺼짐",
                 VerticalAlignment = VerticalAlignment.Center,
                 MinWidth = 0,
             };
@@ -1991,7 +1991,7 @@ public partial class DetailPanelBuilder
 
             nrBody.Children.Add(new TextBlock
             {
-                Text = "Cost Scaler is built into the ShortFuse addon — this toggle is no longer required but remains available if you prefer the standalone version.",
+                Text = "Cost Scaler는 ShortFuse 애드온에 내장되어 있습니다 — 이 토글은 더 이상 필요하지 않지만, 독립 실행형 버전을 원하면 계속 사용할 수 있습니다.",
                 FontSize = 10,
                 Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush),
                 TextWrapping = TextWrapping.Wrap,

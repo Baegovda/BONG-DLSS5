@@ -25,27 +25,27 @@ public partial class SettingsHandler
 
         if (connected)
         {
-            var tier = isPremium ? "Premium" : "Free";
-            _window.NexusStatusText.Text = $"Connected as {username} ({tier})";
+            var tier = isPremium ? "프리미엄" : "무료";
+            _window.NexusStatusText.Text = $"{username}(으)로 연결됨 ({tier})";
             _window.NexusStatusText.Foreground = UIFactory.Brush(
                 isPremium ? ResourceKeys.AccentGreenBrush : ResourceKeys.TextSecondaryBrush);
             _window.NexusDisconnectRow.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
-            _window.NexusConnectBtn.Content = "Re-connect";
+            _window.NexusConnectBtn.Content = "다시 연결";
         }
         else
         {
-            _window.NexusStatusText.Text = "Not connected";
+            _window.NexusStatusText.Text = "연결 안 됨";
             _window.NexusStatusText.Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush);
             _window.NexusDisconnectRow.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-            _window.NexusConnectBtn.Content = "Connect";
+            _window.NexusConnectBtn.Content = "연결";
         }
 
         // NXM handler status
         bool nxmRegistered = NxmProtocolHandler.IsRegistered();
-        _window.NxmStatusText.Text = nxmRegistered ? "RHI is the active nxm:// handler" : "Not registered";
+        _window.NxmStatusText.Text = nxmRegistered ? "RHI가 활성 nxm:// 처리기입니다" : "등록 안 됨";
         _window.NxmStatusText.Foreground = UIFactory.Brush(
             nxmRegistered ? ResourceKeys.AccentGreenBrush : ResourceKeys.TextSecondaryBrush);
-        _window.NxmRegisterBtn.Content = nxmRegistered ? "Unregister" : "Register";
+        _window.NxmRegisterBtn.Content = nxmRegistered ? "등록 해제" : "등록";
     }
 
     public async void NexusConnectBtn_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -56,7 +56,7 @@ public partial class SettingsHandler
             var nexusSso = App.Services.GetRequiredService<NexusSsoService>();
 
             _window.NexusConnectBtn.IsEnabled = false;
-            _window.NexusStatusText.Text = "Opening browser for authorisation...";
+            _window.NexusStatusText.Text = "인증을 위해 브라우저를 여는 중...";
             _window.NexusStatusText.Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush);
 
             using var cts = new System.Threading.CancellationTokenSource(TimeSpan.FromSeconds(120));
@@ -69,7 +69,7 @@ public partial class SettingsHandler
                 catch (Exception ex) { CrashReporter.Log($"[SettingsHandler.NexusConnectBtn_Click] Failed to open browser — {ex.Message}"); }
 
                 _window.DispatcherQueue?.TryEnqueue(() =>
-                    _window.NexusStatusText.Text = "Waiting for authorisation in browser...");
+                    _window.NexusStatusText.Text = "브라우저에서 인증을 기다리는 중...");
             };
 
             try
@@ -94,14 +94,14 @@ public partial class SettingsHandler
 
                     if (string.IsNullOrEmpty(receivedKey))
                     {
-                        _window.NexusStatusText.Text = "Authorisation timed out or was cancelled.";
+                        _window.NexusStatusText.Text = "인증 시간이 초과되었거나 취소되었습니다.";
                         _window.NexusStatusText.Foreground = UIFactory.Brush(ResourceKeys.AccentRedBrush);
                         return;
                     }
 
                     if (info == null)
                     {
-                        _window.NexusStatusText.Text = "Received key was invalid. Please try again.";
+                        _window.NexusStatusText.Text = "받은 키가 올바르지 않습니다. 다시 시도하세요.";
                         _window.NexusStatusText.Foreground = UIFactory.Brush(ResourceKeys.AccentRedBrush);
                         return;
                     }
@@ -150,10 +150,10 @@ public partial class SettingsHandler
                 {
                     var result = await DialogService.ShowSafeAsync(new ContentDialog
                     {
-                        Title = "NXM Protocol Handler",
-                        Content = "Another application (e.g. Vortex or MO2) is already registered as the nxm:// handler. Registering RHI will replace it. Continue?",
-                        PrimaryButtonText = "Register RHI",
-                        CloseButtonText = "Cancel",
+                        Title = "NXM 프로토콜 처리기",
+                        Content = "다른 애플리케이션(예: Vortex 또는 MO2)이 이미 nxm:// 처리기로 등록되어 있습니다. RHI를 등록하면 대체됩니다. 계속하시겠습니까?",
+                        PrimaryButtonText = "RHI 등록",
+                        CloseButtonText = "취소",
                         XamlRoot = _window.Content.XamlRoot,
                         RequestedTheme = Microsoft.UI.Xaml.ElementTheme.Dark,
                     });
@@ -169,8 +169,8 @@ public partial class SettingsHandler
                 {
                     await DialogService.ShowSafeAsync(new ContentDialog
                     {
-                        Title = "NXM Registration Failed",
-                        Content = $"Could not register the nxm:// handler: {ex.Message}",
+                        Title = "NXM 등록 실패",
+                        Content = $"nxm:// 처리기를 등록할 수 없습니다: {ex.Message}",
                         CloseButtonText = "OK",
                         XamlRoot = _window.Content.XamlRoot,
                         RequestedTheme = Microsoft.UI.Xaml.ElementTheme.Dark,
@@ -211,7 +211,7 @@ public partial class SettingsHandler
         // Update the PAT status text to show file state
         if (hasPat)
         {
-            _window.GitHubPatStatusText.Text = "PAT file active — 5,000 req/hr (persists across restarts)";
+            _window.GitHubPatStatusText.Text = "PAT 파일 사용 중 — 시간당 5,000회 요청 (다시 시작해도 유지)";
             _window.GitHubPatStatusText.Foreground = UIFactory.Brush(ResourceKeys.AccentGreenBrush);
             _window.GitHubPatStatusText.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
         }
@@ -223,7 +223,7 @@ public partial class SettingsHandler
 
         if (App._gitHubTokenExpiredOnStartup)
         {
-            _window.GitHubStatusText.Text       = "GitHub sign-in expired. Add a token below to restore the 5,000 req/hr limit.";
+            _window.GitHubStatusText.Text       = "GitHub 로그인이 만료되었습니다. 시간당 5,000회 요청 한도를 복원하려면 아래에 토큰을 추가하세요.";
             _window.GitHubStatusText.Foreground = UIFactory.Brush(ResourceKeys.AccentAmberDimBrush);
             _window.GitHubDisconnectRow.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
         }
@@ -231,13 +231,13 @@ public partial class SettingsHandler
         {
             var display = string.IsNullOrEmpty(username) ? "GitHub" : $"@{username}";
             // Sign-in was removed; existing sessions keep working until signed out
-            _window.GitHubStatusText.Text       = $"Signed in as {display} · 5,000 req/hr. Sign-in is no longer offered: sign out and add a token instead.";
+            _window.GitHubStatusText.Text       = $"{display}(으)로 로그인됨 · 시간당 5,000회 요청. 로그인은 더 이상 제공되지 않으니 로그아웃하고 대신 토큰을 추가하세요.";
             _window.GitHubStatusText.Foreground = UIFactory.Brush(ResourceKeys.AccentGreenBrush);
             _window.GitHubDisconnectRow.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
         }
         else
         {
-            _window.GitHubStatusText.Text       = hasPat ? "Using PAT · 5,000 req/hr" : "Not connected · 60 req/hr";
+            _window.GitHubStatusText.Text       = hasPat ? "PAT 사용 중 · 시간당 5,000회 요청" : "연결 안 됨 · 시간당 60회 요청";
             _window.GitHubStatusText.Foreground = hasPat ? UIFactory.Brush(ResourceKeys.AccentGreenBrush) : UIFactory.Brush(ResourceKeys.TextTertiaryBrush);
             _window.GitHubDisconnectRow.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
         }
@@ -268,7 +268,7 @@ public partial class SettingsHandler
             var pat = _window.GitHubPatBox.Text?.Trim() ?? "";
             if (string.IsNullOrEmpty(pat))
             {
-                _window.GitHubPatStatusText.Text = "Please enter a token first.";
+                _window.GitHubPatStatusText.Text = "먼저 토큰을 입력하세요.";
                 _window.GitHubPatStatusText.Foreground = UIFactory.Brush(ResourceKeys.AccentRedBrush);
                 _window.GitHubPatStatusText.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
                 return;
@@ -278,13 +278,13 @@ public partial class SettingsHandler
             if (!pat.StartsWith("ghp_", StringComparison.OrdinalIgnoreCase) &&
                 !pat.StartsWith("github_pat_", StringComparison.OrdinalIgnoreCase))
             {
-                _window.GitHubPatStatusText.Text = "Token should start with ghp_ or github_pat_";
+                _window.GitHubPatStatusText.Text = "토큰은 ghp_ 또는 github_pat_로 시작해야 합니다";
                 _window.GitHubPatStatusText.Foreground = UIFactory.Brush(ResourceKeys.AccentAmberDimBrush);
                 _window.GitHubPatStatusText.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
             }
 
             _window.GitHubPatSaveBtn.IsEnabled = false;
-            _window.GitHubPatSaveBtn.Content = "Validating...";
+            _window.GitHubPatSaveBtn.Content = "확인 중...";
 
             // Validate the token
             bool valid = false;
@@ -309,11 +309,11 @@ public partial class SettingsHandler
             catch { valid = false; }
 
             _window.GitHubPatSaveBtn.IsEnabled = true;
-            _window.GitHubPatSaveBtn.Content = "Save";
+            _window.GitHubPatSaveBtn.Content = "저장";
 
             if (!valid)
             {
-                _window.GitHubPatStatusText.Text = "Token validation failed — check the token and try again.";
+                _window.GitHubPatStatusText.Text = "토큰 확인 실패 — 토큰을 확인하고 다시 시도하세요.";
                 _window.GitHubPatStatusText.Foreground = UIFactory.Brush(ResourceKeys.AccentRedBrush);
                 _window.GitHubPatStatusText.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
                 return;
@@ -330,7 +330,7 @@ public partial class SettingsHandler
             }
             catch (Exception ex)
             {
-                _window.GitHubPatStatusText.Text = $"Failed to save: {ex.Message}";
+                _window.GitHubPatStatusText.Text = $"저장 실패: {ex.Message}";
                 _window.GitHubPatStatusText.Foreground = UIFactory.Brush(ResourceKeys.AccentRedBrush);
                 _window.GitHubPatStatusText.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
                 return;
@@ -345,8 +345,8 @@ public partial class SettingsHandler
 
             _window.GitHubPatBox.Text = "";
             _window.GitHubPatStatusText.Text = username != null
-                ? $"PAT saved — authenticated as @{username}"
-                : "PAT saved and applied.";
+                ? $"PAT 저장됨 — @{username}(으)로 인증됨"
+                : "PAT를 저장하고 적용했습니다.";
             _window.GitHubPatStatusText.Foreground = UIFactory.Brush(ResourceKeys.AccentGreenBrush);
             _window.GitHubPatStatusText.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
 
@@ -370,7 +370,7 @@ public partial class SettingsHandler
         }
         catch (Exception ex)
         {
-            _window.GitHubPatStatusText.Text = $"Failed to clear: {ex.Message}";
+            _window.GitHubPatStatusText.Text = $"지우기 실패: {ex.Message}";
             _window.GitHubPatStatusText.Foreground = UIFactory.Brush(ResourceKeys.AccentRedBrush);
             _window.GitHubPatStatusText.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
             return;
@@ -384,7 +384,7 @@ public partial class SettingsHandler
         ViewModel.RestartPeriodicUpdateCheckTimer(); // checks every hour with a token, 4 h without
 
         _window.GitHubPatBox.Text = "";
-        _window.GitHubPatStatusText.Text = "PAT cleared.";
+        _window.GitHubPatStatusText.Text = "PAT를 지웠습니다.";
         _window.GitHubPatStatusText.Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush);
         _window.GitHubPatStatusText.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
 

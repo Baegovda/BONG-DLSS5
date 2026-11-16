@@ -310,7 +310,7 @@ public partial class DetailPanelBuilder
             fgCol.Children.Add(new TextBlock { Text = " ", FontSize = 10, Margin = new Thickness(0, 2, 0, 0) });
             var mfgBtn = new Button
             {
-                Content = "Multi Frame Gen",
+                Content = "멀티 프레임 생성",
                 FontSize = 11,
                 Height = 32,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -322,14 +322,14 @@ public partial class DetailPanelBuilder
                 IsEnabled = fgEnabled && presetService.IsSupported,
                 Opacity = (fgEnabled && presetService.IsSupported) ? 1.0 : 0.4,
             };
-            ToolTipService.SetToolTip(mfgBtn, "Configure NVIDIA Multi Frame Generation: mode, frame count multiplier, and dynamic target frame rate. Requires 50 Series GPU.");
+            ToolTipService.SetToolTip(mfgBtn, "NVIDIA 멀티 프레임 생성을 구성합니다: 모드, 프레임 수 배수, 동적 목표 프레임 레이트. 50 시리즈 GPU가 필요합니다.");
             // Disabled buttons show no tooltip — when FG is present but NVAPI isn't available,
             // explain on the "Frame Generation" column label instead (a missing FG DLL is
             // already explained there by BuildDlssColumn).
             if (fgEnabled && !presetService.IsSupported
                 && fgCol.Children.Count > 0 && fgCol.Children[0] is TextBlock fgLabel)
                 ToolTipService.SetToolTip(fgLabel,
-                    "Multi Frame Gen needs access to NVIDIA driver settings, which isn't available on this PC.");
+                    "멀티 프레임 생성은 NVIDIA 드라이버 설정에 접근해야 하지만 이 PC에서는 사용할 수 없습니다.");
             mfgBtn.Click += async (s, ev) =>
             {
                 var xamlRoot = (s as FrameworkElement)?.XamlRoot ?? _window.Content.XamlRoot;
@@ -466,7 +466,7 @@ public partial class DetailPanelBuilder
             bool restoreEnabled = card.HasAnyDlssBackup || hasNonDefaultPreset;
             var dlssRestoreBtn = new Button
             {
-                Content = "Restore DLSS/SL",
+                Content = "DLSS/SL 복원",
                 FontSize = 11,
                 Height = 32,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -529,7 +529,7 @@ public partial class DetailPanelBuilder
 
             var applyBtn = new Button
             {
-                Content = "Quick Apply",
+                Content = "빠른 적용",
                 FontSize = 11,
                 Height = 32,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -540,7 +540,7 @@ public partial class DetailPanelBuilder
                 CornerRadius = new CornerRadius(8),
                 IsEnabled = hasDefaults && card.HasAnyDlssStreamline,
             };
-            ToolTipService.SetToolTip(applyBtn, "Apply your configured DLSS/Streamline default versions, presets, and render scales to this game. Downloads versions on-demand if not cached.");
+            ToolTipService.SetToolTip(applyBtn, "설정한 DLSS/Streamline 기본 버전, 프리셋, 렌더 배율을 이 게임에 적용합니다. 캐시에 없는 버전은 필요할 때 다운로드합니다.");
             applyBtn.Click += async (s, ev) =>
             {
                 var targetCard = _window.ViewModel.AllCards.FirstOrDefault(c =>
@@ -660,12 +660,12 @@ public partial class DetailPanelBuilder
             var applyWrap = new Border { Background = UIFactory.GetBrush("transparent"), Child = applyBtn };
             if (!applyBtn.IsEnabled)
                 ToolTipService.SetToolTip(applyWrap, !hasDefaults
-                    ? "Set DLSS defaults in Settings › DLSS / Streamline to use Quick Apply."
-                    : "This game has no DLSS or Streamline DLLs to apply defaults to.");
+                    ? "빠른 적용을 사용하려면 설정 › DLSS / Streamline에서 DLSS 기본값을 지정하세요."
+                    : "이 게임에는 기본값을 적용할 DLSS 또는 Streamline DLL이 없습니다.");
             var restoreWrap = new Border { Background = UIFactory.GetBrush("transparent"), Child = dlssRestoreBtn };
             if (!dlssRestoreBtn.IsEnabled)
                 ToolTipService.SetToolTip(restoreWrap,
-                    "Nothing to restore: no DLLs have been swapped and no presets or overrides are set for this game.");
+                    "복원할 항목이 없습니다: 이 게임에서 교체된 DLL이 없고 설정된 프리셋이나 재정의도 없습니다.");
             slCol.Children.Add(applyWrap);
             slCol.Children.Add(new TextBlock { Text = " ", FontSize = 10, Margin = new Thickness(0, 2, 0, 0) });
             slCol.Children.Add(restoreWrap);
@@ -682,7 +682,7 @@ public partial class DetailPanelBuilder
                         child.Opacity = 0.4;
                 }
             }
-            ToolTipService.SetToolTip(dlssRestoreBtn, "Restore all DLSS and Streamline DLLs to their original game versions and reset presets to Default.");
+            ToolTipService.SetToolTip(dlssRestoreBtn, "모든 DLSS 및 Streamline DLL을 게임의 원래 버전으로 복원하고 프리셋을 기본값으로 초기화합니다.");
 
             Grid.SetColumn(slCol, slColumn);
             dlssRowGrid.Children.Add(slCol);
@@ -748,11 +748,11 @@ public partial class DetailPanelBuilder
             if (card.HasStreamline)
                 nvSummaryEntries.Add(("SL", card.StreamlineInstalledVersion));
 
-            var nvSummaryTip = "SR = Super Resolution, RR = Ray Reconstruction, FG = Frame Generation, "
+            var nvSummaryTip = "SR = 슈퍼 해상도, RR = 레이 재구성, FG = 프레임 생성, "
                 + (FeatureFlags.DlssNr && card.HasDlssnr ? "NR = Neural Rendering, " : "")
-                + "SL = Streamline.\nEach shows DLL version · preset · render scale.";
+                + "SL = Streamline.\n각 항목은 DLL 버전 · 프리셋 · 렌더 배율을 표시합니다.";
             if (nvSummaryEntries.Any(e => e.Item2 == "NV Override"))
-                nvSummaryTip += "\nNV Override = the NVIDIA driver supplies the DLL.";
+                nvSummaryTip += "\nNV Override = NVIDIA 드라이버가 DLL을 제공합니다.";
             var nvSummaryTb = DetailPanelBuilder.MakeSectionSummaryInlines(nvSummaryEntries, nvSummaryTip);
             if (nvSummaryTb != null)
             {

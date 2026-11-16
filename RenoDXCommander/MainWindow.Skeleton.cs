@@ -276,7 +276,7 @@ public sealed partial class MainWindow
         // "Components" header text (real TextBlock, not skeleton — matches real layout)
         tableContent.Children.Add(new TextBlock
         {
-            Text = "Components",
+            Text = "구성 요소",
             FontSize = 13,
             FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
             Foreground = UIFactory.ThemedBrush(ColorHelper.FromArgb(0xFF, 0xE8, 0xEC, 0xF2)),
@@ -335,7 +335,7 @@ public sealed partial class MainWindow
         // "── Frame limiters — Choose one ──" separator
         tableContent.Children.Add(new TextBlock
         {
-            Text = "——  Frame limiters — Choose one  ——",
+            Text = "——  프레임 제한기 — 하나만 선택  ——",
             FontSize = 10,
             Foreground = UIFactory.ThemedBrush(ColorHelper.FromArgb(0xFF, 0x5A, 0x68, 0x80)),
             HorizontalAlignment = HorizontalAlignment.Center,
@@ -394,7 +394,7 @@ public sealed partial class MainWindow
         // "── Optional ──" separator (matches real detail panel separator above OptiScaler)
         tableContent.Children.Add(new TextBlock
         {
-            Text = "── Optional ──",
+            Text = "── 선택 사항 ──",
             FontSize = 10,
             Foreground = UIFactory.ThemedBrush(ColorHelper.FromArgb(0xFF, 0x5A, 0x68, 0x80)),
             HorizontalAlignment = HorizontalAlignment.Center,
@@ -481,7 +481,7 @@ public sealed partial class MainWindow
         // "Overrides" header text
         overridesContent.Children.Add(new TextBlock
         {
-            Text = "Overrides",
+            Text = "재정의",
             FontSize = 13,
             FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
             Foreground = UIFactory.ThemedBrush(ColorHelper.FromArgb(0xFF, 0xE8, 0xEC, 0xF2)),
@@ -593,7 +593,7 @@ public sealed partial class MainWindow
         // "Manage" header text
         manageContent.Children.Add(new TextBlock
         {
-            Text = "Manage",
+            Text = "관리",
             FontSize = 13,
             FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
             Foreground = UIFactory.ThemedBrush(ColorHelper.FromArgb(0xFF, 0xE8, 0xEC, 0xF2)),

@@ -254,7 +254,7 @@ public sealed partial class MainWindow
             catch (Exception ex)
             {
                 CrashReporter.Log($"[MainWindow.OsComboCell] '{label}' change failed — {ex.Message}");
-                cog.SetError($"Couldn't change {label}: {ex.Message}");
+                cog.SetError($"{label}을(를) 변경할 수 없습니다: {ex.Message}");
                 keep = false;
             }
             if (keep) { last = combo.SelectedIndex; return; }
@@ -357,11 +357,11 @@ public sealed partial class MainWindow
             var ctx = new OsCogContext(card, cog, sender, e);
 
             // Intro and warning stay readable when OptiScaler isn't installed on this game.
-            ctx.Ungated.Add(cog.AddIntro("Settings are written to this game's OptiScaler.ini as soon as you change them. Hover a setting for an explanation."));
+            ctx.Ungated.Add(cog.AddIntro("설정을 변경하면 즉시 이 게임의 OptiScaler.ini에 기록됩니다. 설정 위에 마우스를 올리면 설명이 표시됩니다."));
             if (!isInstalled)
                 ctx.Ungated.Add(cog.AddWarning(isNightly
-                    ? "Install OptiScaler on this game to change these settings. The version and nightly build can be chosen before installing."
-                    : "Install OptiScaler on this game to change these settings. The version can be chosen before installing."));
+                    ? "이 설정을 변경하려면 이 게임에 OptiScaler를 설치하세요. 버전과 나이틀리 빌드는 설치 전에 선택할 수 있습니다."
+                    : "이 설정을 변경하려면 이 게임에 OptiScaler를 설치하세요. 버전은 설치 전에 선택할 수 있습니다."));
 
             // ── Installed vs latest, Check now, Update (issue #163) ──────────
             cog.AddContent(BuildOsVersionLine(ctx, variant, isInstalled));
@@ -377,10 +377,10 @@ public sealed partial class MainWindow
             var variantDisplay = OsVariants.Label(variant);
             var variantCombo = CogDialog.MakeCombo(variantItems, OsIndexOf(variantItems, variantDisplay));
             ctx.VariantCombo = variantCombo;
-            var variantCell = new OsCell("OptiScaler Version",
-                "Stable is the official release. Nightly is the daily build. DLSS NR is a fork with multi-pass Neural Rendering support. " +
-                "F5 DLSSNR is the F5 multi-pass NR fork with a bundled forwarder. Custom builds are the ones you've added in Settings › Components › OptiScaler. " +
-                "Changing it uninstalls OptiScaler from this game; install it again afterwards.",
+            var variantCell = new OsCell("OptiScaler 버전",
+                "안정은 공식 릴리스, 나이틀리는 매일 빌드입니다. DLSS NR은 멀티 패스 Neural Rendering을 지원하는 포크입니다. " +
+                "F5 DLSSNR은 포워더가 포함된 F5 멀티 패스 NR 포크입니다. 사용자 지정 빌드는 설정 › 구성 요소 › OptiScaler에서 추가한 빌드입니다. " +
+                "변경하면 이 게임에서 OptiScaler가 제거되므로 이후 다시 설치하세요.",
                 variantCombo, Ungated: true);
             variantCombo.SelectionChanged += (s, ev) =>
             {
@@ -400,8 +400,8 @@ public sealed partial class MainWindow
 
             // ── Framerate limit ──────────────────────────────────────────────
             var fpsLabels = new[] { "Off" }.Concat(OsVrrPresets.Select(p => p.Label)).ToArray();
-            var fpsCell = OsComboCell(cog, "Framerate Limit",
-                "Caps the frame rate, using Reflex where possible. Each value sits a few fps under a common refresh rate for VRR. Off removes the cap.",
+            var fpsCell = OsComboCell(cog, "프레임 속도 제한",
+                "가능하면 Reflex를 사용해 프레임 속도를 제한합니다. 각 값은 VRR을 위해 일반적인 주사율보다 몇 fps 낮게 설정되어 있습니다. Off는 제한을 해제합니다.",
                 fpsLabels, OsIndexOf(fpsLabels, ReadOsFramerateLabel(card.InstallPath)),
                 i =>
                 {
@@ -421,9 +421,9 @@ public sealed partial class MainWindow
             // ── DXGI spoofing — [Spoofing] Dxgi ──────────────────────────────
             var dxgiItems = new[] { "Auto (Default)", "True", "False" };
             var dxgiCurrent = ReadOsIniSectionValue(card.InstallPath, "Spoofing", "Dxgi", "auto");
-            var dxgiCell = OsComboCell(cog, "DXGI Spoofing",
-                "Makes the game see an NVIDIA GPU (Dxgi in [Spoofing]) so it offers DLSS options. Auto turns it on for AMD and Intel GPUs and off for NVIDIA. " +
-                "Set it to False if a game crashes or behaves oddly with spoofing on.",
+            var dxgiCell = OsComboCell(cog, "DXGI 스푸핑",
+                "게임이 NVIDIA GPU로 인식하게 하여([Spoofing]의 Dxgi) DLSS 옵션을 제공하도록 합니다. Auto는 AMD와 Intel GPU에서는 켜고 NVIDIA에서는 끕니다. " +
+                "스푸핑을 켠 상태에서 게임이 충돌하거나 이상하게 동작하면 False로 설정하세요.",
                 dxgiItems, dxgiCurrent.ToLowerInvariant() switch { "true" => 1, "false" => 2, _ => 0 },
                 i =>
                 {
@@ -461,10 +461,10 @@ public sealed partial class MainWindow
             }
             RefreshUpscalerCombo(apiDefault);
 
-            var apiCell = new OsCell("Upscaler API",
-                "Which graphics API the Upscaler setting applies to. Starts on the API detected for this game.", apiCombo);
-            var upscalerCell = new OsCell("Upscaler",
-                "Upscaler OptiScaler uses for the selected API. Auto lets OptiScaler choose based on your GPU.", apiUpscalerCombo);
+            var apiCell = new OsCell("업스케일러 API",
+                "업스케일러 설정이 적용될 그래픽 API입니다. 이 게임에서 감지된 API로 시작합니다.", apiCombo);
+            var upscalerCell = new OsCell("업스케일러",
+                "선택한 API에서 OptiScaler가 사용할 업스케일러입니다. Auto는 GPU에 따라 OptiScaler가 선택합니다.", apiUpscalerCombo);
 
             // Nightly: version and build share a row (both usable before installing), framerate limit goes last.
             if (isNightly)
@@ -487,7 +487,7 @@ public sealed partial class MainWindow
                 catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
                 {
                     CrashReporter.Log($"[OsCog] Upscaler write failed — {ex.Message}");
-                    cog.SetError($"Couldn't save Upscaler: {ex.Message}");
+                    cog.SetError($"업스케일러를 저장할 수 없습니다: {ex.Message}");
                 }
             };
 
@@ -562,9 +562,9 @@ public sealed partial class MainWindow
         var buildCombo = CogDialog.MakeCombo(buildItems, OsIndexOf(buildItems, selectedBuildItem, 0), isEnabled: !isInstalled);
         buildCombo.Opacity = isInstalled ? CogDialog.DisabledOpacity : 1.0;
 
-        var cell = new OsCell("Nightly Build", isInstalled
-            ? "Uninstall OptiScaler first to change the build."
-            : "Pin a specific nightly build. Pinned games are skipped by auto-update. Latest always uses the newest build.",
+        var cell = new OsCell("나이틀리 빌드", isInstalled
+            ? "빌드를 변경하려면 먼저 OptiScaler를 제거하세요."
+            : "특정 나이틀리 빌드를 고정합니다. 고정된 게임은 자동 업데이트에서 제외됩니다. Latest는 항상 최신 빌드를 사용합니다.",
             buildCombo, Ungated: true);
 
         buildCombo.SelectionChanged += async (s, ev) =>
@@ -592,7 +592,7 @@ public sealed partial class MainWindow
             catch (Exception ex)
             {
                 CrashReporter.Log($"[OsCog] Nightly build pin failed — {ex.Message}");
-                ctx.Cog.SetError($"Couldn't pin the nightly build: {ex.Message}");
+                ctx.Cog.SetError($"나이틀리 빌드를 고정할 수 없습니다: {ex.Message}");
             }
         };
         return cell;

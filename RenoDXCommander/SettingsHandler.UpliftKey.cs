@@ -15,12 +15,12 @@ public partial class SettingsHandler
     private bool _upliftKeyRowFailed;
 
     private const string UpliftKeyTip =
-        "GITC Uplift's key for turning NR on and off in game (Enable hotkey in Uplift's panel). "
-        + "Click the box and press a key; Backspace or the ↺ button sets it back to None.\n\n"
-        + "RHI writes it into a game's reshade.ini when it installs Uplift there. None leaves the key each game already has.";
+        "게임 중 NR을 켜고 끄는 GITC Uplift 키입니다(Uplift 패널의 Enable hotkey). "
+        + "상자를 클릭하고 키를 누르세요. Backspace 또는 ↺ 버튼을 누르면 없음으로 되돌아갑니다.\n\n"
+        + "RHI는 게임에 Uplift를 설치할 때 해당 게임의 reshade.ini에 이 키를 기록합니다. 없음은 각 게임의 기존 키를 그대로 둡니다.";
 
     private static string UpliftKeyText(int vk) =>
-        vk <= 0 ? "None" : HotkeyManager.FormatHotkeyDisplay($"{vk},0,0,0");
+        vk <= 0 ? "없음" : HotkeyManager.FormatHotkeyDisplay($"{vk},0,0,0");
 
     private void EnsureUpliftKeySetting()
     {
@@ -53,7 +53,7 @@ public partial class SettingsHandler
             var row = new Grid { ColumnSpacing = 10, MaxWidth = 470, HorizontalAlignment = HorizontalAlignment.Left };
             row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star), MaxWidth = 210 });
-            var label = new TextBlock { Text = "NR on/off key", Style = FindStyle("SettingsLabelStyle"), VerticalAlignment = VerticalAlignment.Center };
+            var label = new TextBlock { Text = "NR 켜기/끄기 키", Style = FindStyle("SettingsLabelStyle"), VerticalAlignment = VerticalAlignment.Center };
             ToolTipService.SetToolTip(label, UpliftKeyTip);
             row.Children.Add(label);
 
@@ -64,7 +64,7 @@ public partial class SettingsHandler
             {
                 Style = FindStyle("SettingsTextBoxStyle"),
                 IsReadOnly = true,
-                PlaceholderText = "Press a key...",
+                PlaceholderText = "키를 누르세요...",
                 FontFamily = new Microsoft.UI.Xaml.Media.FontFamily("Consolas"),
                 Text = UpliftKeyText(ViewModel.Settings.UpliftEnableKey),
             };
@@ -89,7 +89,7 @@ public partial class SettingsHandler
             inner.Children.Add(box);
 
             var clear = new Button { Content = "↺", Style = FindStyle("SettingsIconButtonStyle"), Foreground = UIFactory.Brush(ResourceKeys.SettingsLabelBrush) };
-            ToolTipService.SetToolTip(clear, "None (leave each game's own Uplift key alone)");
+            ToolTipService.SetToolTip(clear, "없음 (각 게임의 기존 Uplift 키 유지)");
             clear.Click += (s, e) => SetUpliftKey(box, 0);
             Grid.SetColumn(clear, 1);
             inner.Children.Add(clear);
@@ -97,9 +97,9 @@ public partial class SettingsHandler
             row.Children.Add(inner);
             body.Children.Add(row);
 
-            var write = MakeCustomFoldersButton("Write key to all Uplift games", primary: true,
-                "Writes the key into the reshade.ini of every game with GITC Uplift installed by RHI. "
-                + "Skips hidden games and games set to keep their own reshade.ini.");
+            var write = MakeCustomFoldersButton("모든 Uplift 게임에 키 기록", primary: true,
+                "RHI로 GITC Uplift가 설치된 모든 게임의 reshade.ini에 키를 기록합니다. "
+                + "숨긴 게임과 자체 reshade.ini를 유지하도록 설정된 게임은 건너뜁니다.");
             write.HorizontalAlignment = HorizontalAlignment.Left;
             write.Click += async (s, e) =>
             {
@@ -133,7 +133,7 @@ public partial class SettingsHandler
         int vk = ViewModel.Settings.UpliftEnableKey;
         string message;
         if (vk <= 0)
-            message = "Pick a key first. None leaves each game's own Uplift key alone.";
+            message = "먼저 키를 선택하세요. 없음은 각 게임의 기존 Uplift 키를 그대로 둡니다.";
         else
         {
             var games = ViewModel.AllCards
@@ -146,13 +146,13 @@ public partial class SettingsHandler
                 UpliftService.IsRhiInstalled(path)
                 && UpliftService.ApplyEnableKey(Path.Combine(path, "reshade.ini"), vk)));
             CrashReporter.Log($"[SettingsHandler.WriteUpliftKeyToAll] Key {vk} written to {count} game(s)");
-            message = $"Uplift key set to {UpliftKeyText(vk)} in {count} game{(count == 1 ? "" : "s")}.";
+            message = $"게임 {count}개에서 Uplift 키를 {UpliftKeyText(vk)}(으)로 설정했습니다.";
         }
         await DialogService.ShowSafeAsync(new ContentDialog
         {
             Title = "GITC Uplift",
             Content = message,
-            CloseButtonText = "OK",
+            CloseButtonText = "확인",
             XamlRoot = _window.Content.XamlRoot,
             RequestedTheme = ElementTheme.Dark,
         });

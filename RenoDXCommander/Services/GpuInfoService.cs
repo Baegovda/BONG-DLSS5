@@ -72,8 +72,8 @@ public static class GpuInfoService
         GpuFamily.Rtx30 => "RTX 30",
         GpuFamily.Rtx40 => "RTX 40",
         GpuFamily.Rtx50 => "RTX 50",
-        GpuFamily.Newer => "newer than RTX 50",
-        _ => "not RTX",
+        GpuFamily.Newer => "RTX 50 이후",
+        _ => "RTX 아님",
     };
 
     /// <summary>True for cards that need Universal MFG Unlocker for frame generation beyond 2x (RTX 40) or at all (RTX 20 / 30).</summary>

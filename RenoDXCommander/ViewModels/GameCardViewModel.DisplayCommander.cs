@@ -12,11 +12,11 @@ public partial class GameCardViewModel
     public string DcStatusDot => DcStatus == GameStatus.UpdateAvailable ? "🟢"
         : DcStatus == GameStatus.Installed ? "🟢" : "⚪";
 
-    public string DcActionLabel => DcIsInstalling ? "Installing..."
-        : (!IsRsInstalled && !ExcludeFromUpdateAllReShade) ? "⚠  ReShade required"
-        : DcStatus == GameStatus.UpdateAvailable ? "⬆  Update DC"
-        : DcStatus == GameStatus.Installed ? "↺  Reinstall DC"
-        : "⬇  Install DC";
+    public string DcActionLabel => DcIsInstalling ? "설치 중..."
+        : (!IsRsInstalled && !ExcludeFromUpdateAllReShade) ? "⚠  ReShade 필요"
+        : DcStatus == GameStatus.UpdateAvailable ? "⬆  DC 업데이트"
+        : DcStatus == GameStatus.Installed ? "↺  DC 재설치"
+        : "⬇  DC 설치";
 
     public string DcBtnBackground  => DcStatus == GameStatus.UpdateAvailable ? "#201838" : "#182840";
     public string DcBtnForeground  => DcStatus == GameStatus.UpdateAvailable ? "#B898E8" : "#7AACDD";
@@ -36,9 +36,9 @@ public partial class GameCardViewModel
         : DcStatus == GameStatus.Installed ? "#5ECB7D"
         : "#A0AABB";
     public string DcShortAction => DcIsInstalling ? "…"
-        : DcStatus == GameStatus.UpdateAvailable ? "⬆ Update"
-        : DcStatus == GameStatus.Installed ? "↺ Reinstall"
-        : "⬇ Install";
+        : DcStatus == GameStatus.UpdateAvailable ? "⬆ 업데이트"
+        : DcStatus == GameStatus.Installed ? "↺ 재설치"
+        : "⬇ 설치";
 
     public bool IsDcNotInstalling => !DcIsInstalling;
     public bool IsDcInstalled => DcStatus == GameStatus.Installed || DcStatus == GameStatus.UpdateAvailable;

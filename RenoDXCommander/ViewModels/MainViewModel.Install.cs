@@ -905,7 +905,7 @@ public partial class MainViewModel
             card.Mod.SnapshotUrl = card.Mod.SnapshotUrl32;
         if (string.IsNullOrEmpty(card.InstallPath))
         {
-            card.ActionMessage = "No install path — use 📁 to pick the game folder.";
+            card.ActionMessage = "설치 경로 없음 — 📁로 게임 폴더를 선택하세요.";
             return;
         }
 
@@ -937,7 +937,7 @@ public partial class MainViewModel
         }
 
         card.IsInstalling = true;
-        card.ActionMessage = "Starting download...";
+        card.ActionMessage = "다운로드 시작 중...";
         _crashReporter.Log($"[MainViewModel.InstallModAsync] Install started: {card.GameName} → {card.InstallPath}");
         try
         {
@@ -952,7 +952,7 @@ public partial class MainViewModel
             bool isSourceInstall = card.Mod.IsGenericSource;
             if (isSourceInstall)
             {
-                card.ActionMessage = "Setting up DXVK...";
+                card.ActionMessage = "DXVK 설정 중...";
                 await ApplySourceSetupAsync(card);
                 AddSourceLaunchArg(card);
             }
@@ -1118,8 +1118,8 @@ public partial class MainViewModel
                 card.RdxInstalledVersion    = AuxInstallService.ReadInstalledVersion(record.InstallPath, record.AddonFileName);
                 card.Status                 = GameStatus.Installed;
                 card.FadeMessage(m => card.ActionMessage = m, isSourceInstall
-                    ? "✅ Installed! Set High Dynamic Range to Full in the game's video settings."
-                    : "✅ Installed! Press Home in-game to open ReShade.");
+                    ? "✅ 설치됨! 게임 비디오 설정에서 High Dynamic Range를 Full로 설정하세요."
+                    : "✅ 설치됨! 게임 중 Home 키를 누르면 ReShade가 열립니다.");
                 _crashReporter.Log($"[MainViewModel.InstallModAsync] Install complete: {card.GameName} — {record.AddonFileName}");
                 // Reset Nexus baseline so update indicator clears after install
                 _nexusUpdateService.ResetBaseline(card.GameName);
@@ -1140,7 +1140,7 @@ public partial class MainViewModel
         }
         catch (Exception ex)
         {
-            DispatcherQueue?.TryEnqueue(() => card.ActionMessage = $"❌ Failed: {ex.Message}");
+            DispatcherQueue?.TryEnqueue(() => card.ActionMessage = $"❌ 실패: {ex.Message}");
             _crashReporter.WriteCrashReport("InstallModAsync", ex, note: $"Game: {card.GameName}, Path: {card.InstallPath}");
         }
         finally
@@ -1181,7 +1181,7 @@ public partial class MainViewModel
         card.InstalledAddonFileName = null;
         card.RdxInstalledVersion    = null;
         card.Status                 = GameStatus.Available;
-        card.ActionMessage          = "✖ Mod removed.";
+        card.ActionMessage          = "✖ 모드를 제거했습니다.";
         card.FadeMessage(m => card.ActionMessage = m, card.ActionMessage);
         // Clear the addon file cache so the next Refresh doesn't think a file is still there.
         if (!string.IsNullOrEmpty(card.InstallPath))

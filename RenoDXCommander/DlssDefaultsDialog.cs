@@ -29,15 +29,15 @@ public static class DlssDefaultsDialog
         var srCol = new StackPanel { Spacing = 4 };
         srCol.Children.Add(new TextBlock { Text = "DLSS", FontSize = 11, FontWeight = Microsoft.UI.Text.FontWeights.SemiBold, Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush) });
 
-        srCol.Children.Add(new TextBlock { Text = "Version", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
+        srCol.Children.Add(new TextBlock { Text = "버전", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
         var srVersionCombo = BuildCombo(dlssService.DlssVersions, settings.DefaultDlssVersion, includeDriverOverride: true, currentDriverOverride: settings.DefaultSrDriverOverride);
         srCol.Children.Add(srVersionCombo);
 
-        srCol.Children.Add(new TextBlock { Text = "Preset", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
+        srCol.Children.Add(new TextBlock { Text = "프리셋", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
         var srPresetCombo = BuildPresetComboBox(DlssPresetService.SrPresets, settings.DefaultSrPreset);
         srCol.Children.Add(srPresetCombo);
 
-        srCol.Children.Add(new TextBlock { Text = "Render Scale", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
+        srCol.Children.Add(new TextBlock { Text = "렌더 배율", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
         var srScaleCombo = BuildRenderScaleComboBox(settings.DefaultSrRenderScale);
         srCol.Children.Add(srScaleCombo);
 
@@ -49,17 +49,17 @@ public static class DlssDefaultsDialog
 
         // ── RR Column ──
         var rrCol = new StackPanel { Spacing = 4 };
-        rrCol.Children.Add(new TextBlock { Text = "Ray Reconstruction", FontSize = 11, FontWeight = Microsoft.UI.Text.FontWeights.SemiBold, Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush) });
+        rrCol.Children.Add(new TextBlock { Text = "레이 재구성", FontSize = 11, FontWeight = Microsoft.UI.Text.FontWeights.SemiBold, Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush) });
 
-        rrCol.Children.Add(new TextBlock { Text = "Version", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
+        rrCol.Children.Add(new TextBlock { Text = "버전", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
         var rrVersionCombo = BuildCombo(dlssService.DlssdVersions, settings.DefaultDlssdVersion, includeDriverOverride: true, currentDriverOverride: settings.DefaultRrDriverOverride);
         rrCol.Children.Add(rrVersionCombo);
 
-        rrCol.Children.Add(new TextBlock { Text = "Preset", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
+        rrCol.Children.Add(new TextBlock { Text = "프리셋", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
         var rrPresetCombo = BuildPresetComboBox(DlssPresetService.RrPresets, settings.DefaultRrPreset);
         rrCol.Children.Add(rrPresetCombo);
 
-        rrCol.Children.Add(new TextBlock { Text = "Render Scale", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
+        rrCol.Children.Add(new TextBlock { Text = "렌더 배율", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
         var rrScaleCombo = BuildRenderScaleComboBox(settings.DefaultRrRenderScale);
         rrCol.Children.Add(rrScaleCombo);
 
@@ -71,13 +71,13 @@ public static class DlssDefaultsDialog
 
         // ── FG Column ──
         var fgCol = new StackPanel { Spacing = 4 };
-        fgCol.Children.Add(new TextBlock { Text = "Frame Generation", FontSize = 11, FontWeight = Microsoft.UI.Text.FontWeights.SemiBold, Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush) });
+        fgCol.Children.Add(new TextBlock { Text = "프레임 생성", FontSize = 11, FontWeight = Microsoft.UI.Text.FontWeights.SemiBold, Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush) });
 
-        fgCol.Children.Add(new TextBlock { Text = "Version", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
+        fgCol.Children.Add(new TextBlock { Text = "버전", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
         var fgVersionCombo = BuildCombo(dlssService.DlssgVersions, settings.DefaultDlssgVersion, includeDriverOverride: true, currentDriverOverride: settings.DefaultFgDriverOverride);
         fgCol.Children.Add(fgVersionCombo);
 
-        fgCol.Children.Add(new TextBlock { Text = "Preset", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
+        fgCol.Children.Add(new TextBlock { Text = "프리셋", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
         var fgPresetCombo = BuildPresetComboBox(DlssPresetService.FgPresets, settings.DefaultFgPreset);
         fgCol.Children.Add(fgPresetCombo);
 
@@ -99,11 +99,11 @@ public static class DlssDefaultsDialog
             var nrCol = new StackPanel { Spacing = 4 };
             nrCol.Children.Add(new TextBlock { Text = "Neural Rendering", FontSize = 11, FontWeight = Microsoft.UI.Text.FontWeights.SemiBold, Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush) });
 
-            nrCol.Children.Add(new TextBlock { Text = "Version", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
+            nrCol.Children.Add(new TextBlock { Text = "버전", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
             nrVersionCombo = BuildCombo(dlssService.DlssnrVersions, settings.DefaultDlssnrVersion);
             nrCol.Children.Add(nrVersionCombo);
 
-            nrCol.Children.Add(new TextBlock { Text = "Preset", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
+            nrCol.Children.Add(new TextBlock { Text = "프리셋", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
             nrPresetCombo = BuildPresetComboBox(DlssPresetService.NrPresets, settings.DefaultNrPreset);
             nrCol.Children.Add(nrPresetCombo);
 
@@ -119,7 +119,7 @@ public static class DlssDefaultsDialog
         var slCol = new StackPanel { Spacing = 4 };
         slCol.Children.Add(new TextBlock { Text = "Streamline", FontSize = 11, FontWeight = Microsoft.UI.Text.FontWeights.SemiBold, Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush) });
 
-        slCol.Children.Add(new TextBlock { Text = "Version", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
+        slCol.Children.Add(new TextBlock { Text = "버전", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 0) });
         var slVersionCombo = BuildCombo(dlssService.StreamlineVersions, settings.DefaultStreamlineVersion);
         slCol.Children.Add(slVersionCombo);
 
@@ -128,10 +128,10 @@ public static class DlssDefaultsDialog
 
         var dialog = new ContentDialog
         {
-            Title = "DLSS & Streamline Defaults",
+            Title = "DLSS 및 Streamline 기본값",
             Content = grid,
-            PrimaryButtonText = "Save",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = "저장",
+            CloseButtonText = "취소",
             XamlRoot = xamlRoot,
             RequestedTheme = ElementTheme.Dark,
         };
@@ -218,11 +218,11 @@ public static class DlssDefaultsDialog
             CornerRadius = new CornerRadius(6),
         };
         ToolTipService.SetToolTip(versionCombo,
-            "Default: leaves the game's files as they are.\n"
-            + "A version: swaps in that version.\n"
-            + "Custom: copies in your own files from RHI's Custom folder."
+            "Default: 게임 파일을 그대로 둡니다.\n"
+            + "버전: 해당 버전으로 교체합니다.\n"
+            + "Custom: RHI의 Custom 폴더에서 사용자 파일을 복사합니다."
             + (includeDriverOverride
-                ? "\nNVIDIA Override: turns on the driver's override in the game's NVIDIA profile instead of swapping the DLL."
+                ? "\nNVIDIA Override: DLL을 교체하는 대신 게임의 NVIDIA 프로필에서 드라이버 재정의를 켭니다."
                 : ""));
         return versionCombo;
     }
@@ -247,7 +247,7 @@ public static class DlssDefaultsDialog
             CornerRadius = new CornerRadius(6),
         };
         ToolTipService.SetToolTip(presetCombo,
-            "DLSS preset applied through the NVIDIA driver profile. Default leaves the game's preset unchanged.");
+            "NVIDIA 드라이버 프로필을 통해 적용되는 DLSS 프리셋입니다. Default는 게임의 프리셋을 그대로 둡니다.");
         return presetCombo;
     }
 
@@ -273,8 +273,8 @@ public static class DlssDefaultsDialog
             CornerRadius = new CornerRadius(6),
         };
         ToolTipService.SetToolTip(combo,
-            "Internal render resolution as a percentage of output resolution, set through the NVIDIA driver profile.\n"
-            + "Custom takes 33 to 100. Off leaves it unchanged.");
+            "출력 해상도 대비 내부 렌더 해상도 비율(%)로, NVIDIA 드라이버 프로필을 통해 설정됩니다.\n"
+            + "Custom은 33~100을 입력합니다. Off는 그대로 둡니다.");
 
         // Inline TextBox shown when "Custom" is selected
         var customBox = new TextBox

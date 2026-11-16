@@ -31,7 +31,7 @@ public partial class MainViewModel
         if (isNativeHdr)
         {
             var parts = new List<string>();
-            parts.Add("⚠ In-game HDR must be turned ON for UE-Extended to work correctly in this title.");
+            parts.Add("⚠ 이 게임에서 UE-Extended가 제대로 작동하려면 게임 내 HDR을 켜야 합니다.");
 
             // Include wiki tooltip if present (from a specific mod entry)
             if (fallback == null && !string.IsNullOrWhiteSpace(effectiveMod.Notes))
@@ -70,7 +70,7 @@ public partial class MainViewModel
         var specific = GetGenericNote(gameName, genericNotes);
         return string.IsNullOrEmpty(specific)
             ? ""
-            : "📋 Game-specific settings:\n" + specific;
+            : "📋 게임별 설정:\n" + specific;
     }
 
     /// <summary>
@@ -1183,7 +1183,7 @@ public partial class MainViewModel
         }
 
         // 14. Set StatusText to show cached game count
-        StatusText    = $"{_allCards.Count} games";
+        StatusText    = $"게임 {_allCards.Count}개";
         SubStatusText = "";
 
         _crashReporter.Log($"[MainViewModel.LoadCacheAndBuildCardsAsync] Cache phase complete — {_allCards.Count} cards displayed");

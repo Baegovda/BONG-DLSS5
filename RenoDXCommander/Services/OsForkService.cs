@@ -190,7 +190,7 @@ internal static class OsForkService
         try
         {
             fork = Get(variant)!;
-            progress?.Report(($"Checking {fork.Label}...", 8));
+            progress?.Report(($"{fork.Label} 확인 중...", 8));
             var latest = await FindLatestAsync(fork).ConfigureAwait(false);
             if (latest == null)
             {

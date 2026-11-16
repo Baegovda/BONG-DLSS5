@@ -55,9 +55,9 @@ public partial class DragDropHandler
         {
             var dupDialog = new ContentDialog
             {
-                Title           = "Game Already Exists",
-                Content         = $"\"{existingCard.GameName}\" is already in your library at:\n{existingCard.InstallPath}",
-                CloseButtonText = "OK",
+                Title           = "이미 있는 게임",
+                Content         = $"\"{existingCard.GameName}\"은(는) 이미 라이브러리의 다음 위치에 있습니다:\n{existingCard.InstallPath}",
+                CloseButtonText = "확인",
                 XamlRoot        = _window.Content.XamlRoot,
                 Background      = UIFactory.Brush(ResourceKeys.SurfaceToolbarBrush),
                 RequestedTheme  = ElementTheme.Dark,
@@ -71,20 +71,20 @@ public partial class DragDropHandler
         var engineLabel = engine switch
         {
             EngineType.Unreal       => "Unreal Engine",
-            EngineType.UnrealLegacy => "Unreal Engine (Legacy)",
+            EngineType.UnrealLegacy => "Unreal Engine (레거시)",
             EngineType.Unity        => "Unity",
-            _                       => "Unknown"
+            _                       => "알 수 없음"
         };
 
         var confirmPanel = new StackPanel { Spacing = 8 };
         confirmPanel.Children.Add(new TextBlock
         {
-            Text = "Game name:", Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
+            Text = "게임 이름:", Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
         });
         confirmPanel.Children.Add(nameBox);
         confirmPanel.Children.Add(new TextBlock
         {
-            Text = $"Engine: {engineLabel}\nInstall path: {installPath}",
+            Text = $"엔진: {engineLabel}\n설치 경로: {installPath}",
             TextWrapping = TextWrapping.Wrap,
             Foreground   = UIFactory.Brush(ResourceKeys.TextTertiaryBrush),
             FontSize     = 12, Margin = new Thickness(0, 6, 0, 0),
@@ -92,10 +92,10 @@ public partial class DragDropHandler
 
         var confirmDialog = new ContentDialog
         {
-            Title             = "➕ Add Dropped Game",
+            Title             = "➕ 드롭한 게임 추가",
             Content           = confirmPanel,
-            PrimaryButtonText = "Add Game",
-            CloseButtonText   = "Cancel",
+            PrimaryButtonText = "게임 추가",
+            CloseButtonText   = "취소",
             XamlRoot          = _window.Content.XamlRoot,
             Background        = UIFactory.Brush(ResourceKeys.SurfaceToolbarBrush),
             RequestedTheme    = ElementTheme.Dark,

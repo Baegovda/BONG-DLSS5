@@ -2292,8 +2292,8 @@ public partial class MainViewModel
         if (!dlssHasNewVersion && !slHasNewVersion) return;
 
         using var activity = BeginActivity(dlssHasNewVersion && _settingsViewModel.AutoUpdateDlss
-            ? $"Updating DLSS to {newestDlss}..."
-            : $"Updating Streamline to {newestSl}...");
+            ? $"DLSS를 {newestDlss}(으)로 업데이트 중..."
+            : $"Streamline을 {newestSl}(으)로 업데이트 중...");
 
         int dlssUpdated = 0, slUpdated = 0;
 

@@ -29,14 +29,14 @@ public static class AddonManagerDialog
         {
             var emptyDlg = new ContentDialog
             {
-                Title = "ReShade Addon Manager",
+                Title = "ReShade 애드온 관리자",
                 Content = new TextBlock
                 {
-                    Text = "No addons available. Try refreshing.",
+                    Text = "사용 가능한 애드온이 없습니다. 새로 고침해 보세요.",
                     FontSize = 13,
                     Foreground = Brush(ResourceKeys.TextPrimaryBrush),
                 },
-                CloseButtonText = "Close",
+                CloseButtonText = "닫기",
                 XamlRoot = xamlRoot,
                 Background = Brush(ResourceKeys.SurfaceOverlayBrush),
                 MinWidth = 750,
@@ -55,7 +55,7 @@ public static class AddonManagerDialog
             "RHI", "Custom", "Addons");
         var folderLink = new HyperlinkButton
         {
-            Content = "Place custom .addon64/.addon32 files here",
+            Content = "사용자 지정 .addon64/.addon32 파일을 여기에 넣으세요",
             FontSize = 11,
             Foreground = Brush(ResourceKeys.AccentBlueBrush),
             Padding = new Thickness(0),
@@ -88,7 +88,7 @@ public static class AddonManagerDialog
         {
             panel.Children.Add(new TextBlock
             {
-                Text = "Custom Addons",
+                Text = "사용자 지정 애드온",
                 FontSize = 12,
                 FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                 Foreground = Brush(ResourceKeys.TextPrimaryBrush),
@@ -112,9 +112,9 @@ public static class AddonManagerDialog
 
         var dlg = new ContentDialog
         {
-            Title = "ReShade Addon Manager",
+            Title = "ReShade 애드온 관리자",
             Content = scrollViewer,
-            CloseButtonText = "Close",
+            CloseButtonText = "닫기",
             XamlRoot = xamlRoot,
             Background = Brush(ResourceKeys.SurfaceOverlayBrush),
             MinWidth = 820,
@@ -192,7 +192,7 @@ public static class AddonManagerDialog
             VerticalAlignment = VerticalAlignment.Center,
             Visibility = isDownloaded ? Visibility.Visible : Visibility.Collapsed,
         };
-        ToolTipService.SetToolTip(tickMark, isCustomAddon ? "Local file." : "Downloaded.");
+        ToolTipService.SetToolTip(tickMark, isCustomAddon ? "로컬 파일." : "다운로드됨.");
         nameRow.Children.Add(tickMark);
         textPanel.Children.Add(nameRow);
 
@@ -213,7 +213,7 @@ public static class AddonManagerDialog
         {
             textPanel.Children.Add(new HyperlinkButton
             {
-                Content = "How to use",
+                Content = "사용 방법",
                 NavigateUri = new Uri(entry.RepositoryUrl),
                 FontSize = 11,
                 Foreground = Brush(ResourceKeys.AccentBlueBrush),
@@ -241,12 +241,12 @@ public static class AddonManagerDialog
             var toggle = new ToggleSwitch
             {
                 IsOn = isEnabled,
-                OnContent = "On",
-                OffContent = "Off",
+                OnContent = "켜짐",
+                OffContent = "꺼짐",
                 VerticalAlignment = VerticalAlignment.Center,
             };
-            ToolTipService.SetToolTip(toggle, "On: downloads the addon if needed and adds it to the global addon set used by games set to Global addons."
-                + "\nOff: removes it from that set. Downloaded files are kept.");
+            ToolTipService.SetToolTip(toggle, "켜짐: 필요하면 애드온을 다운로드하고, 전역 애드온을 사용하도록 설정된 게임이 쓰는 전역 애드온 세트에 추가합니다."
+                + "\n꺼짐: 해당 세트에서 제거합니다. 다운로드한 파일은 유지됩니다.");
 
             toggle.Toggled += async (s, ev) =>
             {
@@ -265,12 +265,12 @@ public static class AddonManagerDialog
                             await addonPackService.DownloadAddonAsync(entry);
                             // The service logs and swallows most errors, so check the result
                             if (!addonPackService.IsDownloaded(entry.PackageName))
-                                failure = "Download failed. Check your connection and try again.";
+                                failure = "다운로드에 실패했습니다. 연결을 확인하고 다시 시도하세요.";
                         }
                         catch (Exception ex)
                         {
                             CrashReporter.Log($"[AddonManagerDialog.BuildAddonRow] Download failed for '{entry.PackageName}' — {ex.Message}");
-                            failure = $"Download failed: {ex.Message}";
+                            failure = $"다운로드 실패: {ex.Message}";
                         }
 
                         if (failure != null)
@@ -328,7 +328,7 @@ public static class AddonManagerDialog
         {
             rightElement = new HyperlinkButton
             {
-                Content = "Repository",
+                Content = "저장소",
                 NavigateUri = new Uri(entry.RepositoryUrl!),
                 FontSize = 11,
                 Foreground = Brush(ResourceKeys.AccentBlueBrush),

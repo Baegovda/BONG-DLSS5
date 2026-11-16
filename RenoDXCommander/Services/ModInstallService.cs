@@ -130,10 +130,10 @@ public class ModInstallService : IModInstallService
             CrashReporter.Log($"[ModInstallService.InstallAsync] Cache check for '{fileName}': cacheSize={cacheSize}, remoteSize={remoteSize?.ToString() ?? "null"}, sizeOk={sizeOk}, sizeExplicitMismatch={sizeExplicitMismatch}, isPE={HasPeSignature(cachePath)}");
             if (!sizeExplicitMismatch && HasPeSignature(cachePath))
             {
-                progress?.Report(("Installing from cache...", 50));
+                progress?.Report(("캐시에서 설치 중...", 50));
                 File.Copy(cachePath, destPath, overwrite: true);
                 usedCache = true;
-                progress?.Report(("✅ Installed from cache!", 100));
+                progress?.Report(("✅ 캐시에서 설치됨!", 100));
             }
             else if (!HasPeSignature(cachePath))
             {
@@ -146,7 +146,7 @@ public class ModInstallService : IModInstallService
         // ── Step 3: fresh download if no usable cache ─────────────────────────────
         if (!usedCache)
         {
-            progress?.Report(("Downloading...", 0));
+            progress?.Report(("다운로드 중...", 0));
             HttpResponseMessage? response = null;
             var tried      = new List<string>();
             var candidates = new List<string> { resolvedUrl };
@@ -228,7 +228,7 @@ public class ModInstallService : IModInstallService
                     await cacheFile.WriteAsync(buffer.AsMemory(0, read));
                     downloaded += read;
                     if (total > 0)
-                        progress?.Report(($"Downloading... {downloaded / 1024} KB",
+                        progress?.Report(($"다운로드 중... {downloaded / 1024} KB",
                                           (double)downloaded / total * 100));
                 }
                 cacheFile.Flush();
@@ -274,7 +274,7 @@ public class ModInstallService : IModInstallService
         };
         SaveRecord(record);
         try { InstallCompleted?.Invoke(record); } catch (Exception ex) { CrashReporter.Log($"[ModInstallService.InstallAsync] InstallCompleted event handler failed — {ex.Message}"); }
-        progress?.Report(("Installed!", 100));
+        progress?.Report(("설치됨!", 100));
         return record;
     }
 

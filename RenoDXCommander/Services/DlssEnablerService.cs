@@ -96,7 +96,7 @@ public class DlssEnablerService
         }
 
         Directory.CreateDirectory(_stagingDir);
-        progress?.Report(("Downloading DLSS Enabler...", 10));
+        progress?.Report(("DLSS Enabler 다운로드 중...", 10));
 
         var (version, downloadUrl) = await FetchLatestReleaseInfoAsync().ConfigureAwait(false);
         if (string.IsNullOrEmpty(version) || string.IsNullOrEmpty(downloadUrl))
@@ -105,7 +105,7 @@ public class DlssEnablerService
             return;
         }
 
-        progress?.Report(("Downloading DLSS Enabler...", 30));
+        progress?.Report(("DLSS Enabler 다운로드 중...", 30));
 
         try
         {
@@ -148,11 +148,11 @@ public class DlssEnablerService
         catch (Exception ex)
         {
             _crashReporter.Log($"[DlssEnablerService.EnsureStagingAsync] Download failed ({downloadUrl}) — {ex.Message}");
-            progress?.Report(($"DLSS Enabler download failed: {ex.Message}", 0));
+            progress?.Report(($"DLSS Enabler 다운로드 실패: {ex.Message}", 0));
             return;
         }
 
-        progress?.Report(("DLSS Enabler ready", 90));
+        progress?.Report(("DLSS Enabler 준비 완료", 90));
 
         // ── Auto-deploy to all games where DLSS Enabler is enabled ────────────
         try
@@ -189,7 +189,7 @@ public class DlssEnablerService
             _crashReporter.Log($"[DlssEnablerService.EnsureStagingAsync] Auto-deploy loop failed — {ex.Message}");
         }
 
-        progress?.Report(("DLSS Enabler ready", 100));
+        progress?.Report(("DLSS Enabler 준비 완료", 100));
     }
 
     // ── Install / Uninstall / Detection ───────────────────────────────────────

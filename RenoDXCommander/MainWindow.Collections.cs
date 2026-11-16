@@ -151,18 +151,18 @@ public sealed partial class MainWindow
                 };
                 chip.RightTapped += (s, e) => { e.Handled = true; ShowCollectionMenu(chip, n); };
                 ToolTipService.SetToolTip(chip, on
-                    ? $"Showing {name}. Click again to show all games. Right-click to rename, move or delete it."
-                    : $"Show the games in {name}. Right-click to rename, move or delete it.");
+                    ? $"{name} 표시 중. 다시 클릭하면 모든 게임을 표시합니다. 마우스 오른쪽 버튼을 클릭하여 이름 바꾸기, 이동 또는 삭제할 수 있습니다."
+                    : $"{name}의 게임을 표시합니다. 마우스 오른쪽 버튼을 클릭하여 이름 바꾸기, 이동 또는 삭제할 수 있습니다.");
                 _collectionsWrap.Children.Add(chip);
             }
-            var add = MakeCollectionChip("+ Collection", false);
+            var add = MakeCollectionChip("+ 컬렉션", false);
             add.Tag = CollectionNewChipTag;
             add.Click += async (s, e) =>
             {
                 try { await NewCollectionAsync(add.XamlRoot ?? Content?.XamlRoot, null); }
                 catch (Exception ex) { CrashReporter.Log($"[MainWindow.NewCollectionChip_Click] {ex.Message}"); }
             };
-            ToolTipService.SetToolTip(add, "New collection. Add games to it from a game's menu (right-click a game).");
+            ToolTipService.SetToolTip(add, "새 컬렉션. 게임 메뉴(게임을 마우스 오른쪽 버튼으로 클릭)에서 게임을 추가하세요.");
             _collectionsWrap.Children.Add(add);
             UpdateCollectionEmptyText();
         }
@@ -223,17 +223,17 @@ public sealed partial class MainWindow
             int index = ViewModel.CollectionStore.IndexOf(name);
             if (index < 0) return;
             var menu = new MenuFlyout();
-            var rename = new MenuFlyoutItem { Text = "Rename…" };
+            var rename = new MenuFlyoutItem { Text = "이름 바꾸기…" };
             rename.Click += async (s, e) =>
             {
                 try { await RenameCollectionAsync(anchor.XamlRoot ?? Content?.XamlRoot, name); }
                 catch (Exception ex) { CrashReporter.Log($"[MainWindow.CollectionRename_Click] {ex.Message}"); }
             };
-            var left = new MenuFlyoutItem { Text = "Move left", IsEnabled = index > 0 };
+            var left = new MenuFlyoutItem { Text = "왼쪽으로 이동", IsEnabled = index > 0 };
             left.Click += (s, e) => MoveCollectionFromUi(name, -1);
-            var right = new MenuFlyoutItem { Text = "Move right", IsEnabled = index < names.Count - 1 };
+            var right = new MenuFlyoutItem { Text = "오른쪽으로 이동", IsEnabled = index < names.Count - 1 };
             right.Click += (s, e) => MoveCollectionFromUi(name, 1);
-            var delete = new MenuFlyoutItem { Text = "Delete…" };
+            var delete = new MenuFlyoutItem { Text = "삭제…" };
             delete.Click += async (s, e) =>
             {
                 try { await DeleteCollectionAsync(anchor.XamlRoot ?? Content?.XamlRoot, name); }
@@ -276,7 +276,7 @@ public sealed partial class MainWindow
     /// <summary>The game menu's "Add to collection" submenu: a tick per collection, then "New collection…".</summary>
     private MenuFlyoutSubItem BuildCollectionsMenu(GameCardViewModel card)
     {
-        var sub = new MenuFlyoutSubItem { Text = "Add to collection" };
+        var sub = new MenuFlyoutSubItem { Text = "컬렉션에 추가" };
         var names = ViewModel.CollectionNames;
         foreach (var name in names)
         {
@@ -290,14 +290,14 @@ public sealed partial class MainWindow
                     bool member = ((ToggleMenuFlyoutItem)d).IsChecked;
                     ViewModel.SetCollectionMembership(n, card, member);
                     if (_padHints?.Visibility == Visibility.Visible)
-                        ShowPadToast(member ? $"Added {card.GameName} to {n}" : $"Removed {card.GameName} from {n}");
+                        ShowPadToast(member ? $"{card.GameName}을(를) {n}에 추가했습니다" : $"{card.GameName}을(를) {n}에서 제거했습니다");
                 }
                 catch (Exception ex) { CrashReporter.Log($"[MainWindow.CollectionToggle] {ex.Message}"); }
             });
             sub.Items.Add(item);
         }
         if (names.Count > 0) sub.Items.Add(new MenuFlyoutSeparator());
-        var create = new MenuFlyoutItem { Text = "New collection…" };
+        var create = new MenuFlyoutItem { Text = "새 컬렉션…" };
         create.Click += async (s, e) =>
         {
             try { await NewCollectionAsync((s as FrameworkElement)?.XamlRoot ?? Content?.XamlRoot, card); }
@@ -313,20 +313,20 @@ public sealed partial class MainWindow
     private async Task NewCollectionAsync(XamlRoot? xamlRoot, GameCardViewModel? firstGame)
     {
         if (xamlRoot == null) return;
-        var name = await PromptCollectionNameAsync(xamlRoot, "New collection",
-            firstGame != null ? $"Name the new collection. {firstGame.GameName} will be added to it." : "Name the new collection. Add games to it from a game's menu.",
-            "Create", "", null);
+        var name = await PromptCollectionNameAsync(xamlRoot, "새 컬렉션",
+            firstGame != null ? $"새 컬렉션의 이름을 입력하세요. {firstGame.GameName}이(가) 추가됩니다." : "새 컬렉션의 이름을 입력하세요. 게임 메뉴에서 게임을 추가할 수 있습니다.",
+            "만들기", "", null);
         if (name == null) return;
         var error = ViewModel.CreateCollection(name, firstGame, out var created);
         if (error != null) { CrashReporter.Log($"[MainWindow.NewCollectionAsync] {error}"); return; }
         if (_padHints?.Visibility == Visibility.Visible)
-            ShowPadToast(firstGame != null ? $"Added {firstGame.GameName} to {created}" : $"Created {created}");
+            ShowPadToast(firstGame != null ? $"{firstGame.GameName}을(를) {created}에 추가했습니다" : $"{created}을(를) 만들었습니다");
     }
 
     private async Task RenameCollectionAsync(XamlRoot? xamlRoot, string name)
     {
         if (xamlRoot == null) return;
-        var newName = await PromptCollectionNameAsync(xamlRoot, "Rename collection", $"New name for {name}:", "Rename", name, name);
+        var newName = await PromptCollectionNameAsync(xamlRoot, "컬렉션 이름 바꾸기", $"{name}의 새 이름:", "이름 바꾸기", name, name);
         if (newName == null || newName == name) return;
         var error = ViewModel.RenameCollection(name, newName);
         if (error != null) CrashReporter.Log($"[MainWindow.RenameCollectionAsync] {error}");
@@ -338,15 +338,15 @@ public sealed partial class MainWindow
         int count = ViewModel.CollectionStore.GetMembers(name)?.Count ?? 0;
         var dialog = new ContentDialog
         {
-            Title = "Delete collection",
+            Title = "컬렉션 삭제",
             Content = new TextBlock
             {
-                Text = $"Delete the collection \"{name}\"{(count > 0 ? $" ({count} {(count == 1 ? "game" : "games")})" : "")}?\n\n" +
-                       "Only the collection is removed. The games stay in your library with their mods and settings.",
+                Text = $"컬렉션 \"{name}\"{(count > 0 ? $" (게임 {count}개)" : "")}을(를) 삭제할까요?\n\n" +
+                       "컬렉션만 제거됩니다. 게임은 모드 및 설정과 함께 라이브러리에 그대로 남습니다.",
                 TextWrapping = TextWrapping.Wrap,
             },
-            PrimaryButtonText = "Delete",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = "삭제",
+            CloseButtonText = "취소",
             DefaultButton = ContentDialogButton.Close,
             XamlRoot = xamlRoot,
             RequestedTheme = ElementTheme.Dark,
@@ -365,7 +365,7 @@ public sealed partial class MainWindow
         string primary, string initial, string? renaming)
     {
         var store = ViewModel.CollectionStore;
-        var box = new TextBox { Text = initial, MaxLength = GameCollectionStore.MaxNameLength, Width = 340, PlaceholderText = "e.g. Racing" };
+        var box = new TextBox { Text = initial, MaxLength = GameCollectionStore.MaxNameLength, Width = 340, PlaceholderText = "예: 레이싱" };
         var error = new TextBlock
         {
             FontSize = 12,
@@ -383,7 +383,7 @@ public sealed partial class MainWindow
             Title = title,
             Content = panel,
             PrimaryButtonText = primary,
-            CloseButtonText = "Cancel",
+            CloseButtonText = "취소",
             DefaultButton = ContentDialogButton.Primary,
             XamlRoot = xamlRoot,
             RequestedTheme = ElementTheme.Dark,
@@ -436,10 +436,10 @@ public sealed partial class MainWindow
         }
         int members = ViewModel.CollectionStore.GetMembers(name)?.Count ?? 0;
         _collectionEmptyText.Text = members == 0
-            ? $"No games in {name} yet. Add games from a game's menu."
+            ? $"{name}에 아직 게임이 없습니다. 게임 메뉴에서 게임을 추가하세요."
             : !string.IsNullOrWhiteSpace(ViewModel.SearchQuery) || ViewModel.Filter.ActiveCustomFilterName != null
-                ? $"None of the games in {name} match the search."
-                : $"The games in {name} are hidden or no longer detected.";
+                ? $"{name}에 검색과 일치하는 게임이 없습니다."
+                : $"{name}의 게임이 숨겨졌거나 더 이상 감지되지 않습니다.";
         _collectionEmptyText.Visibility = Visibility.Visible;
     }
 }

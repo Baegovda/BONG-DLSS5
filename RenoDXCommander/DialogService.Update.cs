@@ -79,7 +79,7 @@ public partial class DialogService
     {
         var dlg = new ContentDialog
         {
-            Title   = "🔄 Update Available",
+            Title   = "🔄 업데이트 있음",
             Content = new StackPanel
             {
                 Spacing = 8,
@@ -90,15 +90,15 @@ public partial class DialogService
                         TextWrapping = TextWrapping.Wrap,
                         Foreground   = Brush(ResourceKeys.TextSecondaryBrush),
                         FontSize     = 14,
-                        Text         = $"A new version of RHI is available!\n\n" +
-                                       $"Installed:  v{updateInfo.CurrentVersion}\n" +
-                                       $"Available:  v{updateInfo.DisplayVersion ?? updateInfo.RemoteVersion.ToString()}\n\n" +
-                                       "Would you like to update now?",
+                        Text         = $"새 버전의 RHI를 사용할 수 있습니다!\n\n" +
+                                       $"설치됨:  v{updateInfo.CurrentVersion}\n" +
+                                       $"사용 가능:  v{updateInfo.DisplayVersion ?? updateInfo.RemoteVersion.ToString()}\n\n" +
+                                       "지금 업데이트할까요?",
                     },
                 },
             },
-            PrimaryButtonText   = "Update Now",
-            CloseButtonText     = "Later",
+            PrimaryButtonText   = "지금 업데이트",
+            CloseButtonText     = "나중에",
             XamlRoot            = _window.Content.XamlRoot,
             Background          = Brush(ResourceKeys.SurfaceRaisedBrush),
             RequestedTheme      = ElementTheme.Dark,
@@ -116,7 +116,7 @@ public partial class DialogService
         // Create a non-dismissable progress dialog
         var progressText = new TextBlock
         {
-            Text         = "Starting download...",
+            Text         = "다운로드 시작 중...",
             TextWrapping = TextWrapping.Wrap,
             Foreground   = Brush(ResourceKeys.TextSecondaryBrush),
             FontSize     = 13,
@@ -131,7 +131,7 @@ public partial class DialogService
         };
         var downloadDlg = new ContentDialog
         {
-            Title   = "⬇ Downloading Update",
+            Title   = "⬇ 업데이트 다운로드 중",
             Content = new StackPanel
             {
                 Spacing = 12,
@@ -163,9 +163,9 @@ public partial class DialogService
         if (string.IsNullOrEmpty(installerPath))
         {
             // Download failed — update dialog to show error with a Close button
-            progressText.Text = "❌ Download failed. Please try again later or download manually from GitHub.";
+            progressText.Text = "❌ 다운로드에 실패했습니다. 나중에 다시 시도하거나 GitHub에서 직접 다운로드하세요.";
             progressBar.Value = 0;
-            downloadDlg.CloseButtonText = "Close";
+            downloadDlg.CloseButtonText = "닫기";
             await progressSession.Completion;
             return;
         }
@@ -355,8 +355,8 @@ public partial class DialogService
             }
             Highlight(-1);
             markdown.Text = versionsHit == 0
-                ? $"Nothing in the patch notes mentions \"{query}\"."
-                : $"**{linesHit}** matching line{(linesHit == 1 ? "" : "s")} in **{versionsHit}** version{(versionsHit == 1 ? "" : "s")}. Click a version on the left to read all of it.\n\n" + sb;
+                ? $"패치 노트에 \"{query}\"에 대한 내용이 없습니다."
+                : $"**{versionsHit}**개 버전에서 일치하는 줄 **{linesHit}**개. 왼쪽에서 버전을 클릭하면 전체 내용을 볼 수 있습니다.\n\n" + sb;
             scrollViewer.ChangeView(null, 0, null, true);
         }
 
@@ -419,9 +419,9 @@ public partial class DialogService
         }
 
         // Search box (compact, top of the left column): 250 ms after typing stops, Esc clears
-        var search = new TextBox { PlaceholderText = "Search notes", Margin = new Thickness(0, 0, 10, 10) };
+        var search = new TextBox { PlaceholderText = "노트 검색", Margin = new Thickness(0, 0, 10, 10) };
         TabsTheme.StyleInput(search);
-        ToolTipService.SetToolTip(search, "Search every version's notes (e.g. OptiScaler, crash, Vulkan)");
+        ToolTipService.SetToolTip(search, "모든 버전의 노트 검색 (예: OptiScaler, 충돌, Vulkan)");
         var searchTimer = search.DispatcherQueue.CreateTimer();
         searchTimer.Interval = TimeSpan.FromMilliseconds(250);
         searchTimer.IsRepeating = false;
@@ -442,7 +442,7 @@ public partial class DialogService
             }
         };
 
-        var navHeading = TabsTheme.SectionHeading("Versions");
+        var navHeading = TabsTheme.SectionHeading("버전");
         navHeading.FontSize = 11;
         navHeading.Margin = new Thickness(12, 2, 0, 8);
         var navPanel = new Grid { Width = navWidth, Height = bodyHeight + 32 };
@@ -470,9 +470,9 @@ public partial class DialogService
             return b;
         }
         var toggleIcon = new FontIcon { Glyph = "", FontSize = 12 };
-        var toggleNav = StripButton(toggleIcon, "Hide the versions and search");
-        var bigger = StripButton("+", "Bigger text");
-        var smaller = StripButton("−", "Smaller text");
+        var toggleNav = StripButton(toggleIcon, "버전 목록 및 검색 숨기기");
+        var bigger = StripButton("+", "글자 크게");
+        var smaller = StripButton("−", "글자 작게");
         var strip = new StackPanel { Spacing = 6 };
         strip.Children.Add(toggleNav);
         strip.Children.Add(bigger);
@@ -483,7 +483,7 @@ public partial class DialogService
             navPanel.Visibility = hidden ? Visibility.Collapsed : Visibility.Visible;
             card.Width = hidden ? cardWidth + navWidth + layoutGap : cardWidth;
             toggleIcon.Glyph = hidden ? "" : "";
-            ToolTipService.SetToolTip(toggleNav, hidden ? "Show the versions and search" : "Hide the versions and search");
+            ToolTipService.SetToolTip(toggleNav, hidden ? "버전 목록 및 검색 표시" : "버전 목록 및 검색 숨기기");
         }
         toggleNav.Click += (s, e) =>
         {
@@ -524,14 +524,14 @@ public partial class DialogService
         ApplyNavHidden(settings.PatchNotesNavHidden);
 
         if (sections.Count > 0) ShowVersion(0);
-        else markdown.Text = "No patch notes available.";
+        else markdown.Text = "패치 노트가 없습니다.";
 
         var dlg = new ContentDialog
         {
-            Title              = CogDialog.MakeDialogTitle("What's New",
-                                     "Patch notes for every RHI version. Pick one on the left, or search them all."),
+            Title              = CogDialog.MakeDialogTitle("새로운 기능",
+                                     "모든 RHI 버전의 패치 노트입니다. 왼쪽에서 하나를 선택하거나 전체를 검색하세요."),
             Content            = sections.Count > 1 ? layout : card,
-            CloseButtonText    = "Close",
+            CloseButtonText    = "닫기",
             XamlRoot           = _window.Content.XamlRoot,
             RequestedTheme     = ElementTheme.Dark,
         };
@@ -624,9 +624,9 @@ public partial class DialogService
 
         var dlg = new ContentDialog
         {
-            Title = CogDialog.MakeDialogTitle("Message from RHI", "News and notices from RankFTW"),
+            Title = CogDialog.MakeDialogTitle("RHI 메시지", "RankFTW의 소식 및 공지"),
             Content = card,
-            CloseButtonText = "OK",
+            CloseButtonText = "확인",
             XamlRoot = _window.Content.XamlRoot,
             RequestedTheme = ElementTheme.Dark,
         };

@@ -77,7 +77,7 @@ public partial class MainViewModel
     {
         if (card.DxvkRecord != null)
         {
-            card.ActionMessage = "Turn off DXVK for this game first. The Source mod sets up its own DXVK.";
+            card.ActionMessage = "먼저 이 게임의 DXVK를 끄세요. Source 모드는 자체 DXVK를 설정합니다.";
             return false;
         }
         if (card.InstalledRecord == null && ConfirmSourceEngineInstall != null && !await ConfirmSourceEngineInstall(card))
@@ -96,7 +96,7 @@ public partial class MainViewModel
         }
         if (card.RequiresVulkanInstall)
         {
-            card.ActionMessage = "This game is set to Vulkan in RHI. Set its graphics API to DirectX 9 in Game Overrides, then install again.";
+            card.ActionMessage = "이 게임은 RHI에서 Vulkan으로 설정되어 있습니다. Game Overrides에서 그래픽 API를 DirectX 9로 설정한 다음 다시 설치하세요.";
             return false;
         }
 
@@ -108,12 +108,12 @@ public partial class MainViewModel
         if (!reShadeReady)
         {
             _crashReporter.Log($"[MainViewModel.PrepareSourceInstallAsync] '{card.GameName}': installing ReShade as {SourceEngineSetup.ReShadeDll}");
-            card.ActionMessage = "Installing ReShade...";
+            card.ActionMessage = "ReShade 설치 중...";
             await InstallReShadeInternalAsync(card, SourceEngineSetup.ReShadeDll);
         }
         if (!File.Exists(Path.Combine(card.InstallPath, SourceEngineSetup.ReShadeDll)))
         {
-            card.ActionMessage = "ReShade couldn't be installed as d3d9.dll. See the ReShade row.";
+            card.ActionMessage = "ReShade를 d3d9.dll로 설치할 수 없습니다. ReShade 행을 확인하세요.";
             return false;
         }
         return true;

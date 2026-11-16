@@ -13,19 +13,19 @@ public partial class MainViewModel
     /// <summary>Why HSF can't go into this game (a short button label and the full reason), or null when it can.</summary>
     public static (string Short, string Long)? HsfBlock(GameCardViewModel card)
     {
-        if (string.IsNullOrEmpty(card.InstallPath)) return ("No install folder", "This game has no install folder.");
+        if (string.IsNullOrEmpty(card.InstallPath)) return ("설치 폴더 없음", "이 게임에는 설치 폴더가 없습니다.");
         if (card.GraphicsApi == GraphicsApiType.OpenGL && !card.RequiresVulkanInstall)
-            return ("Not for OpenGL", "HSF supports DirectX 9, 11, 12 and Vulkan games, not OpenGL.");
+            return ("OpenGL 미지원", "HSF는 DirectX 9, 11, 12 및 Vulkan 게임을 지원하며 OpenGL은 지원하지 않습니다.");
         bool vulkan = HsfIsVulkan(card);
         if (vulkan && card.Is32Bit)
-            return ("64-bit Vulkan only", "HSF supports 64-bit Vulkan games only.");
-        if (card.IsDxvkInstalled) return ("Remove DXVK first", "DXVK is installed in this game. HSF needs the game's own DirectX; remove DXVK first.");
-        if (card.IsDxvkBlacklisted) return ("Anti-cheat game", "This game is on RHI's anti-cheat list. Never use HSF in a game with online anti-cheat.");
-        if (!card.IsRsInstalled) return ("Install ReShade first", "Install ReShade first: HSF is a ReShade add-on.");
-        if (card.UseNormalReShade) return ("Needs ReShade with addons", "HSF needs ReShade with add-on support. Change this game's ReShade channel from No Addons.");
+            return ("64비트 Vulkan 전용", "HSF는 64비트 Vulkan 게임만 지원합니다.");
+        if (card.IsDxvkInstalled) return ("먼저 DXVK 제거", "이 게임에 DXVK가 설치되어 있습니다. HSF는 게임 자체의 DirectX가 필요하므로 먼저 DXVK를 제거하세요.");
+        if (card.IsDxvkBlacklisted) return ("안티치트 게임", "이 게임은 RHI의 안티치트 목록에 있습니다. 온라인 안티치트가 있는 게임에서는 절대 HSF를 사용하지 마세요.");
+        if (!card.IsRsInstalled) return ("먼저 ReShade 설치", "먼저 ReShade를 설치하세요: HSF는 ReShade 애드온입니다.");
+        if (card.UseNormalReShade) return ("애드온 지원 ReShade 필요", "HSF는 애드온을 지원하는 ReShade가 필요합니다. 이 게임의 ReShade 채널을 No Addons에서 변경하세요.");
         if (vulkan && File.Exists(Path.Combine(card.InstallPath, "dxgi.dll"))
             && AuxInstallService.IsReShadeFile(Path.Combine(card.InstallPath, "dxgi.dll")))
-            return ("Remove ReShade's dxgi.dll", "A DirectX copy of ReShade (dxgi.dll) is in this game's folder. In a Vulkan game it keeps ReShade's Vulkan layer out, and HSF with it: remove that dxgi.dll first.");
+            return ("ReShade dxgi.dll 제거", "이 게임 폴더에 DirectX용 ReShade(dxgi.dll)가 있습니다. Vulkan 게임에서는 이 파일이 ReShade Vulkan 레이어와 HSF를 막으므로 먼저 dxgi.dll을 제거하세요.");
         return null;
     }
 
@@ -47,7 +47,7 @@ public partial class MainViewModel
             return null;
         if (v >= new Version(6, 8)) return null;
         if (card.GraphicsApi == GraphicsApiType.DirectX9 && v >= new Version(6, 5)) return null;
-        return $"ReShade {text} is installed here. HSF is tested with ReShade 6.8 (with add-on support); update ReShade if frame generation doesn't start.";
+        return $"이 게임에는 ReShade {text}이(가) 설치되어 있습니다. HSF는 ReShade 6.8(애드온 지원)에서 테스트되었으니, 프레임 생성이 시작되지 않으면 ReShade를 업데이트하세요.";
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public partial class MainViewModel
             var error = await Task.Run(async () =>
             {
                 if (!await svc.EnsureStagingAsync().ConfigureAwait(false))
-                    return svc.LastError ?? "Couldn't download HSF. Try again later.";
+                    return svc.LastError ?? "HSF를 다운로드할 수 없습니다. 나중에 다시 시도하세요.";
                 if (launchpadOn && !UpliftService.LaunchpadStaged)
                     await _shaderPackService.EnsurePacksAsync(new[] { UpliftService.LaunchpadPackId }).ConfigureAwait(false);
                 svc.Install(installPath, card.Is32Bit, launchpadOn);
@@ -109,8 +109,8 @@ public partial class MainViewModel
         {
             _crashReporter.Log($"[MainViewModel.InstallHsf] '{card.GameName}' — {ex.Message}");
             return ex is UnauthorizedAccessException
-                ? "Couldn't write into the game folder (access denied). Close the game, or try Admin Mode."
-                : $"Couldn't install HSF: {ex.Message}";
+                ? "게임 폴더에 쓸 수 없습니다 (액세스 거부). 게임을 종료하거나 관리자 모드를 사용해 보세요."
+                : $"HSF를 설치할 수 없습니다: {ex.Message}";
         }
     }
 
@@ -141,8 +141,8 @@ public partial class MainViewModel
     /// </summary>
     public async Task<string?> InstallMfgForHsfAsync(GameCardViewModel card, string? proxyName)
     {
-        if (string.IsNullOrEmpty(card.InstallPath)) return "This game has no install folder.";
-        if (card.MfgAdaInstalled) return "MFG Unlock is installed, which conflicts with Universal MFG Unlocker. Remove it from the addon picker first.";
+        if (string.IsNullOrEmpty(card.InstallPath)) return "이 게임에는 설치 폴더가 없습니다.";
+        if (card.MfgAdaInstalled) return "MFG Unlock이 설치되어 있어 Universal MFG Unlocker와 충돌합니다. 먼저 애드온 선택기에서 제거하세요.";
         var installPath = card.InstallPath;
         try
         {
@@ -153,7 +153,7 @@ public partial class MainViewModel
                     await _rtx40MfgService.EnsureStagingAsync().ConfigureAwait(false);
                 return (_rtx40MfgService.Install(installPath, t), t);
             });
-            if (!ok) return "Couldn't download Universal MFG Unlocker. Try again, or install it from its own row.";
+            if (!ok) return "Universal MFG Unlocker를 다운로드할 수 없습니다. 다시 시도하거나 해당 행에서 직접 설치하세요.";
             RecordMfgLocation(card, target);
             _crashReporter.Log($"[MainViewModel.InstallMfgForHsf] '{card.GameName}' as {target}");
             return null;
@@ -161,7 +161,7 @@ public partial class MainViewModel
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or System.Net.Http.HttpRequestException)
         {
             _crashReporter.Log($"[MainViewModel.InstallMfgForHsf] '{card.GameName}' — {ex.Message}");
-            return $"Couldn't install Universal MFG Unlocker: {ex.Message}";
+            return $"Universal MFG Unlocker를 설치할 수 없습니다: {ex.Message}";
         }
     }
 

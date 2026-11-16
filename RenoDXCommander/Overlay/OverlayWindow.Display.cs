@@ -24,11 +24,11 @@ internal sealed partial class OverlayWindow
             var color = info.GetAdvancedColorInfo();
             bool hdr = color.CurrentAdvancedColorKind == Microsoft.Graphics.Display.DisplayAdvancedColorKind.HighDynamicRange;
             var body = new StackPanel { Spacing = 4 };
-            body.Children.Add(BigText(hdr ? "On" : "Off"));
+            body.Children.Add(BigText(hdr ? "켜짐" : "꺼짐"));
             double peak = color.MaxLuminanceInNits;
             body.Children.Add(SmallText(hdr
-                ? peak > 0 ? $"Peak {Math.Round(peak):0} nits" : "Windows HDR is on"
-                : "Windows HDR is off on this monitor"));
+                ? peak > 0 ? $"최대 {Math.Round(peak):0} nits" : "Windows HDR 켜짐"
+                : "이 모니터에서 Windows HDR이 꺼져 있습니다"));
             return MakeCard("HDR", body, stretch: true);
         }
         catch (Exception ex)
@@ -66,12 +66,12 @@ internal sealed partial class OverlayWindow
                 if (!has) return;
                 var parts = new List<string> { version! };
                 if (preset is uint pr) parts.Add(PresetText(pr));
-                if (scale is uint sc && sc > 0) parts.Add($"{sc}% scale");
+                if (scale is uint sc && sc > 0) parts.Add($"{sc}% 배율");
                 rows.Add((name, string.Join("   ·   ", parts), false));
             }
-            Row("Super Resolution", hasSr, card.DlssInstalledVersion, p?.Sr, p?.SrScale);
-            Row("Ray Reconstruction", hasRr, card.DlssdInstalledVersion, p?.Rr, p?.RrScale);
-            Row("Frame Generation", hasFg, card.DlssgInstalledVersion, p?.Fg, null);
+            Row("슈퍼 해상도", hasSr, card.DlssInstalledVersion, p?.Sr, p?.SrScale);
+            Row("레이 재구성", hasRr, card.DlssdInstalledVersion, p?.Rr, p?.RrScale);
+            Row("프레임 생성", hasFg, card.DlssgInstalledVersion, p?.Fg, null);
             Row("Neural Rendering", hasNr, card.DlssnrInstalledVersion, p?.Nr, null);
             Row("Streamline", hasSl, card.StreamlineInstalledVersion, null, null);
             holder.Child = MakeTable(rows);
@@ -112,7 +112,7 @@ internal sealed partial class OverlayWindow
                     {
                         if (openCount != _openCount || !IsOpen) return;
                         Render(presets);
-                        note.Text = "Presets from the NVIDIA profile. Default: the game picks.";
+                        note.Text = "NVIDIA 프로필의 프리셋입니다. 기본값: 게임이 선택합니다.";
                         note.Visibility = Visibility.Visible;
                     });
                 }
@@ -127,9 +127,9 @@ internal sealed partial class OverlayWindow
     /// <summary>"Preset K", "Default preset", "NVIDIA recommended preset".</summary>
     internal static string PresetText(uint value) => value switch
     {
-        0 => "Default preset",
-        0x00FFFFFF or 0x00FFFFFE => "NVIDIA recommended preset",
-        >= 1 and <= 26 => $"Preset {(char)('A' + value - 1)}",
-        _ => $"Preset 0x{value:X}",
+        0 => "기본 프리셋",
+        0x00FFFFFF or 0x00FFFFFE => "NVIDIA 권장 프리셋",
+        >= 1 and <= 26 => $"프리셋 {(char)('A' + value - 1)}",
+        _ => $"프리셋 0x{value:X}",
     };
 }

@@ -44,7 +44,7 @@ public partial class MainViewModel
 
         if (string.IsNullOrEmpty(card.InstallPath) || !Directory.Exists(card.InstallPath))
         {
-            card.RsActionMessage = "No install path — use 📁 to pick the game folder.";
+            card.RsActionMessage = "설치 경로가 없습니다 — 📁 버튼으로 게임 폴더를 선택하세요.";
             return;
         }
 
@@ -54,7 +54,7 @@ public partial class MainViewModel
             && !(card.LumaFeatureEnabled && card.IsLumaMode)
             && !card.ExcludeFromUpdateAllRef)
         {
-            card.RsActionMessage = "⚠ Install RE Framework first.";
+            card.RsActionMessage = "⚠ RE Framework를 먼저 설치하세요.";
             return;
         }
 
@@ -95,13 +95,13 @@ public partial class MainViewModel
                             var confirmed = await ConfirmForeignDxgiOverwrite(card, dxgiPath);
                             if (!confirmed)
                             {
-                                card.RsActionMessage = "⚠ Skipped — unknown dxgi.dll found. Use Overrides to proceed.";
+                                card.RsActionMessage = "⚠ 건너뜀 — 알 수 없는 dxgi.dll이 발견되었습니다. 계속하려면 재정의를 사용하세요.";
                                 return;
                             }
                         }
                         else
                         {
-                            card.RsActionMessage = "⚠ Skipped — unknown dxgi.dll found.";
+                            card.RsActionMessage = "⚠ 건너뜀 — 알 수 없는 dxgi.dll이 발견되었습니다.";
                             return;
                         }
                     }
@@ -110,7 +110,7 @@ public partial class MainViewModel
         }
 
         card.RsIsInstalling  = true;
-        card.RsActionMessage = "Starting ReShade download...";
+        card.RsActionMessage = "ReShade 다운로드 시작 중...";
         try
         {
             var progress = new Progress<(string msg, double pct)>(p =>
@@ -161,7 +161,7 @@ public partial class MainViewModel
                 card.RsInstalledFile    = record.InstalledAs;
                 card.RsInstalledVersion = AuxInstallService.ReadInstalledVersion(record.InstallPath, record.InstalledAs);
                 card.RsStatus           = GameStatus.Installed;
-                card.RsActionMessage    = "✅ ReShade installed!";
+                card.RsActionMessage    = "✅ ReShade 설치됨!";
                 card.NotifyAll();
                 card.FadeMessage(m => card.RsActionMessage = m, card.RsActionMessage);
                 _filterViewModel.UpdateCounts();
@@ -173,7 +173,7 @@ public partial class MainViewModel
         }
         catch (Exception ex)
         {
-            card.RsActionMessage = $"❌ ReShade Failed: {ex.Message}";
+            card.RsActionMessage = $"❌ ReShade 실패: {ex.Message}";
             _crashReporter.WriteCrashReport("InstallReShadeAsync", ex, note: $"Game: {card.GameName}");
         }
         finally
@@ -193,7 +193,7 @@ public partial class MainViewModel
         if (IsVulkanLayerInstalledFunc())
         {
             card.RsIsInstalling  = true;
-            card.RsActionMessage = "Installing Vulkan ReShade...";
+            card.RsActionMessage = "Vulkan ReShade 설치 중...";
             try
             {
                 // The layer is shared: make sure it holds the chosen channel's build, not whatever was there before
@@ -211,7 +211,7 @@ public partial class MainViewModel
                 {
                     card.RsInstalledVersion = vulkanVersion;
                     card.RsStatus        = GameStatus.Installed;
-                    card.RsActionMessage = "✅ Vulkan ReShade installed!";
+                    card.RsActionMessage = "✅ Vulkan ReShade 설치됨!";
                     card.NotifyAll();
                     card.FadeMessage(m => card.RsActionMessage = m, card.RsActionMessage);
                     _filterViewModel.UpdateCounts();
@@ -227,7 +227,7 @@ public partial class MainViewModel
             }
             catch (Exception ex)
             {
-                card.RsActionMessage = $"❌ Vulkan ReShade Failed: {ex.Message}";
+                card.RsActionMessage = $"❌ Vulkan ReShade 실패: {ex.Message}";
                 _crashReporter.WriteCrashReport("InstallReShadeVulkanAsync", ex, note: $"Game: {card.GameName}");
             }
             finally
@@ -246,7 +246,7 @@ public partial class MainViewModel
             if (ShowVulkanAdminRequiredDialog != null)
                 await ShowVulkanAdminRequiredDialog();
             else
-                card.RsActionMessage = "⚠ Administrator privileges are required for Vulkan layer installation. Restart RHI as admin.";
+                card.RsActionMessage = "⚠ Vulkan 레이어를 설치하려면 관리자 권한이 필요합니다. RHI를 관리자 권한으로 다시 시작하세요.";
             return;
         }
 
@@ -258,14 +258,14 @@ public partial class MainViewModel
                 var proceed = await ShowVulkanLayerWarningDialog();
                 if (!proceed)
                 {
-                    card.RsActionMessage = "Vulkan layer install cancelled.";
+                    card.RsActionMessage = "Vulkan 레이어 설치가 취소되었습니다.";
                     return;
                 }
             }
         }
 
         card.RsIsInstalling  = true;
-        card.RsActionMessage = "Installing Vulkan ReShade layer...";
+        card.RsActionMessage = "Vulkan ReShade 레이어 설치 중...";
         try
         {
             // 3. Install the global Vulkan layer (copies DLL, writes manifest, registers in registry)
@@ -295,7 +295,7 @@ public partial class MainViewModel
             {
                 card.RsInstalledVersion = vulkanVersion;
                 card.RsStatus        = GameStatus.Installed;
-                card.RsActionMessage = "✅ ReShade installed (Vulkan Layer)!";
+                card.RsActionMessage = "✅ ReShade 설치됨 (Vulkan 레이어)!";
                 card.NotifyAll();
                 card.FadeMessage(m => card.RsActionMessage = m, card.RsActionMessage);
                 _filterViewModel.UpdateCounts();
@@ -311,7 +311,7 @@ public partial class MainViewModel
         }
         catch (Exception ex)
         {
-            card.RsActionMessage = $"❌ Vulkan ReShade Failed: {ex.Message}";
+            card.RsActionMessage = $"❌ Vulkan ReShade 실패: {ex.Message}";
             _crashReporter.WriteCrashReport("InstallReShadeVulkanAsync", ex, note: $"Game: {card.GameName}");
         }
         finally
@@ -334,7 +334,7 @@ public partial class MainViewModel
             if (ShowVulkanAdminRequiredDialog != null)
                 await ShowVulkanAdminRequiredDialog();
             else
-                card.RsActionMessage = "⚠ Administrator privileges are required for GAC symlink installation. Restart RHI as admin.";
+                card.RsActionMessage = "⚠ GAC 심볼릭 링크를 설치하려면 관리자 권한이 필요합니다. RHI를 관리자 권한으로 다시 시작하세요.";
             return;
         }
 
@@ -347,7 +347,7 @@ public partial class MainViewModel
         dllFileName ??= "dxgi.dll"; // default — DX11/DX12 games use dxgi.dll
 
         card.RsIsInstalling = true;
-        card.RsActionMessage = "Installing ReShade (GAC symlink)...";
+        card.RsActionMessage = "ReShade 설치 중 (GAC 심볼릭 링크)...";
         try
         {
             AuxInstallService.EnsureReShadeStaging();
@@ -377,7 +377,7 @@ public partial class MainViewModel
                 card.RsInstalledFile = dllFileName;
                 card.RsInstalledVersion = version;
                 card.RsStatus = GameStatus.Installed;
-                card.RsActionMessage = "✅ ReShade installed (GAC symlink)!";
+                card.RsActionMessage = "✅ ReShade 설치됨 (GAC 심볼릭 링크)!";
                 card.NotifyAll();
                 card.FadeMessage(m => card.RsActionMessage = m, card.RsActionMessage);
                 DeployAddonsForCard(card.GameName);
@@ -387,7 +387,7 @@ public partial class MainViewModel
         }
         catch (Exception ex)
         {
-            card.RsActionMessage = $"❌ GAC ReShade Failed: {ex.Message}";
+            card.RsActionMessage = $"❌ GAC ReShade 실패: {ex.Message}";
             _crashReporter.WriteCrashReport("InstallReShadeGacAsync", ex, note: $"Game: {card.GameName}");
         }
         finally
@@ -412,7 +412,7 @@ public partial class MainViewModel
         // GAC symlink removal requires admin (files are in C:\Windows\...)
         if (isGacGame && !IsRunningAsAdminFunc())
         {
-            card.RsActionMessage = "⚠ Administrator privileges required to remove GAC symlinks. Enable Admin Mode in Settings.";
+            card.RsActionMessage = "⚠ GAC 심볼릭 링크를 제거하려면 관리자 권한이 필요합니다. 설정에서 관리자 모드를 켜세요.";
             card.NotifyAll();
             return;
         }
@@ -455,7 +455,7 @@ public partial class MainViewModel
             card.RsInstalledFile    = null;
             card.RsInstalledVersion = null;
             card.RsStatus           = GameStatus.NotInstalled;
-            card.RsActionMessage    = "✖ ReShade removed.";
+            card.RsActionMessage    = "✖ ReShade가 제거되었습니다.";
             card.NotifyAll();
             card.FadeMessage(m => card.RsActionMessage = m, card.RsActionMessage);
             _filterViewModel.UpdateCounts();
@@ -463,7 +463,7 @@ public partial class MainViewModel
         }
         catch (Exception ex)
         {
-            card.RsActionMessage = $"❌ Uninstall failed: {ex.Message}";
+            card.RsActionMessage = $"❌ 제거 실패: {ex.Message}";
             _crashReporter.WriteCrashReport("UninstallReShade", ex, note: $"Game: {card.GameName}");
         }
     }
@@ -504,7 +504,7 @@ public partial class MainViewModel
             // Refresh cached VulkanRsIniExists before notifying UI — panel reads this directly
             await Task.Run(() => card.RefreshBackupState());
             card.RsStatus        = GameStatus.NotInstalled;
-            card.RsActionMessage = "✖ Vulkan ReShade removed.";
+            card.RsActionMessage = "✖ Vulkan ReShade가 제거되었습니다.";
             card.NotifyAll();
             card.FadeMessage(m => card.RsActionMessage = m, card.RsActionMessage);
             _filterViewModel.UpdateCounts();
@@ -512,7 +512,7 @@ public partial class MainViewModel
         }
         catch (Exception ex)
         {
-            card.RsActionMessage = $"❌ Uninstall failed: {ex.Message}";
+            card.RsActionMessage = $"❌ 제거 실패: {ex.Message}";
             _crashReporter.WriteCrashReport("UninstallVulkanReShade", ex, note: $"Game: {card.GameName}");
         }
     }
@@ -526,7 +526,7 @@ public partial class MainViewModel
 
         if (string.IsNullOrEmpty(card.InstallPath) || !Directory.Exists(card.InstallPath))
         {
-            card.RefActionMessage = "No install path — use 📁 to pick the game folder.";
+            card.RefActionMessage = "설치 경로가 없습니다 — 📁 버튼으로 게임 폴더를 선택하세요.";
             return;
         }
 
@@ -534,7 +534,7 @@ public partial class MainViewModel
         if (!await CheckInstallWarningAsync(card.GameName, "reframework")) return;
 
         card.RefIsInstalling = true;
-        card.RefActionMessage = "Starting RE Framework download...";
+        card.RefActionMessage = "RE Framework 다운로드 시작 중...";
         try
         {
             var progress = new Progress<(string msg, double pct)>(p =>
@@ -548,14 +548,14 @@ public partial class MainViewModel
                 card.RefRecord = record;
                 card.RefInstalledVersion = record.InstalledVersion;
                 card.RefStatus = GameStatus.Installed;
-                card.RefActionMessage = "✅ RE Framework installed!";
+                card.RefActionMessage = "✅ RE Framework 설치됨!";
                 card.NotifyAll();
                 card.FadeMessage(m => card.RefActionMessage = m, card.RefActionMessage);
             });
         }
         catch (Exception ex)
         {
-            card.RefActionMessage = $"❌ RE Framework Failed: {ex.Message}";
+            card.RefActionMessage = $"❌ RE Framework 실패: {ex.Message}";
             _crashReporter.WriteCrashReport("InstallREFrameworkAsync", ex, note: $"Game: {card.GameName}");
         }
         finally
@@ -575,13 +575,13 @@ public partial class MainViewModel
             card.RefRecord = null;
             card.RefInstalledVersion = null;
             card.RefStatus = GameStatus.NotInstalled;
-            card.RefActionMessage = "✖ RE Framework removed.";
+            card.RefActionMessage = "✖ RE Framework가 제거되었습니다.";
             card.NotifyAll();
             card.FadeMessage(m => card.RefActionMessage = m, card.RefActionMessage);
         }
         catch (Exception ex)
         {
-            card.RefActionMessage = $"❌ Uninstall failed: {ex.Message}";
+            card.RefActionMessage = $"❌ 제거 실패: {ex.Message}";
             _crashReporter.WriteCrashReport("UninstallREFramework", ex, note: $"Game: {card.GameName}");
         }
     }
@@ -957,7 +957,7 @@ public partial class MainViewModel
         if (!skipWarning && !await CheckInstallWarningAsync(card.GameName, "luma")) return;
 
         card.IsLumaInstalling = true;
-        card.LumaActionMessage = "Installing Luma...";
+        card.LumaActionMessage = "Luma 설치 중...";
         try
         {
             LumaInstalledRecord record;
@@ -970,16 +970,16 @@ public partial class MainViewModel
                 var parsed = NexusUpdateService.ParseNexusUrl(mod.NexusUrl);
                 if (parsed == null)
                 {
-                    card.LumaActionMessage = "❌ Invalid Nexus URL.";
+                    card.LumaActionMessage = "❌ 잘못된 Nexus URL입니다.";
                     return;
                 }
 
-                card.LumaActionMessage = "Fetching mod info...";
+                card.LumaActionMessage = "모드 정보 가져오는 중...";
                 var latestFile = await nexusDl.GetLatestMainFileAsync(parsed.Value.Domain, parsed.Value.ModId).ConfigureAwait(false);
                 if (latestFile == null)
                 {
                     _crashReporter.Log($"[InstallLumaAsync] Nexus — no MAIN file for '{card.GameName}'");
-                    DispatcherQueue?.TryEnqueue(() => card.LumaActionMessage = "No downloadable file found on Nexus.");
+                    DispatcherQueue?.TryEnqueue(() => card.LumaActionMessage = "Nexus에서 다운로드할 수 있는 파일을 찾지 못했습니다.");
                     return;
                 }
 
@@ -987,7 +987,7 @@ public partial class MainViewModel
                 if (uri == null)
                 {
                     _crashReporter.Log($"[InstallLumaAsync] Nexus — could not resolve CDN URI for '{card.GameName}'");
-                    DispatcherQueue?.TryEnqueue(() => card.LumaActionMessage = "Could not resolve Nexus download link.");
+                    DispatcherQueue?.TryEnqueue(() => card.LumaActionMessage = "Nexus 다운로드 링크를 확인할 수 없습니다.");
                     return;
                 }
 
@@ -997,7 +997,7 @@ public partial class MainViewModel
                 var tempPath = await nexusDl.DownloadToTempAsync(uri, progress).ConfigureAwait(false);
                 if (tempPath == null)
                 {
-                    DispatcherQueue?.TryEnqueue(() => card.LumaActionMessage = "Download failed.");
+                    DispatcherQueue?.TryEnqueue(() => card.LumaActionMessage = "다운로드 실패.");
                     return;
                 }
 
@@ -1028,7 +1028,7 @@ public partial class MainViewModel
             {
                 // Bespoke drag-drop install — no download URL available
                 _crashReporter.Log($"[InstallLumaAsync] '{card.GameName}' Luma mod has no download URL (bespoke drag-drop install) — cannot reinstall automatically");
-                DispatcherQueue?.TryEnqueue(() => card.LumaActionMessage = "Drop a Luma archive onto the card to reinstall.");
+                DispatcherQueue?.TryEnqueue(() => card.LumaActionMessage = "재설치하려면 Luma 압축 파일을 카드에 끌어서 놓으세요.");
                 return;
             }
             else
@@ -1060,7 +1060,7 @@ public partial class MainViewModel
             {
                 card.LumaRecord = record;
                 card.LumaStatus = GameStatus.Installed;
-                card.LumaActionMessage = "Luma installed!";
+                card.LumaActionMessage = "Luma 설치됨!";
                 card.FadeMessage(m => card.LumaActionMessage = m, card.LumaActionMessage);
                 // Rebuild the detail panel so the addon label and author badge update immediately
                 RequestDetailPanelRebuild?.Invoke(card);
@@ -1070,7 +1070,7 @@ public partial class MainViewModel
         }
         catch (Exception ex)
         {
-            DispatcherQueue?.TryEnqueue(() => card.LumaActionMessage = $"❌ Install failed: {ex.Message}");
+            DispatcherQueue?.TryEnqueue(() => card.LumaActionMessage = $"❌ 설치 실패: {ex.Message}");
             _crashReporter.WriteCrashReport("InstallLuma", ex, note: $"Game: {card.GameName}");
         }
         finally
@@ -1094,7 +1094,7 @@ public partial class MainViewModel
         // Deploy RHI's newest DLSS version (Luma bundles its own — RHI manages it instead)
         try
         {
-            DispatcherQueue?.TryEnqueue(() => card.LumaActionMessage = "Updating DLSS...");
+            DispatcherQueue?.TryEnqueue(() => card.LumaActionMessage = "DLSS 업데이트 중...");
             var newestDlssPath = await _dlssStreamlineService.EnsureNewestDlssCachedAsync();
             if (newestDlssPath != null && File.Exists(newestDlssPath))
             {
@@ -1121,7 +1121,7 @@ public partial class MainViewModel
         // Luma's bundled ReShade DLL was excluded from the zip — RHI manages ReShade.
         // When dgVoodoo2 is being deployed: force ReShade to dxgi.dll so it hooks dgVoodoo's
         // DX11 output rather than competing with dgVoodoo2 for the d3d9.dll slot.
-        DispatcherQueue?.TryEnqueue(() => card.LumaActionMessage = "Installing ReShade...");
+        DispatcherQueue?.TryEnqueue(() => card.LumaActionMessage = "ReShade 설치 중...");
         await InstallReShadeInternalAsync(card, needsDgVoodoo ? "dxgi.dll" : null);
 
         // ── dgVoodoo2 (DX9→DX11 translation layer — required for some legacy games) ────
@@ -1132,7 +1132,7 @@ public partial class MainViewModel
         {
             try
             {
-                DispatcherQueue?.TryEnqueue(() => card.LumaActionMessage = "Installing dgVoodoo2...");
+                DispatcherQueue?.TryEnqueue(() => card.LumaActionMessage = "dgVoodoo2 설치 중...");
                 var dgVoodooSvc = App.Services.GetRequiredService<DgVoodooService>();
 
                 // Prefer the version recommended by the wiki for this specific mod.
@@ -1223,7 +1223,7 @@ public partial class MainViewModel
         }
 
         // Clear the action message — drag-drop path has no subsequent step to overwrite it
-        card.FadeMessage(m => card.LumaActionMessage = m, "✅ Luma installed!");
+        card.FadeMessage(m => card.LumaActionMessage = m, "✅ Luma 설치됨!");
     }
 
     [RelayCommand]
@@ -1254,7 +1254,7 @@ public partial class MainViewModel
             _lumaService.Uninstall(card.LumaRecord);
             card.LumaRecord = null;
             card.LumaStatus = GameStatus.NotInstalled;
-            card.LumaActionMessage = "✖ Luma removed.";
+            card.LumaActionMessage = "✖ Luma가 제거되었습니다.";
             RequestDetailPanelRebuild?.Invoke(card);
 
             // Clean up nvngx_dlss.dll deployed by ApplyLumaPostInstallAsync.
@@ -1288,7 +1288,7 @@ public partial class MainViewModel
             bool wasDgVoodooGame = wasDgVoodoo;
             if (wasDgVoodooGame && card.IsRsInstalled)
             {
-                card.LumaActionMessage = "Restoring ReShade...";
+                card.LumaActionMessage = "ReShade 복원 중...";
                 _ = InstallReShadeInternalAsync(card, forceFilename: null);
             }
             else if (card.IsRsInstalled)
@@ -1390,7 +1390,7 @@ public partial class MainViewModel
         }
         catch (Exception ex)
         {
-            card.LumaActionMessage = $"❌ Uninstall failed: {ex.Message}";
+            card.LumaActionMessage = $"❌ 제거 실패: {ex.Message}";
             _crashReporter.WriteCrashReport("UninstallLuma", ex, note: $"Game: {card.GameName}");
         }
     }
@@ -1450,10 +1450,10 @@ public partial class MainViewModel
 
             var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
             {
-                Title = $"⚠ Install Note — {gameName}",
+                Title = $"⚠ 설치 참고 — {gameName}",
                 Content = dialogContent,
-                PrimaryButtonText = "Continue",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "계속",
+                CloseButtonText = "취소",
                 DefaultButton = Microsoft.UI.Xaml.Controls.ContentDialogButton.Primary,
                 XamlRoot = xamlRoot,
             };
@@ -1539,7 +1539,7 @@ public partial class MainViewModel
 
             card.UseNormalReShade = true;
             card.RsStatus = GameStatus.NotInstalled;
-            card.RsActionMessage = "Normal ReShade selected — click Install to deploy.";
+            card.RsActionMessage = "일반 ReShade 선택됨 — 설치를 눌러 배포하세요.";
             card.NotifyAll();
             card.FadeMessage(m => card.RsActionMessage = m, card.RsActionMessage);
             _crashReporter.Log($"[SetUseNormalReShade] '{card.GameName}' flagged for normal ReShade (not installed yet)");
@@ -1575,7 +1575,7 @@ public partial class MainViewModel
 
             card.UseNormalReShade = false;
             card.RsStatus = GameStatus.NotInstalled;
-            card.RsActionMessage = "Addon ReShade selected — click Install to deploy.";
+            card.RsActionMessage = "애드온 ReShade 선택됨 — 설치를 눌러 배포하세요.";
             card.NotifyAll();
             card.FadeMessage(m => card.RsActionMessage = m, card.RsActionMessage);
             _crashReporter.Log($"[SetUseNormalReShade] '{card.GameName}' flagged for addon ReShade (not installed yet)");

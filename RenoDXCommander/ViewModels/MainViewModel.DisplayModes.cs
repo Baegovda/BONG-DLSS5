@@ -90,12 +90,12 @@ public partial class MainViewModel
         if (!DisplayModesOn) return null;
         if (card.IsRunning)
         {
-            refused?.Invoke($"Close {card.GameName} first: games write their settings when they close, which would undo the switch.");
+            refused?.Invoke($"먼저 {card.GameName}을(를) 닫으세요. 게임은 종료할 때 설정을 기록하므로 전환이 취소될 수 있습니다.");
             return null;
         }
         if (string.IsNullOrEmpty(card.InstallPath))
         {
-            refused?.Invoke("This game has no install folder.");
+            refused?.Invoke("이 게임에는 설치 폴더가 없습니다.");
             return null;
         }
         var ctx = BuildDisplayModeContext(card);
@@ -129,7 +129,7 @@ public partial class MainViewModel
                 if (ct.IsCancellationRequested) break;
                 var (card, ctx) = targets[i];
                 if (store.ItemsFor(ctx.Key).Count == 0) continue;
-                progress?.Report((modeId == null ? $"Turning off: {ctx.GameName}" : $"{modeName} mode: {ctx.GameName}",
+                progress?.Report((modeId == null ? $"끄는 중: {ctx.GameName}" : $"{modeName} 모드: {ctx.GameName}",
                     (double)i / Math.Max(1, targets.Count) * 100));
                 try
                 {
@@ -189,7 +189,7 @@ public partial class MainViewModel
         SaveNameMappings();
         NotifyDisplayModesChanged();
         if (item.AtLaunch || !DisplayModeStore.IsCustom(store.ActiveModeId(key))) return null;
-        if (card.IsRunning) return "Saved. The game is running, so it's written the next time you switch modes.";
+        if (card.IsRunning) return "저장했습니다. 게임이 실행 중이므로 다음에 모드를 전환할 때 기록됩니다.";
         var ctx = BuildDisplayModeContext(card);
         var svc = DisplayModeService;
         return await Task.Run(() => svc.ValueFor(ctx, DisplayModeStore.CustomId, item) is { } v ? svc.ApplyNow(ctx, item, v) : null);
@@ -253,8 +253,8 @@ public partial class MainViewModel
         var key = DisplayModeKey(card);
         if (DisplayModeStore.ActiveModeId(key) is not { } mode) return null;
         if (!DisplayModeStore.IsCustom(mode))
-            return $"{DisplayModeStore.NameOf(mode)} mode sets this for every game. Change it in Settings › Display › Display modes, "
-                 + "or make a Custom mode for this game with the ⚙ beside its mode switch.";
+            return $"{DisplayModeStore.NameOf(mode)} 모드는 모든 게임에 이 값을 설정합니다. 설정 › 디스플레이 › 디스플레이 모드에서 변경하거나, "
+                 + "모드 전환 옆의 ⚙로 이 게임용 사용자 지정 모드를 만드세요.";
         DisplayModeStore.SetInCustom(key, itemKey, true);
         DisplayModeStore.SetCustomValue(key, itemKey, value);
         SaveNameMappings();

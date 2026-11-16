@@ -30,9 +30,9 @@ public sealed partial class MainWindow
         if (!File.Exists(Path.Combine(gameDir, OptiScalerService.IniFileName))) return;
         var openKey = $"{card.GameName}|{store}";
 
-        cog.AddSection("All Settings");
-        cog.AddNote("Every setting in this game's OptiScaler.ini, with the options the installed OptiScaler build lists. " +
-                    "Nothing is written until you press Apply. Applied changes are kept when OptiScaler is reinstalled or updated.");
+        cog.AddSection("모든 설정");
+        cog.AddNote("이 게임의 OptiScaler.ini에 있는 모든 설정과, 설치된 OptiScaler 빌드가 제공하는 옵션입니다. " +
+                    "적용을 누르기 전에는 아무것도 기록되지 않습니다. 적용한 변경 사항은 OptiScaler를 재설치하거나 업데이트해도 유지됩니다.");
 
         var settings = new List<OsIniSetting>();
         var pending = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -40,11 +40,11 @@ public sealed partial class MainWindow
 
         var host = new StackPanel { Spacing = 10, Visibility = Visibility.Collapsed };
         var sectionCombo = CogDialog.MakeCombo(Array.Empty<string>(), -1);
-        var search = CogDialog.MakeTextBox("", "Search all settings");
+        var search = CogDialog.MakeTextBox("", "모든 설정 검색");
         var filterRow = new Grid { ColumnSpacing = 12 };
         filterRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         filterRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-        ToolTipService.SetToolTip(sectionCombo, "Section of OptiScaler.ini to show.");
+        ToolTipService.SetToolTip(sectionCombo, "표시할 OptiScaler.ini 섹션입니다.");
         Grid.SetColumn(search, 1);
         filterRow.Children.Add(sectionCombo);
         filterRow.Children.Add(search);
@@ -61,15 +61,15 @@ public sealed partial class MainWindow
         {
             if (applyBtn != null)
             {
-                applyBtn.Content = pending.Count == 0 ? "Apply" : $"Apply {pending.Count} change{(pending.Count == 1 ? "" : "s")}";
+                applyBtn.Content = pending.Count == 0 ? "적용" : $"변경 사항 {pending.Count}개 적용";
                 applyBtn.IsEnabled = pending.Count > 0;
             }
             if (revertBtn != null) revertBtn.IsEnabled = pending.Count > 0;
             var saved = ViewModel.GetOsIniEdits(card.GameName, store).Count;
             if (forgetBtn != null) forgetBtn.IsEnabled = saved > 0;
             info.Text = saved > 0
-                ? $"{saved} applied edit{(saved == 1 ? " is" : "s are")} saved for this game and written again after a reinstall or update. Hover a setting for its description."
-                : "Hover a setting for its description. Settings not in the file yet are shown with auto and added when you change them.";
+                ? $"이 게임에 적용한 편집 {saved}개가 저장되어 있으며 재설치나 업데이트 후 다시 기록됩니다. 설정 위에 마우스를 올리면 설명이 표시됩니다."
+                : "설정 위에 마우스를 올리면 설명이 표시됩니다. 아직 파일에 없는 설정은 auto로 표시되며 변경하면 추가됩니다.";
         }
 
         // One cell per setting: dropdown for documented options, text box for anything else
@@ -85,8 +85,8 @@ public sealed partial class MainWindow
             }
 
             var help = s.Help;
-            if (!string.IsNullOrEmpty(s.Default)) help += (help.Length > 0 ? "\n" : "") + $"Default (auto): {s.Default}";
-            help += (help.Length > 0 ? "\n" : "") + $"[{s.Section}] {s.Key}" + (s.InFile ? "" : " (not in the file yet)");
+            if (!string.IsNullOrEmpty(s.Default)) help += (help.Length > 0 ? "\n" : "") + $"기본값 (auto): {s.Default}";
+            help += (help.Length > 0 ? "\n" : "") + $"[{s.Section}] {s.Key}" + (s.InFile ? "" : " (아직 파일에 없음)");
             var label = showSection ? $"{s.Key} ({s.Section})" : s.Key;
 
             FrameworkElement control;
@@ -105,7 +105,7 @@ public sealed partial class MainWindow
                     if (!values.Any(x => x.Equals(v, StringComparison.OrdinalIgnoreCase)))
                     {
                         values.Add(v);
-                        labels.Add(v.Length == 0 ? "(empty)" : v);
+                        labels.Add(v.Length == 0 ? "(비어 있음)" : v);
                     }
                 int sel = values.FindIndex(x => x.Equals(Current(), StringComparison.OrdinalIgnoreCase));
                 var combo = CogDialog.MakeCombo(labels, sel);
@@ -134,10 +134,10 @@ public sealed partial class MainWindow
                 var all = settings.Where(s => Matches(s, q)).ToList();
                 shown = all.Take(OsAllSearchLimit).ToList();
                 listHost.Children.Add(MakeOsFooterNote(all.Count == 0
-                    ? "No settings match."
+                    ? "일치하는 설정이 없습니다."
                     : all.Count > shown.Count
-                        ? $"Showing the first {shown.Count} of {all.Count} matches."
-                        : $"{all.Count} match{(all.Count == 1 ? "" : "es")}."));
+                        ? $"일치 항목 {all.Count}개 중 처음 {shown.Count}개를 표시합니다."
+                        : $"일치 항목 {all.Count}개."));
             }
             else
             {
@@ -162,7 +162,7 @@ public sealed partial class MainWindow
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
                 CrashReporter.Log($"[MainWindow.BuildOsAllSettingsSection] Couldn't read OptiScaler.ini — {ex.Message}");
-                cog.SetError($"Couldn't read OptiScaler.ini: {ex.Message}");
+                cog.SetError($"OptiScaler.ini를 읽을 수 없습니다: {ex.Message}");
                 return;
             }
             var sections = settings.Select(s => s.Section).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
@@ -196,12 +196,12 @@ public sealed partial class MainWindow
         };
         void OnSearchTick(DispatcherQueueTimer t, object o) => Render();
 
-        applyBtn = cog.MakeButton("Apply", CogButtonKind.Primary, async () =>
+        applyBtn = cog.MakeButton("적용", CogButtonKind.Primary, async () =>
         {
             if (pending.Count == 0) return;
             var values = pending.Select(kv => { var (s, k) = OsIniEditor.SplitId(kv.Key); return (s, k, kv.Value); }).ToList();
             var err = await Task.Run(() => OsIniEditor.WriteValues(gameDir, values));
-            if (err != null) { cog.SetError($"Couldn't write OptiScaler.ini: {err}"); return; }
+            if (err != null) { cog.SetError($"OptiScaler.ini에 쓸 수 없습니다: {err}"); return; }
 
             var saved = ViewModel.GetOsIniEdits(card.GameName, store);
             foreach (var kv in pending) saved[kv.Key] = kv.Value;
@@ -218,30 +218,30 @@ public sealed partial class MainWindow
 
             CrashReporter.Log($"[MainWindow.BuildOsAllSettingsSection] Applied {values.Count} OptiScaler.ini change(s) for '{card.GameName}'");
             _osAllOpenFor = openKey;
-            _osAllAppliedMessage = $"Applied {values.Count} change{(values.Count == 1 ? "" : "s")} to OptiScaler.ini.";
+            _osAllAppliedMessage = $"OptiScaler.ini에 변경 사항 {values.Count}개를 적용했습니다.";
             ReopenOsCog(ctx); // the settings above show the new values too
-        }, "Write the changed settings to this game's OptiScaler.ini. The old file is backed up first.");
+        }, "변경한 설정을 이 게임의 OptiScaler.ini에 기록합니다. 기존 파일은 먼저 백업됩니다.");
 
-        revertBtn = cog.MakeButton("Revert", CogButtonKind.Secondary, () =>
+        revertBtn = cog.MakeButton("되돌리기", CogButtonKind.Secondary, () =>
         {
             pending.Clear();
             Render();
             UpdateButtons();
-        }, "Forget the changes you haven't applied yet.");
+        }, "아직 적용하지 않은 변경 사항을 취소합니다.");
 
-        forgetBtn = cog.MakeButton("Forget saved edits", CogButtonKind.Secondary, () =>
+        forgetBtn = cog.MakeButton("저장된 편집 삭제", CogButtonKind.Secondary, () =>
         {
             ViewModel.SetOsIniEdits(card.GameName, null, store);
             UpdateButtons();
-            cog.SetSuccess("Saved edits forgotten. OptiScaler.ini is unchanged; a reinstall will use the default settings.");
-        }, "Stop writing your applied edits again after a reinstall or update. Doesn't change the current OptiScaler.ini.");
+            cog.SetSuccess("저장된 편집을 삭제했습니다. OptiScaler.ini는 변경되지 않았으며, 재설치 시 기본 설정이 사용됩니다.");
+        }, "재설치나 업데이트 후 적용한 편집을 다시 기록하지 않습니다. 현재 OptiScaler.ini는 변경되지 않습니다.");
 
-        var backupsBtn = cog.MakeButton("Open backups", CogButtonKind.Secondary, async () =>
+        var backupsBtn = cog.MakeButton("백업 열기", CogButtonKind.Secondary, async () =>
         {
             var dir = OsIniEditor.BackupDir(gameDir);
-            if (!Directory.Exists(dir)) { cog.SetStatus("No backups yet. One is made each time you press Apply."); return; }
+            if (!Directory.Exists(dir)) { cog.SetStatus("아직 백업이 없습니다. 적용을 누를 때마다 백업이 만들어집니다."); return; }
             await Windows.System.Launcher.LaunchFolderPathAsync(dir);
-        }, "Copies of OptiScaler.ini from before each Apply (newest 5).");
+        }, "각 적용 전의 OptiScaler.ini 사본입니다(최신 5개).");
 
         var actions = new Controls.WrapPanel { HorizontalSpacing = 8, VerticalSpacing = 8 };
         foreach (var b in new[] { applyBtn, revertBtn, forgetBtn, backupsBtn }) actions.Children.Add(b);
@@ -255,11 +255,11 @@ public sealed partial class MainWindow
         {
             bool open = host.Visibility != Visibility.Visible;
             host.Visibility = open ? Visibility.Visible : Visibility.Collapsed;
-            showBtn!.Content = open ? "Hide all settings" : "Show all settings";
+            showBtn!.Content = open ? "모든 설정 숨기기" : "모든 설정 표시";
             _osAllOpenFor = open ? openKey : null;
             if (open && !loaded) await LoadAsync();
         }
-        showBtn = cog.MakeButton("Show all settings", CogButtonKind.Secondary, ToggleAsync);
+        showBtn = cog.MakeButton("모든 설정 표시", CogButtonKind.Secondary, ToggleAsync);
         cog.AddButtons(showBtn);
         cog.AddContent(host);
         UpdateButtons();

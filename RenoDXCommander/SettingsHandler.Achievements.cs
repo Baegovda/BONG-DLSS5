@@ -42,14 +42,14 @@ public partial class SettingsHandler
             var head = new StackPanel { Spacing = 3 };
             head.Children.Add(new TextBlock
             {
-                Text = "Achievements",
+                Text = "도전 과제",
                 FontSize = 18,
                 FontWeight = Microsoft.UI.Text.FontWeights.Bold,
                 Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
             });
             head.Children.Add(new TextBlock
             {
-                Text = "Show your achievements on the Spotlight page. Off by default; turn on the stores you want to see.",
+                Text = "스포트라이트 페이지에 도전 과제를 표시합니다. 기본값은 꺼짐이며, 보고 싶은 스토어를 켜세요.",
                 FontSize = 12,
                 LineHeight = 17,
                 TextWrapping = TextWrapping.Wrap,
@@ -61,7 +61,7 @@ public partial class SettingsHandler
             var card = new Border { Style = FindStyle("SettingsCardStyle") };
             var body = new StackPanel { Spacing = 12 };
             card.Child = body;
-            body.Children.Add(new TextBlock { Text = "Stores", Style = FindStyle("SettingsCardTitleStyle") });
+            body.Children.Add(new TextBlock { Text = "스토어", Style = FindStyle("SettingsCardTitleStyle") });
 
             var columns = new Grid();
             columns.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -78,27 +78,27 @@ public partial class SettingsHandler
 
             left.Children.Add(MakeAchievementRow(
                 "Steam",
-                "Shows the selected Steam game's achievements under the Launch button in the Spotlight layout: "
-              + "your progress, latest unlock and recent unlocks. Click it for the full list with unlock dates and rarity.\n"
-              + "Read from Steam's files on this PC, so no sign-in, API key or public profile is needed. "
-              + "Games you haven't played on this PC show no achievements until you run them once.",
+                "스포트라이트 레이아웃에서 실행 버튼 아래에 선택한 Steam 게임의 도전 과제를 표시합니다: "
+              + "진행률, 최근 달성 및 최근 달성 목록. 클릭하면 달성 날짜와 희귀도가 포함된 전체 목록이 표시됩니다.\n"
+              + "이 PC의 Steam 파일에서 읽으므로 로그인, API 키, 공개 프로필이 필요 없습니다. "
+              + "이 PC에서 플레이하지 않은 게임은 한 번 실행하기 전까지 도전 과제가 표시되지 않습니다.",
                 () => ViewModel.Settings.SteamAchievements,
                 on => ViewModel.Settings.SteamAchievements = on,
                 out _steamAchCombo));
             right.Children.Add(MakeAchievementRow(
                 "Xbox",
-                "Shows the selected Xbox / Game Pass game's achievements under the Launch button in the Spotlight layout, "
-              + "with unlock dates, rarity and Gamerscore.\n"
-              + "Read from the Xbox app's data on this PC, so no sign-in is needed in RHI. The Xbox app only keeps a game's "
-              + "achievements after it has shown them: if a game shows none, or new unlocks are missing, open the game's page "
-              + "in the Xbox app once.",
+                "스포트라이트 레이아웃에서 실행 버튼 아래에 선택한 Xbox / Game Pass 게임의 도전 과제를 "
+              + "달성 날짜, 희귀도, 게이머 점수와 함께 표시합니다.\n"
+              + "이 PC의 Xbox 앱 데이터에서 읽으므로 RHI에서 로그인할 필요가 없습니다. Xbox 앱은 게임의 도전 과제를 "
+              + "한 번 표시한 뒤에만 보관합니다. 게임에 아무것도 표시되지 않거나 새 달성이 누락되면 Xbox 앱에서 "
+              + "해당 게임 페이지를 한 번 여세요.",
                 () => ViewModel.Settings.XboxAchievements,
                 on => ViewModel.Settings.XboxAchievements = on,
                 out _xboxAchCombo));
             body.Children.Add(columns);
             body.Children.Add(new TextBlock
             {
-                Text = "Progress, unlock dates, icons and rarity, read from each store's files on this PC. Spotlight layout only.",
+                Text = "진행률, 달성 날짜, 아이콘, 희귀도를 이 PC의 각 스토어 파일에서 읽습니다. 스포트라이트 레이아웃 전용입니다.",
                 Style = FindStyle("SettingsHelpStyle"),
                 TextWrapping = TextWrapping.Wrap,
             });
@@ -127,11 +127,11 @@ public partial class SettingsHandler
             VerticalAlignment = VerticalAlignment.Center,
         });
         var combo = new ComboBox { Style = FindStyle("SettingsComboStyle") };
-        combo.Items.Add(new ComboBoxItem { Content = "Off" });
-        combo.Items.Add(new ComboBoxItem { Content = "On" });
+        combo.Items.Add(new ComboBoxItem { Content = "꺼짐" });
+        combo.Items.Add(new ComboBoxItem { Content = "켜짐" });
         combo.SelectedIndex = get() ? 1 : 0;
         ToolTipService.SetToolTip(combo, tooltip);
-        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(combo, $"Show {store} achievements");
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(combo, $"{store} 도전 과제 표시");
         combo.SelectionChanged += (s, e) =>
         {
             if (combo.SelectedIndex < 0) return;

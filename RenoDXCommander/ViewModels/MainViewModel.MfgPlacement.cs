@@ -59,8 +59,8 @@ public partial class MainViewModel
     /// </summary>
     public async Task<string?> EnsureUniversalMfgForPresetAsync(GameCardViewModel card)
     {
-        if (string.IsNullOrEmpty(card.InstallPath)) return "This game has no install folder.";
-        if (card.MfgAdaInstalled) return "MFG Unlock is installed, which conflicts with Universal MFG Unlocker. Remove it from the addon picker first.";
+        if (string.IsNullOrEmpty(card.InstallPath)) return "이 게임에는 설치 폴더가 없습니다.";
+        if (card.MfgAdaInstalled) return "MFG Unlock이 설치되어 있어 Universal MFG Unlocker와 충돌합니다. 먼저 애드온 선택기에서 제거하세요.";
 
         var installPath = card.InstallPath;
         var store       = card.Source ?? "";
@@ -82,7 +82,7 @@ public partial class MainViewModel
                 : new[] { "version.dll", "winmm.dll", "dinput8.dll" }
                     .FirstOrDefault(n => !File.Exists(Path.Combine(installPath, n))) ?? "";
             if (target.Length == 0)
-                return "Couldn't install Universal MFG Unlocker: version.dll, winmm.dll and dinput8.dll are all taken in this game. Install it from Extras and pick a name.";
+                return "Universal MFG Unlocker를 설치할 수 없습니다. 이 게임에서 version.dll, winmm.dll, dinput8.dll이 모두 사용 중입니다. 추가 기능에서 설치하고 이름을 선택하세요.";
 
             bool ok = await Task.Run(async () =>
             {
@@ -92,7 +92,7 @@ public partial class MainViewModel
                     await _rtx40MfgService.EnsureXessStagingAsync().ConfigureAwait(false);
                 return _rtx40MfgService.Install(installPath, target);
             });
-            if (!ok) return "Couldn't download Universal MFG Unlocker. Try again, or install it from Extras.";
+            if (!ok) return "Universal MFG Unlocker를 다운로드할 수 없습니다. 다시 시도하거나 추가 기능에서 설치하세요.";
 
             RecordMfgLocation(card, target);
             _crashReporter.Log($"[MainViewModel.EnsureUniversalMfgForPreset] Installed for '{card.GameName}' as {target}");
@@ -101,7 +101,7 @@ public partial class MainViewModel
         catch (Exception ex) when (ex is System.IO.IOException or UnauthorizedAccessException or System.Net.Http.HttpRequestException)
         {
             _crashReporter.Log($"[MainViewModel.EnsureUniversalMfgForPreset] '{card.GameName}' — {ex.Message}");
-            return $"Couldn't install Universal MFG Unlocker: {ex.Message}";
+            return $"Universal MFG Unlocker를 설치할 수 없습니다: {ex.Message}";
         }
     }
 

@@ -119,13 +119,13 @@ public sealed class DisplayModeStore
     public string? ValidateName(string? name, string? exceptId = null)
     {
         var n = name?.Trim() ?? "";
-        if (n.Length == 0) return "Enter a name.";
-        if (n.Length > MaxNameLength) return $"Use {MaxNameLength} characters or fewer.";
-        if (n.Equals(CustomName, StringComparison.OrdinalIgnoreCase)) return "Custom is the name of a game's own mode. Pick another name.";
+        if (n.Length == 0) return "이름을 입력하세요.";
+        if (n.Length > MaxNameLength) return $"{MaxNameLength}자 이하로 입력하세요.";
+        if (n.Equals(CustomName, StringComparison.OrdinalIgnoreCase)) return "Custom은 게임 자체 모드의 이름입니다. 다른 이름을 선택하세요.";
         lock (_lock)
             if (_modes.Any(m => m.Name.Equals(n, StringComparison.OrdinalIgnoreCase)
                              && !m.Id.Equals(exceptId ?? "", StringComparison.OrdinalIgnoreCase)))
-                return "A mode with that name already exists.";
+                return "같은 이름의 모드가 이미 있습니다.";
         return null;
     }
 

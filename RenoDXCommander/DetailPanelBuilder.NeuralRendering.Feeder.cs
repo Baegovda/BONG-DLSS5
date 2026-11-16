@@ -41,7 +41,7 @@ public partial class DetailPanelBuilder
         }
         bool useLatestConsumer = string.IsNullOrEmpty(requestedVersion) || requestedVersion.StartsWith("Latest");
 
-        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "Downloading Feeder...");
+        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "Feeder 다운로드 중...");
 
         // Resolve Feeder staged path — versioned or latest via AddonPackService
         string? feederSourcePath = null;
@@ -80,7 +80,7 @@ public partial class DetailPanelBuilder
             _window.ViewModel.SetNrPackVersion(gameName, null, store); // clear version pin — using latest
         }
 
-        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "Deploying Feeder...");
+        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "Feeder 배포 중...");
         await Task.Run(() =>
         {
             if (feederSourcePath == null || !File.Exists(feederSourcePath))
@@ -130,7 +130,7 @@ public partial class DetailPanelBuilder
         // Deploy DLSS5 Tool as neural consumer (Feeder needs renodx-dlss5.addon64 alongside it)
         // For 32-bit games the neural consumer runs in host64\ — it must NOT be in the game folder
         // (32-bit ReShade cannot load .addon64 files).
-        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "Deploying DLSS5 Tool...");
+        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "DLSS5 Tool 배포 중...");
 
         // Resolve the source path for the neural consumer — versioned or latest
         string? consumerSourcePath = null;
@@ -170,7 +170,7 @@ public partial class DetailPanelBuilder
         }
 
         // Deploy newest nvngx_dlss.dll — required by Feeder beside the game exe (install root, not detected plugin path)
-        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "Deploying DLSS SR...");
+        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "DLSS SR 배포 중...");
         var cachedDlss = await _dlssStreamlineService.EnsureNewestDlssCachedAsync().ConfigureAwait(false);
         if (cachedDlss != null && new FileInfo(cachedDlss).Length > 0)
         {
@@ -193,7 +193,7 @@ public partial class DetailPanelBuilder
         // Provider and preset follow Feeder's own installer (FeederPreset): built-in vectors (5) on a new
         // install, the preset's existing provider kept; LumeniteFX is only downloaded for providers 3 / 4.
         // We do NOT call EnsurePacksAsync for DLSS5Feeder — its URL is a dead fallback that 404s.
-        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "Deploying shaders...");
+        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "셰이더 배포 중...");
         bool useLumenite = false, createdPreset = false;
         try
         {
@@ -243,7 +243,7 @@ public partial class DetailPanelBuilder
                     // No zip available locally — force re-download the Feeder addon so the zip
                     // is fetched fresh and DLSS5_Feed.fx is extracted from it.
                     CrashReporter.Log("[NeuralRendering] DLSS5_Feed.fx missing and no zip found — re-downloading Feeder addon to seed it");
-                    _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "Downloading Feed.fx...");
+                    _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "Feed.fx 다운로드 중...");
                     var feederEntry = addonSvc.AvailablePacks.FirstOrDefault(p =>
                         p.PackageName.Equals(FeederPackageName, StringComparison.OrdinalIgnoreCase));
                     if (feederEntry != null)
@@ -369,7 +369,7 @@ public partial class DetailPanelBuilder
             var manifest = _window.ViewModel.Manifest;
             if (manifest?.DgVoodooVersions?.Count > 0)
             {
-                _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "Deploying dgVoodoo2...");
+                _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "dgVoodoo2 배포 중...");
                 try
                 {
                     var dgSvc = App.Services.GetRequiredService<DgVoodooService>();
@@ -381,7 +381,7 @@ public partial class DetailPanelBuilder
                     else
                     {
                         CrashReporter.Log($"[NeuralRendering] dgVoodoo2 deploy returned no files for '{card.GameName}' — Windows Defender may be blocking the zip. Add %LocalAppData%\\RHI\\dgvoodoo\\ to Defender exclusions.");
-                        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "⚠ dgVoodoo2 blocked by Defender");
+                        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "⚠ Defender가 dgVoodoo2를 차단함");
                     }
                 }
                 catch (Exception dgEx)
@@ -397,7 +397,7 @@ public partial class DetailPanelBuilder
         // Note: NOT gated on isDx9 — host64 is needed for all 32-bit Feeder installs
         if (card.Is32Bit)
         {
-                _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "Setting up host64\\...");
+                _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "host64\\ 설정 중...");
                 await Task.Run(async () =>
                 {
                     try

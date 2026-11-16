@@ -37,7 +37,7 @@ public partial class DetailPanelBuilder
             string? blockedBy = owners.TryGetValue(name, out var owner) ? owner : null;
             if (blockedBy == null && isHooked && !isCurrent && !string.IsNullOrEmpty(card.InstallPath)
                 && File.Exists(Path.Combine(card.InstallPath, name)))
-                blockedBy = $"the game's own {ual}";
+                blockedBy = $"게임 자체 {ual}";
             bool isRecommended = blockedBy == null && string.Equals(name, recommended, StringComparison.OrdinalIgnoreCase);
             options.Add(new ExtraDllOption(name, isRecommended, isCurrent, blockedBy, isHooked, ual));
         }
@@ -48,15 +48,15 @@ public partial class DetailPanelBuilder
     private static void AddExtraDllBadges(StackPanel contentRow, Button btn, ExtraDllOption o, string extraName)
     {
         if (o.IsHooked)
-            contentRow.Children.Add(MakeBadge("Loaded by ASI Loader", "#1A2A3A", "#7AACDD", "#2A4A6A"));
+            contentRow.Children.Add(MakeBadge("ASI Loader가 로드함", "#1A2A3A", "#7AACDD", "#2A4A6A"));
         if (o.BlockedBy != null)
         {
-            contentRow.Children.Add(MakeBadge($"In use by {o.BlockedBy}", "#2A1818", "#CC6666", "#5A2828"));
-            ToolTipService.SetToolTip(btn, $"In use by {o.BlockedBy}. Choose a different name.");
+            contentRow.Children.Add(MakeBadge($"{o.BlockedBy}에서 사용 중", "#2A1818", "#CC6666", "#5A2828"));
+            ToolTipService.SetToolTip(btn, $"{o.BlockedBy}에서 사용 중입니다. 다른 이름을 선택하세요.");
         }
         else if (o.IsHooked)
             ToolTipService.SetToolTip(btn,
-                $"ASI Loader is installed as {o.UalName} and loads {o.Name} as the real {o.UalName}, so {extraName} runs alongside it. " +
-                $"If ASI Loader is removed, RHI renames this file back to {o.UalName}.");
+                $"ASI Loader가 {o.UalName}(으)로 설치되어 {o.Name}을(를) 실제 {o.UalName}(으)로 로드하므로 {extraName}이(가) 함께 실행됩니다. " +
+                $"ASI Loader를 제거하면 RHI가 이 파일 이름을 다시 {o.UalName}(으)로 바꿉니다.");
     }
 }

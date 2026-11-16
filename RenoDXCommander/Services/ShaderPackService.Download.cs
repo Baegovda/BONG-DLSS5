@@ -177,7 +177,7 @@ public partial class ShaderPackService
             $"versionMatch={versionMatch} cacheExists={cacheExists} hasExtracted={hasExtracted}");
 
         // ── Download ──────────────────────────────────────────────────────────────
-        progress?.Report($"Downloading {pack.DisplayName}...");
+        progress?.Report($"{pack.DisplayName} 다운로드 중...");
         CrashReporter.Log($"[ShaderPackService.EnsurePackAsync] [{pack.Id}] Downloading from {downloadUrl}");
 
         Directory.CreateDirectory(DownloadPaths.Shaders);
@@ -205,7 +205,7 @@ public partial class ShaderPackService
                     await file.WriteAsync(buf.AsMemory(0, read));
                     received += read;
                     if (total > 0)
-                        progress?.Report($"Downloading {pack.DisplayName}... {received / 1024} KB / {total / 1024} KB");
+                        progress?.Report($"{pack.DisplayName} 다운로드 중... {received / 1024} KB / {total / 1024} KB");
                 }
             }
 
@@ -220,7 +220,7 @@ public partial class ShaderPackService
         }
 
         // ── Extract ───────────────────────────────────────────────────────────────
-        progress?.Report($"Extracting {pack.DisplayName}...");
+        progress?.Report($"{pack.DisplayName} 압축 해제 중...");
         try
         {
             Directory.CreateDirectory(ShadersDir);
@@ -337,7 +337,7 @@ public partial class ShaderPackService
 
         await SaveStoredVersionAsync(pack.Id, versionToken);
         ClearIncludeCache();
-        progress?.Report($"{pack.DisplayName} updated.");
+        progress?.Report($"{pack.DisplayName} 업데이트됨.");
         CrashReporter.Log($"[ShaderPackService.EnsurePackAsync] [{pack.Id}] Done. Version = {versionToken}");
         App.Services.GetRequiredService<IUpdateLogService>().Record(new Models.UpdateLogEntry
         {

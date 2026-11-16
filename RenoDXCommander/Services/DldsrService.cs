@@ -227,7 +227,7 @@ public class DldsrService : IDldsrService
             if (baseKey == null)
             {
                 CrashReporter.Log("[DldsrService.CaptureCurrentState] DisplayDatabase key not found");
-                throw new InvalidOperationException("NVIDIA display database not found in registry. Is an NVIDIA GPU installed?");
+                throw new InvalidOperationException("레지스트리에서 NVIDIA 디스플레이 데이터베이스를 찾을 수 없습니다. NVIDIA GPU가 설치되어 있습니까?");
             }
 
             foreach (var monitorId in baseKey.GetSubKeyNames())
@@ -253,23 +253,23 @@ public class DldsrService : IDldsrService
         {
             CrashReporter.Log($"[DldsrService.CaptureCurrentState] Access denied: {ex.Message}");
             throw new UnauthorizedAccessException(
-                "Cannot read DLDSR registry keys. Admin privileges are required.\n\n" +
-                "Please enable Admin Mode in RHI Settings or run RHI as Administrator.");
+                "DLDSR 레지스트리 키를 읽을 수 없습니다. 관리자 권한이 필요합니다.\n\n" +
+                "RHI 설정에서 관리자 모드를 켜거나 RHI를 관리자 권한으로 실행하세요.");
         }
         catch (System.Security.SecurityException ex)
         {
             CrashReporter.Log($"[DldsrService.CaptureCurrentState] Security exception: {ex.Message}");
             throw new UnauthorizedAccessException(
-                "Cannot read DLDSR registry keys. Admin privileges are required.\n\n" +
-                "Please enable Admin Mode in RHI Settings or run RHI as Administrator.");
+                "DLDSR 레지스트리 키를 읽을 수 없습니다. 관리자 권한이 필요합니다.\n\n" +
+                "RHI 설정에서 관리자 모드를 켜거나 RHI를 관리자 권한으로 실행하세요.");
         }
 
         if (monitors.Count == 0)
         {
             CrashReporter.Log("[DldsrService.CaptureCurrentState] No monitor keys with values found");
             throw new InvalidOperationException(
-                "No DLDSR/DSR data found in registry.\n\n" +
-                "Please enable at least one DSR or DLDSR factor in NVIDIA Control Panel first, then capture.");
+                "레지스트리에서 DLDSR/DSR 데이터를 찾을 수 없습니다.\n\n" +
+                "먼저 NVIDIA 제어판에서 DSR 또는 DLDSR 배율을 하나 이상 켠 후 캡처하세요.");
         }
 
         var capture = new DldsrCapture(label, DateTime.Now, GetCurrentDriverVersion(), monitors);
@@ -313,7 +313,7 @@ public class DldsrService : IDldsrService
     public async Task<bool> ApplyStateAsync(string label, IProgress<string>? progress = null, int? smoothnessOverride = null)
     {
         CrashReporter.Log($"[DldsrService.ApplyStateAsync] Applying state '{label}'" + (smoothnessOverride.HasValue ? $" with smoothness override {smoothnessOverride}%" : ""));
-        progress?.Report("Loading capture...");
+        progress?.Report("캡처 불러오는 중...");
         var captures = LoadCaptures();
         var capture = captures.FirstOrDefault(c => c.Label.Equals(label, StringComparison.OrdinalIgnoreCase));
         if (capture == null)
@@ -332,7 +332,7 @@ public class DldsrService : IDldsrService
         }
 
         // Write capture to ProgramData for SYSTEM-accessible path (user temp is inaccessible to SYSTEM)
-        progress?.Report("Preparing DLDSR configuration...");
+        progress?.Report("DLDSR 구성 준비 중...");
         Directory.CreateDirectory(ProgramDataDir);
         var stateFile = Path.Combine(ProgramDataDir, "dldsr-state.json");
         try
@@ -380,7 +380,7 @@ public class DldsrService : IDldsrService
         }
 
         // Execute registry writes via scheduled task (SYSTEM privilege)
-        progress?.Report("Writing DLDSR configuration...");
+        progress?.Report("DLDSR 구성 기록 중...");
         if (!await ExecuteAsSystemAsync(stateFile))
         {
             CrashReporter.Log("[DldsrService.ApplyStateAsync] Failed to execute registry writes");
@@ -388,7 +388,7 @@ public class DldsrService : IDldsrService
         }
 
         // Restart GPU adapter
-        progress?.Report("Restarting GPU adapter...");
+        progress?.Report("GPU 어댑터 다시 시작 중...");
         if (!await RestartGpuAdapterAsync())
         {
             CrashReporter.Log("[DldsrService.ApplyStateAsync] Failed to restart GPU adapter");
@@ -396,7 +396,7 @@ public class DldsrService : IDldsrService
         }
 
         // Wait for displays to come back
-        progress?.Report("Waiting for displays...");
+        progress?.Report("디스플레이 대기 중...");
         await Task.Delay(12000);
 
         CrashReporter.Log($"[DldsrService.ApplyStateAsync] Successfully applied '{label}'");
@@ -757,7 +757,7 @@ try {
         }
 
         CrashReporter.Log($"[DldsrService.SetSmoothnessAsync] Setting smoothness to {smoothness}%");
-        progress?.Report("Reading current DLDSR state...");
+        progress?.Report("현재 DLDSR 상태 읽는 중...");
 
         try
         {
@@ -831,7 +831,7 @@ try {
                 return false;
             }
 
-            progress?.Report("Preparing smoothness configuration...");
+            progress?.Report("부드러움 구성 준비 중...");
 
             // Build a capture with modified smoothness
             var monitors = new List<DldsrMonitorCapture>();
@@ -868,7 +868,7 @@ try {
             CrashReporter.Log($"[DldsrService.SetSmoothnessAsync] Wrote state file to {stateFile}");
 
             // Execute registry writes via scheduled task (SYSTEM privilege)
-            progress?.Report("Writing smoothness configuration...");
+            progress?.Report("부드러움 구성 기록 중...");
             if (!await ExecuteAsSystemAsync(stateFile))
             {
                 CrashReporter.Log("[DldsrService.SetSmoothnessAsync] Failed to execute registry writes");
@@ -878,14 +878,14 @@ try {
             // GPU restart required — the driver reads DisplayDatabase at adapter startup only,
             // not live. nvcontainer.exe updates smoothness live via a privileged IPC channel
             // that is not available to third-party apps.
-            progress?.Report("Restarting GPU adapter...");
+            progress?.Report("GPU 어댑터 다시 시작 중...");
             if (!await RestartGpuAdapterAsync())
             {
                 CrashReporter.Log("[DldsrService.SetSmoothnessAsync] Failed to restart GPU adapter");
                 return false;
             }
 
-            progress?.Report("Waiting for displays...");
+            progress?.Report("디스플레이 대기 중...");
             await Task.Delay(12000);
 
             CrashReporter.Log($"[DldsrService.SetSmoothnessAsync] Successfully set smoothness to {smoothness}%");

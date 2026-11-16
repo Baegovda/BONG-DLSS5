@@ -613,18 +613,18 @@ public sealed partial class MainWindow : Window
                 };
                 var pickerDialog = new ContentDialog
                 {
-                    Title = "🌙 Install Luma Addon",
+                    Title = "🌙 Luma 애드온 설치",
                     Content = new StackPanel
                     {
                         Spacing = 8,
                         Children =
                         {
-                            new TextBlock { Text = $"Install {Path.GetFileName(filePath)} to:", TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap, FontSize = 12 },
+                            new TextBlock { Text = $"{Path.GetFileName(filePath)}을(를) 설치할 대상:", TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap, FontSize = 12 },
                             combo,
                         }
                     },
-                    PrimaryButtonText = "Install",
-                    CloseButtonText = "Cancel",
+                    PrimaryButtonText = "설치",
+                    CloseButtonText = "취소",
                     XamlRoot = Content.XamlRoot,
                     RequestedTheme = Microsoft.UI.Xaml.ElementTheme.Dark,
                 };

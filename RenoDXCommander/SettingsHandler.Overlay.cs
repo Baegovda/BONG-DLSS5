@@ -48,15 +48,15 @@ public partial class SettingsHandler
             var head = new StackPanel { Spacing = 3 };
             head.Children.Add(new TextBlock
             {
-                Text = "RHI overlay",
+                Text = "RHI 오버레이",
                 FontSize = 18,
                 FontWeight = Microsoft.UI.Text.FontWeights.Bold,
                 Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
             });
             head.Children.Add(new TextBlock
             {
-                Text = "A full-screen RHI page over your game, opened with a key or a controller: achievements, screenshots, your notes, "
-                     + "playtime and the game's mod setup. Works while RHI is running, including from the tray.",
+                Text = "키나 컨트롤러로 게임 위에 여는 전체 화면 RHI 페이지입니다: 도전 과제, 스크린샷, 메모, "
+                     + "플레이 시간, 게임의 모드 구성. 트레이 상태를 포함해 RHI가 실행 중이면 작동합니다.",
                 FontSize = 12,
                 LineHeight = 17,
                 TextWrapping = TextWrapping.Wrap,
@@ -67,7 +67,7 @@ public partial class SettingsHandler
             var card = new Border { Style = FindStyle("SettingsCardStyle") };
             var body = new StackPanel { Spacing = 12 };
             card.Child = body;
-            body.Children.Add(new TextBlock { Text = "Overlay", Style = FindStyle("SettingsCardTitleStyle") });
+            body.Children.Add(new TextBlock { Text = "오버레이", Style = FindStyle("SettingsCardTitleStyle") });
 
             var columns = new Grid();
             columns.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -83,16 +83,16 @@ public partial class SettingsHandler
             columns.Children.Add(right);
 
             // Left: on / off
-            var onRow = MakeSettingRow("RHI overlay", out var onCell);
+            var onRow = MakeSettingRow("RHI 오버레이", out var onCell);
             var combo = new ComboBox { Style = FindStyle("SettingsComboStyle") };
-            combo.Items.Add(new ComboBoxItem { Content = "Off" });
-            combo.Items.Add(new ComboBoxItem { Content = "On" });
+            combo.Items.Add(new ComboBoxItem { Content = "꺼짐" });
+            combo.Items.Add(new ComboBoxItem { Content = "켜짐" });
             combo.SelectedIndex = ViewModel.Settings.RhiOverlayEnabled ? 1 : 0;
             ToolTipService.SetToolTip(combo,
-                "Press the hotkey in a game to open RHI over it; press it again, or Esc, to go back.\n"
-              + "Nothing is installed into the game. Works in borderless and windowed games and in games using "
-              + "Windows' fullscreen optimisations; it can't show over true exclusive fullscreen.");
-            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(combo, "RHI overlay");
+                "게임에서 단축키를 누르면 게임 위에 RHI가 열립니다. 다시 누르거나 Esc를 누르면 돌아갑니다.\n"
+              + "게임에는 아무것도 설치되지 않습니다. 테두리 없는 창 모드, 창 모드 게임 및 "
+              + "Windows 전체 화면 최적화를 사용하는 게임에서 작동하며, 진짜 전용 전체 화면에서는 표시되지 않습니다.");
+            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(combo, "RHI 오버레이");
             combo.SelectionChanged += (s, e) =>
             {
                 if (combo.SelectedIndex < 0) return;
@@ -108,15 +108,15 @@ public partial class SettingsHandler
             left.Children.Add(onRow);
             _rhiOverlayCombo = combo;
 
-            var padRow = MakeSettingRow("Controller (hold View + Menu)", out var padCell);
+            var padRow = MakeSettingRow("컨트롤러 (View + Menu 길게 누르기)", out var padCell);
             var padCombo = new ComboBox { Style = FindStyle("SettingsComboStyle") };
-            padCombo.Items.Add(new ComboBoxItem { Content = "Off" });
-            padCombo.Items.Add(new ComboBoxItem { Content = "On" });
+            padCombo.Items.Add(new ComboBoxItem { Content = "꺼짐" });
+            padCombo.Items.Add(new ComboBoxItem { Content = "켜짐" });
             padCombo.SelectedIndex = ViewModel.Settings.RhiOverlayController ? 1 : 0;
             ToolTipService.SetToolTip(padCombo,
-                "Hold View + Menu (Back + Start; Share + Options on PlayStation) for half a second in a game to open or close "
-              + "the overlay. While it's open: D-pad to move, A to select, B to go back, LB / RB to jump between columns, right stick to scroll.");
-            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(padCombo, "Open the RHI overlay with a controller");
+                "게임에서 View + Menu(Back + Start, PlayStation은 Share + Options)를 0.5초 동안 누르면 "
+              + "오버레이가 열리거나 닫힙니다. 열려 있는 동안: D-패드로 이동, A로 선택, B로 뒤로, LB / RB로 열 간 이동, 오른쪽 스틱으로 스크롤.");
+            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(padCombo, "컨트롤러로 RHI 오버레이 열기");
             padCombo.SelectionChanged += (s, e) =>
             {
                 if (padCombo.SelectedIndex < 0) return;
@@ -132,7 +132,7 @@ public partial class SettingsHandler
             _rhiOverlayPadCombo = padCombo;
 
             // Right: hotkey
-            var keyRow = MakeSettingRow("Hotkey", out var keyCell);
+            var keyRow = MakeSettingRow("단축키", out var keyCell);
             var box = new TextBox
             {
                 Style = FindStyle("SettingsTextBoxStyle"),
@@ -140,25 +140,25 @@ public partial class SettingsHandler
                 Text = HotkeyManager.FormatHotkeyDisplay(ViewModel.Settings.RhiOverlayHotkey),
             };
             ToolTipService.SetToolTip(box,
-                "Click here, then press the key you want, with Ctrl, Alt or Shift (for example Alt + `). "
-              + "Backspace puts back the default (Alt + `).");
-            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(box, "RHI overlay hotkey");
+                "여기를 클릭한 후 Ctrl, Alt 또는 Shift와 함께 원하는 키를 누르세요 (예: Alt + `). "
+              + "Backspace를 누르면 기본값(Alt + `)으로 돌아갑니다.");
+            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(box, "RHI 오버레이 단축키");
             box.PreviewKeyDown += RhiOverlayHotkeyBox_PreviewKeyDown;
             keyCell.Child = box;
             right.Children.Add(keyRow);
             _rhiOverlayHotkeyBox = box;
 
-            var pauseRow = MakeSettingRow("Pause the game while open", out var pauseCell);
+            var pauseRow = MakeSettingRow("열려 있는 동안 게임 일시 정지", out var pauseCell);
             var pauseCombo = new ComboBox { Style = FindStyle("SettingsComboStyle") };
-            pauseCombo.Items.Add(new ComboBoxItem { Content = "Off" });
-            pauseCombo.Items.Add(new ComboBoxItem { Content = "On" });
+            pauseCombo.Items.Add(new ComboBoxItem { Content = "꺼짐" });
+            pauseCombo.Items.Add(new ComboBoxItem { Content = "켜짐" });
             pauseCombo.SelectedIndex = ViewModel.Settings.RhiOverlayPauseGame ? 1 : 0;
             ToolTipService.SetToolTip(pauseCombo,
-                "Freezes the game while the overlay is open and unfreezes it when you go back, so the game doesn't react to "
-              + "your controller while you use the overlay (Windows can't block a controller from a game any other way).\n"
-              + "Experimental: online games may lose their connection, anti-cheat may object, and some games stutter for a "
-              + "moment when they resume. Single-player games only.");
-            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(pauseCombo, "Pause the game while the RHI overlay is open");
+                "오버레이가 열려 있는 동안 게임을 멈추고 돌아가면 다시 재개하여, 오버레이를 사용하는 중에 "
+              + "게임이 컨트롤러 입력에 반응하지 않게 합니다 (Windows에서는 다른 방법으로 게임의 컨트롤러 입력을 막을 수 없습니다).\n"
+              + "실험적: 온라인 게임은 연결이 끊길 수 있고, 안티치트가 문제를 삼을 수 있으며, 일부 게임은 재개할 때 "
+              + "잠깐 끊길 수 있습니다. 싱글플레이 게임 전용.");
+            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(pauseCombo, "RHI 오버레이가 열려 있는 동안 게임 일시 정지");
             pauseCombo.SelectionChanged += (s, e) =>
             {
                 if (pauseCombo.SelectedIndex < 0) return;
@@ -207,17 +207,17 @@ public partial class SettingsHandler
         var key = HotkeyManager.FormatHotkeyDisplay(ViewModel.Settings.RhiOverlayHotkey);
         if (!ViewModel.Settings.RhiOverlayEnabled)
         {
-            _rhiOverlayStatus.Text = "The overlay is off.";
+            _rhiOverlayStatus.Text = "오버레이가 꺼져 있습니다.";
             _rhiOverlayStatus.Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush);
         }
         else if (_window.RhiOverlayHotkeyActive)
         {
-            _rhiOverlayStatus.Text = $"Press {key} in a game to open the overlay.";
+            _rhiOverlayStatus.Text = $"게임에서 {key}을(를) 누르면 오버레이가 열립니다.";
             _rhiOverlayStatus.Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush);
         }
         else
         {
-            _rhiOverlayStatus.Text = $"Another program is using {key}. Pick a different key.";
+            _rhiOverlayStatus.Text = $"다른 프로그램이 {key}을(를) 사용 중입니다. 다른 키를 선택하세요.";
             _rhiOverlayStatus.Foreground = UIFactory.Brush(ResourceKeys.AccentAmberBrush);
         }
     }
@@ -243,7 +243,7 @@ public partial class SettingsHandler
             {
                 if (_rhiOverlayStatus != null)
                 {
-                    _rhiOverlayStatus.Text = "Use the key with Ctrl or Alt (or Shift with an F key), so games and other programs still get the key on its own.";
+                    _rhiOverlayStatus.Text = "게임과 다른 프로그램이 키 단독 입력을 계속 받을 수 있도록 Ctrl 또는 Alt(F 키는 Shift)와 함께 사용하세요.";
                     _rhiOverlayStatus.Foreground = UIFactory.Brush(ResourceKeys.AccentAmberBrush);
                 }
                 return;

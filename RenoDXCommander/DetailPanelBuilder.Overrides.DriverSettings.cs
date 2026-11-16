@@ -58,8 +58,8 @@ public partial class DetailPanelBuilder
         tb.Inlines.Add(new Microsoft.UI.Xaml.Documents.Run
         {
             Text = elevated
-                ? "✓ Running as admin — all driver profile settings are writable."
-                : "⚠ Admin rights required to write driver profile settings. Enable Admin Mode in Settings or restart as admin.",
+                ? "✓ 관리자 권한으로 실행 중 — 모든 드라이버 프로필 설정을 변경할 수 있습니다."
+                : "⚠ 드라이버 프로필 설정을 변경하려면 관리자 권한이 필요합니다. 설정에서 관리자 모드를 켜거나 관리자 권한으로 다시 시작하세요.",
             Foreground = UIFactory.Brush(elevated ? ResourceKeys.TextTertiaryBrush : ResourceKeys.AccentAmberDimBrush),
         });
         return tb;
@@ -80,7 +80,7 @@ public partial class DetailPanelBuilder
         // Driver version goes in the collapsed summary, not the title, so the
         // title matches the other sections.
         var driverVer = _dlssPresetService.DriverVersionString;
-        var driverHeaderText = "Driver Settings";
+        var driverHeaderText = "드라이버 설정";
 
         var driverArrow = new TextBlock
         {
@@ -137,8 +137,8 @@ public partial class DetailPanelBuilder
         {
             // No profile data to read: the summary is just the driver version
             if (!string.IsNullOrEmpty(driverVer)
-                && DetailPanelBuilder.MakeSectionSummaryInlines(new[] { ("Driver", (string?)driverVer) },
-                    "NVIDIA driver version.") is { } verTb)
+                && DetailPanelBuilder.MakeSectionSummaryInlines(new[] { ("드라이버", (string?)driverVer) },
+                    "NVIDIA 드라이버 버전.") is { } verTb)
             {
                 verTb.Tag = DriverSummaryTag;
                 verTb.Visibility = driverCollapsed ? Visibility.Visible : Visibility.Collapsed;
@@ -273,28 +273,28 @@ public partial class DetailPanelBuilder
                     _driverHeaderRow.Children.RemoveAt(i);
 
             var vsyncName = DlssPresetService.VSyncModeOptions
-                .FirstOrDefault(o => o.Value == data.VSyncMode).Name ?? "Default";
-            var smoothName = data.SmoothMotionEnable != 0 ? "On" : null;
+                .FirstOrDefault(o => o.Value == data.VSyncMode).Name ?? "기본값";
+            var smoothName = data.SmoothMotionEnable != 0 ? "켜짐" : null;
             // ReBarEnableMode: 0=Off, 1=Auto (default), 2=On
-            var rebarName = data.ReBarEnableMode == 2 ? "On"
-                          : data.ReBarEnableMode == 0 ? "Off"
+            var rebarName = data.ReBarEnableMode == 2 ? "켜짐"
+                          : data.ReBarEnableMode == 0 ? "꺼짐"
                           : null; // Auto = default, omit from summary
 
             var summaryEntries = new System.Collections.Generic.List<(string, string?)>();
             if (!string.IsNullOrEmpty(_driverSummaryVer))
-                summaryEntries.Add(("Driver", _driverSummaryVer));
+                summaryEntries.Add(("드라이버", _driverSummaryVer));
             summaryEntries.Add(("VSync", vsyncName));
             if (smoothName != null)
                 summaryEntries.Add(("Smooth", smoothName));
             if (rebarName != null)
                 summaryEntries.Add(("ReBAR", rebarName));
             if (!data.PerGameGSyncEnabled)
-                summaryEntries.Add(("G-Sync", "Off"));
+                summaryEntries.Add(("G-Sync", "꺼짐"));
             if (data.PerGameFpsLimit is uint capFps)
-                summaryEntries.Add(("FPS Limit", capFps == 0 ? "Off" : $"{capFps}"));
+                summaryEntries.Add(("FPS 제한", capFps == 0 ? "꺼짐" : $"{capFps}"));
             var summaryTb = DetailPanelBuilder.MakeSectionSummaryInlines(summaryEntries,
-                "NVIDIA driver version and this game's driver profile settings.\n"
-                + "VSync is always shown. Smooth (Smooth Motion), ReBAR, G-Sync and FPS Limit appear only when they differ from the default.");
+                "NVIDIA 드라이버 버전과 이 게임의 드라이버 프로필 설정입니다.\n"
+                + "VSync는 항상 표시됩니다. Smooth(Smooth Motion), ReBAR, G-Sync, FPS 제한은 기본값과 다를 때만 표시됩니다.");
             if (summaryTb != null)
             {
                 summaryTb.Tag = DriverSummaryTag;
@@ -348,12 +348,12 @@ public partial class DetailPanelBuilder
             // ── Column 0: VSync ──
             var vsyncCol = new StackPanel { Spacing = 4 };
             var vsyncLabel = new TextBlock { Text = "VSync", FontSize = 11, Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush) };
-            ToolTipService.SetToolTip(vsyncLabel, "Vertical Sync settings — controls how the driver synchronizes frame rendering with your display's refresh rate.");
+            ToolTipService.SetToolTip(vsyncLabel, "수직 동기화 설정 — 드라이버가 프레임 렌더링을 디스플레이 주사율에 맞추는 방식을 제어합니다.");
             vsyncCol.Children.Add(vsyncLabel);
 
             // VSync Mode
             {
-                vsyncCol.Children.Add(new TextBlock { Text = "Mode", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) });
+                vsyncCol.Children.Add(new TextBlock { Text = "모드", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) });
                 var options = DlssPresetService.VSyncModeOptions;
                 uint current = d.VSyncMode;
                 var globalVSync = d.GlobalVSyncMode;
@@ -361,7 +361,7 @@ public partial class DetailPanelBuilder
                 var itemsList = new List<string>();
                 if (globalVSync.HasValue)
                 {
-                    var globalName = options.FirstOrDefault(o => o.Value == globalVSync.Value).Name ?? "App Controlled";
+                    var globalName = options.FirstOrDefault(o => o.Value == globalVSync.Value).Name ?? "앱 제어";
                     itemsList.Add($"Global ({globalName})");
                 }
                 itemsList.AddRange(options.Select(o => o.Name));
@@ -391,8 +391,8 @@ public partial class DetailPanelBuilder
                     MaxDropDownHeight = 300,
                 };
                 ToolTipService.SetToolTip(combo, globalVSync.HasValue
-                    ? "Global = inherit from global setting. App Controlled: let the game decide. Force Off: disables VSync. Force On: locks to refresh rate. Fast Sync: renders freely, displays latest complete frame."
-                    : "VSync Mode — App Controlled: let the game decide. Force Off: disables VSync entirely. Force On: locks to refresh rate. Fast Sync: renders freely, displays latest complete frame.");
+                    ? "Global = 전역 설정을 따릅니다. 앱 제어: 게임이 결정합니다. 강제 끄기: VSync를 끕니다. 강제 켜기: 주사율에 고정합니다. Fast Sync: 자유롭게 렌더링하고 가장 최근에 완성된 프레임을 표시합니다."
+                    : "VSync 모드 — 앱 제어: 게임이 결정합니다. 강제 끄기: VSync를 완전히 끕니다. 강제 켜기: 주사율에 고정합니다. Fast Sync: 자유롭게 렌더링하고 가장 최근에 완성된 프레임을 표시합니다.");
                 var init = true;
                 combo.SelectionChanged += (s, ev) =>
                 {
@@ -422,7 +422,7 @@ public partial class DetailPanelBuilder
 
             // VSync Tear Control
             {
-                vsyncCol.Children.Add(new TextBlock { Text = "Tear Control", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) });
+                vsyncCol.Children.Add(new TextBlock { Text = "티어링 제어", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) });
                 var options = DlssPresetService.VSyncTearControlOptions;
                 uint current = d.VSyncTearControl;
                 var items = options.Select(o => o.Name).ToArray();
@@ -437,7 +437,7 @@ public partial class DetailPanelBuilder
                     CornerRadius = new CornerRadius(6),
                     MaxDropDownHeight = 300,
                 };
-                ToolTipService.SetToolTip(combo, "VSync Tear Control — Standard: normal VSync behavior. Adaptive: VSync on when FPS ≥ refresh rate, off when below (reduces stuttering at low FPS).");
+                ToolTipService.SetToolTip(combo, "VSync 티어링 제어 — 표준: 일반 VSync 동작. 적응형: FPS가 주사율 이상이면 VSync 켜짐, 미만이면 꺼짐 (낮은 FPS에서 끊김 감소).");
                 var init = true;
                 combo.SelectionChanged += (s, ev) =>
                 {
@@ -453,7 +453,7 @@ public partial class DetailPanelBuilder
 
             // Low Latency Mode (in VSync column)
             {
-                var lowLatencyLabel = new TextBlock { Text = "Low Latency", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) };
+                var lowLatencyLabel = new TextBlock { Text = "저지연", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) };
                 vsyncCol.Children.Add(lowLatencyLabel);
                 var options = DlssPresetService.LowLatencyModeOptions;
                 uint current = d.LowLatencyMode;
@@ -467,7 +467,7 @@ public partial class DetailPanelBuilder
                 // so the reason goes on the visible label above it.
                 if (latencyLocked)
                     ToolTipService.SetToolTip(lowLatencyLabel,
-                        "Low Latency is locked to Ultra while Smooth Motion is on. Turn Smooth Motion Off to change this.");
+                        "Smooth Motion이 켜져 있는 동안 저지연은 Ultra로 고정됩니다. 변경하려면 Smooth Motion을 끄세요.");
                 var combo2 = new ComboBox
                 {
                     ItemsSource = items,
@@ -480,8 +480,8 @@ public partial class DetailPanelBuilder
                     Opacity = latencyLocked ? 0.4 : 1.0,
                 };
                 ToolTipService.SetToolTip(combo2, latencyLocked
-                    ? "Low Latency is locked to Ultra while Smooth Motion is enabled. Turn off Smooth Motion to change this setting."
-                    : "Low Latency Mode — Off: game controls frame queue. On: limits pre-rendered frames to 1 (lower latency). Ultra: just-in-time frame submission (lowest latency, may reduce FPS slightly).");
+                    ? "Smooth Motion이 켜져 있는 동안 저지연은 Ultra로 고정됩니다. 이 설정을 변경하려면 Smooth Motion을 끄세요."
+                    : "저지연 모드 — 꺼짐: 게임이 프레임 대기열을 제어합니다. 켜짐: 미리 렌더링된 프레임을 1개로 제한합니다 (지연 감소). Ultra: 적시 프레임 제출 (최저 지연, FPS가 약간 감소할 수 있음).");
                 var init2 = true;
                 combo2.SelectionChanged += (s, ev) =>
                 {
@@ -503,13 +503,13 @@ public partial class DetailPanelBuilder
             // ── Column 4: Smooth Motion ──
             var smoothCol = new StackPanel { Spacing = 4 };
             var smoothLabel = new TextBlock { Text = "Smooth Motion", FontSize = 11, Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush) };
-            ToolTipService.SetToolTip(smoothLabel, "NVIDIA Smooth Motion — driver-level frame generation. Adds interpolated frames for smoother visuals. RTX 40 Series+ required.");
+            ToolTipService.SetToolTip(smoothLabel, "NVIDIA Smooth Motion — 드라이버 수준 프레임 생성. 보간 프레임을 추가해 화면을 더 부드럽게 만듭니다. RTX 40 시리즈 이상 필요.");
             smoothCol.Children.Add(smoothLabel);
 
             // Enable
             bool smoothMotionEnabled;
             {
-                smoothCol.Children.Add(new TextBlock { Text = "Enable", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) });
+                smoothCol.Children.Add(new TextBlock { Text = "사용", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) });
                 var options = DlssPresetService.SmoothMotionEnableOptions;
                 uint current = d.SmoothMotionEnable;
                 smoothMotionEnabled = current != 0;
@@ -525,7 +525,7 @@ public partial class DetailPanelBuilder
                     CornerRadius = new CornerRadius(6),
                     MaxDropDownHeight = 300,
                 };
-                ToolTipService.SetToolTip(combo, "Smooth Motion Enable — Off: disabled. On: enables driver-level frame generation (RTX 40 Series+ only).");
+                ToolTipService.SetToolTip(combo, "Smooth Motion 사용 — 꺼짐: 사용 안 함. 켜짐: 드라이버 수준 프레임 생성 사용 (RTX 40 시리즈 이상 전용).");
                 var init = true;
                 combo.SelectionChanged += (s, ev) =>
                 {
@@ -570,9 +570,9 @@ public partial class DetailPanelBuilder
 
             // APIs
             {
-                var apisLabel = new TextBlock { Text = "Allowed APIs", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) };
+                var apisLabel = new TextBlock { Text = "허용 API", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) };
                 if (!smoothMotionEnabled)
-                    ToolTipService.SetToolTip(apisLabel, "Turn Smooth Motion On to change this.");
+                    ToolTipService.SetToolTip(apisLabel, "변경하려면 Smooth Motion을 켜세요.");
                 smoothCol.Children.Add(apisLabel);
                 var options = DlssPresetService.SmoothMotionApisOptions;
                 uint current = d.SmoothMotionApis;
@@ -590,7 +590,7 @@ public partial class DetailPanelBuilder
                     IsEnabled = smoothMotionEnabled,
                     Opacity = smoothMotionEnabled ? 1.0 : 0.4,
                 };
-                ToolTipService.SetToolTip(combo, "Smooth Motion APIs — which graphics APIs Smooth Motion is allowed to hook. None = disabled for all APIs.");
+                ToolTipService.SetToolTip(combo, "Smooth Motion API — Smooth Motion이 후킹할 수 있는 그래픽 API입니다. 없음 = 모든 API에서 사용 안 함.");
                 var init = true;
                 combo.SelectionChanged += (s, ev) =>
                 {
@@ -606,9 +606,9 @@ public partial class DetailPanelBuilder
 
             // Flip Pacing (combined — sets both Fullscreen and Windowed together)
             {
-                var flipPacingLabel = new TextBlock { Text = "Flip Pacing", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) };
+                var flipPacingLabel = new TextBlock { Text = "플립 페이싱", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) };
                 if (!smoothMotionEnabled)
-                    ToolTipService.SetToolTip(flipPacingLabel, "Turn Smooth Motion On to change this.");
+                    ToolTipService.SetToolTip(flipPacingLabel, "변경하려면 Smooth Motion을 켜세요.");
                 smoothCol.Children.Add(flipPacingLabel);
                 var options = DlssPresetService.SmoothMotionFlipPacingFsOptions;
                 uint current = d.SmoothMotionFlipPacingFs;
@@ -626,7 +626,7 @@ public partial class DetailPanelBuilder
                     IsEnabled = smoothMotionEnabled,
                     Opacity = smoothMotionEnabled ? 1.0 : 0.4,
                 };
-                ToolTipService.SetToolTip(combo, "Flip Pacing — Off: prioritize lower latency. On: prioritize smoother frame pacing. Sets both fullscreen and windowed modes together.");
+                ToolTipService.SetToolTip(combo, "플립 페이싱 — 꺼짐: 낮은 지연 우선. 켜짐: 부드러운 프레임 페이싱 우선. 전체 화면과 창 모드를 함께 설정합니다.");
                 var init = true;
                 combo.SelectionChanged += (s, ev) =>
                 {
@@ -653,13 +653,13 @@ public partial class DetailPanelBuilder
 
             // ── Column 6: Other (Power, G-Sync, FPS Limit) ──
             var powerCol = new StackPanel { Spacing = 4 };
-            var powerLabel = new TextBlock { Text = "Other", FontSize = 11, Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush) };
-            ToolTipService.SetToolTip(powerLabel, "Power management, G-Sync control and the driver frame rate limit for this game.");
+            var powerLabel = new TextBlock { Text = "기타", FontSize = 11, Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush) };
+            ToolTipService.SetToolTip(powerLabel, "이 게임의 전원 관리, G-Sync 제어, 드라이버 프레임 속도 제한입니다.");
             powerCol.Children.Add(powerLabel);
 
             // Power Management Mode
             {
-                powerCol.Children.Add(new TextBlock { Text = "Power Mode", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) });
+                powerCol.Children.Add(new TextBlock { Text = "전원 모드", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) });
                 var options = DlssPresetService.PowerManagementOptions;
                 uint current = d.PowerManagementMode;
                 var items = options.Select(o => o.Name).ToArray();
@@ -674,7 +674,7 @@ public partial class DetailPanelBuilder
                     CornerRadius = new CornerRadius(6),
                     MaxDropDownHeight = 300,
                 };
-                ToolTipService.SetToolTip(combo, "Power Management — Adaptive: GPU clocks down at idle. Maximum: locks GPU to highest clocks. Optimal: balanced (NVIDIA recommended).");
+                ToolTipService.SetToolTip(combo, "전원 관리 — 적응형: 유휴 시 GPU 클럭을 낮춥니다. 최대: GPU를 최고 클럭에 고정합니다. 최적: 균형 (NVIDIA 권장).");
                 var init = true;
                 combo.SelectionChanged += (s, ev) =>
                 {
@@ -694,14 +694,14 @@ public partial class DetailPanelBuilder
                 bool gsyncEnabled = d.PerGameGSyncEnabled;
                 var gsyncCombo = new ComboBox
                 {
-                    ItemsSource = new[] { "Enabled", "Disabled" },
+                    ItemsSource = new[] { "켜짐", "꺼짐" },
                     SelectedIndex = gsyncEnabled ? 0 : 1,
                     FontSize = 11,
                     HorizontalAlignment = HorizontalAlignment.Stretch,
                     CornerRadius = new CornerRadius(6),
                     MaxDropDownHeight = 300,
                 };
-                ToolTipService.SetToolTip(gsyncCombo, "Per-game G-Sync control. Disabled forces G-Sync off for this game regardless of global setting.");
+                ToolTipService.SetToolTip(gsyncCombo, "게임별 G-Sync 제어. 꺼짐으로 설정하면 전역 설정과 관계없이 이 게임에서 G-Sync를 끕니다.");
                 var gsyncInit = true;
                 gsyncCombo.SelectionChanged += (s, ev) =>
                 {
@@ -720,7 +720,7 @@ public partial class DetailPanelBuilder
 
             // Per-game FPS limit (FPS Limiter V3). "Global" removes the game's own value so it follows the Settings page limit.
             {
-                powerCol.Children.Add(new TextBlock { Text = "FPS Limit", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) });
+                powerCol.Children.Add(new TextBlock { Text = "FPS 제한", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) });
                 var presets = DlssPresetService.FpsLimiterPresets;
                 var globalFps = d.GlobalFpsLimit;
                 var globalItem = globalFps == 0 ? "Global (Off)" : $"Global ({globalFps} FPS)";
@@ -750,9 +750,9 @@ public partial class DetailPanelBuilder
                 };
                 bool hasFrameLimiter = card.UlStatus is GameStatus.Installed or GameStatus.UpdateAvailable
                                     || card.DcStatus is GameStatus.Installed or GameStatus.UpdateAvailable;
-                var fpsTip = "NVIDIA driver frame rate limit for this game only. Global follows the limit set on the Settings page. Off turns the driver limit off for this game even when a global limit is set.";
+                var fpsTip = "이 게임에만 적용되는 NVIDIA 드라이버 프레임 속도 제한입니다. Global은 설정 페이지에서 지정한 제한을 따릅니다. 꺼짐은 전역 제한이 설정되어 있어도 이 게임의 드라이버 제한을 끕니다.";
                 if (hasFrameLimiter)
-                    fpsTip += "\n\nReLimiter or Display Commander is installed for this game, so RHI set the driver limit to Off. Using both limiters at once can cause stutter.";
+                    fpsTip += "\n\n이 게임에 ReLimiter 또는 Display Commander가 설치되어 있어 RHI가 드라이버 제한을 꺼짐으로 설정했습니다. 두 제한기를 동시에 사용하면 끊김이 생길 수 있습니다.";
                 ToolTipService.SetToolTip(fpsCombo, fpsTip);
 
                 var fpsInit = true;
@@ -789,10 +789,10 @@ public partial class DetailPanelBuilder
                         var textBox = new TextBox { PlaceholderText = "20-1000", FontSize = 13 };
                         var dialog = new ContentDialog
                         {
-                            Title = "Custom FPS Limit",
+                            Title = "사용자 지정 FPS 제한",
                             Content = textBox,
-                            PrimaryButtonText = "Set",
-                            CloseButtonText = "Cancel",
+                            PrimaryButtonText = "설정",
+                            CloseButtonText = "취소",
                             XamlRoot = fpsCombo.XamlRoot ?? _window.Content.XamlRoot,
                             RequestedTheme = ElementTheme.Dark,
                         };
@@ -826,7 +826,7 @@ public partial class DetailPanelBuilder
             // Restore Profile Defaults button — sits in the footer row under this column
             var restoreProfileBtn = new Button
             {
-                Content = "Restore Defaults",
+                Content = "기본값 복원",
                 FontSize = 11,
                 Height = 32,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -838,21 +838,21 @@ public partial class DetailPanelBuilder
                 IsEnabled = nvidiaPresetService.IsSupported,
             };
             ToolTipService.SetToolTip(restoreProfileBtn,
-                "Restore this game's NVIDIA driver profile to factory defaults. Removes all custom settings (presets, render scale, MFG, driver overrides). This action is irreversible.");
+                "이 게임의 NVIDIA 드라이버 프로필을 공장 기본값으로 복원합니다. 모든 사용자 지정 설정(프리셋, 렌더 배율, MFG, 드라이버 재정의)이 제거됩니다. 이 작업은 되돌릴 수 없습니다.");
             restoreProfileBtn.Click += async (s, ev) =>
             {
                 var xamlRoot = (s as FrameworkElement)?.XamlRoot ?? _window.Content.XamlRoot;
                 var warningDialog = new ContentDialog
                 {
-                    Title = "Restore driver settings?",
+                    Title = "드라이버 설정을 복원할까요?",
                     Content = new TextBlock
                     {
-                        Text = $"This will restore driver settings for {capturedName} back to the factory default and restore DLSS/Streamline DLLs to their original versions. This action is irreversible.",
+                        Text = $"{capturedName}의 드라이버 설정을 공장 기본값으로 복원하고 DLSS/Streamline DLL을 원래 버전으로 되돌립니다. 이 작업은 되돌릴 수 없습니다.",
                         TextWrapping = TextWrapping.Wrap,
                         FontSize = 13,
                     },
-                    PrimaryButtonText = "Restore",
-                    CloseButtonText = "Cancel",
+                    PrimaryButtonText = "복원",
+                    CloseButtonText = "취소",
                     XamlRoot = xamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 };
@@ -886,7 +886,7 @@ public partial class DetailPanelBuilder
             // ── Column 8: ReBAR ──
             var rebarCol = new StackPanel { Spacing = 4 };
             var rebarLabel = new TextBlock { Text = "ReBAR", FontSize = 11, Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush) };
-            ToolTipService.SetToolTip(rebarLabel, "Resizable BAR — allows the CPU to access full GPU VRAM at once. Can improve performance by 5-10% in some titles. RTX 30+ and BIOS support required.");
+            ToolTipService.SetToolTip(rebarLabel, "Resizable BAR — CPU가 GPU VRAM 전체에 한 번에 접근할 수 있게 합니다. 일부 게임에서 성능이 5-10% 향상될 수 있습니다. RTX 30 이상 및 BIOS 지원 필요.");
             rebarCol.Children.Add(rebarLabel);
 
             bool rebarEnabled = false; // set inside Enable block below
@@ -894,7 +894,7 @@ public partial class DetailPanelBuilder
 
             // Enable — Auto (Default) / Off / On using new 0x000BFA21 setting
             {
-                rebarCol.Children.Add(new TextBlock { Text = "Enable", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) });
+                rebarCol.Children.Add(new TextBlock { Text = "사용", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) });
 
                 uint rebarEnableMode = d.ReBarEnableMode;
                 // 0=Off→index 1, 1=Auto→index 0, 2=On→index 2
@@ -902,14 +902,14 @@ public partial class DetailPanelBuilder
 
                 var rebarEnableCombo = new ComboBox
                 {
-                    ItemsSource = new[] { "Auto (Default)", "Off", "On" },
+                    ItemsSource = new[] { "자동 (기본값)", "꺼짐", "켜짐" },
                     SelectedIndex = enableIdx,
                     FontSize = 11,
                     HorizontalAlignment = HorizontalAlignment.Stretch,
                     CornerRadius = new CornerRadius(6),
                     MaxDropDownHeight = 300,
                 };
-                ToolTipService.SetToolTip(rebarEnableCombo, "Auto = driver decides. On = force-enable ReBAR. Off = force-disable ReBAR.");
+                ToolTipService.SetToolTip(rebarEnableCombo, "자동 = 드라이버가 결정. 켜짐 = ReBAR 강제 사용. 꺼짐 = ReBAR 강제 사용 안 함.");
                 var rebarComboInit = true;
                 rebarEnableCombo.SelectionChanged += (s, ev) =>
                 {
@@ -930,9 +930,9 @@ public partial class DetailPanelBuilder
 
             // Mode
             {
-                var rebarModeLabel = new TextBlock { Text = "Mode", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) };
+                var rebarModeLabel = new TextBlock { Text = "모드", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) };
                 if (!rebarEnabled)
-                    ToolTipService.SetToolTip(rebarModeLabel, "Set ReBAR Enable to On to change this.");
+                    ToolTipService.SetToolTip(rebarModeLabel, "변경하려면 ReBAR 사용을 켜짐으로 설정하세요.");
                 rebarCol.Children.Add(rebarModeLabel);
                 uint rebarMode = d.ReBarMode;
                 var modeItems = DlssPresetService.ReBarModes.Select(m => m.Name).ToList();
@@ -952,7 +952,7 @@ public partial class DetailPanelBuilder
                     IsEnabled = rebarEnabled,
                     Opacity = rebarEnabled ? 1.0 : 0.4,
                 };
-                ToolTipService.SetToolTip(rebarModeCombo, "Standard = conservative. Optimized = aggressive driver scheduling (used by NVIDIA-whitelisted titles).");
+                ToolTipService.SetToolTip(rebarModeCombo, "표준 = 보수적. 최적화 = 적극적인 드라이버 스케줄링 (NVIDIA 화이트리스트 게임에서 사용).");
                 var modeComboInit = true;
                 rebarModeCombo.SelectionChanged += (s, ev) =>
                 {
@@ -968,9 +968,9 @@ public partial class DetailPanelBuilder
 
             // Size Limit — always shows actual size values (no Global option)
             {
-                var rebarSizeLabel = new TextBlock { Text = "Size Limit", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) };
+                var rebarSizeLabel = new TextBlock { Text = "크기 제한", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) };
                 if (!rebarEnabled)
-                    ToolTipService.SetToolTip(rebarSizeLabel, "Set ReBAR Enable to On to change this.");
+                    ToolTipService.SetToolTip(rebarSizeLabel, "변경하려면 ReBAR 사용을 켜짐으로 설정하세요.");
                 rebarCol.Children.Add(rebarSizeLabel);
 
                 var sizeItems = new List<string>();
@@ -999,7 +999,7 @@ public partial class DetailPanelBuilder
                     IsEnabled = rebarEnabled,
                     Opacity = rebarEnabled ? 1.0 : 0.4,
                 };
-                ToolTipService.SetToolTip(rebarSizeCombo, "1GB is optimal for most games. Decrease to 512MB if experiencing ReBAR-related stutters.");
+                ToolTipService.SetToolTip(rebarSizeCombo, "대부분의 게임에서는 1GB가 최적입니다. ReBAR 관련 끊김이 있으면 512MB로 낮추세요.");
                 var sizeComboInit = true;
                 rebarSizeCombo.SelectionChanged += (s, ev) =>
                 {

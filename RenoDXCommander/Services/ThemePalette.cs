@@ -23,15 +23,15 @@ public sealed record ThemePalette(
     /// <summary>The colours Custom lets the user pick, in the order shown in Settings (internal name, label).</summary>
     public static readonly (string Key, string Label)[] CustomKeys =
     {
-        ("Background", "Background"),
-        ("Panel", "Panels"),
-        ("Text", "Text"),
-        ("Accent", "Accent"),
-        ("Buttons", "Buttons"),
-        ("Installed", "Installed"),
-        ("Update", "Update available"),
-        ("Warning", "Warning"),
-        ("Error", "Error"),
+        ("Background", "배경"),
+        ("Panel", "패널"),
+        ("Text", "텍스트"),
+        ("Accent", "강조"),
+        ("Buttons", "버튼"),
+        ("Installed", "설치됨"),
+        ("Update", "업데이트 있음"),
+        ("Warning", "경고"),
+        ("Error", "오류"),
     };
 
     public Color Get(string key) => key switch
@@ -183,23 +183,23 @@ public static class ThemePresets
     /// except in Colour-blind Friendly, which swaps them for colours that stay distinct with red-green colour blindness.</summary>
     public static readonly IReadOnlyList<ThemePreset> All = new[]
     {
-        new ThemePreset(DefaultId, "Default", ThemePalette.Default),
-        new ThemePreset("OledBlack", "OLED Black",
+        new ThemePreset(DefaultId, "기본값", ThemePalette.Default),
+        new ThemePreset("OledBlack", "OLED 블랙",
             P("#000000", "#0A0C0F", "#1E242C", "#66717F", "#E8ECF2", "#4DC9E6", "#7AACDD", "#5ECB7D", "#B898E8", "#D4A856", "#E07070")),
-        new ThemePreset("MidnightBlue", "Midnight Blue",
+        new ThemePreset("MidnightBlue", "미드나이트 블루",
             P("#0B1020", "#111830", "#22305A", "#6A7BA8", "#E6ECFF", "#6AA8FF", "#8AB4FF", "#5ECB7D", "#B898E8", "#D4A856", "#E07070")),
-        new ThemePreset("Ember", "Ember",
+        new ThemePreset("Ember", "엠버",
             P("#161210", "#1E1814", "#3A2E26", "#8A7A6E", "#F2EAE4", "#FF9A4D", "#E8A070", "#5ECB7D", "#C8A0E8", "#E8D060", "#E87070")),
-        new ThemePreset("Forest", "Forest",
+        new ThemePreset("Forest", "포레스트",
             P("#0F1512", "#141C17", "#24332A", "#6E8577", "#E6F0EA", "#7FD6C2", "#9CC4A8", "#5ECB7D", "#B898E8", "#D4A856", "#E07070")),
         // Kiro: the colours of the Kiro IDE's dark theme (replaced Violet; a saved "Violet" choice opens as Kiro)
         new ThemePreset("Kiro", "Kiro",
             P("#19161D", "#211D25", "#38343B", "#938F9B", "#F4F2F7", "#A97AF4", "#9E61FF", "#80FFB5", "#F38BC8", "#F1C587", "#E5737A")),
-        new ThemePreset("Slate", "Slate",
+        new ThemePreset("Slate", "슬레이트",
             P("#141414", "#1C1C1C", "#303030", "#7A7A7A", "#ECECEC", "#9AB8D0", "#A8B4C4", "#5ECB7D", "#B898E8", "#D4A856", "#E07070")),
-        new ThemePreset("HighContrast", "High Contrast",
+        new ThemePreset("HighContrast", "고대비",
             P("#000000", "#0A0A0A", "#5A6475", "#A8B2C0", "#FFFFFF", "#5FE0FF", "#9CC8FF", "#6CF08E", "#D2B4FF", "#FFD060", "#FF7A7A")),
-        new ThemePreset("ColourBlind", "Colour-blind Friendly",
+        new ThemePreset("ColourBlind", "색각 이상 친화",
             P("#121518", "#181D23", "#283240", "#6B7A8E", "#E8ECF2", "#4DC9E6", "#A8B4D0", "#4FA3E8", "#CC79A7", "#F0E442", "#E8743B")),
     };
 

@@ -37,22 +37,22 @@ public partial class SettingsHandler
             var outer = new StackPanel { Spacing = 10 };
             card.Child = outer;
             var head = new StackPanel { Spacing = 3 };
-            head.Children.Add(new TextBlock { Text = "Display modes", Style = FindStyle("SettingsCardTitleStyle") });
+            head.Children.Add(new TextBlock { Text = "디스플레이 모드", Style = FindStyle("SettingsCardTitleStyle") });
             head.Children.Add(new TextBlock
             {
-                Text = "Save sets of the settings RHI applies to a game and switch between them from its page, e.g. one for your monitor and one for your TV, "
-                     + "or for trying different setups. Modes don't change your display themselves. Set a mode's values with Edit... "
-                     + "(peak brightness, frame rate caps, keys, DLSS settings, DLDSR, HDR and resolution on launch, ...): every game you switch to that mode gets them. "
-                     + "For different values in one game, make it a Custom mode with the ⚙ beside its mode switch.",
+                Text = "RHI가 게임에 적용하는 설정 묶음을 저장하고 게임 페이지에서 전환할 수 있습니다. 예를 들어 모니터용 하나, TV용 하나를 두거나 "
+                     + "여러 구성을 시험해 볼 때 사용하세요. 모드 자체가 디스플레이를 변경하지는 않습니다. 모드 값은 편집...에서 설정합니다 "
+                     + "(최대 밝기, 프레임 제한, 단축키, DLSS 설정, DLDSR, 실행 시 HDR 및 해상도 등): 해당 모드로 전환한 모든 게임에 적용됩니다. "
+                     + "특정 게임에만 다른 값을 쓰려면 모드 전환 옆의 ⚙로 사용자 지정 모드를 만드세요.",
                 Style = FindStyle("SettingsCardDescStyle"),
                 TextWrapping = TextWrapping.Wrap,
             });
             outer.Children.Add(head);
             outer.Children.Add(new TextBlock
             {
-                Text = "A game set to a mode keeps its own values for what it swaps, so settings elsewhere in RHI that write to every game "
-                     + "(peak brightness, frame rate cap, keys) skip it. Click the game's active mode again (or pick Off) to turn its mode off: "
-                     + "it goes back to your global settings. New games start with their mode off.",
+                Text = "모드가 설정된 게임은 모드가 바꾸는 항목에 대해 자체 값을 유지하므로, RHI의 다른 곳에서 모든 게임에 적용하는 설정"
+                     + "(최대 밝기, 프레임 제한, 단축키)은 해당 게임을 건너뜁니다. 게임의 활성 모드를 다시 클릭하거나 꺼짐을 선택하면 모드가 꺼지고 "
+                     + "전역 설정으로 돌아갑니다. 새 게임은 모드가 꺼진 상태로 시작합니다.",
                 Style = FindStyle("SettingsNoteStyle"),
                 Foreground = UIFactory.Brush(ResourceKeys.AccentAmberBrush),
                 TextWrapping = TextWrapping.Wrap,
@@ -88,21 +88,21 @@ public partial class SettingsHandler
 
         // ── On / off ──
         var onCombo = new ComboBox { Style = FindStyle("SettingsComboStyle") };
-        onCombo.Items.Add(new ComboBoxItem { Content = "Off" });
-        onCombo.Items.Add(new ComboBoxItem { Content = "On" });
+        onCombo.Items.Add(new ComboBoxItem { Content = "꺼짐" });
+        onCombo.Items.Add(new ComboBoxItem { Content = "켜짐" });
         onCombo.SelectedIndex = vm.DisplayModesOn ? 1 : 0;
-        ToolTipService.SetToolTip(onCombo, "On shows the mode switch on game pages (Classic+, Tabs and Spotlight), beside the HDR and resolution buttons, "
-            + "and in the game menu. Off hides it; games keep the settings they have now.");
-        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(onCombo, "Display modes");
+        ToolTipService.SetToolTip(onCombo, "켜짐이면 게임 페이지(Classic+, Tabs, Spotlight)의 HDR 및 해상도 버튼 옆과 "
+            + "게임 메뉴에 모드 전환이 표시됩니다. 꺼짐이면 숨겨지며 게임은 현재 설정을 유지합니다.");
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(onCombo, "디스플레이 모드");
         onCombo.SelectionChanged += (s, e) =>
         {
             if (onCombo.SelectedIndex < 0) return;
             vm.SetDisplayModesEnabled(onCombo.SelectedIndex == 1);
         };
-        _dmBody.Children.Add(SettingRow("Show on game pages", onCombo));
+        _dmBody.Children.Add(SettingRow("게임 페이지에 표시", onCombo));
 
         // ── Modes ──
-        _dmBody.Children.Add(new TextBlock { Text = "Modes", Style = FindStyle("SettingsHeadStyle") });
+        _dmBody.Children.Add(new TextBlock { Text = "모드", Style = FindStyle("SettingsHeadStyle") });
         for (int i = 0; i < modes.Count; i++)
         {
             var m = modes[i];
@@ -112,7 +112,7 @@ public partial class SettingsHandler
             int setCount = DisplayModeItems.All.Count(it => store.ModeDefault(m.Id, it.Key) != null);
             var label = new TextBlock
             {
-                Text = setCount == 0 ? $"{m.Name}  (nothing set)" : $"{m.Name}  ({setCount} setting{(setCount == 1 ? "" : "s")})",
+                Text = setCount == 0 ? $"{m.Name}  (설정 없음)" : $"{m.Name}  (설정 {setCount}개)",
                 Style = FindStyle("SettingsLabelStyle"),
                 VerticalAlignment = VerticalAlignment.Center,
                 TextTrimming = TextTrimming.CharacterEllipsis,
@@ -121,60 +121,60 @@ public partial class SettingsHandler
             var buttons = new Controls.WrapPanel { HorizontalSpacing = 6, VerticalSpacing = 6, HorizontalAlignment = HorizontalAlignment.Right };
             var id = m.Id;
             var name = m.Name;
-            buttons.Children.Add(DmButton("Edit...", DmKind.Normal, $"The values every game gets in {name} mode.",
+            buttons.Children.Add(DmButton("편집...", DmKind.Normal, $"{name} 모드에서 모든 게임에 적용되는 값입니다.",
                 async () => await ShowModeDefaultsAsync(id)));
-            buttons.Children.Add(DmButton("Rename", DmKind.Normal, $"Rename {name}", async () =>
+            buttons.Children.Add(DmButton("이름 바꾸기", DmKind.Normal, $"{name} 이름 바꾸기", async () =>
             {
-                var newName = await PromptModeNameAsync("Rename mode", $"New name for {name}:", "Rename", name, id);
-                if (newName != null && vm.RenameDisplayMode(id, newName)) SetDmStatus($"Renamed {name} to {newName}.", false);
+                var newName = await PromptModeNameAsync("모드 이름 바꾸기", $"{name}의 새 이름:", "이름 바꾸기", name, id);
+                if (newName != null && vm.RenameDisplayMode(id, newName)) SetDmStatus($"{name}의 이름을 {newName}(으)로 바꿨습니다.", false);
             }));
             // Both always shown (greyed at the ends) so the rows line up
-            var up = DmButton("Move up", DmKind.Normal, "Move this mode left on game pages", async () => { vm.MoveDisplayMode(id, -1); await Task.CompletedTask; });
+            var up = DmButton("위로 이동", DmKind.Normal, "게임 페이지에서 이 모드를 왼쪽으로 이동", async () => { vm.MoveDisplayMode(id, -1); await Task.CompletedTask; });
             up.IsEnabled = i > 0;
             buttons.Children.Add(up);
-            var down = DmButton("Move down", DmKind.Normal, "Move this mode right on game pages", async () => { vm.MoveDisplayMode(id, 1); await Task.CompletedTask; });
+            var down = DmButton("아래로 이동", DmKind.Normal, "게임 페이지에서 이 모드를 오른쪽으로 이동", async () => { vm.MoveDisplayMode(id, 1); await Task.CompletedTask; });
             down.IsEnabled = i < modes.Count - 1;
             buttons.Children.Add(down);
             if (modes.Count > 1)
-                buttons.Children.Add(DmButton("Delete", DmKind.Danger, $"Delete {name}. Games in it have their mode turned off (back to your global settings).", async () =>
+                buttons.Children.Add(DmButton("삭제", DmKind.Danger, $"{name}을(를) 삭제합니다. 이 모드의 게임은 모드가 꺼집니다 (전역 설정으로 돌아감).", async () =>
                 {
-                    if (!await ConfirmAsync("Delete mode",
-                            $"Delete {name}? Games in {name} mode have their mode turned off: they go back to your global settings " +
-                            $"(running games are just set to Off), and the values games remembered for {name} are forgotten.",
-                            "Delete")) return;
+                    if (!await ConfirmAsync("모드 삭제",
+                            $"{name}을(를) 삭제할까요? {name} 모드의 게임은 모드가 꺼지고 전역 설정으로 돌아갑니다 " +
+                            $"(실행 중인 게임은 꺼짐으로만 설정됨). 게임이 {name}에 대해 기억한 값은 삭제됩니다.",
+                            "삭제")) return;
                     var (deleted, turnedOff) = await vm.DeleteDisplayModeAsync(id);
                     if (deleted)
-                        SetDmStatus(turnedOff > 0 ? $"Deleted {name}. {turnedOff} game{(turnedOff == 1 ? "" : "s")} turned off." : $"Deleted {name}.", false);
+                        SetDmStatus(turnedOff > 0 ? $"{name}을(를) 삭제했습니다. 게임 {turnedOff}개의 모드가 꺼졌습니다." : $"{name}을(를) 삭제했습니다.", false);
                 }));
             Grid.SetColumn(buttons, 1);
             row.Children.Add(buttons);
             _dmBody.Children.Add(row);
         }
         var addRow = new Controls.WrapPanel { HorizontalSpacing = 8, VerticalSpacing = 8 };
-        var addBtn = DmButton("Add mode", DmKind.Primary, $"Add another mode (up to {DisplayModeStore.MaxModes}), e.g. Handheld or Projector.", async () =>
+        var addBtn = DmButton("모드 추가", DmKind.Primary, $"모드를 추가합니다 (최대 {DisplayModeStore.MaxModes}개). 예: 휴대용, 프로젝터.", async () =>
         {
-            var newName = await PromptModeNameAsync("Add mode", "Name for the new mode:", "Add", "", null);
+            var newName = await PromptModeNameAsync("모드 추가", "새 모드의 이름:", "추가", "", null);
             if (newName == null) return;
             var newId = vm.AddDisplayMode(newName);
-            if (newId != null) SetDmStatus($"Added {newName}. Set its values with Edit..., or give a game its own values from its page.", false);
+            if (newId != null) SetDmStatus($"{newName}을(를) 추가했습니다. 편집...에서 값을 설정하거나 게임 페이지에서 게임별 값을 지정하세요.", false);
         });
         addBtn.IsEnabled = modes.Count < DisplayModeStore.MaxModes;
         addRow.Children.Add(addBtn);
         _dmBody.Children.Add(addRow);
 
         // ── Switch all ──
-        _dmBody.Children.Add(new TextBlock { Text = "Switch all games", Style = FindStyle("SettingsHeadStyle") });
+        _dmBody.Children.Add(new TextBlock { Text = "모든 게임 전환", Style = FindStyle("SettingsHeadStyle") });
         var allCombo = new ComboBox { Style = FindStyle("SettingsComboStyle"), MinWidth = 140 };
         foreach (var m in modes) allCombo.Items.Add(new ComboBoxItem { Content = m.Name });
-        allCombo.Items.Add(new ComboBoxItem { Content = "Off" }); // last: turns every game's mode off
+        allCombo.Items.Add(new ComboBoxItem { Content = "꺼짐" }); // last: turns every game's mode off
         allCombo.SelectedIndex = 0;
-        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(allCombo, "Mode to switch all games to");
-        var allBtn = DmButton("Switch", DmKind.Primary, "Switch every game to this mode, e.g. for an evening on the TV, or turn every game's mode off. Running and hidden games are skipped.",
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(allCombo, "모든 게임을 전환할 모드");
+        var allBtn = DmButton("전환", DmKind.Primary, "모든 게임을 이 모드로 전환하거나(예: 저녁에 TV로 플레이할 때) 모든 게임의 모드를 끕니다. 실행 중이거나 숨긴 게임은 건너뜁니다.",
             async () =>
             {
                 int i = allCombo.SelectedIndex;
                 if (i < 0 || i > modes.Count) return;
-                if (i == modes.Count) await SwitchAllAsync(null, "Off");
+                if (i == modes.Count) await SwitchAllAsync(null, "꺼짐");
                 else await SwitchAllAsync(modes[i].Id, modes[i].Name);
             });
         allBtn.IsEnabled = vm.DisplayModesOn;
@@ -184,12 +184,12 @@ public partial class SettingsHandler
         allGrid.Children.Add(allCombo);
         Grid.SetColumn(allBtn, 1);
         allGrid.Children.Add(allBtn);
-        _dmBody.Children.Add(SettingRow("Switch every game to", allGrid, maxWidth: 300));
+        _dmBody.Children.Add(SettingRow("모든 게임 전환 대상", allGrid, maxWidth: 300));
         _dmBody.Children.Add(new TextBlock
         {
             Text = vm.DisplayModesOn
-                ? "Writes each game's values for that mode (Off: your global settings). Running and hidden games are skipped."
-                : "Turn on Show on game pages first.",
+                ? "각 게임의 해당 모드 값을 기록합니다 (꺼짐: 전역 설정). 실행 중이거나 숨긴 게임은 건너뜁니다."
+                : "먼저 게임 페이지에 표시를 켜세요.",
             Style = FindStyle("SettingsHelpStyle"),
             TextWrapping = TextWrapping.Wrap,
         });
@@ -240,7 +240,7 @@ public partial class SettingsHandler
             catch (Exception ex) when (ex is InvalidOperationException or IOException or UnauthorizedAccessException or System.Runtime.InteropServices.COMException)
             {
                 CrashReporter.Log($"[SettingsHandler.DisplayModes] '{text}' failed — {ex.Message}");
-                SetDmStatus($"{text} failed: {ex.Message}", true);
+                SetDmStatus($"{text} 실패: {ex.Message}", true);
             }
             finally { _dmBusy = false; }
         };
@@ -264,18 +264,18 @@ public partial class SettingsHandler
         var store = vm.DisplayModeStore;
         var name = store.NameOf(modeId);
         if (name == null) return;
-        var cog = new CogDialog($"{name} Mode", _window.Content.XamlRoot);
-        cog.AddIntro($"What every game gets when you switch it to {name} mode. Anything set in any mode is changed by every game, " +
-                     "and a game in a mode without a value for it gets its normal value back (your global setting, or what it had " +
-                     "before display modes). Empty = not set. For different values in one game, make it a Custom mode with the ⚙ beside its mode switch. " +
-                     "Games already in this mode get a change the next time you switch them.");
+        var cog = new CogDialog($"{name} 모드", _window.Content.XamlRoot);
+        cog.AddIntro($"게임을 {name} 모드로 전환할 때 적용되는 값입니다. 어느 모드에서든 설정된 항목은 모든 게임에서 변경되며, " +
+                     "해당 값이 없는 모드의 게임은 원래 값(전역 설정 또는 디스플레이 모드 이전의 값)으로 " +
+                     "돌아갑니다. 비어 있음 = 설정 안 됨. 특정 게임에만 다른 값을 쓰려면 모드 전환 옆의 ⚙로 사용자 지정 모드를 만드세요. " +
+                     "이미 이 모드인 게임은 다음에 전환할 때 변경 사항이 적용됩니다.");
         foreach (var group in DisplayModeItems.Groups)
         {
             cog.AddSection(group);
             foreach (var item in DisplayModeItems.All.Where(i => i.Group == group))
             {
                 var key = item.Key;
-                var editor = DisplayModeEditor.Build(item, store.ModeDefault(modeId, key), "Not set",
+                var editor = DisplayModeEditor.Build(item, store.ModeDefault(modeId, key), "설정 안 됨",
                     v => { vm.SetDisplayModeDefault(modeId, key, v); return Task.FromResult<string?>(null); },
                     (text, error) => { if (error) cog.SetError(text); else cog.SetSuccess(text); });
                 cog.AddRow(item.Label, editor, item.Help);
@@ -290,19 +290,19 @@ public partial class SettingsHandler
     {
         var vm = ViewModel;
         bool off = modeId == null;
-        if (!await ConfirmAsync(off ? "Turn off all games" : "Switch all games",
+        if (!await ConfirmAsync(off ? "모든 게임 모드 끄기" : "모든 게임 전환",
                 off
-                    ? "Turn every game's display mode off? Each game goes back to your global settings (and what it had before modes, " +
-                      "for settings without a global value). What it has now is kept for its current mode. Running and hidden games are skipped."
-                    : $"Switch every game to {modeName} mode? Each game gets its values for {modeName} (what it has now is kept for its current mode). " +
-                      "Running and hidden games are skipped.",
-                off ? "Turn off" : "Switch")) return;
+                    ? "모든 게임의 디스플레이 모드를 끌까요? 각 게임은 전역 설정(전역 값이 없는 설정은 모드 이전의 값)으로 " +
+                      "돌아갑니다. 현재 값은 현재 모드용으로 보존됩니다. 실행 중이거나 숨긴 게임은 건너뜁니다."
+                    : $"모든 게임을 {modeName} 모드로 전환할까요? 각 게임에 {modeName}용 값이 적용됩니다 (현재 값은 현재 모드용으로 보존됨). " +
+                      "실행 중이거나 숨긴 게임은 건너뜁니다.",
+                off ? "끄기" : "전환")) return;
 
-        var text = new TextBlock { Text = "Starting...", TextWrapping = TextWrapping.Wrap };
+        var text = new TextBlock { Text = "시작 중...", TextWrapping = TextWrapping.Wrap };
         var bar = new ProgressBar { Minimum = 0, Maximum = 100, Height = 6 };
         var dialog = new ContentDialog
         {
-            Title = off ? "Turning display modes off" : $"Switching to {modeName}",
+            Title = off ? "디스플레이 모드 끄는 중" : $"{modeName}(으)로 전환 중",
             Content = new StackPanel { Spacing = 12, Width = 380, Children = { text, bar } },
             XamlRoot = _window.Content.XamlRoot,
             RequestedTheme = ElementTheme.Dark,
@@ -314,9 +314,9 @@ public partial class SettingsHandler
             result = await vm.SwitchAllDisplayModesAsync(modeId, progress, _window.LifetimeToken);
         }
         var msg = off
-            ? $"Turned off {result.Switched} game{(result.Switched == 1 ? "" : "s")}."
-            : $"Switched {result.Switched} game{(result.Switched == 1 ? "" : "s")} to {modeName}.";
-        if (result.Running > 0) msg += $" {result.Running} running game{(result.Running == 1 ? " was" : "s were")} skipped.";
+            ? $"게임 {result.Switched}개의 모드를 껐습니다."
+            : $"게임 {result.Switched}개를 {modeName}(으)로 전환했습니다.";
+        if (result.Running > 0) msg += $" 실행 중인 게임 {result.Running}개를 건너뛰었습니다.";
         SetDmStatus(msg, false);
         _window.ShowStatusBarMessage(msg, TimeSpan.FromSeconds(8));
     }
@@ -328,7 +328,7 @@ public partial class SettingsHandler
             Title = title,
             Content = new TextBlock { Text = body, TextWrapping = TextWrapping.Wrap, MaxWidth = 460 },
             PrimaryButtonText = primary,
-            CloseButtonText = "Cancel",
+            CloseButtonText = "취소",
             DefaultButton = ContentDialogButton.Close,
             XamlRoot = _window.Content.XamlRoot,
             RequestedTheme = ElementTheme.Dark,
@@ -340,7 +340,7 @@ public partial class SettingsHandler
     private async Task<string?> PromptModeNameAsync(string title, string prompt, string primary, string initial, string? renamingId)
     {
         var store = ViewModel.DisplayModeStore;
-        var box = new TextBox { Text = initial, MaxLength = DisplayModeStore.MaxNameLength, Width = 340, PlaceholderText = "e.g. Handheld" };
+        var box = new TextBox { Text = initial, MaxLength = DisplayModeStore.MaxNameLength, Width = 340, PlaceholderText = "예: 휴대용" };
         var error = new TextBlock { FontSize = 12, TextWrapping = TextWrapping.Wrap, Foreground = TabsTheme.B("#FF9AA8"), Visibility = Visibility.Collapsed };
         var panel = new StackPanel { Spacing = 10 };
         panel.Children.Add(new TextBlock { Text = prompt, TextWrapping = TextWrapping.Wrap });
@@ -351,7 +351,7 @@ public partial class SettingsHandler
             Title = title,
             Content = panel,
             PrimaryButtonText = primary,
-            CloseButtonText = "Cancel",
+            CloseButtonText = "취소",
             DefaultButton = ContentDialogButton.Primary,
             XamlRoot = _window.Content.XamlRoot,
             RequestedTheme = ElementTheme.Dark,

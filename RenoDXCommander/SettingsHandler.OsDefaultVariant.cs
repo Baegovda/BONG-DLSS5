@@ -37,7 +37,7 @@ public partial class SettingsHandler
                 var row = new Grid { ColumnSpacing = 10, Tag = OsDefaultVariantRowTag };
                 row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                 row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star), MaxWidth = 210 });
-                var label = new TextBlock { Text = "Default version" };
+                var label = new TextBlock { Text = "기본 버전" };
                 if (Application.Current.Resources.TryGetValue("SettingsLabelStyle", out var ls) && ls is Style labelStyle)
                     label.Style = labelStyle;
                 row.Children.Add(label);
@@ -48,10 +48,10 @@ public partial class SettingsHandler
                 _osDefaultVariantCombo = combo;
                 FillOsDefaultVariants();
                 ToolTipService.SetToolTip(combo,
-                    "The OptiScaler version installed in games where you haven't picked one in the game's OptiScaler ⚙. " +
-                    "Games that already have OptiScaler keep the version they have. " +
-                    "Stable is the official release, Nightly the daily build, DLSS NR and F5 DLSSNR the Neural Rendering forks. " +
-                    "Custom builds you add below are listed too.");
+                    "게임의 OptiScaler ⚙에서 버전을 선택하지 않은 게임에 설치되는 OptiScaler 버전입니다. " +
+                    "이미 OptiScaler가 있는 게임은 기존 버전을 유지합니다. " +
+                    "Stable은 공식 릴리스, Nightly는 일일 빌드, DLSS NR과 F5 DLSSNR은 Neural Rendering 포크입니다. " +
+                    "아래에서 추가한 사용자 지정 빌드도 표시됩니다.");
                 Grid.SetColumn(combo, 1);
                 row.Children.Add(combo);
                 list.Children.Insert(list.Children.IndexOf(gpuRow), row);
@@ -103,16 +103,16 @@ public partial class SettingsHandler
         var row = new Grid { ColumnSpacing = 10 };
         row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star), MaxWidth = 210 });
-        row.Children.Add(new TextBlock { Text = "Remove old Nightly builds", Style = FindStyle("SettingsLabelStyle") });
+        row.Children.Add(new TextBlock { Text = "이전 Nightly 빌드 제거", Style = FindStyle("SettingsLabelStyle") });
         var combo = new ComboBox { Style = FindStyle("SettingsComboStyle") };
-        combo.Items.Add("Off");
-        combo.Items.Add("On");
+        combo.Items.Add("꺼짐");
+        combo.Items.Add("켜짐");
         combo.SelectedIndex = ViewModel.Settings.OsNightlyCleanup ? 1 : 0;
         ToolTipService.SetToolTip(combo,
-            "RHI keeps a copy of every OptiScaler Nightly build it downloads, about 200-300 MB each. " +
-            "On: when a new Nightly build is downloaded, older ones are deleted. RHI keeps the newest build " +
-            "and any build a game is pinned to in its OptiScaler ⚙. A deleted build downloads again if you pick it later. " +
-            "Games that already have OptiScaler installed aren't affected.");
+            "RHI는 다운로드한 모든 OptiScaler Nightly 빌드의 사본을 보관하며, 각각 약 200-300 MB입니다. " +
+            "켜짐: 새 Nightly 빌드를 다운로드하면 이전 빌드가 삭제됩니다. RHI는 최신 빌드와 " +
+            "게임의 OptiScaler ⚙에서 고정한 빌드는 유지합니다. 삭제된 빌드는 나중에 선택하면 다시 다운로드됩니다. " +
+            "이미 OptiScaler가 설치된 게임에는 영향이 없습니다.");
         combo.SelectionChanged += (s, e) =>
         {
             if (combo.SelectedIndex < 0) return;
@@ -131,7 +131,7 @@ public partial class SettingsHandler
                     ? $"{bytes / (1024.0 * 1024 * 1024):0.0} GB"
                     : $"{bytes / (1024 * 1024)} MB";
                 _window.DispatcherQueue.TryEnqueue(() => _window.ShowStatusBarMessage(
-                    $"Removed {removed} old OptiScaler Nightly build{(removed == 1 ? "" : "s")} ({size} freed)",
+                    $"이전 OptiScaler Nightly 빌드 {removed}개를 제거했습니다 ({size} 확보)",
                     TimeSpan.FromSeconds(8)));
             });
         };

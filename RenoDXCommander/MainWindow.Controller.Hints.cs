@@ -105,47 +105,47 @@ public sealed partial class MainWindow
 
         if (popup != null)
         {
-            if (focused is ComboBoxItem) return new() { ("A", "Choose"), ("B", "Cancel") };
-            if (focused is MenuFlyoutSubItem) return new() { ("A", "Open"), ("B", _padSubmenus.Count > 0 ? "Back" : "Close") };
-            if (focused is MenuFlyoutItemBase) return new() { ("A", "Choose"), ("B", _padSubmenus.Count > 0 ? "Back" : "Close") };
-            var dialogHints = new List<(string, string)> { ("A", "Select"), ("B", "Close") };
-            if (PopupScroller(popup, focused) != null) dialogHints.Add(("Right stick", "Scroll"));
+            if (focused is ComboBoxItem) return new() { ("A", "선택"), ("B", "취소") };
+            if (focused is MenuFlyoutSubItem) return new() { ("A", "열기"), ("B", _padSubmenus.Count > 0 ? "뒤로" : "닫기") };
+            if (focused is MenuFlyoutItemBase) return new() { ("A", "선택"), ("B", _padSubmenus.Count > 0 ? "뒤로" : "닫기") };
+            var dialogHints = new List<(string, string)> { ("A", "선택"), ("B", "닫기") };
+            if (PopupScroller(popup, focused) != null) dialogHints.Add(("오른쪽 스틱", "스크롤"));
             return dialogHints;
         }
 
         if (ViewModel.CurrentPage == AppPage.Settings)
-            return new() { ("A", "Select"), ("B", "Back to games"), ("LB / RB", "Section"), ("Right stick", "Scroll") };
+            return new() { ("A", "선택"), ("B", "게임으로 돌아가기"), ("LB / RB", "섹션"), ("오른쪽 스틱", "스크롤") };
 
         var hints = new List<(string, string)>();
         string? select = focused switch
         {
             TextBox => null,                   // typing needs a keyboard
-            ComboBox => "Open",
-            ToggleSwitch => "Switch",
-            _ when focused != null && _shelf != null && IsWithin(focused, _shelf) => "Select",
-            _ => "Select",
+            ComboBox => "열기",
+            ToggleSwitch => "전환",
+            _ when focused != null && _shelf != null && IsWithin(focused, _shelf) => "선택",
+            _ => "선택",
         };
         if (select != null) hints.Add(("A", select));
 
         if (layout.IsPanelOpen)
         {
-            hints.Add(("B", layout.IsCogInPanel ? "Back" : "Close"));
-            hints.Add(("LB / RB", "Section"));
-            hints.Add(("Y", "Launch"));
-            hints.Add(("RS", "Covers"));
+            hints.Add(("B", layout.IsCogInPanel ? "뒤로" : "닫기"));
+            hints.Add(("LB / RB", "섹션"));
+            hints.Add(("Y", "실행"));
+            hints.Add(("RS", "커버"));
             return hints;
         }
 
         bool onShelf = focused != null && _shelf != null && IsWithin(focused, _shelf);
-        if (!onShelf) hints.Add(("B", "Covers"));
-        hints.Add(("Y", "Launch"));
-        hints.Add(("X", IsCollectionChip(focused, out _) ? "Collection menu" : "Game menu"));
-        hints.Add(("LB / RB", "Game"));
-        hints.Add(("LT / RT", "Skip 10"));
-        hints.Add(("LS", "Filter"));
-        hints.Add(("RS", ViewModel.CollectionNames.Count > 0 ? "Collection" : "Covers"));
-        hints.Add(("View", "Filters"));
-        hints.Add(("Menu", "Settings"));
+        if (!onShelf) hints.Add(("B", "커버"));
+        hints.Add(("Y", "실행"));
+        hints.Add(("X", IsCollectionChip(focused, out _) ? "컬렉션 메뉴" : "게임 메뉴"));
+        hints.Add(("LB / RB", "게임"));
+        hints.Add(("LT / RT", "10개 건너뛰기"));
+        hints.Add(("LS", "필터"));
+        hints.Add(("RS", ViewModel.CollectionNames.Count > 0 ? "컬렉션" : "커버"));
+        hints.Add(("View", "필터"));
+        hints.Add(("Menu", "설정"));
         return hints;
     }
 

@@ -92,7 +92,7 @@ public class NormalReShadeUpdateService : INormalReShadeUpdateService
         CrashReporter.Log("[NormalReShadeUpdateService.EnsureLatestAsync] Started");
         Directory.CreateDirectory(CacheDir);
 
-        progress?.Report(("Checking for Normal ReShade updates...", 5));
+        progress?.Report(("Normal ReShade 업데이트 확인 중...", 5));
         var latest = await CheckLatestVersionAsync();
         if (latest == null)
         {
@@ -113,7 +113,7 @@ public class NormalReShadeUpdateService : INormalReShadeUpdateService
             && new FileInfo(stagedPath32).Length > 1_000_000)
         {
             CrashReporter.Log($"[NormalReShadeUpdateService.EnsureLatestAsync] Already have v{version}");
-            progress?.Report(($"Normal ReShade {version} is current", 100));
+            progress?.Report(($"Normal ReShade {version} 최신 상태", 100));
             return false;
         }
 
@@ -123,7 +123,7 @@ public class NormalReShadeUpdateService : INormalReShadeUpdateService
 
         if (!File.Exists(exePath))
         {
-            progress?.Report(($"Downloading Normal ReShade {version}...", 15));
+            progress?.Report(($"Normal ReShade {version} 다운로드 중...", 15));
             CrashReporter.Log($"[NormalReShadeUpdateService.EnsureLatestAsync] Downloading {url}");
 
             try
@@ -154,7 +154,7 @@ public class NormalReShadeUpdateService : INormalReShadeUpdateService
                         if (totalBytes > 0)
                         {
                             var pct = 15.0 + (downloaded / (double)totalBytes * 60.0);
-                            progress?.Report(($"Downloading Normal ReShade {version}... {downloaded / 1024}KB", pct));
+                            progress?.Report(($"Normal ReShade {version} 다운로드 중... {downloaded / 1024}KB", pct));
                         }
                     }
                 }
@@ -216,7 +216,7 @@ public class NormalReShadeUpdateService : INormalReShadeUpdateService
         }
 
         // Extract DLLs from the exe (it has an appended ZIP archive)
-        progress?.Report(("Extracting Normal ReShade DLLs...", 80));
+        progress?.Report(("Normal ReShade DLL 압축 해제 중...", 80));
         try
         {
             await _extractor.ExtractFileAsync(exePath, "ReShade64.dll", stagedPath64);
@@ -254,7 +254,7 @@ public class NormalReShadeUpdateService : INormalReShadeUpdateService
         }
         catch (Exception ex) { CrashReporter.Log($"[NormalReShadeUpdateService.EnsureLatestAsync] Failed to clean up old installers — {ex.Message}"); }
 
-        progress?.Report(($"Normal ReShade {version} ready!", 100));
+        progress?.Report(($"Normal ReShade {version} 준비 완료!", 100));
         CrashReporter.Log($"[NormalReShadeUpdateService.EnsureLatestAsync] Staged v{version} successfully");
         App.Services.GetRequiredService<IUpdateLogService>().Record(new Models.UpdateLogEntry
         {

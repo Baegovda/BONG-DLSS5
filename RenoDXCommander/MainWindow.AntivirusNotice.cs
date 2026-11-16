@@ -22,21 +22,21 @@ public sealed partial class MainWindow
         try
         {
             if (IsShuttingDown || !_antivirusNoticeShown.Add(component)) return;
-            ShowStatusBarMessage($"Your antivirus removed {component} after RHI downloaded it.", TimeSpan.FromSeconds(15));
+            ShowStatusBarMessage($"RHI가 다운로드한 {component}을(를) 백신 프로그램이 제거했습니다.", TimeSpan.FromSeconds(15));
             if (Content?.XamlRoot is not { } root) return;
 
             var folder = Path.GetDirectoryName(path) ?? path;
             var dialog = new ContentDialog
             {
-                Title = "Antivirus removed a download",
+                Title = "백신 프로그램이 다운로드를 제거함",
                 Content =
-                    $"Your antivirus deleted {component} right after RHI downloaded it:\n{path}\n\n"
-                    + "Mods like this change how games load DLLs, so antivirus programs often flag them even though they're safe "
-                    + "(a false positive). RHI won't download it again automatically.\n\n"
-                    + "To use it, add an exclusion for %LocalAppData%\\RHI in your antivirus (in Windows Security: Virus & threat "
-                    + "protection > Manage settings > Exclusions), restore the file if your antivirus quarantined it, then install it again from RHI.",
-                PrimaryButtonText = "Open folder",
-                CloseButtonText = "OK",
+                    $"RHI가 {component}을(를) 다운로드한 직후 백신 프로그램이 삭제했습니다:\n{path}\n\n"
+                    + "이런 모드는 게임이 DLL을 불러오는 방식을 바꾸기 때문에, 안전하더라도 백신 프로그램이 자주 탐지합니다 "
+                    + "(오탐). RHI는 자동으로 다시 다운로드하지 않습니다.\n\n"
+                    + "사용하려면 백신 프로그램에서 %LocalAppData%\\RHI를 예외로 추가하고(Windows 보안: 바이러스 및 위협 "
+                    + "방지 > 설정 관리 > 제외), 백신이 파일을 격리했다면 복원한 다음 RHI에서 다시 설치하세요.",
+                PrimaryButtonText = "폴더 열기",
+                CloseButtonText = "확인",
                 DefaultButton = ContentDialogButton.Close,
                 XamlRoot = root,
                 RequestedTheme = ElementTheme.Dark,

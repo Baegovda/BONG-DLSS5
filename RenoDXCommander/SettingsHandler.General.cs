@@ -54,11 +54,11 @@ public partial class SettingsHandler
                 // Check if it's due to admin rights
                 if (!VulkanLayerService.IsRunningAsAdmin())
                 {
-                    _window.DldsrCurrentStateText.Text = "Admin required to read DLDSR state";
+                    _window.DldsrCurrentStateText.Text = "DLDSR 상태를 읽으려면 관리자 권한이 필요합니다";
                 }
                 else
                 {
-                    _window.DldsrCurrentStateText.Text = "No DLDSR-capable monitors detected";
+                    _window.DldsrCurrentStateText.Text = "DLDSR을 지원하는 모니터가 감지되지 않았습니다";
                 }
                 return;
             }
@@ -76,8 +76,8 @@ public partial class SettingsHandler
             var friendlyNames = DldsrService.GetMonitorFriendlyNames(states.Select(s => s.MonitorId));
             foreach (var s in states)
             {
-                var factorPart = string.IsNullOrEmpty(s.EnabledFactors) ? "Off" : s.EnabledFactors;
-                var matchPart = string.IsNullOrEmpty(s.MatchesCapture) ? "" : $" (matches: {s.MatchesCapture})";
+                var factorPart = string.IsNullOrEmpty(s.EnabledFactors) ? "꺼짐" : s.EnabledFactors;
+                var matchPart = string.IsNullOrEmpty(s.MatchesCapture) ? "" : $" (일치: {s.MatchesCapture})";
                 // Use friendly monitor name if available, otherwise fall back to shortened key
                 string displayName;
                 if (friendlyNames.TryGetValue(s.MonitorId, out var fn))
@@ -92,14 +92,14 @@ public partial class SettingsHandler
                     if (shortId.Length > 12) shortId = shortId.Substring(0, 12) + "...";
                     displayName = shortId;
                 }
-                lines.Add($"{displayName}: {factorPart}, {s.Smoothness}% smooth{matchPart}");
+                lines.Add($"{displayName}: {factorPart}, 부드러움 {s.Smoothness}%{matchPart}");
             }
 
             _window.DldsrCurrentStateText.Text = string.Join("\n", lines);
         }
         catch (Exception ex)
         {
-            _window.DldsrCurrentStateText.Text = $"Error: {ex.Message}";
+            _window.DldsrCurrentStateText.Text = $"오류: {ex.Message}";
             CrashReporter.Log($"[SettingsHandler.RefreshDldsrCurrentState] {ex.Message}");
         }
     }
@@ -158,10 +158,10 @@ public partial class SettingsHandler
             // Changing this redeploys shaders to every game straight away, so confirm first.
             var confirm = new ContentDialog
             {
-                Title = "Change shader management?",
-                Content = "RHI will update the shader files in all your ReShade games straight away to match this setting.",
-                PrimaryButtonText = "Change",
-                CloseButtonText = "Cancel",
+                Title = "셰이더 관리 방식을 변경할까요?",
+                Content = "RHI가 이 설정에 맞게 ReShade가 설치된 모든 게임의 셰이더 파일을 즉시 업데이트합니다.",
+                PrimaryButtonText = "변경",
+                CloseButtonText = "취소",
                 DefaultButton = ContentDialogButton.Close,
                 XamlRoot = combo.XamlRoot ?? _window.Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
@@ -255,12 +255,12 @@ public partial class SettingsHandler
 
             // Show confirmation dialog
             var appliedSettings = string.IsNullOrEmpty(screenshotPath)
-                ? "ReShade hotkeys and effect list style"
-                : "Screenshot path, ReShade hotkeys, and effect list style";
+                ? "ReShade 단축키 및 효과 목록 스타일"
+                : "스크린샷 경로, ReShade 단축키 및 효과 목록 스타일";
             var dialog = new ContentDialog
             {
-                Title = "Keys and screenshots",
-                Content = $"{appliedSettings} applied to {updatedCount} game{(updatedCount == 1 ? "" : "s")}.",
+                Title = "키 및 스크린샷",
+                Content = $"{appliedSettings}을(를) 게임 {updatedCount}개에 적용했습니다.",
                 CloseButtonText = "OK",
                 XamlRoot = _window.Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
@@ -318,8 +318,8 @@ public partial class SettingsHandler
             {
                 var emptyDialog = new ContentDialog
                 {
-                    Title = "Peak Nits",
-                    Content = "Peak nits is not configured or is disabled.",
+                    Title = "최대 니트",
+                    Content = "최대 니트가 구성되지 않았거나 꺼져 있습니다.",
                     CloseButtonText = "OK",
                     XamlRoot = _window.Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
@@ -371,9 +371,9 @@ public partial class SettingsHandler
 
             var dialog = new ContentDialog
             {
-                Title = "Peak Nits",
-                Content = $"Applied peak nits ({peakNits}) to {updatedCount} reshade.ini file{(updatedCount == 1 ? "" : "s")}."
-                    + (modeCount > 0 ? $"\n\n{modeCount} game{(modeCount == 1 ? "" : "s")} kept the peak brightness of {(modeCount == 1 ? "its" : "their")} display mode." : ""),
+                Title = "최대 니트",
+                Content = $"최대 니트({peakNits})를 reshade.ini 파일 {updatedCount}개에 적용했습니다."
+                    + (modeCount > 0 ? $"\n\n게임 {modeCount}개는 해당 디스플레이 모드의 최대 밝기를 유지했습니다." : ""),
                 CloseButtonText = "OK",
                 XamlRoot = _window.Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
@@ -432,8 +432,8 @@ public partial class SettingsHandler
             {
                 await DialogService.ShowSafeAsync(new ContentDialog
                 {
-                    Title = "Admin Mode",
-                    Content = "UAC is disabled on this system — RHI always runs as administrator.",
+                    Title = "관리자 모드",
+                    Content = "이 시스템에서는 UAC가 꺼져 있어 RHI가 항상 관리자로 실행됩니다.",
                     CloseButtonText = "OK",
                     XamlRoot = _window.Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
@@ -455,10 +455,10 @@ public partial class SettingsHandler
                 // Show restart notice
                 await DialogService.ShowSafeAsync(new ContentDialog
                 {
-                    Title = "Admin Mode",
+                    Title = "관리자 모드",
                     Content = enable
-                        ? "Admin Mode enabled. Restart RHI for it to take effect."
-                        : "Admin Mode disabled. RHI will launch normally on next start.",
+                        ? "관리자 모드가 켜졌습니다. 적용하려면 RHI를 다시 시작하세요."
+                        : "관리자 모드가 꺼졌습니다. 다음 시작 시 RHI가 일반 권한으로 실행됩니다.",
                     CloseButtonText = "OK",
                     XamlRoot = _window.Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,

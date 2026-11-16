@@ -18,11 +18,11 @@ public partial class SettingsHandler
         _launchButtonRowsAdded = true;
         try
         {
-            AddLaunchButtonRow(_window.HdrAutoToggleCombo, "HDR button on game pages",
-                "Show or hide the HDR on launch button on game pages. Hidden, a game's own HDR choice still applies when you launch it from RHI.",
+            AddLaunchButtonRow(_window.HdrAutoToggleCombo, "게임 페이지의 HDR 버튼",
+                "게임 페이지에서 실행 시 HDR 버튼을 표시하거나 숨깁니다. 숨겨도 RHI에서 실행하면 게임별 HDR 설정은 계속 적용됩니다.",
                 () => ViewModel.Settings.ShowHdrLaunchButton, v => ViewModel.Settings.ShowHdrLaunchButton = v);
-            AddLaunchButtonRow(_window.ResAutoToggleCombo, "Resolution button on game pages",
-                "Show or hide the Resolution switch button on game pages. Hidden, a game's own resolution choice still applies when you launch it from RHI.",
+            AddLaunchButtonRow(_window.ResAutoToggleCombo, "게임 페이지의 해상도 버튼",
+                "게임 페이지에서 해상도 전환 버튼을 표시하거나 숨깁니다. 숨겨도 RHI에서 실행하면 게임별 해상도 설정은 계속 적용됩니다.",
                 () => ViewModel.Settings.ShowResLaunchButton, v => ViewModel.Settings.ShowResLaunchButton = v);
         }
         catch (Exception ex) when (ex is InvalidOperationException or System.Runtime.InteropServices.COMException or ArgumentException)
@@ -44,8 +44,8 @@ public partial class SettingsHandler
             return;
         }
         var combo = new ComboBox { Style = FindStyle("SettingsComboStyle") };
-        combo.Items.Add(new ComboBoxItem { Content = "Show" });
-        combo.Items.Add(new ComboBoxItem { Content = "Hide" });
+        combo.Items.Add(new ComboBoxItem { Content = "표시" });
+        combo.Items.Add(new ComboBoxItem { Content = "숨기기" });
         combo.SelectedIndex = get() ? 0 : 1;
         ToolTipService.SetToolTip(combo, tooltip);
         Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(combo, label);

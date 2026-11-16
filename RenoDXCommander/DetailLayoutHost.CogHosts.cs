@@ -178,7 +178,7 @@ internal sealed partial class DetailLayoutHost
         _panelBack = new Button { Padding = new Thickness(8, 0, 12, 0), Visibility = Visibility.Collapsed, Margin = new Thickness(0, 0, 12, 0) };
         TabsTheme.Apply(_panelBack, TabsTheme.IconButton, height: 34, fontSize: 13);
         _panelBack.Click += (s, e) => CloseCog(ContentDialogResult.None);
-        ToolTipService.SetToolTip(_panelBack, "Back");
+        ToolTipService.SetToolTip(_panelBack, "뒤로");
         if (_panelTitle?.Parent is Grid head)
         {
             head.ColumnDefinitions.Insert(0, new ColumnDefinition { Width = GridLength.Auto });
@@ -192,7 +192,7 @@ internal sealed partial class DetailLayoutHost
     {
         var sp = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 6 };
         sp.Children.Add(TabsTheme.Icon("", 11)); // chevron left
-        sp.Children.Add(new TextBlock { Text = string.IsNullOrEmpty(to) ? "Back" : to, VerticalAlignment = VerticalAlignment.Center });
+        sp.Children.Add(new TextBlock { Text = string.IsNullOrEmpty(to) ? "뒤로" : to, VerticalAlignment = VerticalAlignment.Center });
         return sp;
     }
 
@@ -232,7 +232,7 @@ internal sealed partial class DetailLayoutHost
         var close = TabsTheme.MakeIconButton(TabsTheme.GlyphClose, TabsTheme.IconButton, 12);
         close.Width = 34; close.Height = 34;
         close.Click += (s, e) => CloseCog(ContentDialogResult.None);
-        ToolTipService.SetToolTip(close, "Close");
+        ToolTipService.SetToolTip(close, "닫기");
         var head = new Grid();
         head.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         head.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });

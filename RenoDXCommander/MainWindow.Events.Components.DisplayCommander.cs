@@ -55,7 +55,7 @@ public sealed partial class MainWindow
                 var iniFile = CurrentIni();
                 if (iniFile == null || !Directory.Exists(Path.GetDirectoryName(iniFile)))
                 {
-                    cog.SetError("The game folder wasn't found.");
+                    cog.SetError("게임 폴더를 찾을 수 없습니다.");
                     return false;
                 }
                 try
@@ -67,83 +67,83 @@ public sealed partial class MainWindow
                 }
                 catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
                 {
-                    cog.SetError($"Couldn't save {label}: {ex.Message}");
+                    cog.SetError($"{label}을(를) 저장할 수 없습니다: {ex.Message}");
                     CrashReporter.Log($"[MainWindow.DcCogButton_Click] {key} write failed — {ex.Message}");
                     return false;
                 }
             }
             CogDialog.CompactCell OnOff(string key, string label, string help) =>
-                cog.CompactCombo(label, help, new[] { "Off", "On" }, ReadBool(key) ? 1 : 0,
-                    i => Write(key, i == 1 ? "1" : "0", label, i == 1 ? "On" : "Off"));
+                cog.CompactCombo(label, help, new[] { "꺼짐", "켜짐" }, ReadBool(key) ? 1 : 0,
+                    i => Write(key, i == 1 ? "1" : "0", label, i == 1 ? "켜짐" : "꺼짐"));
 
-            cog.AddIntro("Saved in this game's DisplayCommander.ini. Display Commander saves its settings while the game runs, " +
-                         "so change these with the game closed. Everything else is in its in-game menu.");
+            cog.AddIntro("이 게임의 DisplayCommander.ini에 저장됩니다. Display Commander는 게임 실행 중에 설정을 저장하므로 " +
+                         "게임을 종료한 상태에서 변경하세요. 나머지 설정은 게임 내 메뉴에 있습니다.");
             if (card.IsRunning)
-                cog.AddWarning("The game is running. Display Commander may overwrite changes made now; close the game first.");
+                cog.AddWarning("게임이 실행 중입니다. 지금 변경하면 Display Commander가 덮어쓸 수 있으니 먼저 게임을 종료하세요.");
 
             // ── Frame rate ─────────────────────────────────────────────────────────
-            cog.AddSection("Frame Rate");
+            cog.AddSection("프레임 속도");
             AddDcFpsLimitRow(cog, fpsLimit, fps => Write("fps_limit",
-                fps.ToString("0.###", CultureInfo.InvariantCulture), "FPS Limit",
-                fps == 0 ? "No limit" : $"{fps.ToString("0.###", CultureInfo.InvariantCulture)} FPS"));
+                fps.ToString("0.###", CultureInfo.InvariantCulture), "FPS 제한",
+                fps == 0 ? "제한 없음" : $"{fps.ToString("0.###", CultureInfo.InvariantCulture)} FPS"));
 
-            var limiterModes = new[] { "DC's fps limiter", "NVIDIA Reflex" };
-            var windowModes = new[] { "No changes", "Borderless fullscreen", "Borderless windowed", "No exclusive fullscreen" };
+            var limiterModes = new[] { "DC FPS 제한기", "NVIDIA Reflex" };
+            var windowModes = new[] { "변경 안 함", "테두리 없는 전체 화면", "테두리 없는 창 모드", "전용 전체 화면 사용 안 함" };
             int windowMode = Math.Clamp(ReadInt("WindowMode", 0), 0, windowModes.Length - 1);
             cog.AddCompactGrid(
-                cog.CompactCombo("FPS Limiter Mode",
-                    "How Display Commander limits the frame rate. NVIDIA Reflex works in DX11 and DX12 games; Vulkan games need the game's own Reflex.",
+                cog.CompactCombo("FPS 제한기 모드",
+                    "Display Commander가 프레임 속도를 제한하는 방식입니다. NVIDIA Reflex는 DX11 및 DX12 게임에서 작동하며, Vulkan 게임은 게임 자체 Reflex가 필요합니다.",
                     limiterModes, Math.Clamp(ReadInt("fps_limiter_mode", 0), 0, 1),
-                    i => Write("fps_limiter_mode", i.ToString(CultureInfo.InvariantCulture), "FPS Limiter Mode", limiterModes[i])),
-                OnOff("inject_reflex", "Inject Reflex",
-                    "When the game has no Reflex of its own, use Display Commander's Reflex (sleep and latency markers) for lower latency."),
-                cog.CompactCombo("Window Mode",
-                    "No changes: leave the window alone. Borderless fullscreen / windowed: resize the game's window. " +
-                    "No exclusive fullscreen: stop the game switching to exclusive fullscreen, without resizing.",
+                    i => Write("fps_limiter_mode", i.ToString(CultureInfo.InvariantCulture), "FPS 제한기 모드", limiterModes[i])),
+                OnOff("inject_reflex", "Reflex 주입",
+                    "게임에 자체 Reflex가 없으면 Display Commander의 Reflex(슬립 및 지연 마커)를 사용해 지연을 줄입니다."),
+                cog.CompactCombo("창 모드",
+                    "변경 안 함: 창을 그대로 둡니다. 테두리 없는 전체 화면 / 창 모드: 게임 창 크기를 조정합니다. " +
+                    "전용 전체 화면 사용 안 함: 크기 조정 없이 게임이 전용 전체 화면으로 전환되지 않게 합니다.",
                     windowModes, windowMode,
-                    i => Write("WindowMode", i.ToString(CultureInfo.InvariantCulture), "Window Mode", windowModes[i])),
+                    i => Write("WindowMode", i.ToString(CultureInfo.InvariantCulture), "창 모드", windowModes[i])),
                 null);
 
             // ── Reflex (Advanced tab, "NVIDIA Reflex (Minimal)") ──────────────────
             cog.AddSection("Reflex");
             cog.AddCompactGrid(
-                OnOff("ReflexAutoConfigure", "Auto Configure Reflex", "Configure Reflex automatically when the game starts."),
-                OnOff("ReflexEnableSleep", "Enable Reflex Sleep Mode", "Let Display Commander make Reflex sleep calls. Off by default for safety."),
-                OnOff("ReflexUseMarkers", "Use Reflex Markers", "Tell NVIDIA Reflex to use latency markers."),
-                OnOff("ReflexGenerateMarkers", "Generate Reflex Markers", "Add markers to the frame timeline for latency measurement."));
+                OnOff("ReflexAutoConfigure", "Reflex 자동 구성", "게임 시작 시 Reflex를 자동으로 구성합니다."),
+                OnOff("ReflexEnableSleep", "Reflex 슬립 모드 사용", "Display Commander가 Reflex 슬립 호출을 하도록 허용합니다. 안전을 위해 기본값은 꺼짐입니다."),
+                OnOff("ReflexUseMarkers", "Reflex 마커 사용", "NVIDIA Reflex가 지연 마커를 사용하도록 합니다."),
+                OnOff("ReflexGenerateMarkers", "Reflex 마커 생성", "지연 측정을 위해 프레임 타임라인에 마커를 추가합니다."));
 
             // ── Other ─────────────────────────────────────────────────────────────
-            cog.AddSection("Other");
+            cog.AddSection("기타");
             var graceSeconds = new[] { 0, 1, 2, 5, 10, 61 };
-            var graceLabels = new[] { "Off", "1 second", "2 seconds", "5 seconds", "10 seconds", "Always" };
+            var graceLabels = new[] { "꺼짐", "1초", "2초", "5초", "10초", "항상" };
             int grace = ReadInt("WinUpGraceSeconds", 1);
             int graceIdx = Array.IndexOf(graceSeconds, grace);
             var graceItems = graceLabels.ToList();
-            if (graceIdx < 0) { graceItems.Add($"{grace} seconds"); graceIdx = graceItems.Count - 1; }
+            if (graceIdx < 0) { graceItems.Add($"{grace}초"); graceIdx = graceItems.Count - 1; }
             cog.AddCompactGrid(
-                cog.CompactCombo("Win+Up grace time",
-                    "How long after you switch away from a borderless game Win+Up still restores its window. " +
-                    "Not in Display Commander's menu; only set in its ini.",
+                cog.CompactCombo("Win+Up 유예 시간",
+                    "테두리 없는 게임에서 전환한 후 Win+Up으로 창을 복원할 수 있는 시간입니다. " +
+                    "Display Commander 메뉴에는 없으며 ini에서만 설정됩니다.",
                     graceItems, graceIdx, i =>
                     {
                         if (i >= graceSeconds.Length) return true; // existing custom value
-                        return Write("WinUpGraceSeconds", graceSeconds[i].ToString(CultureInfo.InvariantCulture), "Win+Up grace time", graceLabels[i]);
+                        return Write("WinUpGraceSeconds", graceSeconds[i].ToString(CultureInfo.InvariantCulture), "Win+Up 유예 시간", graceLabels[i]);
                     }),
                 null);
-            cog.AddNote("Target Display and Display Commander's ReShade options (global shaders path, screenshots path) are left to its in-game menu. " +
-                        "RHI manages ReShade's shader and screenshot folders itself.");
+            cog.AddNote("대상 디스플레이와 Display Commander의 ReShade 옵션(전역 셰이더 경로, 스크린샷 경로)은 게임 내 메뉴에서 설정하세요. " +
+                        "RHI는 ReShade의 셰이더 및 스크린샷 폴더를 직접 관리합니다.");
 
             // ── Files ─────────────────────────────────────────────────────────────
-            cog.AddSection("Files");
-            var openIniBtn = cog.MakeOpenFileButton("Open DisplayCommander.ini", dcIniFile);
-            var deployBtn = cog.MakeButton("Deploy DisplayCommander.ini", CogButtonKind.Primary, () =>
+            cog.AddSection("파일");
+            var openIniBtn = cog.MakeOpenFileButton("DisplayCommander.ini 열기", dcIniFile);
+            var deployBtn = cog.MakeButton("DisplayCommander.ini 배포", CogButtonKind.Primary, () =>
             {
                 if (string.IsNullOrEmpty(card.InstallPath)) return;
                 AuxInstallService.CopyDcIni(card.InstallPath);
                 openIniBtn.IsEnabled = dcIniFile != null && File.Exists(dcIniFile);
-                cog.SetSuccess("DisplayCommander.ini copied to the game folder. Close and reopen this dialog to see its settings.");
+                cog.SetSuccess("DisplayCommander.ini를 게임 폴더에 복사했습니다. 설정을 보려면 이 대화 상자를 닫았다가 다시 여세요.");
                 CrashReporter.Log($"[MainWindow.DcCogButton_Click] Deployed DisplayCommander.ini for '{card.GameName}'");
-            }, "Copies RHI's DisplayCommander.ini template into the game folder, replacing the game's current one.");
+            }, "RHI의 DisplayCommander.ini 템플릿을 게임 폴더에 복사해 현재 파일을 대체합니다.");
             cog.AddButtons(deployBtn, openIniBtn);
 
             // No default button: Enter in the FPS box must not close the dialog
@@ -167,9 +167,9 @@ public sealed partial class MainWindow
 
         List<string> Items(double fps)
         {
-            var items = new List<string> { "No limit" };
+            var items = new List<string> { "제한 없음" };
             items.AddRange(presets.Select(p => p.Label));
-            if (fps > 0 && !presets.Any(p => p.Fps == fps)) items.Add($"{Fmt(fps)} (Custom)");
+            if (fps > 0 && !presets.Any(p => p.Fps == fps)) items.Add($"{Fmt(fps)} (사용자 지정)");
             items.Add("Custom...");
             return items;
         }
@@ -182,12 +182,12 @@ public sealed partial class MainWindow
 
         var items0 = Items(current);
         var combo = CogDialog.MakeCombo(items0, Index(items0, current));
-        cog.AddRow("FPS Limit", combo,
-            "Frame rate cap for this game. Each VRR preset sits just under that refresh rate. Custom... lets you type your own value.");
+        cog.AddRow("FPS 제한", combo,
+            "이 게임의 프레임 속도 상한입니다. 각 VRR 프리셋은 해당 주사율보다 약간 낮게 설정됩니다. Custom...을 선택하면 직접 값을 입력할 수 있습니다.");
 
-        var box = CogDialog.MakeTextBox("", "20-1000, decimals allowed");
-        var setBtn = CogDialog.StyledButton("Set", CogButtonKind.Secondary, compact: true);
-        var customRow = cog.AddRow("Custom FPS", CogDialog.Inline(box, setBtn), "Type a frame rate from 20 to 1000, then press Set or Enter.");
+        var box = CogDialog.MakeTextBox("", "20-1000, 소수 허용");
+        var setBtn = CogDialog.StyledButton("설정", CogButtonKind.Secondary, compact: true);
+        var customRow = cog.AddRow("사용자 지정 FPS", CogDialog.Inline(box, setBtn), "20에서 1000 사이의 프레임 속도를 입력한 후 설정 또는 Enter를 누르세요.");
         customRow.Visibility = Visibility.Collapsed;
 
         bool suppress = false;
@@ -227,7 +227,7 @@ public sealed partial class MainWindow
             var text = box.Text.Trim().Replace(',', '.');
             if (!double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out var fps) || fps < 20 || fps > 1000)
             {
-                cog.SetError("Enter a frame rate from 20 to 1000.");
+                cog.SetError("20에서 1000 사이의 프레임 속도를 입력하세요.");
                 return;
             }
             fps = Math.Round(fps, 3);

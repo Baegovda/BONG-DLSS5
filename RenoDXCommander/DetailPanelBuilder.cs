@@ -139,7 +139,7 @@ public partial class DetailPanelBuilder
             _window.DetailEngineText.TextDecorations = isClickable ? Windows.UI.Text.TextDecorations.Underline : Windows.UI.Text.TextDecorations.None;
             _window.DetailEngineBadge.Tag = isClickable ? card : null;
             if (isClickable)
-                ToolTipService.SetToolTip(_window.DetailEngineBadge, "Click to cycle engine version (affects DOF Fix eligibility)");
+                ToolTipService.SetToolTip(_window.DetailEngineBadge, "클릭하여 엔진 버전 전환 (DOF Fix 사용 가능 여부에 영향)");
             else
                 ToolTipService.SetToolTip(_window.DetailEngineBadge, null);
         }
@@ -154,8 +154,8 @@ public partial class DetailPanelBuilder
         // 32-bit / 64-bit badge
         _window.Detail32BitBadge.Visibility = card.Is32Bit ? Visibility.Visible : Visibility.Collapsed;
         _window.Detail64BitBadge.Visibility = !card.Is32Bit ? Visibility.Visible : Visibility.Collapsed;
-        ToolTipService.SetToolTip(_window.Detail32BitBadge, "32-bit game. Some components aren't available for 32-bit games.");
-        ToolTipService.SetToolTip(_window.Detail64BitBadge, "64-bit game.");
+        ToolTipService.SetToolTip(_window.Detail32BitBadge, "32비트 게임. 일부 구성 요소는 32비트 게임에서 사용할 수 없습니다.");
+        ToolTipService.SetToolTip(_window.Detail64BitBadge, "64비트 게임.");
 
         // Wiki status badge — hidden from main UI, shown inside Info button dialog instead
         _window.DetailWikiBadge.Visibility = Visibility.Collapsed;
@@ -193,11 +193,11 @@ public partial class DetailPanelBuilder
                     var cursorProp = DetailPanelBuilder.CursorProp;
                     badge.PointerEntered += (s, e) => cursorProp?.SetValue(badge, handCursor);
                     badge.PointerExited += (s, e) => cursorProp?.SetValue(badge, arrowCursor);
-                    ToolTipService.SetToolTip(badge, $"Mod author: {author} — click to open their donation page");
+                    ToolTipService.SetToolTip(badge, $"모드 제작자: {author} — 클릭하면 후원 페이지가 열립니다");
                 }
                 else
                 {
-                    ToolTipService.SetToolTip(badge, $"Mod author: {author}");
+                    ToolTipService.SetToolTip(badge, $"모드 제작자: {author}");
                 }
                 _window.DetailAuthorBadgePanel.Children.Add(badge);
             }
@@ -241,7 +241,7 @@ public partial class DetailPanelBuilder
         {
             _window.DetailInstalledFile.Text = fileLabel;
             ToolTipService.SetToolTip(_window.DetailInstalledFileBadge,
-                fileLabel.Contains('·') ? "Installed HDR mod files" : "Installed HDR mod file");
+                fileLabel.Contains('·') ? "설치된 HDR 모드 파일" : "설치된 HDR 모드 파일");
             _window.DetailInstalledFileBadge.Visibility = Visibility.Visible;
             _window.DetailSepModPlatform.Visibility = Visibility.Visible;
         }
@@ -292,14 +292,14 @@ public partial class DetailPanelBuilder
             _window.DetailModStatusIcon.Text = "✓";
             _window.DetailModStatusIcon.Foreground = UIFactory.Brush(ResourceKeys.AccentGreenBrush);
             _window.DetailModStatusIcon.Visibility = Visibility.Visible;
-            ToolTipService.SetToolTip(_window.DetailModStatusIcon, "HDR mod complete");
+            ToolTipService.SetToolTip(_window.DetailModStatusIcon, "HDR 모드 완성");
         }
         else if (string.Equals(modStatusText, "WIP", StringComparison.OrdinalIgnoreCase))
         {
             _window.DetailModStatusIcon.Text = "🔨";
             _window.DetailModStatusIcon.Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush);
             _window.DetailModStatusIcon.Visibility = Visibility.Visible;
-            ToolTipService.SetToolTip(_window.DetailModStatusIcon, "HDR mod in progress");
+            ToolTipService.SetToolTip(_window.DetailModStatusIcon, "HDR 모드 작업 중");
         }
         else
         {
@@ -311,10 +311,10 @@ public partial class DetailPanelBuilder
         ApplyFavouriteButtonStyle(_window.DetailFavBtn, _window.DetailFavIcon, card.IsFavourite);
 
         _window.DetailHideBtn.Tag = card;
-        _window.DetailHideIcon.Text = card.IsHidden ? "Show" : "Hide";
+        _window.DetailHideIcon.Text = card.IsHidden ? "표시" : "숨기기";
         ToolTipService.SetToolTip(_window.DetailHideBtn, card.IsHidden
-            ? "Show this game in the game list again."
-            : "Hide this game from the sidebar (find it again in the Hidden filter)");
+            ? "이 게임을 게임 목록에 다시 표시합니다."
+            : "사이드바에서 이 게임을 숨깁니다 (숨김 필터에서 다시 찾을 수 있습니다)");
         _window.DetailHideBtn.Foreground = UIFactory.Brush(ResourceKeys.ChipTextBrush);
 
         // Folder management buttons
@@ -344,8 +344,8 @@ public partial class DetailPanelBuilder
         _window.DetailUwFixBtn.Visibility = card.HasUwFixUrl ? Visibility.Visible : Visibility.Collapsed;
         if (card.HasUwFixUrl)
         {
-            var source = card.UwFixSource ?? "creator";
-            ToolTipService.SetToolTip(_window.DetailUwFixBtn, $"Open {source}'s ultrawide fix page");
+            var source = card.UwFixSource ?? "제작자";
+            ToolTipService.SetToolTip(_window.DetailUwFixBtn, $"{source}의 울트라와이드 수정 페이지 열기");
         }
 
         // Ultra+ link button
@@ -493,7 +493,7 @@ public partial class DetailPanelBuilder
                 GraphicsApiType.OpenGL    => "OpenGL",
                 _                         => label,
             };
-            ToolTipService.SetToolTip(badge, $"Detected graphics API: {apiName}");
+            ToolTipService.SetToolTip(badge, $"감지된 그래픽 API: {apiName}");
             window.DetailGraphicsApiBadgePanel.Children.Add(badge);
         }
 
@@ -556,39 +556,39 @@ public partial class DetailPanelBuilder
     /// </summary>
     internal static void ApplyFavouriteButtonStyle(Button btn, TextBlock label, bool isFavourite)
     {
-        label.Text = isFavourite ? "Favourited" : "Favourite";
+        label.Text = isFavourite ? "즐겨찾기됨" : "즐겨찾기";
         label.Foreground = UIFactory.Brush(isFavourite ? ResourceKeys.AccentAmberBrush : ResourceKeys.ChipTextBrush);
         btn.BorderBrush = UIFactory.Brush(ResourceKeys.BorderSubtleBrush);
         ToolTipService.SetToolTip(btn, isFavourite
-            ? "Favourite. Click to remove it from Favourites."
-            : "Add this game to Favourites (find it with the Favourites filter).");
+            ? "즐겨찾기 항목입니다. 클릭하면 즐겨찾기에서 제거합니다."
+            : "이 게임을 즐겨찾기에 추가합니다 (즐겨찾기 필터로 찾을 수 있습니다).");
     }
 
     /// <summary>HDR button tooltip that states the current setting for this game.</summary>
     internal static string HdrToggleTooltip(bool active, bool isOverride)
-        => HdrToggleTooltip(active, isOverride ? "set for this game" : "following Settings › Display & HDR");
+        => HdrToggleTooltip(active, isOverride ? "이 게임에 설정됨" : "설정 › 디스플레이 및 HDR 따름");
 
     /// <summary>HDR button tooltip; <paramref name="source"/> says where the setting comes from.</summary>
     internal static string HdrToggleTooltip(bool active, string source)
     {
         return active
-            ? $"Windows HDR: On ({source}).\nWhen you launch the game from RHI, Windows HDR is turned on, then back off when the game closes.\nClick to turn off for this game."
-            : $"Windows HDR: Off ({source}).\nClick to turn Windows HDR on when you launch this game from RHI (and back off when it closes).";
+            ? $"Windows HDR: 켜짐 ({source}).\nRHI에서 게임을 실행하면 Windows HDR이 켜지고, 게임을 닫으면 다시 꺼집니다.\n클릭하면 이 게임에서 끕니다."
+            : $"Windows HDR: 꺼짐 ({source}).\n클릭하면 RHI에서 이 게임을 실행할 때 Windows HDR을 켭니다 (게임을 닫으면 다시 끕니다).";
     }
 
     /// <summary>RES button tooltip that states the current setting for this game.</summary>
     internal static string ResToggleTooltip(bool active, bool isOverride)
-        => ResToggleTooltip(active, isOverride ? "set for this game" : "following Settings › Display & HDR");
+        => ResToggleTooltip(active, isOverride ? "이 게임에 설정됨" : "설정 › 디스플레이 및 HDR 따름");
 
     internal static string ResToggleTooltip(bool active, string source)
     {
         return active
-            ? $"Change resolution: On ({source}).\nWhen you launch the game from RHI, the display switches to your target resolution, then back when the game closes.\nClick to turn off for this game."
-            : $"Change resolution: Off ({source}).\nClick to switch to your target resolution when you launch this game from RHI (and back when it closes).";
+            ? $"해상도 변경: 켜짐 ({source}).\nRHI에서 게임을 실행하면 디스플레이가 목표 해상도로 전환되고, 게임을 닫으면 원래대로 돌아갑니다.\n클릭하면 이 게임에서 끕니다."
+            : $"해상도 변경: 꺼짐 ({source}).\n클릭하면 RHI에서 이 게임을 실행할 때 목표 해상도로 전환합니다 (게임을 닫으면 원래대로 돌아갑니다).";
     }
 
     /// <summary>Tooltip for the arrow + title of every collapsible detail section header.</summary>
-    internal const string SectionHeaderTooltip = "Click to collapse or expand";
+    internal const string SectionHeaderTooltip = "클릭하여 접거나 펼치기";
 
     internal TextBlock MakeDragHandle(Border container)
     {
@@ -601,7 +601,7 @@ public partial class DetailPanelBuilder
             Margin            = new Thickness(0, 0, 8, 0),
             ManipulationMode  = Microsoft.UI.Xaml.Input.ManipulationModes.None,
         };
-        ToolTipService.SetToolTip(handle, "Drag to reorder sections");
+        ToolTipService.SetToolTip(handle, "끌어서 섹션 순서 변경");
 
         var handCursor  = Microsoft.UI.Input.InputSystemCursor.Create(Microsoft.UI.Input.InputSystemCursorShape.Hand);
         var arrowCursor = Microsoft.UI.Input.InputSystemCursor.Create(Microsoft.UI.Input.InputSystemCursorShape.Arrow);
@@ -867,9 +867,9 @@ public partial class DetailPanelBuilder
         if (card.IsDcInstalled)
             entries.Add(("DC", card.DcInstalledVersion));
         if (card.IsLumaInstalled)
-            entries.Add(("Luma", "On"));
+            entries.Add(("Luma", "켜짐"));
 
-        return MakeSectionSummaryInlines(entries, "Installed components and versions.");
+        return MakeSectionSummaryInlines(entries, "설치된 구성 요소 및 버전.");
     }
 
     /// <summary>
@@ -908,7 +908,7 @@ public partial class DetailPanelBuilder
 
         var channel = _window.ViewModel.GetReShadeChannelOverride(card.GameName, card.Source ?? "");
         if (!string.IsNullOrEmpty(channel))
-            entries.Add(("RS Channel:", channel));
+            entries.Add(("RS 채널:", channel));
 
         var apis = _window.ViewModel.GetApiOverride(card.GameName, card.Source ?? "");
         if (apis is { Count: > 0 })
@@ -917,11 +917,11 @@ public partial class DetailPanelBuilder
         // Shaders / Addons — show when set to non-default
         var shaderMode = _window.ViewModel.GetPerGameShaderMode(card.GameName, card.Source ?? "");
         if (!string.IsNullOrEmpty(shaderMode) && shaderMode != "Global")
-            entries.Add(("Shaders:", shaderMode));
+            entries.Add(("셰이더:", shaderMode));
 
         var addonMode = _window.ViewModel.GetPerGameAddonMode(card.GameName, card.Source ?? "");
         if (!string.IsNullOrEmpty(addonMode) && addonMode != "Global")
-            entries.Add(("Addons:", addonMode));
+            entries.Add(("애드온:", addonMode));
 
         // Update inclusion — show only when any component is excluded
         var excluded = new List<string>();
@@ -931,12 +931,12 @@ public partial class DetailPanelBuilder
         if (_window.ViewModel.IsUpdateAllExcludedDc(card.GameName, card.Source ?? ""))     excluded.Add("DC");
         if (_window.ViewModel.IsUpdateAllExcludedOs(card.GameName, card.Source ?? ""))     excluded.Add("OS");
         if (excluded.Count > 0)
-            entries.Add(("Excluded:", string.Join(" ", excluded)));
+            entries.Add(("제외:", string.Join(" ", excluded)));
 
         var launchArgs = _gameNameService.LaunchArgsOverrides.TryGetValue(card.GameName, out var la)
             ? la : null;
         if (!string.IsNullOrWhiteSpace(launchArgs))
-            entries.Add(("Args:", launchArgs));
+            entries.Add(("인수:", launchArgs));
 
         // DLL naming overrides — show each custom filename that's set
         if (_window.ViewModel.HasDllOverride(card.GameName))
@@ -954,9 +954,9 @@ public partial class DetailPanelBuilder
         }
 
         return MakeSectionSummaryInlines(entries,
-            "Game overrides that differ from the defaults.\n"
+            "기본값과 다른 게임 재정의.\n"
             + "RS = ReShade, RDX = RenoDX, RL = ReLimiter, DC = Display Commander, OS = OptiScaler.\n"
-            + "API = graphics API override. Args = launch arguments. DLL = custom DLL file name.\n"
-            + "Excluded = components Update All skips for this game.");
+            + "API = 그래픽 API 재정의. 인수 = 실행 인수. DLL = 사용자 지정 DLL 파일 이름.\n"
+            + "제외 = 이 게임에서 모두 업데이트가 건너뛰는 구성 요소.");
     }
 }

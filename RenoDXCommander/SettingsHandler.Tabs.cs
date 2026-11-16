@@ -26,7 +26,7 @@ public partial class SettingsHandler
     {
         var b = new Button
         {
-            Content = "Tabs",
+            Content = "탭",
             FontSize = 13,
             MinHeight = 34,
             Padding = new Thickness(12, 0, 12, 0),
@@ -50,9 +50,9 @@ public partial class SettingsHandler
         b.BorderBrush = UIFactory.Brush(on ? ResourceKeys.AccentBlueBorderBrush : ResourceKeys.BorderDefaultBrush);
         b.Foreground = UIFactory.Brush(on ? ResourceKeys.TextPrimaryBrush : ResourceKeys.TextSecondaryBrush);
         ToolTipService.SetToolTip(b, on
-            ? "Settings are shown one section at a time as tabs. Click for the full list."
-            : "Show one section at a time, as tabs");
-        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(b, on ? "Settings tabs: on" : "Settings tabs: off");
+            ? "설정을 탭 형태로 한 번에 한 섹션씩 표시합니다. 전체 목록을 보려면 클릭하세요."
+            : "탭 형태로 한 번에 한 섹션씩 표시");
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(b, on ? "설정 탭: 켜짐" : "설정 탭: 꺼짐");
     }
 
     /// <summary>The tab strip shown above the sections in tabbed mode (built once, hidden otherwise).</summary>

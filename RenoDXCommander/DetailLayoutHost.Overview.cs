@@ -74,12 +74,12 @@ internal sealed partial class DetailLayoutHost
         }
 
         var components = new StackPanel { Spacing = 12 };
-        components.Children.Add(TabsTheme.SectionHeading("Components"));
+        components.Children.Add(TabsTheme.SectionHeading("구성 요소"));
         components.Children.Add(_cardsPanel);
         components.Children.Add(_noModNote);
 
         var glance = new StackPanel { Spacing = 12 };
-        glance.Children.Add(TabsTheme.SectionHeading("At a glance"));
+        glance.Children.Add(TabsTheme.SectionHeading("한눈에 보기"));
         glance.Children.Add(_glancePanel);
 
         _overview.Children.Add(components);
@@ -138,12 +138,12 @@ internal sealed partial class DetailLayoutHost
 
     private static string GlanceFallback(string key) => key switch
     {
-        "GameOverrides"       => "Name, DLL names, launch options, shaders and addons",
-        "NeuralRendering"     => "Not set up",
-        "NvidiaProfileDlss"   => "No DLSS or Streamline files found",
-        "NvidiaProfileDriver" => "NVIDIA driver settings for this game",
-        "Management"          => "Install folder, reset and report",
-        "Extras"              => "OptiScaler, frame generation unlocks, DXVK and more",
+        "GameOverrides"       => "이름, DLL 이름, 실행 옵션, 셰이더 및 애드온",
+        "NeuralRendering"     => "설정 안 됨",
+        "NvidiaProfileDlss"   => "DLSS 또는 Streamline 파일 없음",
+        "NvidiaProfileDriver" => "이 게임의 NVIDIA 드라이버 설정",
+        "Management"          => "설치 폴더, 초기화 및 보고",
+        "Extras"              => "OptiScaler, 프레임 생성 잠금 해제, DXVK 등",
         _                     => "",
     };
 
@@ -189,7 +189,7 @@ internal sealed partial class DetailLayoutHost
             Padding = new Thickness(16, 14, 16, 14),
             Child = body,
         };
-        TabsTheme.SetHandTip(tile, $"Open {GetTitle(key)}");
+        TabsTheme.SetHandTip(tile, $"{GetTitle(key)} 열기");
         TabsTheme.UseHandCursor(tile);
         var button = TabsTheme.WrapTile(tile, () => SelectTab(key));
         button.Tag = key; // controller support returns to the tile by its section key
@@ -268,36 +268,36 @@ internal sealed partial class DetailLayoutHost
         {
             case "Rs":
             {
-                if (card.UseNormalReShade) return "No Addons channel · addons off";
+                if (card.UseNormalReShade) return "No Addons 채널 · 애드온 꺼짐";
                 var channel = vm.GetReShadeChannelOverride(card.GameName, store) ?? Settings.ReShadeChannel;
                 if (string.IsNullOrWhiteSpace(channel)) channel = "Stable";
                 var shaders = vm.GetPerGameShaderMode(card.GameName, store);
                 var addons = vm.GetPerGameAddonMode(card.GameName, store);
                 var line = string.Equals(shaders, addons, StringComparison.OrdinalIgnoreCase)
-                    ? $"{channel} channel · {shaders.ToLowerInvariant()} shaders and addons"
-                    : $"{channel} channel · {shaders.ToLowerInvariant()} shaders · {addons.ToLowerInvariant()} addons";
-                return card.RequiresVulkanInstall ? line + " · Vulkan layer" : line;
+                    ? $"{channel} 채널 · 셰이더 및 애드온 {shaders.ToLowerInvariant()}"
+                    : $"{channel} 채널 · 셰이더 {shaders.ToLowerInvariant()} · 애드온 {addons.ToLowerInvariant()}";
+                return card.RequiresVulkanInstall ? line + " · Vulkan 레이어" : line;
             }
             case "Rdx":
                 return !string.IsNullOrEmpty(card.InstalledAddonFileName) ? card.InstalledAddonFileName
-                    : card.IsRtxHdrEnabled  ? "NVIDIA RTX HDR is on for this game"
-                    : card.IsAutoHdrEnabled ? "Windows Auto HDR is on for this game"
-                    : "HDR mod for this game";
+                    : card.IsRtxHdrEnabled  ? "이 게임에 NVIDIA RTX HDR이 켜져 있음"
+                    : card.IsAutoHdrEnabled ? "이 게임에 Windows Auto HDR이 켜져 있음"
+                    : "이 게임용 HDR 모드";
             case "Luma":
             {
                 // The mod's Name is just the game's name, so describe it instead
                 var luma = card.LumaMod;
-                var line = luma?.IsGenericLuma == true ? "Generic Luma for DX11 Unreal Engine games"
-                    : luma?.Author is { Length: > 0 } a ? $"HDR mod for this game by {a}" : "HDR mod for this game";
-                if (luma?.RequiresDgVoodoo == true) line += " · installs dgVoodoo2";
+                var line = luma?.IsGenericLuma == true ? "DX11 Unreal Engine 게임용 범용 Luma"
+                    : luma?.Author is { Length: > 0 } a ? $"{a}의 이 게임용 HDR 모드" : "이 게임용 HDR 모드";
+                if (luma?.RequiresDgVoodoo == true) line += " · dgVoodoo2 설치";
                 // Latest GitHub build, when it's newer than what's installed (Nexus-only mods have no build number)
                 if (luma?.DownloadUrl != null && LatestLumaBuild() is > 0 and var latest
                     && latest > (card.LumaRecord?.InstalledBuildNumber ?? 0))
-                    line = $"Build {latest} available · " + line;
+                    line = $"빌드 {latest} 사용 가능 · " + line;
                 return line;
             }
-            case "Ref":    return "Needed for ReShade in RE Engine games";
-            case "DofFix": return "Fixes depth of field with RenoDX in Unreal Engine 5 games";
+            case "Ref":    return "RE Engine 게임에서 ReShade 사용에 필요";
+            case "DofFix": return "Unreal Engine 5 게임에서 RenoDX 사용 시 피사계 심도 문제 수정";
             default:       return null;
         }
     }
@@ -583,14 +583,14 @@ internal sealed partial class DetailLayoutHost
             CopyIcon(r.Info, _info);
             bool notes = HasInfoArrow(src.Content);
             _info.BorderBrush = TabsTheme.B(notes ? TabsTheme.Accent : "#263042");
-            ToolTipService.SetToolTip(_info, notes ? "This game has notes. Click to read them." : (TooltipText(r.Info) ?? "Info"));
+            ToolTipService.SetToolTip(_info, notes ? "이 게임에 메모가 있습니다. 클릭하여 읽으세요." : (TooltipText(r.Info) ?? "정보"));
             CopyIcon(r.Cog, _cog);
-            ToolTipService.SetToolTip(_cog, TooltipText(r.Cog) ?? $"{_name.Text} settings");
+            ToolTipService.SetToolTip(_cog, TooltipText(r.Cog) ?? $"{_name.Text} 설정");
 
             // ✕ is hidden with Opacity 0 in the row (keeps its column); hide it properly here
             bool showDelete = r.Delete.Visibility == Visibility.Visible && r.Delete.IsHitTestVisible && r.Delete.Opacity > 0.05;
             _delete.Visibility = showDelete ? Visibility.Visible : Visibility.Collapsed;
-            ToolTipService.SetToolTip(_delete, TooltipText(r.Delete) ?? $"Remove {_name.Text}");
+            ToolTipService.SetToolTip(_delete, TooltipText(r.Delete) ?? $"{_name.Text} 제거");
 
             UpdateProgress();
         }

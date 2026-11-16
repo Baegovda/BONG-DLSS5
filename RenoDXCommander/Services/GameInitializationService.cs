@@ -303,7 +303,7 @@ public class GameInitializationService : IGameInitializationService
                     card.Mod.SnapshotUrl = null;
                 card.IsExternalOnly = true;
                 card.ExternalUrl    = ext.Url ?? "https://discord.gg/gF4GRJWZ2A";
-                card.ExternalLabel  = ext.Label ?? "Download from Discord";
+                card.ExternalLabel  = ext.Label ?? "Discord에서 다운로드";
                 // Set WikiStatus based on the actual download source
                 bool isNexus = ext.Url != null && ext.Url.Contains("nexusmods", StringComparison.OrdinalIgnoreCase);
                 card.WikiStatus     = isNexus ? "🌐" : "💬";
@@ -366,9 +366,9 @@ public class GameInitializationService : IGameInitializationService
         var overrides = new Dictionary<string, CardOverride>(StringComparer.OrdinalIgnoreCase)
         {
             ["Dishonored"] = new CardOverride(
-                Notes: "ℹ️ This game has both 32-bit and 64-bit RenoDX builds.\n\n" +
-                       "• 64-bit (default) — for the Microsoft Store and Epic Games Store versions.\n" +
-                       "• 32-bit — for the Steam version. Enable 32-bit mode in 🎯 Overrides to use this.",
+                Notes: "ℹ️ 이 게임은 32비트와 64비트 RenoDX 빌드가 모두 있습니다.\n\n" +
+                       "• 64비트 (기본값) — Microsoft Store 및 Epic Games Store 버전용.\n" +
+                       "• 32비트 — Steam 버전용. 사용하려면 🎯 Overrides에서 32비트 모드를 켜세요.",
                 DiscordUrl: null, ForceDiscord: false),
         };
 
@@ -382,7 +382,7 @@ public class GameInitializationService : IGameInitializationService
                     card.Mod.SnapshotUrl = null;
                 card.IsExternalOnly  = true;
                 card.ExternalUrl     = ov.DiscordUrl ?? "https://discord.gg/gF4GRJWZ2A";
-                card.ExternalLabel   = "Download from Discord";
+                card.ExternalLabel   = "Discord에서 다운로드";
                 card.DiscordUrl      = ov.DiscordUrl ?? "https://discord.gg/gF4GRJWZ2A";
                 card.WikiStatus      = "💬";
             }

@@ -48,23 +48,23 @@ public partial class GameCardViewModel
     {
         get
         {
-            if (RsIsInstalling) return "Installing...";
+            if (RsIsInstalling) return "설치 중...";
             // RE Engine games require REFramework before ReShade can be installed
             // (unless user has excluded REF via Update Inclusion toggle)
             if (IsREEngineGame && !IsRefInstalled && !EffectiveLumaMode && !ExcludeFromUpdateAllRef)
-                return "⚠  RE Framework required";
+                return "⚠  RE Framework 필요";
             if (RequiresVulkanInstall)
             {
                 bool layerInstalled = _vulkanLayerInstalled;
                 if (RsStatus == GameStatus.UpdateAvailable && layerInstalled && IsVulkanRsActive)
-                    return "⬆  Update Vulkan ReShade";
-                if (layerInstalled && IsVulkanRsActive) return "↺  Reinstall Vulkan ReShade";
-                if (layerInstalled) return "⬇  Install Vulkan ReShade";
-                return "⬇  Install Vulkan Layer";
+                    return "⬆  Vulkan ReShade 업데이트";
+                if (layerInstalled && IsVulkanRsActive) return "↺  Vulkan ReShade 재설치";
+                if (layerInstalled) return "⬇  Vulkan ReShade 설치";
+                return "⬇  Vulkan 레이어 설치";
             }
-            return RsStatus == GameStatus.UpdateAvailable ? "⬆  Update ReShade"
-                 : RsStatus == GameStatus.Installed       ? "↺  Reinstall ReShade"
-                 : "⬇  Install ReShade";
+            return RsStatus == GameStatus.UpdateAvailable ? "⬆  ReShade 업데이트"
+                 : RsStatus == GameStatus.Installed       ? "↺  ReShade 재설치"
+                 : "⬇  ReShade 설치";
         }
     }
 
@@ -100,14 +100,14 @@ public partial class GameCardViewModel
             {
                 bool layerInstalled = _vulkanLayerInstalled;
                 if (RsStatus == GameStatus.UpdateAvailable && layerInstalled && IsVulkanRsActive)
-                    return "⬆ Update";
-                if (layerInstalled && IsVulkanRsActive) return "↺ Reinstall";
+                    return "⬆ 업데이트";
+                if (layerInstalled && IsVulkanRsActive) return "↺ 재설치";
                 if (layerInstalled) return "⬇ Vulkan RS";
-                return "⬇ Install";
+                return "⬇ 설치";
             }
-            return RsStatus == GameStatus.UpdateAvailable ? "⬆ Update"
-                 : RsStatus == GameStatus.Installed       ? "↺ Reinstall"
-                 : "⬇ Install";
+            return RsStatus == GameStatus.UpdateAvailable ? "⬆ 업데이트"
+                 : RsStatus == GameStatus.Installed       ? "↺ 재설치"
+                 : "⬇ 설치";
         }
     }
 

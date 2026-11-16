@@ -17,28 +17,28 @@ public class AddonInfoResolver
     // ── Generic fallback text constants (Tier 3) ──────────────────────────────────
 
     public const string FallbackREFramework =
-        "RE Framework is a modding framework for RE Engine games. It enables ReShade injection and other mods by hooking into the game's rendering pipeline.";
+        "RE Framework는 RE Engine 게임용 모딩 프레임워크입니다. 게임의 렌더링 파이프라인에 후킹하여 ReShade 주입 및 기타 모드를 사용할 수 있게 합니다.";
 
     public const string FallbackReShade =
-        "ReShade is a post-processing injector that adds visual effects to games. It is required by RenoDX to apply HDR tone mapping and color grading.";
+        "ReShade는 게임에 시각 효과를 추가하는 후처리 인젝터입니다. RenoDX가 HDR 톤 매핑과 색 보정을 적용하려면 필요합니다.";
 
     public const string FallbackRenoDX =
-        "RenoDX is an HDR mod framework that upgrades SDR games to HDR using ReShade. It provides per-game tone mapping and color space conversion.";
+        "RenoDX는 ReShade를 사용해 SDR 게임을 HDR로 업그레이드하는 HDR 모드 프레임워크입니다. 게임별 톤 매핑과 색 공간 변환을 제공합니다.";
 
     public const string FallbackNativeHdr =
-        "This game is set to use UE-Extended. It is automatically configured to use native HDR and an Engine.ini will be automatically deployed upon installation. If there is an ingame HDR option then enable that too.";
+        "이 게임은 UE-Extended를 사용하도록 설정되어 있습니다. 네이티브 HDR을 사용하도록 자동 구성되며 설치 시 Engine.ini가 자동으로 배포됩니다. 게임 내 HDR 옵션이 있다면 그것도 켜세요.";
 
     public const string FallbackReLimiter =
-        "ReLimiter is a frame limiter that works alongside ReShade to reduce input lag and improve frame pacing in games.";
+        "ReLimiter는 ReShade와 함께 작동하여 게임의 입력 지연을 줄이고 프레임 페이싱을 개선하는 프레임 제한기입니다.";
 
     public const string FallbackDisplayCommander =
-        "Display Commander is a frame limiter that works alongside ReShade to reduce input lag and improve frame pacing.";
+        "Display Commander는 ReShade와 함께 작동하여 입력 지연을 줄이고 프레임 페이싱을 개선하는 프레임 제한기입니다.";
 
     public const string FallbackOptiScaler =
-        "OptiScaler is an upscaling compatibility layer that enables FSR, XeSS, or DLSS across different GPU vendors, allowing you to use any upscaler regardless of your hardware.";
+        "OptiScaler는 GPU 제조사와 관계없이 FSR, XeSS, DLSS를 사용할 수 있게 하는 업스케일링 호환 레이어로, 하드웨어에 상관없이 원하는 업스케일러를 사용할 수 있습니다.";
 
     public const string FallbackLuma =
-        "Luma is an alternative HDR mod framework that provides native HDR output for supported games, bypassing the need for ReShade-based injection.";
+        "Luma는 지원 게임에 네이티브 HDR 출력을 제공하는 대체 HDR 모드 프레임워크로, ReShade 기반 주입이 필요하지 않습니다.";
 
     /// <summary>
     /// Returns the generic fallback text for the given addon type.
@@ -169,10 +169,10 @@ public class AddonInfoResolver
         var source = GetSourceType(card, addon, manifest, osWikiData, hdrDatabase);
         return source switch
         {
-            InfoSourceType.Manifest => "Per-game notes available",
-            InfoSourceType.Wiki     => "Wiki info available",
-            InfoSourceType.Fallback => "General addon info",
-            _ => "General addon info"
+            InfoSourceType.Manifest => "게임별 노트 있음",
+            InfoSourceType.Wiki     => "위키 정보 있음",
+            InfoSourceType.Fallback => "일반 애드온 정보",
+            _ => "일반 애드온 정보"
         };
     }
 
@@ -324,7 +324,7 @@ public class AddonInfoResolver
         {
             Content = content,
             Url = card.NameUrl,
-            UrlLabel = !string.IsNullOrEmpty(card.NameUrl) ? "View wiki page" : null,
+            UrlLabel = !string.IsNullOrEmpty(card.NameUrl) ? "위키 페이지 보기" : null,
             Source = InfoSourceType.Wiki,
             WikiStatusLabel = card.WikiStatusLabel,
             WikiStatusBadgeBg = card.WikiStatusBadgeBackground,
@@ -367,7 +367,7 @@ public class AddonInfoResolver
         {
             Content = content,
             Url = url,
-            UrlLabel = url != null ? "View wiki page" : null,
+            UrlLabel = url != null ? "위키 페이지 보기" : null,
             Source = InfoSourceType.Wiki,
             OptiScalerCompat = stdEntry,
             OptiScalerFsr4Compat = fsr4Entry
@@ -405,8 +405,8 @@ public class AddonInfoResolver
         {
             var upscalers = stdEntry.Upscalers.Count > 0
                 ? string.Join(", ", stdEntry.Upscalers)
-                : "None listed";
-            parts.Add($"OptiScaler Compatibility: {stdEntry.Status}\nUpscalers: {upscalers}");
+                : "목록 없음";
+            parts.Add($"OptiScaler 호환성: {stdEntry.Status}\n업스케일러: {upscalers}");
             if (!string.IsNullOrWhiteSpace(stdEntry.Notes))
                 parts.Add(stdEntry.Notes);
         }
@@ -415,8 +415,8 @@ public class AddonInfoResolver
         {
             var upscalers = fsr4Entry.Upscalers.Count > 0
                 ? string.Join(", ", fsr4Entry.Upscalers)
-                : "None listed";
-            parts.Add($"FSR4 Compatibility: {fsr4Entry.Status}\nUpscalers: {upscalers}");
+                : "목록 없음";
+            parts.Add($"FSR4 호환성: {fsr4Entry.Status}\n업스케일러: {upscalers}");
             if (!string.IsNullOrWhiteSpace(fsr4Entry.Notes))
                 parts.Add(fsr4Entry.Notes);
         }

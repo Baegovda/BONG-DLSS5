@@ -102,9 +102,9 @@ internal sealed partial class OverlayWindow
     private Button? MakeUltraPlusButton(RenoDXCommander.ViewModels.GameCardViewModel card)
     {
         if (!DevUnlockService.IsExtraUnlocked || UltraPlusFiles.Find(card.InstallPath) == null) return null;
-        var btn = new Button { Content = "Ultra+ settings", HorizontalAlignment = HorizontalAlignment.Left };
+        var btn = new Button { Content = "Ultra+ 설정", HorizontalAlignment = HorizontalAlignment.Left };
         TabsTheme.Apply(btn, TabsTheme.PurpleButton, height: 40, fontSize: 14);
-        ToolTipService.SetToolTip(btn, "Change this game's Ultra+ settings and watch them change in the game");
+        ToolTipService.SetToolTip(btn, "이 게임의 Ultra+ 설정을 변경하고 게임에서 바로 확인하세요");
         btn.Click += (_, _) => EnterUltraPlus();
         return btn;
     }
@@ -117,7 +117,7 @@ internal sealed partial class OverlayWindow
         {
             CrashReporter.Log($"[OverlayWindow.UltraPlus] Couldn't open Ultra+ settings — {ex}");
             if (_upMode) ExitUltraPlus();
-            _hint.Text = "Couldn't open the Ultra+ settings. The log has the details.";
+            _hint.Text = "Ultra+ 설정을 열 수 없습니다. 자세한 내용은 로그를 확인하세요.";
         }
     }
 
@@ -142,9 +142,9 @@ internal sealed partial class OverlayWindow
             if (await Task.Run(() => UltraPlusFiles.Write(path, new Dictionary<string, string> { [UltraPlusConfig.AutoApplyKey] = "on" })))
             {
                 state = await Task.Run(() => UltraPlusFiles.Load(installPath)) ?? state;
-                notice = "Turned on Ultra+'s Automatically Apply Configuration so changes show straight away. Press F12 in the game once (or restart it) for Ultra+ to pick that up.";
+                notice = "변경 사항이 바로 반영되도록 Ultra+의 Automatically Apply Configuration을 켰습니다. Ultra+가 이를 인식하도록 게임에서 F12를 한 번 누르거나 게임을 다시 시작하세요.";
             }
-            else notice = "Ultra+'s Automatically Apply Configuration is off and RHI couldn't turn it on: changes apply when you press F12 in the game.";
+            else notice = "Ultra+의 Automatically Apply Configuration이 꺼져 있고 RHI가 켤 수 없었습니다. 게임에서 F12를 누르면 변경 사항이 적용됩니다.";
         }
 
         _up = state;
@@ -207,7 +207,7 @@ internal sealed partial class OverlayWindow
         header.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         header.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
         var titles = new StackPanel { Spacing = 2 };
-        titles.Children.Add(new TextBlock { Text = "ULTRA+ SETTINGS", FontSize = 11, CharacterSpacing = 120, Foreground = TabsTheme.B(TabsTheme.TextMuted) });
+        titles.Children.Add(new TextBlock { Text = "ULTRA+ 설정", FontSize = 11, CharacterSpacing = 120, Foreground = TabsTheme.B(TabsTheme.TextMuted) });
         titles.Children.Add(new TextBlock
         {
             Text = gameName, FontSize = 22, FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
@@ -217,9 +217,9 @@ internal sealed partial class OverlayWindow
         titles.Children.Add(_upSubtitle);
         UpdateUpSubtitle();
         header.Children.Add(titles);
-        var back = new Button { Content = "Full overlay", VerticalAlignment = VerticalAlignment.Top };
+        var back = new Button { Content = "전체 오버레이", VerticalAlignment = VerticalAlignment.Top };
         TabsTheme.Apply(back, TabsTheme.BlueButton, height: 36, fontSize: 13);
-        ToolTipService.SetToolTip(back, "Back to the full RHI overlay (Esc)");
+        ToolTipService.SetToolTip(back, "전체 RHI 오버레이로 돌아가기 (Esc)");
         back.Click += (_, _) => ExitUltraPlus();
         Grid.SetColumn(back, 1);
         header.Children.Add(back);
@@ -230,11 +230,11 @@ internal sealed partial class OverlayWindow
         var findRow = new Grid { ColumnSpacing = 8 };
         findRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         findRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(220) });
-        var search = new TextBox { PlaceholderText = "Search settings", Text = _upSearch, FontSize = 14 };
+        var search = new TextBox { PlaceholderText = "설정 검색", Text = _upSearch, FontSize = 14 };
         search.TextChanged += (_, _) => { _upSearch = search.Text.Trim(); RebuildUpList(); };
         findRow.Children.Add(search);
         _upCategories = new ComboBox { HorizontalAlignment = HorizontalAlignment.Stretch, FontSize = 14 };
-        ToolTipService.SetToolTip(_upCategories, "Show one group of settings, or only the ones changed from Ultra+'s defaults");
+        ToolTipService.SetToolTip(_upCategories, "설정 그룹 하나 또는 Ultra+ 기본값에서 변경된 설정만 표시합니다");
         _upCategories.SelectionChanged += (_, _) =>
         {
             if (_upSilent || _upCategories.SelectedItem is not ComboBoxItem { Tag: string name } || name == _upCategory) return;
@@ -249,11 +249,11 @@ internal sealed partial class OverlayWindow
         var switches = new Grid { ColumnSpacing = 18 };
         switches.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         switches.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-        var desc = MakeUpSwitch("Descriptions", new[] { "Off", "On" }, _upPrefs.ShowDescriptions ? 1 : 0,
-            "On: every setting's description. Off: the description of the setting under the mouse shows at the bottom.",
+        var desc = MakeUpSwitch("설명", new[] { "꺼짐", "켜짐" }, _upPrefs.ShowDescriptions ? 1 : 0,
+            "켜짐: 모든 설정의 설명을 표시합니다. 꺼짐: 마우스 아래 설정의 설명이 하단에 표시됩니다.",
             i => { _upPrefs.ShowDescriptions = i == 1; _upPrefs.Save(); ApplyUpDescriptionMode(); });
-        var numbers = MakeUpSwitch("Numbers", new[] { "Slider", "List" }, _upPrefs.NumbersAsList ? 1 : 0,
-            "How number settings are changed: a slider, or a list of every allowed value (like Ultra+ Manager).",
+        var numbers = MakeUpSwitch("숫자", new[] { "슬라이더", "목록" }, _upPrefs.NumbersAsList ? 1 : 0,
+            "숫자 설정 변경 방식: 슬라이더 또는 허용되는 모든 값의 목록 (Ultra+ Manager와 동일).",
             i => { _upPrefs.NumbersAsList = i == 1; _upPrefs.Save(); RebuildUpList(keepScroll: true); });
         switches.Children.Add(desc);
         Grid.SetColumn(numbers, 1);
@@ -268,8 +268,8 @@ internal sealed partial class OverlayWindow
         presetRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         presetRow.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
         presetRow.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-        _upPresets = new ComboBox { PlaceholderText = "Apply a preset", HorizontalAlignment = HorizontalAlignment.Stretch, FontSize = 14 };
-        ToolTipService.SetToolTip(_upPresets, "Presets that came with Ultra+ for this game, then your own");
+        _upPresets = new ComboBox { PlaceholderText = "프리셋 적용", HorizontalAlignment = HorizontalAlignment.Stretch, FontSize = 14 };
+        ToolTipService.SetToolTip(_upPresets, "이 게임용 Ultra+ 기본 제공 프리셋, 그다음 내 프리셋");
         FillUpPresets();
         _upPresets.SelectionChanged += (_, _) =>
         {
@@ -278,15 +278,15 @@ internal sealed partial class OverlayWindow
             _upSilent = true; _upPresets.SelectedIndex = -1; _upSilent = false;
         };
         presetRow.Children.Add(_upPresets);
-        var save = new Button { Content = "Save as preset" };
+        var save = new Button { Content = "프리셋으로 저장" };
         TabsTheme.Apply(save, TabsTheme.BlueButton, height: 34, fontSize: 13);
-        ToolTipService.SetToolTip(save, "Save the current settings as your own preset for this game (Ultra+ Manager sees it too)");
+        ToolTipService.SetToolTip(save, "현재 설정을 이 게임의 내 프리셋으로 저장합니다 (Ultra+ Manager에서도 표시됨)");
         save.Click += (_, _) => { _upSaveRow.Visibility = Visibility.Visible; _upSaveName.Text = ""; _upSaveName.Focus(FocusState.Programmatic); };
         Grid.SetColumn(save, 1);
         presetRow.Children.Add(save);
-        var restore = new Button { Content = "Restore defaults" };
+        var restore = new Button { Content = "기본값 복원" };
         TabsTheme.Apply(restore, TabsTheme.AmberButton, height: 34, fontSize: 13);
-        ToolTipService.SetToolTip(restore, "Set every setting back to Ultra+'s default. You can undo it.");
+        ToolTipService.SetToolTip(restore, "모든 설정을 Ultra+ 기본값으로 되돌립니다. 실행 취소할 수 있습니다.");
         restore.Click += (_, _) => RestoreUpDefaults();
         Grid.SetColumn(restore, 2);
         presetRow.Children.Add(restore);
@@ -296,15 +296,15 @@ internal sealed partial class OverlayWindow
         _upSaveRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         _upSaveRow.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
         _upSaveRow.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-        _upSaveName = new TextBox { PlaceholderText = "Preset name", FontSize = 14, MaxLength = 60 };
+        _upSaveName = new TextBox { PlaceholderText = "프리셋 이름", FontSize = 14, MaxLength = 60 };
         _upSaveName.KeyDown += (_, e) => { if (e.Key == Windows.System.VirtualKey.Enter) { e.Handled = true; SaveUpPreset(); } };
         _upSaveRow.Children.Add(_upSaveName);
-        var saveOk = new Button { Content = "Save" };
+        var saveOk = new Button { Content = "저장" };
         TabsTheme.Apply(saveOk, TabsTheme.GreenButton, height: 34, fontSize: 13);
         saveOk.Click += (_, _) => SaveUpPreset();
         Grid.SetColumn(saveOk, 1);
         _upSaveRow.Children.Add(saveOk);
-        var saveCancel = new Button { Content = "Cancel" };
+        var saveCancel = new Button { Content = "취소" };
         TabsTheme.Apply(saveCancel, TabsTheme.IconButton, height: 34, fontSize: 13);
         saveCancel.Click += (_, _) => _upSaveRow.Visibility = Visibility.Collapsed;
         Grid.SetColumn(saveCancel, 2);
@@ -313,10 +313,10 @@ internal sealed partial class OverlayWindow
 
         var statusRow = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 10 };
         _upStatus = new TextBlock { FontSize = 13, Foreground = TabsTheme.B(TabsTheme.TextSecondary), TextWrapping = TextWrapping.Wrap, MaxWidth = 380, VerticalAlignment = VerticalAlignment.Center };
-        _upUndo = new Button { Content = "Undo", Visibility = Visibility.Collapsed };
+        _upUndo = new Button { Content = "실행 취소", Visibility = Visibility.Collapsed };
         TabsTheme.Apply(_upUndo, TabsTheme.BlueButton, height: 30, fontSize: 12);
         _upUndo.Click += (_, _) => UndoUp();
-        _upDeletePreset = new Button { Content = "Delete preset", Visibility = Visibility.Collapsed };
+        _upDeletePreset = new Button { Content = "프리셋 삭제", Visibility = Visibility.Collapsed };
         TabsTheme.Apply(_upDeletePreset, TabsTheme.DangerButton, height: 30, fontSize: 12);
         _upDeletePreset.Click += (_, _) => DeleteUpPreset();
         statusRow.Children.Add(_upStatus);
@@ -352,8 +352,8 @@ internal sealed partial class OverlayWindow
         bottom.Children.Add(new TextBlock
         {
             Text = UltraPlusData.HasData
-                ? "Ultra+ by the Ultra+ team. Setting names, descriptions and costs from Ultra+ Manager. Esc: full overlay."
-                : "Ultra+ by the Ultra+ team. Esc: full overlay.",
+                ? "Ultra+ 제작: Ultra+ 팀. 설정 이름, 설명, 비용은 Ultra+ Manager 제공. Esc: 전체 오버레이."
+                : "Ultra+ 제작: Ultra+ 팀. Esc: 전체 오버레이.",
             FontSize = 11, Foreground = TabsTheme.B(TabsTheme.TextMuted), TextWrapping = TextWrapping.Wrap,
         });
         Grid.SetRow(bottom, 4);
@@ -404,7 +404,7 @@ internal sealed partial class OverlayWindow
                     UpChanged => visible.Count(IsUpChanged),
                     _ => visible.Count(s => CategoryOf(s).Equals(name, StringComparison.OrdinalIgnoreCase)),
                 };
-                var label = name switch { UpAll => "All settings", UpChanged => "Changed from default", _ => ShortCategory(name) };
+                var label = name switch { UpAll => "모든 설정", UpChanged => "기본값에서 변경됨", _ => ShortCategory(name) };
                 var item = new ComboBoxItem { Content = $"{label}  ({count})", Tag = name };
                 if (label != name && name is not (UpAll or UpChanged)) ToolTipService.SetToolTip(item, name);
                 _upCategories.Items.Add(item);
@@ -428,7 +428,7 @@ internal sealed partial class OverlayWindow
     }
 
     private static string ShortCategory(string name) =>
-        name.StartsWith("Upscaling", StringComparison.OrdinalIgnoreCase) ? "Upscaling and FG" : name;
+        name.StartsWith("Upscaling", StringComparison.OrdinalIgnoreCase) ? "업스케일링 및 FG" : name;
 
     // ── Rows ─────────────────────────────────────────────────────────────────
 
@@ -478,7 +478,7 @@ internal sealed partial class OverlayWindow
         if (items.Count == 0)
             _upList.Children.Add(new TextBlock
             {
-                Text = _upCategory == UpChanged ? "Nothing is changed from Ultra+'s defaults." : "No settings match.",
+                Text = _upCategory == UpChanged ? "Ultra+ 기본값에서 변경된 설정이 없습니다." : "일치하는 설정이 없습니다.",
                 FontSize = 14, Foreground = TabsTheme.B(TabsTheme.TextSecondary), Margin = new Thickness(2, 8, 0, 0),
             });
         TabsTheme.Restyle(_upList);
@@ -510,8 +510,8 @@ internal sealed partial class OverlayWindow
             Foreground = TabsTheme.B(TabsTheme.TextPrimary),
         });
         var meta = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8 };
-        row.Changed = new TextBlock { Text = "Changed", FontSize = 11, Foreground = TabsTheme.B("#D9C8FF"), VerticalAlignment = VerticalAlignment.Center };
-        ToolTipService.SetToolTip(row.Changed, "Not Ultra+'s default");
+        row.Changed = new TextBlock { Text = "변경됨", FontSize = 11, Foreground = TabsTheme.B("#D9C8FF"), VerticalAlignment = VerticalAlignment.Center };
+        ToolTipService.SetToolTip(row.Changed, "Ultra+ 기본값이 아님");
         row.Cost = new TextBlock { FontSize = 11, VerticalAlignment = VerticalAlignment.Center };
         row.State = new TextBlock { FontSize = 11, VerticalAlignment = VerticalAlignment.Center };
         meta.Children.Add(row.Changed);
@@ -519,10 +519,10 @@ internal sealed partial class OverlayWindow
         if (!string.IsNullOrEmpty(s.Shortcut))
         {
             var key = new TextBlock { Text = s.Shortcut, FontSize = 11, Foreground = TabsTheme.B(TabsTheme.TextMuted), VerticalAlignment = VerticalAlignment.Center };
-            ToolTipService.SetToolTip(key, $"Ultra+ toggles this with {s.Shortcut} in the game when its keybinds are on");
+            ToolTipService.SetToolTip(key, $"Ultra+ 단축키가 켜져 있으면 게임에서 {s.Shortcut}(으)로 전환합니다");
             meta.Children.Add(key);
         }
-        row.Reset = new Button { Content = "Reset", Padding = new Thickness(8, 1, 8, 2) };
+        row.Reset = new Button { Content = "초기화", Padding = new Thickness(8, 1, 8, 2) };
         TabsTheme.Apply(row.Reset, TabsTheme.IconButton, height: 24, fontSize: 11);
         row.Reset.Click += (_, _) => { if (_up != null) WriteUpValues(new() { [s.Key] = _up.DefaultOf(s) }, undo: null, status: null); };
         meta.Children.Add(row.Reset);
@@ -582,8 +582,8 @@ internal sealed partial class OverlayWindow
             row.SliderValue = new TextBlock { FontSize = 14, Foreground = TabsTheme.B(TabsTheme.TextPrimary), HorizontalAlignment = HorizontalAlignment.Right };
             if (choices.Contains("game", StringComparer.OrdinalIgnoreCase))
             {
-                row.GameDefault = new CheckBox { Content = "Game default", FontSize = 12, MinWidth = 0 };
-                ToolTipService.SetToolTip(row.GameDefault, "Use the game's own value");
+                row.GameDefault = new CheckBox { Content = "게임 기본값", FontSize = 12, MinWidth = 0 };
+                ToolTipService.SetToolTip(row.GameDefault, "게임 자체 값을 사용합니다");
                 row.GameDefault.Click += (_, _) =>
                 {
                     if (row.GameDefault.IsChecked == true) WriteUpValues(new() { [s.Key] = "game" }, null, null);
@@ -669,7 +669,7 @@ internal sealed partial class OverlayWindow
                 if (double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var n))
                     row.Slider.Value = Math.Clamp(n, row.Slider.Minimum, row.Slider.Maximum);
                 row.Slider.Opacity = isGame ? 0.45 : 1;
-                row.SliderValue!.Text = isGame ? "Game" : FormatUpNumber(s, row.Slider.Value);
+                row.SliderValue!.Text = isGame ? "게임" : FormatUpNumber(s, row.Slider.Value);
             }
         }
         finally { _upSilent = false; }
@@ -677,20 +677,20 @@ internal sealed partial class OverlayWindow
         bool changed = IsUpChanged(s);
         row.Changed.Visibility = changed ? Visibility.Visible : Visibility.Collapsed;
         row.Reset.Visibility = changed ? Visibility.Visible : Visibility.Collapsed;
-        if (_up != null) ToolTipService.SetToolTip(row.Reset, $"Back to Ultra+'s default: {_up.DefaultOf(s)}");
+        if (_up != null) ToolTipService.SetToolTip(row.Reset, $"Ultra+ 기본값으로 되돌리기: {_up.DefaultOf(s)}");
         var cost = UltraPlusData.CostOf(s.Key, value);
         (string text, string colour) = cost?.ToLowerInvariant() switch
         {
-            "low" => ("Low cost", "#7FE0A0"),
-            "medium" => ("Medium cost", "#F0C35A"),
-            "high" => ("High cost", "#FF9F6B"),
-            "very_high" => ("Very high cost", "#FF7A8A"),
+            "low" => ("낮은 비용", "#7FE0A0"),
+            "medium" => ("중간 비용", "#F0C35A"),
+            "high" => ("높은 비용", "#FF9F6B"),
+            "very_high" => ("매우 높은 비용", "#FF7A8A"),
             _ => ("", TabsTheme.TextMuted),
         };
         row.Cost.Text = text;
         row.Cost.Foreground = TabsTheme.B(colour);
         row.Cost.Visibility = text.Length > 0 ? Visibility.Visible : Visibility.Collapsed;
-        if (text.Length > 0) ToolTipService.SetToolTip(row.Cost, "Performance cost of the current value (Ultra+ Manager's estimate)");
+        if (text.Length > 0) ToolTipService.SetToolTip(row.Cost, "현재 값의 성능 비용 (Ultra+ Manager 추정치)");
     }
 
     private void ApplyUpDescriptionMode()
@@ -701,7 +701,7 @@ internal sealed partial class OverlayWindow
         {
             _upInfo.Visibility = _upPrefs.ShowDescriptions ? Visibility.Collapsed : Visibility.Visible;
             if (!_upPrefs.ShowDescriptions && string.IsNullOrEmpty(_upInfo.Text))
-                _upInfo.Text = "Point at a setting to see what it does.";
+                _upInfo.Text = "설정에 마우스를 올리면 기능을 볼 수 있습니다.";
         }
     }
 
@@ -736,13 +736,13 @@ internal sealed partial class OverlayWindow
                     if (!_upRows.TryGetValue(key, out var row)) continue;
                     row.State.Text = ok ? "Applied" : "Not applied";
                     row.State.Foreground = TabsTheme.B(ok ? "#7FE0A0" : "#FF9AA8");
-                    ToolTipService.SetToolTip(row.State, ok ? null : "RHI couldn't write Ultra+'s settings file. Is it read-only, or open in another program?");
+                    ToolTipService.SetToolTip(row.State, ok ? null : "RHI가 Ultra+ 설정 파일에 쓸 수 없습니다. 읽기 전용이거나 다른 프로그램에서 열려 있습니까?");
                     if (ok) ClearAppliedLater(row, seq);
                 }
                 if (status != null || undo != null || !ok)
                 {
                     _upUndoValues = ok ? undo : null;
-                    SetUpStatus(ok ? status : "Couldn't save the change: Ultra+'s settings file couldn't be written.", showUndo: ok && undo != null);
+                    SetUpStatus(ok ? status : "변경 사항을 저장할 수 없습니다: Ultra+ 설정 파일에 쓸 수 없습니다.", showUndo: ok && undo != null);
                 }
                 RebuildUpChipCounts();
             });
@@ -768,8 +768,8 @@ internal sealed partial class OverlayWindow
         bool live = _upValues.TryGetValue(UltraPlusConfig.AutoApplyKey, out var v) && v.Equals("on", StringComparison.OrdinalIgnoreCase);
         var version = _up?.Version != null ? $"Ultra+ {_up.Version} · " : "";
         _upSubtitle.Text = version + (live
-            ? "changes apply in the game as you make them"
-            : "Automatically Apply Configuration is off: press F12 in the game to apply changes");
+            ? "변경 사항이 게임에 즉시 적용됩니다"
+            : "Automatically Apply Configuration이 꺼져 있습니다: 변경 사항을 적용하려면 게임에서 F12를 누르세요");
         _upSubtitle.Foreground = TabsTheme.B(live ? TabsTheme.TextSecondary : "#F0C35A");
     }
 
@@ -808,8 +808,8 @@ internal sealed partial class OverlayWindow
         _upLastCustomPreset = p.IsCustom ? p.StorageName : null;
         var undo = CurrentUpValues(values.Keys);
         WriteUpValues(values, undo, changed == 0
-            ? $"{p.DisplayName}: the settings already match."
-            : $"Applied {p.DisplayName} ({changed} setting{(changed == 1 ? "" : "s")} changed).");
+            ? $"{p.DisplayName}: 설정이 이미 일치합니다."
+            : $"{p.DisplayName} 적용됨 (설정 {changed}개 변경).");
         CrashReporter.Log($"[OverlayWindow.UltraPlus] Preset '{p.StorageName}' ({changed} changed)");
         if (changed == 0) SetUpStatus(_upStatus.Text, showDelete: p.IsCustom);
     }
@@ -821,8 +821,8 @@ internal sealed partial class OverlayWindow
         // Keep live-apply on: restoring the defaults would otherwise switch it off again
         values.Remove(UltraPlusConfig.AutoApplyKey);
         _upLastCustomPreset = null;
-        if (values.Count == 0) { SetUpStatus("Every setting is already at Ultra+'s default."); return; }
-        WriteUpValues(values, CurrentUpValues(values.Keys), $"Restored Ultra+'s defaults ({values.Count} setting{(values.Count == 1 ? "" : "s")}).");
+        if (values.Count == 0) { SetUpStatus("모든 설정이 이미 Ultra+ 기본값입니다."); return; }
+        WriteUpValues(values, CurrentUpValues(values.Keys), $"Ultra+ 기본값 복원됨 (설정 {values.Count}개).");
     }
 
     private void UndoUp()
@@ -830,8 +830,8 @@ internal sealed partial class OverlayWindow
         if (_upUndoValues is not { } undo) return;
         _upUndoValues = null;
         _upLastCustomPreset = null;
-        WriteUpValues(undo, null, "Undone.");
-        SetUpStatus("Undone.");
+        WriteUpValues(undo, null, "실행 취소됨.");
+        SetUpStatus("실행 취소됨.");
     }
 
     private void FillUpPresets()
@@ -840,12 +840,12 @@ internal sealed partial class OverlayWindow
         _upPresets.Items.Clear();
         foreach (var p in _up?.Presets ?? Array.Empty<UltraPlusPreset>())
         {
-            var item = new ComboBoxItem { Content = p.IsCustom ? $"{p.DisplayName} (yours)" : p.DisplayName, Tag = p };
+            var item = new ComboBoxItem { Content = p.IsCustom ? $"{p.DisplayName} (내 프리셋)" : p.DisplayName, Tag = p };
             if (p.Description != null) ToolTipService.SetToolTip(item, p.Description);
             _upPresets.Items.Add(item);
         }
         _upPresets.IsEnabled = _upPresets.Items.Count > 0;
-        if (_upPresets.Items.Count == 0) _upPresets.PlaceholderText = "No presets for this game";
+        if (_upPresets.Items.Count == 0) _upPresets.PlaceholderText = "이 게임용 프리셋 없음";
         _upSilent = false;
     }
 
@@ -862,7 +862,7 @@ internal sealed partial class OverlayWindow
             if (error != null) { SetUpStatus(error); return; }
             _upSaveRow.Visibility = Visibility.Collapsed;
             await ReloadUpStateAsync();
-            SetUpStatus($"Saved your preset \"{name}\".");
+            SetUpStatus($"내 프리셋 \"{name}\"을(를) 저장했습니다.");
         }
         catch (Exception ex)
         {
@@ -879,7 +879,7 @@ internal sealed partial class OverlayWindow
             bool ok = await Task.Run(() => UltraPlusFiles.DeletePreset(dir, name));
             _upLastCustomPreset = null;
             await ReloadUpStateAsync();
-            SetUpStatus(ok ? $"Deleted your preset \"{name}\"." : "Couldn't delete the preset.");
+            SetUpStatus(ok ? $"내 프리셋 \"{name}\"을(를) 삭제했습니다." : "프리셋을 삭제할 수 없습니다.");
         }
         catch (Exception ex)
         {

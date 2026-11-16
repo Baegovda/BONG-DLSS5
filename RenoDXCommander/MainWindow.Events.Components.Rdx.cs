@@ -71,10 +71,10 @@ public sealed partial class MainWindow
             if (iniExists && renodxSection != null && renodxSection.ContainsKey("Set_Path"))
             {
                 int.TryParse(renodxSection["Set_Path"], out var setPathVal);
-                addUpgradePath = () => cog.AddCombo("Upgrade Path", RdxUpgradePathHelp,
-                    new List<string> { "HDR / Off", "SDR / On" },
+                addUpgradePath = () => cog.AddCombo("업그레이드 경로", RdxUpgradePathHelp,
+                    new List<string> { "HDR / 꺼짐", "SDR / 켜짐" },
                     setPathVal >= 0 && setPathVal < 2 ? setPathVal : 0,
-                    idx => WriteRenodxIniValue(cog, iniPath, "Set_Path", idx.ToString(), "Upgrade Path"));
+                    idx => WriteRenodxIniValue(cog, iniPath, "Set_Path", idx.ToString(), "업그레이드 경로"));
             }
             AddRdxMainSettings(cog, card, addNits, addUpgradePath);
 
@@ -98,7 +98,7 @@ public sealed partial class MainWindow
     }
 
     private const string RdxUpgradePathHelp =
-        "HDR uses the game's own HDR output. SDR upgrades the game's SDR output to HDR. Saved as Set_Path in reshade.ini.";
+        "HDR은 게임 자체 HDR 출력을 사용합니다. SDR은 게임의 SDR 출력을 HDR로 업그레이드합니다. reshade.ini에 Set_Path로 저장됩니다.";
 
     // ── Max Nits ─────────────────────────────────────────────────────────────────
 
@@ -112,7 +112,7 @@ public sealed partial class MainWindow
         {
             if (!int.TryParse(nitsValue, out var val) || val <= 0)
             {
-                cog.SetError("Enter a valid number.");
+                cog.SetError("올바른 숫자를 입력하세요.");
                 return;
             }
             try
@@ -134,13 +134,13 @@ public sealed partial class MainWindow
                 }
                 AuxInstallService.WriteIni(iniPath, freshIni);
                 nitsBox.Text = val.ToString();
-                cog.SetSuccess($"Set ToneMapPeakNits to {val} in {updated} preset(s).");
+                cog.SetSuccess($"프리셋 {updated}개에서 ToneMapPeakNits를 {val}(으)로 설정했습니다.");
                 CrashReporter.Log($"[MainWindow.AddRdxNitsRow] ToneMapPeakNits={val} in {updated} preset(s) of '{iniPath}'");
             }
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
                 CrashReporter.Log($"[MainWindow.AddRdxNitsRow] Failed to write nits — {ex.Message}");
-                cog.SetError($"Couldn't save Max Nits: {ex.Message}");
+                cog.SetError($"최대 니트를 저장할 수 없습니다: {ex.Message}");
             }
         }
 
@@ -156,15 +156,15 @@ public sealed partial class MainWindow
             }
         };
 
-        var autoBtn = CogDialog.StyledButton("Auto", CogButtonKind.Primary, compact: true);
-        ToolTipService.SetToolTip(autoBtn, "Reads your monitor's peak brightness automatically.");
+        var autoBtn = CogDialog.StyledButton("자동", CogButtonKind.Primary, compact: true);
+        ToolTipService.SetToolTip(autoBtn, "모니터의 최대 밝기를 자동으로 읽어옵니다.");
         autoBtn.Click += async (s, ev) =>
         {
             try
             {
                 var devices = await Windows.Devices.Enumeration.DeviceInformation.FindAllAsync(
                     Windows.Devices.Display.DisplayMonitor.GetDeviceSelector());
-                if (devices.Count == 0) { cog.SetError("No display found."); return; }
+                if (devices.Count == 0) { cog.SetError("디스플레이를 찾을 수 없습니다."); return; }
 
                 float maxNitsFound = 0;
                 foreach (var device in devices)
@@ -178,7 +178,7 @@ public sealed partial class MainWindow
                     catch (Exception ex) { CrashReporter.Log($"[MainWindow.RdxCogButton_Click] Failed to read monitor peak luminance — {ex.Message}"); }
                 }
                 var peakNits = (int)maxNitsFound;
-                if (peakNits <= 0) { cog.SetError("Could not read peak brightness."); return; }
+                if (peakNits <= 0) { cog.SetError("최대 밝기를 읽을 수 없습니다."); return; }
 
                 ApplyNitsValue(peakNits.ToString());
             }
@@ -189,9 +189,9 @@ public sealed partial class MainWindow
             }
         };
 
-        cog.AddRow("Max Nits", CogDialog.Inline(nitsBox, autoBtn),
-            "Peak brightness for the RenoDX tone mapper, written to every RenoDX preset in reshade.ini. " +
-            "Type a value and press Enter, or click Auto to read it from your monitor.");
+        cog.AddRow("최대 니트", CogDialog.Inline(nitsBox, autoBtn),
+            "RenoDX 톤 매퍼의 최대 밝기로, reshade.ini의 모든 RenoDX 프리셋에 기록됩니다. " +
+            "값을 입력하고 Enter를 누르거나, 자동을 클릭해 모니터에서 읽어오세요.");
     }
 
     // ── Unreal Engine: UE-Extended, Engine.ini HDR, LUT ──────────────────────────
@@ -207,12 +207,12 @@ public sealed partial class MainWindow
         bool showLut = card.EngineHint?.Contains("Unreal") == true && card.Status == GameStatus.Installed;
 
         bool hasCustomEngineIniFile = AuxInstallService.GlobalManifest?.EngineIniFiles?.ContainsKey(card.GameName) == true;
-        const string customEngineIniHelp = "Managed by this game's custom Engine.ini file, so it can't be changed here.";
+        const string customEngineIniHelp = "이 게임의 사용자 지정 Engine.ini 파일에서 관리하므로 여기서 변경할 수 없습니다.";
 
         if (showUeToggle)
         {
             cog.AddCombo("UE-Extended",
-                "Use the UE-Extended RenoDX mod instead of the game's own mod or the generic Unreal mod.",
+                "게임 전용 모드나 일반 Unreal 모드 대신 UE-Extended RenoDX 모드를 사용합니다.",
                 RdxOffOn(), card.UseUeExtended ? 1 : 0, idx =>
             {
                 bool enable = idx == 1;
@@ -233,20 +233,20 @@ public sealed partial class MainWindow
             {
                 bool hdrActive = card.InstalledRecord?.EngineIniHdr ?? true;
                 cog.AddCombo("Engine.ini HDR",
-                    "Adds HDR settings to the game's Engine.ini, for games without an in-game HDR option. Turn off for SDR.",
+                    "게임 내 HDR 옵션이 없는 게임을 위해 Engine.ini에 HDR 설정을 추가합니다. SDR에서는 끄세요.",
                     RdxOffOn(), hdrActive ? 1 : 0, idx =>
                 {
                     if (idx == 1)
                     {
                         AuxInstallService.ApplyEngineIniHdrSettings(card.InstallPath, card.EngineIniProjectOverride, card.GameName, card.Source);
                         if (card.InstalledRecord != null) card.InstalledRecord.EngineIniHdr = true;
-                        cog.SetSuccess("Engine.ini HDR settings deployed.");
+                        cog.SetSuccess("Engine.ini HDR 설정을 배포했습니다.");
                     }
                     else
                     {
                         AuxInstallService.RemoveEngineIniHdrSettings(card.InstallPath, card.EngineIniProjectOverride, card.GameName, card.Source);
                         if (card.InstalledRecord != null) card.InstalledRecord.EngineIniHdr = false;
-                        cog.SetSuccess("Engine.ini HDR settings removed.");
+                        cog.SetSuccess("Engine.ini HDR 설정을 제거했습니다.");
                     }
                     if (card.InstalledRecord != null)
                         App.Services.GetRequiredService<IModInstallService>().SaveRecordPublic(card.InstalledRecord);
@@ -258,26 +258,26 @@ public sealed partial class MainWindow
         {
             if (hasCustomEngineIniFile)
             {
-                AddRdxDisabledCombo(cog, "LUT Update Every Frame", customEngineIniHelp);
+                AddRdxDisabledCombo(cog, "매 프레임 LUT 업데이트", customEngineIniHelp);
             }
             else
             {
                 bool lutActive = card.InstalledRecord?.EngineIniLut ?? true;
-                cog.AddCombo("LUT Update Every Frame",
-                    "Writes r.LUT.UpdateEveryFrame=1 to Engine.ini so the game recalculates its colour LUTs every frame, for accurate HDR colour.",
+                cog.AddCombo("매 프레임 LUT 업데이트",
+                    "Engine.ini에 r.LUT.UpdateEveryFrame=1을 기록하여 게임이 매 프레임 색상 LUT를 다시 계산하도록 합니다. 정확한 HDR 색상을 위한 설정입니다.",
                     RdxOffOn(), lutActive ? 1 : 0, idx =>
                 {
                     if (idx == 1)
                     {
                         AuxInstallService.ApplyEngineIniLutSetting(card.InstallPath, card.EngineIniProjectOverride, card.GameName, card.Source);
                         if (card.InstalledRecord != null) card.InstalledRecord.EngineIniLut = true;
-                        cog.SetSuccess("LUT Update Every Frame enabled in Engine.ini.");
+                        cog.SetSuccess("Engine.ini에서 매 프레임 LUT 업데이트를 켰습니다.");
                     }
                     else
                     {
                         AuxInstallService.RemoveEngineIniLutSetting(card.InstallPath, card.EngineIniProjectOverride, card.GameName, card.Source);
                         if (card.InstalledRecord != null) card.InstalledRecord.EngineIniLut = false;
-                        cog.SetSuccess("LUT Update Every Frame removed from Engine.ini.");
+                        cog.SetSuccess("Engine.ini에서 매 프레임 LUT 업데이트를 제거했습니다.");
                     }
                     if (card.InstalledRecord != null)
                         App.Services.GetRequiredService<IModInstallService>().SaveRecordPublic(card.InstalledRecord);
@@ -302,14 +302,14 @@ public sealed partial class MainWindow
     {
         if (!iniExists)
         {
-            cog.AddSection("Compatibility");
-            cog.AddNote("No reshade.ini found in game folder.");
+            cog.AddSection("호환성");
+            cog.AddNote("게임 폴더에서 reshade.ini를 찾을 수 없습니다.");
             return;
         }
         if (renodxSection == null)
         {
-            cog.AddSection("Compatibility");
-            cog.AddNote("Run the game once with RenoDX installed to generate settings.");
+            cog.AddSection("호환성");
+            cog.AddNote("설정을 생성하려면 RenoDX를 설치한 상태로 게임을 한 번 실행하세요.");
             return;
         }
 
@@ -338,9 +338,9 @@ public sealed partial class MainWindow
 
         if (upgradeKeys.Count == 0) return;
 
-        cog.AddSection("Compatibility");
-        cog.AddNote("These values are read from and saved to the [renodx] section of the game's reshade.ini. " +
-                    "Only change them if the mod's instructions tell you to. Hover a setting for details.");
+        cog.AddSection("호환성");
+        cog.AddNote("이 값들은 게임 reshade.ini의 [renodx] 섹션에서 읽고 저장됩니다. " +
+                    "모드 안내에서 지시한 경우에만 변경하세요. 자세한 내용은 설정 위에 마우스를 올려 확인하세요.");
 
         // Compact two-per-row grid (as before the cog redesign): these are many small toggles
         var cells = new List<RdxCompatCell>();
@@ -368,30 +368,30 @@ public sealed partial class MainWindow
                                        || isCopyDest || isUseScrGb || isSettingsMode || isSwapChainCompat || isProxyRevert);
 
             // Label text
-            string labelText = isSetPath ? "Upgrade Path"
-                : isDumpLut          ? "Dump LUT Shaders"
-                : isSwapchainProxy   ? "Swapchain Proxy"
-                : isSwapchainEncoding? "Swapchain Encoding"
-                : isUseScrGb         ? "Swapchain Format"
-                : isCopyDest         ? "Copy Destinations"
-                : isSettingsMode     ? "Advanced Settings"
-                : isSwapChainCompat  ? "Swapchain Compat"
-                : isProxyRevert      ? "Proxy Revert State"
+            string labelText = isSetPath ? "업그레이드 경로"
+                : isDumpLut          ? "LUT 셰이더 덤프"
+                : isSwapchainProxy   ? "스왑체인 프록시"
+                : isSwapchainEncoding? "스왑체인 인코딩"
+                : isUseScrGb         ? "스왑체인 형식"
+                : isCopyDest         ? "복사 대상"
+                : isSettingsMode     ? "고급 설정"
+                : isSwapChainCompat  ? "스왑체인 호환"
+                : isProxyRevert      ? "프록시 상태 복원"
                 : kv.Key.StartsWith("Upgrade_", StringComparison.OrdinalIgnoreCase) ? kv.Key.Substring(8)
                 : kv.Key.Replace('_', ' ');
 
             var items = new List<string>();
-            if (isSetPath) { items.Add("HDR / Off"); items.Add("SDR / On"); }
-            else if (isDumpLut) { items.Add("Off"); items.Add("On"); }
-            else if (isSwapchainProxy) { items.Add("Off"); items.Add("On"); items.Add("On (Compat)"); }
-            else if (isSwapchainEncoding) { items.Add("Linear"); items.Add("Gamma"); }
-            else if (isBlitCopyHack) { items.Add("Off"); items.Add("Auto"); items.Add("On"); items.Add("Scaling Only"); }
-            else if (isCopyDest) { items.Add("Off"); items.Add("On"); items.Add("Auto Upgrade"); }
+            if (isSetPath) { items.Add("HDR / 꺼짐"); items.Add("SDR / 켜짐"); }
+            else if (isDumpLut) { items.Add("꺼짐"); items.Add("켜짐"); }
+            else if (isSwapchainProxy) { items.Add("꺼짐"); items.Add("켜짐"); items.Add("켜짐 (호환)"); }
+            else if (isSwapchainEncoding) { items.Add("선형"); items.Add("감마"); }
+            else if (isBlitCopyHack) { items.Add("꺼짐"); items.Add("자동"); items.Add("켜짐"); items.Add("스케일링만"); }
+            else if (isCopyDest) { items.Add("꺼짐"); items.Add("켜짐"); items.Add("자동 업그레이드"); }
             else if (isUseScrGb) { items.Add("HDR10"); items.Add("scRGB"); }
-            else if (isSettingsMode || isSwapChainCompat || isProxyRevert) { items.Add("Off"); items.Add("On"); }
+            else if (isSettingsMode || isSwapChainCompat || isProxyRevert) { items.Add("꺼짐"); items.Add("켜짐"); }
             else if (isOffsetRange) { for (int v = 0; v <= 5; v++) items.Add(v.ToString()); }
-            else if (isUnityBool) { items.Add("Off"); items.Add("On"); }
-            else { items.Add("Off"); items.Add("Output size"); items.Add("Output ratio"); items.Add("Any size"); }
+            else if (isUnityBool) { items.Add("꺼짐"); items.Add("켜짐"); }
+            else { items.Add("꺼짐"); items.Add("출력 크기"); items.Add("출력 비율"); items.Add("모든 크기"); }
 
             int.TryParse(kv.Value, out var currentVal);
             int selected = !isResourceUpgrade
@@ -399,15 +399,15 @@ public sealed partial class MainWindow
                 : (currentVal >= 0 && currentVal <= 3 ? currentVal : 0);
 
             // Specific explanation where the setting's purpose is clear; always name the ini key.
-            string? specific = isSetPath ? "HDR uses the game's own HDR output. SDR upgrades the game's SDR output to HDR."
-                : isDumpLut         ? "Saves the game's LUT shaders to files. Meant for mod development; leave Off for normal play."
-                : isUseScrGb        ? "The HDR output format: HDR10 or scRGB."
-                : isSwapchainEncoding ? "Whether the game's output is treated as linear or gamma encoded."
-                : kv.Key.Equals("ForceBorderless", StringComparison.OrdinalIgnoreCase) ? "Forces the game to run in a borderless window."
-                : kv.Key.Equals("PreventFullscreen", StringComparison.OrdinalIgnoreCase) ? "Stops the game switching to exclusive fullscreen."
-                : isResourceUpgrade ? $"Upgrades {labelText} textures to an HDR format. Output size and Output ratio only upgrade textures matching the screen size or aspect ratio; Any size upgrades all of them."
+            string? specific = isSetPath ? "HDR은 게임 자체 HDR 출력을 사용합니다. SDR은 게임의 SDR 출력을 HDR로 업그레이드합니다."
+                : isDumpLut         ? "게임의 LUT 셰이더를 파일로 저장합니다. 모드 개발용이므로 일반 플레이 시에는 꺼 두세요."
+                : isUseScrGb        ? "HDR 출력 형식: HDR10 또는 scRGB."
+                : isSwapchainEncoding ? "게임 출력을 선형 또는 감마 인코딩으로 처리할지 여부입니다."
+                : kv.Key.Equals("ForceBorderless", StringComparison.OrdinalIgnoreCase) ? "게임을 테두리 없는 창으로 강제 실행합니다."
+                : kv.Key.Equals("PreventFullscreen", StringComparison.OrdinalIgnoreCase) ? "게임이 전용 전체 화면으로 전환되지 않도록 합니다."
+                : isResourceUpgrade ? $"{labelText} 텍스처를 HDR 형식으로 업그레이드합니다. 출력 크기와 출력 비율은 화면 크기나 화면비가 일치하는 텍스처만 업그레이드하며, 모든 크기는 전부 업그레이드합니다."
                 : null;
-            string help = specific != null ? $"{specific} Saved as {kv.Key}." : $"Saved as {kv.Key} in reshade.ini.";
+            string help = specific != null ? $"{specific} {kv.Key}(으)로 저장됩니다." : $"reshade.ini에 {kv.Key}(으)로 저장됩니다.";
 
             var capturedKey = kv.Key;
             var capturedLabel = labelText;
@@ -423,7 +423,7 @@ public sealed partial class MainWindow
             {
                 var options = setting.Options?.Count > 0
                     ? setting.Options
-                    : new List<RenodxExtraOption> { new() { Value = "0", Name = "Off" }, new() { Value = "1", Name = "On" } };
+                    : new List<RenodxExtraOption> { new() { Value = "0", Name = "꺼짐" }, new() { Value = "1", Name = "켜짐" } };
 
                 string currentExtraVal = setting.Default;
                 if (renodxSection.TryGetValue(setting.Key, out var existingVal))
@@ -433,7 +433,7 @@ public sealed partial class MainWindow
                 var capturedSetting = setting;
                 var capturedOptions = options;
                 var label = setting.Label ?? setting.Key;
-                cells.Add(new RdxCompatCell(label, $"Saved as {setting.Key} in reshade.ini.",
+                cells.Add(new RdxCompatCell(label, $"reshade.ini에 {setting.Key}(으)로 저장됩니다.",
                     options.Select(o => o.Name).ToList(), selectedIdx >= 0 ? selectedIdx : 0,
                     idx =>
                     {
@@ -510,19 +510,19 @@ public sealed partial class MainWindow
             var iniForWrite = AuxInstallService.ParseIni(File.ReadAllLines(iniPath));
             if (!iniForWrite.TryGetValue("renodx", out var section))
             {
-                cog.SetError($"Couldn't save {label}: reshade.ini has no [renodx] section.");
+                cog.SetError($"{label}을(를) 저장할 수 없습니다: reshade.ini에 [renodx] 섹션이 없습니다.");
                 return false;
             }
             section[key] = value;
             AuxInstallService.WriteIni(iniPath, iniForWrite);
-            cog.SetSuccess($"Saved {label}.");
+            cog.SetSuccess($"{label} 저장됨.");
             CrashReporter.Log($"[MainWindow.WriteRenodxIniValue] [renodx] {key}={value} in '{iniPath}'");
             return true;
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
             CrashReporter.Log($"[MainWindow.WriteRenodxIniValue] Failed to write {key} — {ex.Message}");
-            cog.SetError($"Couldn't save {label}: {ex.Message}");
+            cog.SetError($"{label}을(를) 저장할 수 없습니다: {ex.Message}");
             return false;
         }
     }
@@ -532,11 +532,11 @@ public sealed partial class MainWindow
     private static void AddRdxPresetsSection(CogDialog cog, GameCardViewModel card, string iniPath, string presetPath,
         bool iniExists, bool presetExists)
     {
-        cog.AddSection("Presets");
-        cog.AddNote("Export saves every RenoDX preset from reshade.ini to RHI-RenoDX-Preset.txt in the game folder and copies the file to the clipboard for sharing. " +
-                    "Import replaces the presets in reshade.ini with the ones in that file.");
+        cog.AddSection("프리셋");
+        cog.AddNote("내보내기는 reshade.ini의 모든 RenoDX 프리셋을 게임 폴더의 RHI-RenoDX-Preset.txt에 저장하고 공유할 수 있도록 파일을 클립보드에 복사합니다. " +
+                    "가져오기는 reshade.ini의 프리셋을 해당 파일의 프리셋으로 교체합니다.");
 
-        var exportBtn = cog.MakeButton("Export Presets", CogButtonKind.Primary, async () =>
+        var exportBtn = cog.MakeButton("프리셋 내보내기", CogButtonKind.Primary, async () =>
         {
             try
             {
@@ -563,7 +563,7 @@ public sealed partial class MainWindow
 
                 if (presetLines.Count == 0)
                 {
-                    cog.SetError("No [renodx-preset*] sections found.");
+                    cog.SetError("[renodx-preset*] 섹션을 찾을 수 없습니다.");
                     return;
                 }
 
@@ -584,17 +584,17 @@ public sealed partial class MainWindow
                     Windows.ApplicationModel.DataTransfer.Clipboard.Flush();
                 }
                 catch (Exception ex) { CrashReporter.Log($"[MainWindow.RdxCogButton_Click] Failed to copy preset file to clipboard — {ex.Message}"); }
-                cog.SetSuccess($"Exported {presetLines.Count(l => l.StartsWith("["))} preset(s) and copied the file to the clipboard.");
+                cog.SetSuccess($"프리셋 {presetLines.Count(l => l.StartsWith("["))}개를 내보내고 파일을 클립보드에 복사했습니다.");
             }
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
                 CrashReporter.Log($"[MainWindow.AddRdxPresetsSection] Export failed — {ex.Message}");
-                cog.SetError($"Export failed: {ex.Message}");
+                cog.SetError($"내보내기 실패: {ex.Message}");
             }
-        }, "Save all RenoDX presets to a file and copy to clipboard for sharing.");
+        }, "모든 RenoDX 프리셋을 파일로 저장하고 공유할 수 있도록 클립보드에 복사합니다.");
         exportBtn.IsEnabled = iniExists;
 
-        var importBtn = cog.MakeButton("Import Presets", CogButtonKind.Primary, () =>
+        var importBtn = cog.MakeButton("프리셋 가져오기", CogButtonKind.Primary, () =>
         {
             try
             {
@@ -633,16 +633,16 @@ public sealed partial class MainWindow
                 filtered.AddRange(presetLines);
 
                 File.WriteAllLines(iniPath, filtered);
-                cog.SetSuccess($"Imported {presetSections.Count} preset(s).");
+                cog.SetSuccess($"프리셋 {presetSections.Count}개를 가져왔습니다.");
             }
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
                 CrashReporter.Log($"[MainWindow.AddRdxPresetsSection] Import failed — {ex.Message}");
-                cog.SetError($"Import failed: {ex.Message}");
+                cog.SetError($"가져오기 실패: {ex.Message}");
             }
         }, presetExists
-            ? "Restore presets from the exported backup file into reshade.ini."
-            : "No RHI-RenoDX-Preset.txt file found. Export first.");
+            ? "내보낸 백업 파일의 프리셋을 reshade.ini로 복원합니다."
+            : "RHI-RenoDX-Preset.txt 파일이 없습니다. 먼저 내보내기를 하세요.");
         importBtn.IsEnabled = presetExists && iniExists;
 
         cog.AddButtons(exportBtn, importBtn);

@@ -25,7 +25,7 @@ public sealed class UpdateLogWindow : Window
     {
         _updateLogService = updateLogService;
 
-        Title = "Component Updates";
+        Title = "구성 요소 업데이트";
 
         // Size — 720 × 500 logical px, DPI-scaled
         var hwnd = WindowNative.GetWindowHandle(this);
@@ -109,14 +109,14 @@ public sealed class UpdateLogWindow : Window
         };
         var entries = _updateLogService.GetAll();
         countText.Text = entries.Count == 0
-            ? "No updates recorded yet."
-            : $"{entries.Count} update{(entries.Count == 1 ? "" : "s")} recorded";
+            ? "아직 기록된 업데이트가 없습니다."
+            : $"업데이트 {entries.Count}개 기록됨";
         Grid.SetColumn(countText, 0);
         footerRow.Children.Add(countText);
 
         var clearBtn = new Button
         {
-            Content     = "Clear History",
+            Content     = "기록 지우기",
             FontSize    = 11,
             Padding     = new Thickness(10, 4, 10, 4),
             Margin      = new Thickness(0, 0, 8, 0),
@@ -124,7 +124,7 @@ public sealed class UpdateLogWindow : Window
             Foreground  = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
             BorderBrush = UIFactory.Brush(ResourceKeys.BorderDefaultBrush),
         };
-        ToolTipService.SetToolTip(clearBtn, "Delete the whole update history. This can't be undone.");
+        ToolTipService.SetToolTip(clearBtn, "업데이트 기록 전체를 삭제합니다. 되돌릴 수 없습니다.");
         clearBtn.Click += async (_, _) =>
         {
             try
@@ -134,10 +134,10 @@ public sealed class UpdateLogWindow : Window
                 if (xamlRoot == null) return;
                 var confirm = new ContentDialog
                 {
-                    Title             = "Clear update history?",
-                    Content           = "This deletes every entry in the update history. It can't be undone.",
-                    PrimaryButtonText = "Clear History",
-                    CloseButtonText   = "Cancel",
+                    Title             = "업데이트 기록을 지울까요?",
+                    Content           = "업데이트 기록의 모든 항목이 삭제됩니다. 되돌릴 수 없습니다.",
+                    PrimaryButtonText = "기록 지우기",
+                    CloseButtonText   = "취소",
                     DefaultButton     = ContentDialogButton.Close,
                     XamlRoot          = xamlRoot,
                     RequestedTheme    = ElementTheme.Dark,
@@ -150,7 +150,7 @@ public sealed class UpdateLogWindow : Window
                 {
                     listPanel.Children.Clear();
                     BuildEntryList(listPanel);
-                    countText.Text = "No updates recorded yet.";
+                    countText.Text = "아직 기록된 업데이트가 없습니다.";
                 });
             }
             catch (Exception ex)
@@ -163,7 +163,7 @@ public sealed class UpdateLogWindow : Window
 
         var closeBtn = new Button
         {
-            Content     = "Close",
+            Content     = "닫기",
             FontSize    = 11,
             Padding     = new Thickness(10, 4, 10, 4),
             Background  = UIFactory.Brush(ResourceKeys.AccentBlueBgBrush),
@@ -189,7 +189,7 @@ public sealed class UpdateLogWindow : Window
         {
             listPanel.Children.Add(new TextBlock
             {
-                Text       = "No component updates have been recorded yet.\n\nUpdates are captured whenever RHI downloads a new version of ReShade, RenoDX addons, shader packs, OptiScaler, Display Commander, or other components.",
+                Text       = "아직 기록된 구성 요소 업데이트가 없습니다.\n\nRHI가 ReShade, RenoDX 애드온, 셰이더 팩, OptiScaler, Display Commander 또는 기타 구성 요소의 새 버전을 다운로드할 때마다 업데이트가 기록됩니다.",
                 FontSize   = 12,
                 Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush),
                 TextWrapping = TextWrapping.Wrap,
@@ -205,8 +205,8 @@ public sealed class UpdateLogWindow : Window
         string GroupLabel(DateTime dt)
         {
             var d = dt.ToLocalTime().Date;
-            if (d == today)     return "Today";
-            if (d == yesterday) return "Yesterday";
+            if (d == today)     return "오늘";
+            if (d == yesterday) return "어제";
             return d.ToString("d MMMM yyyy");
         }
 

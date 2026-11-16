@@ -12,14 +12,14 @@ internal static class OsCustomBuildDialogs
     /// <summary>Asks for a build name (prefilled). Null when cancelled.</summary>
     internal static async Task<string?> AskNameAsync(XamlRoot xamlRoot, string title, string suggested, string? intro = null)
     {
-        var box = new TextBox { Text = suggested, MaxLength = 60, PlaceholderText = "Name" };
+        var box = new TextBox { Text = suggested, MaxLength = 60, PlaceholderText = "이름" };
         box.SelectAll();
         var panel = new StackPanel { Spacing = 8 };
         if (intro != null)
             panel.Children.Add(new TextBlock { Text = intro, TextWrapping = TextWrapping.Wrap });
         panel.Children.Add(new TextBlock
         {
-            Text = "Shown in the OptiScaler version lists as \"Custom: <name>\".",
+            Text = "OptiScaler 버전 목록에 \"Custom: <name>\"으로 표시됩니다.",
             TextWrapping = TextWrapping.Wrap,
         });
         panel.Children.Add(box);
@@ -27,8 +27,8 @@ internal static class OsCustomBuildDialogs
         {
             Title = title,
             Content = panel,
-            PrimaryButtonText = "Save",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = "저장",
+            CloseButtonText = "취소",
             DefaultButton = ContentDialogButton.Primary,
             XamlRoot = xamlRoot,
         };

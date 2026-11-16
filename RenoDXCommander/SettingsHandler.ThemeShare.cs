@@ -31,8 +31,8 @@ public partial class SettingsHandler
         panel.Children.Add(new TextBlock
         {
             Text = copied
-                ? "Theme code copied. Paste it anywhere to share your colours; others use Import theme to apply it."
-                : "Copy this code to share your colours; others use Import theme to apply it.",
+                ? "테마 코드를 복사했습니다. 아무 곳에나 붙여넣어 색상을 공유하세요. 다른 사람은 테마 가져오기로 적용할 수 있습니다."
+                : "이 코드를 복사해 색상을 공유하세요. 다른 사람은 테마 가져오기로 적용할 수 있습니다.",
             TextWrapping = TextWrapping.Wrap,
             FontSize = 12,
         });
@@ -54,7 +54,7 @@ public partial class SettingsHandler
         var panel = new StackPanel { Spacing = 8, Width = 420 };
         panel.Children.Add(new TextBlock
         {
-            Text = "Paste a theme code (it starts with RHI-THEME:). It replaces your custom colours.",
+            Text = "테마 코드를 붙여넣으세요 (RHI-THEME:로 시작). 사용자 지정 색상이 대체됩니다.",
             TextWrapping = TextWrapping.Wrap,
             FontSize = 12,
         });
@@ -67,7 +67,7 @@ public partial class SettingsHandler
         panel.Children.Add(box);
         var note = new TextBlock { TextWrapping = TextWrapping.Wrap, FontSize = 12, Visibility = Visibility.Collapsed };
         panel.Children.Add(note);
-        var importBtn = new Button { Content = "Import", Style = FindStyle("SettingsPrimaryButtonStyle") };
+        var importBtn = new Button { Content = "가져오기", Style = FindStyle("SettingsPrimaryButtonStyle") };
         panel.Children.Add(importBtn);
         var flyout = new Flyout { Content = panel };
 
@@ -75,7 +75,7 @@ public partial class SettingsHandler
         {
             if (!ThemePalette.TryParseShareCode(box.Text, out var palette))
             {
-                note.Text = "That isn't a theme code. Copy the whole code, from RHI-THEME: to the last colour.";
+                note.Text = "테마 코드가 아닙니다. RHI-THEME:부터 마지막 색상까지 코드 전체를 복사하세요.";
                 note.Foreground = UIFactory.Brush(ResourceKeys.AccentRedBrush);
                 note.Visibility = Visibility.Visible;
                 return;

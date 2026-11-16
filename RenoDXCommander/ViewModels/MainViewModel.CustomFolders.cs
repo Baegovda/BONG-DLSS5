@@ -92,7 +92,7 @@ public partial class MainViewModel
                 SetPendingCustomGames(Array.Empty<CustomGameCandidate>());
                 return Array.Empty<CustomGameCandidate>();
             }
-            using var activity = BeginActivity("Checking custom game folders...");
+            using var activity = BeginActivity("사용자 지정 게임 폴더 확인 중...");
             var request = BuildCustomFolderScanRequest(folders);
             _crashReporter.Log($"[MainViewModel.ScanCustomFoldersAsync] {reason}: scanning {folders.Count} folder(s)");
             var scanner = App.Services.GetRequiredService<ICustomFolderScanService>();
@@ -201,13 +201,13 @@ public partial class MainViewModel
     public string? AddCustomGame(CustomGameCandidate candidate, string name, ScoredExe exe)
     {
         name = name.Trim();
-        if (string.IsNullOrEmpty(name)) return "No name was given.";
-        if (!File.Exists(exe.FullPath)) return $"{exe.RelativePath} no longer exists.";
+        if (string.IsNullOrEmpty(name)) return "이름이 입력되지 않았습니다.";
+        if (!File.Exists(exe.FullPath)) return $"{exe.RelativePath}이(가) 더 이상 존재하지 않습니다.";
 
         var norm = _gameDetectionService.NormalizeName(name);
         var existing = _allCards.FirstOrDefault(c => _gameDetectionService.NormalizeName(c.GameName) == norm);
         if (existing != null || _manualGames.Any(g => g.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
-            return $"\"{existing?.GameName ?? name}\" is already in your library.";
+            return $"\"{existing?.GameName ?? name}\"은(는) 이미 라이브러리에 있습니다.";
 
         // The card's install path comes from engine detection on the folder we pass. Pass the game
         // root when that lands next to the chosen exe (or the manifest has a path override relative to

@@ -35,8 +35,8 @@ public partial class DetailPanelBuilder
     }
 
     // Wiki lookup dropdown items (Game Overrides, under Wiki mod name)
-    internal const string WikiIncludedItem = "Use wiki";
-    internal const string WikiExcludedItem = "Ignore wiki";
+    internal const string WikiIncludedItem = "위키 사용";
+    internal const string WikiExcludedItem = "위키 무시";
 
     /// <summary>Plain grey look shared by the Game Overrides reset buttons (name, DLL names, launch options).</summary>
     internal static void ApplyResetButtonStyle(Button btn)
@@ -81,7 +81,7 @@ public partial class DetailPanelBuilder
         };
         var ovTitle = new TextBlock
         {
-            Text       = "Game Overrides",
+            Text       = "게임 재정의",
             FontSize   = 13,
             FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
             Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
@@ -154,23 +154,23 @@ public partial class DetailPanelBuilder
         // ── Game name + Wiki name ────────────────────────────────────────────────
         var detectedBox = new TextBox
         {
-            Header = "Game name",
+            Header = "게임 이름",
             Text = gameName,
             FontSize = 12,
             HorizontalAlignment = HorizontalAlignment.Stretch,
         };
         ToolTipService.SetToolTip(detectedBox,
-            "The display name for this game. Edit and press Enter to rename. Reset name reverts to the auto-detected store name.");
+            "이 게임의 표시 이름입니다. 수정 후 Enter를 눌러 이름을 바꿉니다. 이름 초기화를 누르면 자동 감지된 스토어 이름으로 되돌립니다.");
         var wikiBox = new TextBox
         {
-            Header = "Wiki mod name",
-            PlaceholderText = "Exact wiki name",
+            Header = "위키 모드 이름",
+            PlaceholderText = "정확한 위키 이름",
             Text = _window.ViewModel.GetUserNameMapping(gameName) ?? "",
             FontSize = 12,
             HorizontalAlignment = HorizontalAlignment.Stretch,
         };
         ToolTipService.SetToolTip(wikiBox,
-            "Override the name used to look up this game on the RenoDX/Luma wiki. Leave blank to use the game name. Press Enter to save.");
+            "RenoDX/Luma 위키에서 이 게임을 찾을 때 사용할 이름을 재정의합니다. 비워 두면 게임 이름을 사용합니다. Enter를 눌러 저장하세요.");
         var originalStoreName = _window.ViewModel.GetOriginalStoreName(gameName);
 
         // Mutable captured name so rename handler can update it for subsequent handlers
@@ -178,7 +178,7 @@ public partial class DetailPanelBuilder
 
         var resetBtn = new Button
         {
-            Content = "Reset",
+            Content = "초기화",
             FontSize = 12,
             VerticalAlignment = VerticalAlignment.Bottom,
             Padding = new Thickness(10, 6, 10, 6),
@@ -186,7 +186,7 @@ public partial class DetailPanelBuilder
             Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
             BorderBrush = UIFactory.Brush(ResourceKeys.BorderDefaultBrush),
         };
-        ToolTipService.SetToolTip(resetBtn, "Reset game name back to auto-detected and clear wiki name mapping.");
+        ToolTipService.SetToolTip(resetBtn, "게임 이름을 자동 감지된 이름으로 초기화하고 위키 이름 매핑을 지웁니다.");
         resetBtn.Click += (s, ev) =>
         {
             var resetName = (originalStoreName ?? gameName).Trim();
@@ -218,9 +218,9 @@ public partial class DetailPanelBuilder
         Button? resetDllBtn = null; // declared early so lambdas can capture it
         TextBlock? dllOverrideLabel = null; // declared early so UpdateAllDropdowns can refresh its tooltip
         string DllOverrideLabelTip(bool hasOverride) => hasOverride
-            ? "Rename the ReShade, Display Commander and OptiScaler DLLs for this game."
-            : "Rename the ReShade, Display Commander and OptiScaler DLLs for this game.\n"
-              + "Reset DLL names is available once a name has been overridden.";
+            ? "이 게임의 ReShade, Display Commander, OptiScaler DLL 이름을 변경합니다."
+            : "이 게임의 ReShade, Display Commander, OptiScaler DLL 이름을 변경합니다.\n"
+              + "DLL 이름 초기화는 이름을 재정의한 후에 사용할 수 있습니다.";
         bool _updatingDropdowns = false; // declared early so UpdateAllDropdowns can use it
 
         var existingRsName = existingCfg?.ReShadeFileName ?? "";
@@ -236,7 +236,7 @@ public partial class DetailPanelBuilder
             SelectedItem = DllDefaultSentinel, // default = no override
         };
         ToolTipService.SetToolTip(rsNameBox,
-            "Override the ReShade DLL filename. Select a name to rename the installed DLL immediately. Select -------- to revert to the default name.");
+            "ReShade DLL 파일 이름을 재정의합니다. 이름을 선택하면 설치된 DLL의 이름이 즉시 바뀝니다. 기본 이름으로 되돌리려면 --------를 선택하세요.");
         if (!string.IsNullOrEmpty(existingRsName))
         {
             if (rsNames.Contains(existingRsName, StringComparer.OrdinalIgnoreCase))
@@ -261,7 +261,7 @@ public partial class DetailPanelBuilder
             SelectedItem = DllDefaultSentinel,
         };
         ToolTipService.SetToolTip(dcNameBox,
-            "Override the Display Commander DLL file name. Choose -------- for the default name.");
+            "Display Commander DLL 파일 이름을 재정의합니다. 기본 이름을 사용하려면 --------를 선택하세요.");
         if (!string.IsNullOrEmpty(existingDcName))
         {
             if (dcNames.Contains(existingDcName, StringComparer.OrdinalIgnoreCase))
@@ -290,7 +290,7 @@ public partial class DetailPanelBuilder
 
         var osNameBox = new ComboBox
         {
-            PlaceholderText = "Select OptiScaler DLL name",
+            PlaceholderText = "OptiScaler DLL 이름 선택",
             FontSize = 12,
             IsEnabled = true,
             HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -298,8 +298,8 @@ public partial class DetailPanelBuilder
             SelectedItem = DllDefaultSentinel,
         };
         ToolTipService.SetToolTip(osNameBox,
-            $"Override the OptiScaler DLL file name. Choose -------- to go back to the default name ({OptiScalerService.GetDefaultDllName(card.GraphicsApi)}).\n"
-            + "Names already used by ReShade or Display Commander for this game are left out.");
+            $"OptiScaler DLL 파일 이름을 재정의합니다. 기본 이름({OptiScalerService.GetDefaultDllName(card.GraphicsApi)})으로 되돌리려면 --------를 선택하세요.\n"
+            + "이 게임에서 ReShade나 Display Commander가 이미 사용 중인 이름은 제외됩니다.");
         if (!string.IsNullOrEmpty(existingOsName))
         {
             if (availableOsNames.Contains(existingOsName, StringComparer.OrdinalIgnoreCase))
@@ -580,7 +580,7 @@ public partial class DetailPanelBuilder
         resetWikiRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         resetWikiRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-        resetBtn.Content = "Reset name";
+        resetBtn.Content = "이름 초기화";
         resetBtn.FontSize = 12;
         resetBtn.Height = 32;
         resetBtn.HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -600,7 +600,7 @@ public partial class DetailPanelBuilder
             HorizontalAlignment = HorizontalAlignment.Stretch,
         };
         ToolTipService.SetToolTip(wikiExcludeCombo,
-            "Use wiki: look this game up on the RenoDX and Luma wikis to find its mod.\nIgnore wiki: skip wiki lookups for this game.");
+            "위키 사용: RenoDX 및 Luma 위키에서 이 게임의 모드를 찾습니다.\n위키 무시: 이 게임은 위키 조회를 건너뜁니다.");
         wikiExcludeCombo.SelectionChanged += (s, ev) =>
         {
             var selected = wikiExcludeCombo.SelectedItem as string;
@@ -636,7 +636,7 @@ public partial class DetailPanelBuilder
 
         dllOverrideLabel = new TextBlock
         {
-            Text = "DLL naming overrides",
+            Text = "DLL 이름 재정의",
             FontSize = 12,
             Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
         };
@@ -658,7 +658,7 @@ public partial class DetailPanelBuilder
         {
             rsNameBox.IsEnabled = false;
             ToolTipService.SetToolTip(rsLabel,
-                $"ReShade is loaded as {AuxInstallService.RsAsiName(card.Is32Bit)} for this game. Turn off Load ReShade as ASI in ReShade's ⚙ to choose a DLL name.");
+                $"이 게임에서는 ReShade가 {AuxInstallService.RsAsiName(card.Is32Bit)}(으)로 로드됩니다. DLL 이름을 선택하려면 ReShade ⚙에서 ReShade를 ASI로 로드를 끄세요.");
         }
         var dcLabel = new TextBlock { Text = "Display Commander", FontSize = 11, Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush) };
         var osLabel = new TextBlock { Text = "OptiScaler", FontSize = 11, Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush) };
@@ -680,7 +680,7 @@ public partial class DetailPanelBuilder
         // Reset DLL Names button — reverts all three DLLs to defaults and clears the config
         resetDllBtn = new Button
         {
-            Content = "Reset DLL names",
+            Content = "DLL 이름 초기화",
             FontSize = 12,
             Height = 32,
             HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -689,7 +689,7 @@ public partial class DetailPanelBuilder
         };
         ApplyResetButtonStyle(resetDllBtn);
         ToolTipService.SetToolTip(resetDllBtn,
-            "Revert all DLL names back to defaults and clear saved overrides.");
+            "모든 DLL 이름을 기본값으로 되돌리고 저장된 재정의를 지웁니다.");
         resetDllBtn.Click += async (s, e) =>
         {
             resetDllBtn.IsEnabled = false;
@@ -821,7 +821,7 @@ public partial class DetailPanelBuilder
             HorizontalAlignment = HorizontalAlignment.Stretch,
         };
         ToolTipService.SetToolTip(shaderModeCombo,
-            "Global = use global shader selection. Custom = use custom shader directories. Select = pick per-game packs. Off = no shaders.");
+            "Global = 전역 셰이더 선택 사용. Custom = 사용자 지정 셰이더 폴더 사용. Select = 게임별 팩 선택. Off = 셰이더 없음.");
 
         // Allow re-opening the Select picker when already on Select
         shaderModeCombo.DropDownClosed += (s, ev) =>
@@ -984,7 +984,7 @@ public partial class DetailPanelBuilder
         // ── Bitness Override ComboBox (left column of Bitness & API Row) ─────────
         var bitnessLabel = new TextBlock
         {
-            Text = "Bitness",
+            Text = "비트",
             FontSize = 12,
             Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
             Margin = new Thickness(0, 0, 0, 8),
@@ -1007,7 +1007,7 @@ public partial class DetailPanelBuilder
             HorizontalAlignment = HorizontalAlignment.Stretch,
         };
         ToolTipService.SetToolTip(bitnessCombo,
-            "Override the auto-detected bitness for this game. Auto uses PE header detection. 32-bit or 64-bit forces the value.");
+            "이 게임의 자동 감지된 비트를 재정의합니다. Auto는 PE 헤더 감지를 사용합니다. 32-bit 또는 64-bit는 값을 강제로 지정합니다.");
 
         bitnessCombo.SelectionChanged += (s, e) =>
         {
@@ -1090,15 +1090,15 @@ public partial class DetailPanelBuilder
         // ── API Override ComboBox (single selection, placed in left panel below bitness) ──────
         var apiLabel = new TextBlock
         {
-            Text = "Graphics API",
+            Text = "그래픽 API",
             FontSize = 12,
             Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
         };
         ToolTipService.SetToolTip(apiLabel,
-            "Override the detected graphics API for this game.\n\n" +
-            "Auto uses the auto-detected value from PE header scanning.\n" +
-            "User overrides set here take precedence over manifest and auto-detected values.\n" +
-            "Reset Overrides reverts to auto-detection.");
+            "이 게임의 감지된 그래픽 API를 재정의합니다.\n\n" +
+            "Auto는 PE 헤더 검사로 자동 감지된 값을 사용합니다.\n" +
+            "여기서 설정한 사용자 재정의는 매니페스트 및 자동 감지 값보다 우선합니다.\n" +
+            "재정의 초기화를 누르면 자동 감지로 되돌립니다.");
 
         var apiDropdownItems = new[] { "Auto", "DirectX8", "DirectX9", "DirectX10", "DirectX11", "DirectX12", "Vulkan", "OpenGL" };
         var existingApiOverride = _window.ViewModel.GetApiOverride(gameName, card.Source);
@@ -1132,7 +1132,7 @@ public partial class DetailPanelBuilder
             HorizontalAlignment = HorizontalAlignment.Stretch,
         };
         ToolTipService.SetToolTip(apiCombo,
-            "Override the detected graphics API for this game.\nAuto uses PE header scanning. Reset Overrides reverts to auto-detection.");
+            "이 게임의 감지된 그래픽 API를 재정의합니다.\nAuto는 PE 헤더 검사를 사용합니다. 재정의 초기화를 누르면 자동 감지로 되돌립니다.");
 
         apiCombo.SelectionChanged += (s, ev) =>
         {

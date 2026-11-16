@@ -43,7 +43,7 @@ public partial class OptiScalerService
                 FirstTimeWarningAcknowledged = true;
             }
 
-            progress?.Report(("Preparing OptiScaler install...", 5));
+            progress?.Report(("OptiScaler 설치 준비 중...", 5));
 
             // ── 2. Resolve effective staging dir based on variant ────────────
             bool isNightly = variant.Equals("Nightly", StringComparison.OrdinalIgnoreCase);
@@ -56,7 +56,7 @@ public partial class OptiScalerService
             if (isCustom && customBuild == null)
             {
                 CrashReporter.Log($"[OptiScalerService] {card.GameName}: custom build {variant} no longer exists — aborting");
-                progress?.Report(("This custom OptiScaler build was removed. Pick another version in the OptiScaler settings.", 0));
+                progress?.Report(("이 사용자 지정 OptiScaler 빌드가 제거되었습니다. OptiScaler 설정에서 다른 버전을 선택하세요.", 0));
                 return null;
             }
             // Recommended fork (manifest osForks, OsForkService): downloaded / updated from its GitHub releases
@@ -65,7 +65,7 @@ public partial class OptiScalerService
             if (isFork && fork == null)
             {
                 CrashReporter.Log($"[OptiScalerService] {card.GameName}: fork {variant} is no longer listed — aborting");
-                progress?.Report(("This OptiScaler fork is no longer available. Pick another version in the OptiScaler settings.", 0));
+                progress?.Report(("이 OptiScaler 포크는 더 이상 사용할 수 없습니다. OptiScaler 설정에서 다른 버전을 선택하세요.", 0));
                 return null;
             }
             // A game pinned to a release of Stable / DLSS NR / F5 / a fork (OptiScaler ⚙ › Release). The pin
@@ -92,7 +92,7 @@ public partial class OptiScalerService
                 if (effectiveStagingDir.Length == 0)
                 {
                     CrashReporter.Log($"[OptiScalerService] {card.GameName}: pinned release {nightlyBuildHint} of {variant} unavailable — aborting");
-                    progress?.Report(($"Release {nightlyBuildHint} couldn't be downloaded. Pick another in the OptiScaler settings (Release), or Latest.", 0));
+                    progress?.Report(($"릴리스 {nightlyBuildHint}을(를) 다운로드할 수 없습니다. OptiScaler 설정(Release)에서 다른 릴리스나 Latest를 선택하세요.", 0));
                     return null;
                 }
                 isOs10Build = Directory.Exists(Path.Combine(effectiveStagingDir, "OptiScaler"));
@@ -120,7 +120,7 @@ public partial class OptiScalerService
             // A pinned nightly build is installed as pinned.
             if (!isFixedDir && !(isNightly && !string.IsNullOrEmpty(nightlyBuildHint)))
             {
-                progress?.Report(("Checking for a newer OptiScaler release...", 6));
+                progress?.Report(("새 OptiScaler 릴리스 확인 중...", 6));
                 if (isF5) await CheckForF5UpdateAsync().ConfigureAwait(false);
                 else if (isDlssNr) await CheckForDlssNrUpdateAsync().ConfigureAwait(false);
                 else if (isNightly) await CheckForNightlyUpdateAsync().ConfigureAwait(false);
@@ -148,8 +148,8 @@ public partial class OptiScalerService
             {
                 CrashReporter.Log($"[OptiScalerService.InstallAsync] {variant} has no OptiScaler.dll — aborting");
                 progress?.Report((isFork
-                    ? "This OptiScaler fork couldn't be downloaded. Check your connection (or GitHub token) and try again."
-                    : "This custom OptiScaler build is missing its files. Re-import it in Settings.", 0));
+                    ? "이 OptiScaler 포크를 다운로드할 수 없습니다. 연결(또는 GitHub 토큰)을 확인하고 다시 시도하세요."
+                    : "이 사용자 지정 OptiScaler 빌드의 파일이 없습니다. 설정에서 다시 가져오세요.", 0));
                 return null;
             }
             if (!stagingReady || (isNightly && hasUpdate))
@@ -163,7 +163,7 @@ public partial class OptiScalerService
                 if (!stagingReady)
                 {
                     CrashReporter.Log($"[OptiScalerService.InstallAsync] {variant} staging still not ready after download attempt — aborting");
-                    progress?.Report(($"OptiScaler {variant} staging not available", 0));
+                    progress?.Report(($"OptiScaler {variant} 스테이징을 사용할 수 없습니다", 0));
                     return null;
                 }
                 // Re-resolve nightly build dir — a new build may have been downloaded
@@ -189,7 +189,7 @@ public partial class OptiScalerService
 
             CrashReporter.Log($"[OptiScalerService.InstallAsync] {card.GameName}: effective DLL name = {effectiveDllName}");
 
-            progress?.Report(("Copying OptiScaler files...", 20));
+            progress?.Report(("OptiScaler 파일 복사 중...", 20));
 
             // ── 4. ReShade coexistence — rename RS DLL to ReShade64.dll BEFORE deploying files ──
             // This MUST happen before file deployment because OptiScaler may use the same
@@ -356,7 +356,7 @@ public partial class OptiScalerService
                 }
             }
 
-            progress?.Report(("Configuring OptiScaler INI...", 60));
+            progress?.Report(("OptiScaler INI 구성 중...", 60));
 
             // ── 5. INI seeding and deployment ────────────────────────────────
             Directory.CreateDirectory(AuxInstallService.InisDir);
@@ -447,7 +447,7 @@ public partial class OptiScalerService
             // ── 5b. DlssNr/F5 variant: deploy forwarder + nvngx_dlssnr.dll ─────
             if (needsNrDll)
             {
-                progress?.Report(("Deploying DLSS NR runtime...", 72));
+                progress?.Report(("DLSS NR 런타임 배포 중...", 72));
                 try
                 {
                     var cachedNrDll = await GetNrRuntimeForAsync(card).ConfigureAwait(false);
@@ -470,7 +470,7 @@ public partial class OptiScalerService
                 }
             }
 
-            progress?.Report(("Saving install record...", 80));
+            progress?.Report(("설치 기록 저장 중...", 80));
 
             // ── 6. Create/update AuxInstalledRecord ──────────────────────────
             var record = new AuxInstalledRecord
@@ -493,7 +493,7 @@ public partial class OptiScalerService
             {
                 try
                 {
-                    progress?.Report(("Downloading OptiPatcher...", 85));
+                    progress?.Report(("OptiPatcher 다운로드 중...", 85));
                     await EnsureOptiPatcherStagingAsync(progress);
 
                     var stagedAsi = Path.Combine(OptiPatcherStagingDir, OptiPatcherFileName);
@@ -513,7 +513,7 @@ public partial class OptiScalerService
                             var rootPlugins = Path.GetDirectoryName(staleAsi)!;
                             if (!Directory.EnumerateFileSystemEntries(rootPlugins).Any()) Directory.Delete(rootPlugins);
                         }
-                        progress?.Report(("OptiPatcher deployed", 90));
+                        progress?.Report(("OptiPatcher 배포됨", 90));
                     }
                     else
                     {
@@ -650,7 +650,7 @@ public partial class OptiScalerService
                 });
             }
 
-            progress?.Report(("OptiScaler installed!", 100));
+            progress?.Report(("OptiScaler 설치됨!", 100));
             CrashReporter.Log($"[OptiScalerService.InstallAsync] Install complete for {card.GameName}");
 
             return record;
@@ -658,7 +658,7 @@ public partial class OptiScalerService
         catch (Exception ex)
         {
             CrashReporter.Log($"[OptiScalerService.InstallAsync] {card.GameName} — {ex.Message}");
-            progress?.Report(($"Install failed: {ex.Message}", 0));
+            progress?.Report(($"설치 실패: {ex.Message}", 0));
             if (ranV10Hook)
             {
                 try { V10InstallFailedHook?.Invoke(card); }
@@ -1154,7 +1154,7 @@ public partial class OptiScalerService
     {
         try
         {
-            progress?.Report(("Preparing OptiScaler update...", 5));
+            progress?.Report(("OptiScaler 업데이트 준비 중...", 5));
 
             // ── Read variant from tracking record ─────────────────────────
             var record = _auxInstaller.FindRecord(card.GameName, card.InstallPath, AddonType);
@@ -1170,7 +1170,7 @@ public partial class OptiScalerService
             if (isCustom && customBuild == null)
             {
                 CrashReporter.Log($"[OptiScalerService] {card.GameName}: custom build {variant} no longer exists — aborting");
-                progress?.Report(("This custom OptiScaler build was removed. Pick another version in the OptiScaler settings.", 0));
+                progress?.Report(("이 사용자 지정 OptiScaler 빌드가 제거되었습니다. OptiScaler 설정에서 다른 버전을 선택하세요.", 0));
                 return;
             }
             // Recommended fork (manifest osForks, OsForkService): downloaded / updated from its GitHub releases
@@ -1179,7 +1179,7 @@ public partial class OptiScalerService
             if (isFork && fork == null)
             {
                 CrashReporter.Log($"[OptiScalerService] {card.GameName}: fork {variant} is no longer listed — aborting");
-                progress?.Report(("This OptiScaler fork is no longer available. Pick another version in the OptiScaler settings.", 0));
+                progress?.Report(("이 OptiScaler 포크는 더 이상 사용할 수 없습니다. OptiScaler 설정에서 다른 버전을 선택하세요.", 0));
                 return;
             }
             // A game pinned to a release of Stable / DLSS NR / F5 / a fork (OptiScaler ⚙ › Release). The pin
@@ -1207,7 +1207,7 @@ public partial class OptiScalerService
                 if (effectiveStagingDir.Length == 0)
                 {
                     CrashReporter.Log($"[OptiScalerService] {card.GameName}: pinned release {nightlyBuildHint} of {variant} unavailable — aborting");
-                    progress?.Report(($"Release {nightlyBuildHint} couldn't be downloaded. Pick another in the OptiScaler settings (Release), or Latest.", 0));
+                    progress?.Report(($"릴리스 {nightlyBuildHint}을(를) 다운로드할 수 없습니다. OptiScaler 설정(Release)에서 다른 릴리스나 Latest를 선택하세요.", 0));
                     return;
                 }
                 isOs10Build = Directory.Exists(Path.Combine(effectiveStagingDir, "OptiScaler"));
@@ -1252,8 +1252,8 @@ public partial class OptiScalerService
             {
                 CrashReporter.Log($"[OptiScalerService.UpdateAsync] {variant} has no OptiScaler.dll — aborting");
                 progress?.Report((isFork
-                    ? "This OptiScaler fork couldn't be downloaded. Check your connection (or GitHub token) and try again."
-                    : "This custom OptiScaler build is missing its files. Re-import it in Settings.", 0));
+                    ? "이 OptiScaler 포크를 다운로드할 수 없습니다. 연결(또는 GitHub 토큰)을 확인하고 다시 시도하세요."
+                    : "이 사용자 지정 OptiScaler 빌드의 파일이 없습니다. 설정에서 다시 가져오세요.", 0));
                 return;
             }
             if (!stagingReady)
@@ -1280,7 +1280,7 @@ public partial class OptiScalerService
                 if (!stagingReady)
                 {
                     CrashReporter.Log($"[OptiScalerService.UpdateAsync] {variant} staging still not ready after download attempt — aborting");
-                    progress?.Report(($"OptiScaler {variant} staging not available", 0));
+                    progress?.Report(($"OptiScaler {variant} 스테이징을 사용할 수 없습니다", 0));
                     return;
                 }
             }
@@ -1292,11 +1292,11 @@ public partial class OptiScalerService
             if (string.IsNullOrEmpty(installedDll))
             {
                 CrashReporter.Log($"[OptiScalerService.UpdateAsync] No installed DLL filename found for {card.GameName} — aborting");
-                progress?.Report(("Update failed: no installed DLL found", 0));
+                progress?.Report(("업데이트 실패: 설치된 DLL을 찾을 수 없음", 0));
                 return;
             }
 
-            progress?.Report(("Updating OptiScaler files...", 20));
+            progress?.Report(("OptiScaler 파일 업데이트 중...", 20));
 
             // ── 3. Clean up old deployed files before deploying new ones ────
             // Delete all previously deployed companion files and subdirectories
@@ -1510,7 +1510,7 @@ public partial class OptiScalerService
                 }
             }
 
-            progress?.Report(("Updating tracking record...", 80));
+            progress?.Report(("추적 기록 업데이트 중...", 80));
 
             // ── 5. Update tracking record with new version ───────────────────
             if (record != null)
@@ -1601,14 +1601,14 @@ public partial class OptiScalerService
                 });
             }
 
-            progress?.Report(("OptiScaler updated!", 100));
+            progress?.Report(("OptiScaler 업데이트됨!", 100));
             CrashReporter.Log($"[OptiScalerService.UpdateAsync] Update complete for {card.GameName}");
         }
         catch (Exception ex)
         {
             // Type + stack included: some failures here (e.g. WinUI COM errors) have an empty Message
             CrashReporter.Log($"[OptiScalerService.UpdateAsync] {card.GameName} — {ex.GetType().Name} (0x{ex.HResult:X8}): {ex.Message}\n{ex.StackTrace}");
-            progress?.Report(($"Update failed: {ex.Message}", 0));
+            progress?.Report(($"업데이트 실패: {ex.Message}", 0));
         }
     }
 

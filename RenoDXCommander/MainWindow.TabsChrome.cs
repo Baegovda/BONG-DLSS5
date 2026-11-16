@@ -158,7 +158,7 @@ public sealed partial class MainWindow
         _shelfPositionBtn.Height = 30;
         _shelfPositionBtn.Visibility = Visibility.Collapsed;
         _shelfPositionBtn.CornerRadius = new CornerRadius(6);
-        ToolTipService.SetToolTip(_shelfPositionBtn, "Game list options");
+        ToolTipService.SetToolTip(_shelfPositionBtn, "게임 목록 옵션");
         _shelfPositionBtn.Click += ShelfPositionBtn_Click;
         Grid.SetColumn(_shelfPositionBtn, 1);
         _countsGrid.Children.Add(_shelfPositionBtn);
@@ -206,7 +206,7 @@ public sealed partial class MainWindow
         });
         var names = new StackPanel { VerticalAlignment = VerticalAlignment.Center };
         names.Children.Add(new TextBlock { Text = "RHI", FontSize = 16, FontWeight = Microsoft.UI.Text.FontWeights.Bold, CharacterSpacing = 20, Foreground = TabsTheme.B(TabsTheme.TextPrimary) });
-        names.Children.Add(new TextBlock { Text = "Simplified PC Gaming", FontSize = 11, Foreground = TabsTheme.B(TabsTheme.TextMuted) });
+        names.Children.Add(new TextBlock { Text = "간편한 PC 게이밍", FontSize = 11, Foreground = TabsTheme.B(TabsTheme.TextMuted) });
         brand.Children.Add(names);
         // The brand takes you back to your games (from Settings)
         brand.Background = new SolidColorBrush(Microsoft.UI.Colors.Transparent);
@@ -220,22 +220,22 @@ public sealed partial class MainWindow
         {
             Padding = new Thickness(7, 1, 7, 1), CornerRadius = new CornerRadius(6),
             Background = TabsTheme.B("#1C3A2A"), VerticalAlignment = VerticalAlignment.Center,
-            Child = new TextBlock { Text = "New", FontSize = 11, FontWeight = Microsoft.UI.Text.FontWeights.Bold, Foreground = TabsTheme.B("#7FE0A0") },
+            Child = new TextBlock { Text = "새 항목", FontSize = 11, FontWeight = Microsoft.UI.Text.FontWeights.Bold, Foreground = TabsTheme.B("#7FE0A0") },
             Visibility = Visibility.Collapsed,
         };
-        var mods = MakeNavItem("Available Mods", _navModsNew, e =>
+        var mods = MakeNavItem("사용 가능한 모드", _navModsNew, e =>
         {
             if (NewModsBtn.Visibility == Visibility.Visible) NewModsButton_Click(NewModsBtn, e);
             else HdrModsListBtn_Click(HdrModsListBtn, e);
         });
-        TabsTheme.SetHandTip(mods, ToolTipService.GetToolTip(HdrModsListBtn) as string ?? "Browse every RenoDX and Luma mod");
+        TabsTheme.SetHandTip(mods, ToolTipService.GetToolTip(HdrModsListBtn) as string ?? "모든 RenoDX 및 Luma 모드 둘러보기");
         Button shaders = null!;
-        shaders = MakeNavItem("Shaders & Addons", null, e =>
+        shaders = MakeNavItem("셰이더 및 애드온", null, e =>
         {
             var menu = new MenuFlyout();
-            var a = new MenuFlyoutItem { Text = "Global Shaders" };
+            var a = new MenuFlyoutItem { Text = "전역 셰이더" };
             a.Click += (s2, e2) => ChooseShadersButton_Click(ChooseShadersItem, e2);
-            var b = new MenuFlyoutItem { Text = "Global Addons" };
+            var b = new MenuFlyoutItem { Text = "전역 애드온" };
             b.Click += (s2, e2) => ReShadeAddonsButton_Click(ReShadeAddonsItem, e2);
             menu.Items.Add(a);
             menu.Items.Add(b);
@@ -248,12 +248,12 @@ public sealed partial class MainWindow
         _checkedText = new TextBlock { FontSize = 12, Foreground = TabsTheme.B(TabsTheme.TextMuted), VerticalAlignment = VerticalAlignment.Center };
         var refresh = TabsTheme.MakeIconButton("", TabsTheme.IconButton, 16); // refresh
         refresh.Click += (s, e) => RefreshButton_Click(RefreshBtn, e);
-        ToolTipService.SetToolTip(refresh, ToolTipService.GetToolTip(RefreshBtn) as string ?? "Check for updates and rescan your games. The selected game gets a full rescan (DLSS files and more).");
+        ToolTipService.SetToolTip(refresh, ToolTipService.GetToolTip(RefreshBtn) as string ?? "업데이트를 확인하고 게임을 다시 검색합니다. 선택한 게임은 전체 재검색(DLSS 파일 등)을 수행합니다.");
         _updateAllHost = new Grid();
 
         var help = new Button { Padding = new Thickness(12, 0, 12, 0) };
         var helpContent = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 6 };
-        helpContent.Children.Add(new TextBlock { Text = "Help", VerticalAlignment = VerticalAlignment.Center });
+        helpContent.Children.Add(new TextBlock { Text = "도움말", VerticalAlignment = VerticalAlignment.Center });
         helpContent.Children.Add(TabsTheme.Icon("", 11));
         help.Content = helpContent;
         TabsTheme.Apply(help, TabsTheme.IconButton, height: 38, fontSize: 14);
@@ -270,7 +270,7 @@ public sealed partial class MainWindow
             if (ViewModel.CurrentPage == AppPage.Settings) ViewModel.NavigateToGameView();
             else SettingsButton_Click(SettingsBtn, e);
         };
-        ToolTipService.SetToolTip(settings, "Settings");
+        ToolTipService.SetToolTip(settings, "설정");
         _settingsGear = settings;
 
         var right = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8, VerticalAlignment = VerticalAlignment.Center };
@@ -340,9 +340,9 @@ public sealed partial class MainWindow
 
     private static readonly (MainLayout Layout, string Label, string Tip)[] TopBarLayouts =
     {
-        (MainLayout.Classic,   "Classic+",  "Every section of the game page in one long page"),
-        (MainLayout.Tabs,      "Tabs",      "An Overview, then one tab per section"),
-        (MainLayout.Spotlight, "Spotlight", "Game artwork, your games as covers, sections in a side panel"),
+        (MainLayout.Classic,   "Classic+",  "게임 페이지의 모든 섹션을 하나의 긴 페이지로"),
+        (MainLayout.Tabs,      "Tabs",      "개요와 섹션별 탭"),
+        (MainLayout.Spotlight, "Spotlight", "게임 아트워크, 커버 형태의 게임 목록, 사이드 패널의 섹션"),
     };
 
     private MainLayout CurrentMainLayout =>
@@ -378,20 +378,20 @@ public sealed partial class MainWindow
             i.Click += h;
             menu.Items.Add(i);
         }
-        Add("Quick Start", (s, e) => FaqButton_Click(FaqBtn, e));
-        Add("Guide", (s, e) => SupportGuide_Click(s, e));
+        Add("빠른 시작", (s, e) => FaqButton_Click(FaqBtn, e));
+        Add("가이드", (s, e) => SupportGuide_Click(s, e));
         Add("Discord", (s, e) => SupportDiscord_Click(s, e));
         menu.Items.Add(new MenuFlyoutSeparator());
-        Add("RenoDX Wiki", (s, e) => LinkRenoDxWiki_Click(s, e));
-        Add("Luma Wiki", (s, e) => LinkLumaWiki_Click(s, e));
+        Add("RenoDX 위키", (s, e) => LinkRenoDxWiki_Click(s, e));
+        Add("Luma 위키", (s, e) => LinkLumaWiki_Click(s, e));
         Add("RHI GitHub", (s, e) => LinkRhiGithub_Click(s, e));
         Add("ReLimiter GitHub", (s, e) => LinkReLimiterGithub_Click(s, e));
         menu.Items.Add(new MenuFlyoutSeparator());
-        Add("Patch notes", (s, e) => PatchNotesLink_Click(s, e));
-        Add("Message of the day", (s, e) => MotdButton_Click(s, e));
-        Add("Update log", (s, e) => UpdateLogButton_Click(UpdateLogBtn, e));
-        Add("About", (s, e) => AboutButton_Click(s, e));
-        Add("Donate", (s, e) => DonateButton_Click(DonateBtn, e));
+        Add("패치 노트", (s, e) => PatchNotesLink_Click(s, e));
+        Add("오늘의 메시지", (s, e) => MotdButton_Click(s, e));
+        Add("업데이트 기록", (s, e) => UpdateLogButton_Click(UpdateLogBtn, e));
+        Add("정보", (s, e) => AboutButton_Click(s, e));
+        Add("후원", (s, e) => DonateButton_Click(DonateBtn, e));
         menu.ShowAt(anchor, new FlyoutShowOptions { Placement = FlyoutPlacementMode.BottomEdgeAlignedRight });
     }
 
@@ -417,7 +417,7 @@ public sealed partial class MainWindow
     // ── Sidebar ───────────────────────────────────────────────────────────────
 
     private static readonly (string Tag, string Label)[] MainFilters =
-        { ("Detected", "All"), ("Installed", "Installed"), ("Favourites", "Favourites"), ("Hidden", "Hidden") };
+        { ("Detected", "전체"), ("Installed", "설치됨"), ("Favourites", "즐겨찾기"), ("Hidden", "숨김") };
 
     private Button MainFilterButton(string tag) => tag switch
     {
@@ -507,8 +507,8 @@ public sealed partial class MainWindow
         int extra = active.Count(f => !MainFilters.Any(m => m.Tag == f));
         _filtersBtn.Content = MakeFiltersLabel(extra, iconOnly: _spotlightOn);
         ToolTipService.SetToolTip(_filtersBtn, extra > 0
-            ? $"Filters ({extra} on): engine and mod filters, and your saved searches"
-            : "Filters: engine and mod filters, and your saved searches");
+            ? $"필터 ({extra}개 켜짐): 엔진 및 모드 필터, 저장된 검색"
+            : "필터: 엔진 및 모드 필터, 저장된 검색");
         _chipsRow.Visibility = _filtersOpen ? Visibility.Visible : Visibility.Collapsed;
     }
 
@@ -520,7 +520,7 @@ public sealed partial class MainWindow
         if (!iconOnly || extra > 0)
             sp.Children.Add(new TextBlock
             {
-                Text = iconOnly ? extra.ToString() : extra > 0 ? $"Filters ({extra})" : "Filters",
+                Text = iconOnly ? extra.ToString() : extra > 0 ? $"필터 ({extra})" : "필터",
                 VerticalAlignment = VerticalAlignment.Center,
             });
         return sp;
@@ -571,7 +571,7 @@ public sealed partial class MainWindow
                 _settingsGear.Background  = TabsTheme.B(onSettings ? "#22304A" : TabsTheme.IconButton.Bg);
                 _settingsGear.BorderBrush = TabsTheme.B(onSettings ? TabsTheme.Accent : TabsTheme.IconButton.Border);
                 _settingsGear.Foreground  = TabsTheme.B(onSettings ? TabsTheme.TextPrimary : TabsTheme.IconButton.Fg);
-                ToolTipService.SetToolTip(_settingsGear, onSettings ? "Back to your games" : "Settings");
+                ToolTipService.SetToolTip(_settingsGear, onSettings ? "게임으로 돌아가기" : "설정");
             }
             if (_navModsNew != null) _navModsNew.Visibility = NewModsBtn.Visibility;
             RefreshLayoutSwitch();
@@ -579,7 +579,7 @@ public sealed partial class MainWindow
             if (_checkedText != null)
                 _checkedText.Text = DateTime.TryParse(ViewModel.Settings.LastUpdateCheckUtc, null,
                     System.Globalization.DateTimeStyles.RoundtripKind, out var last)
-                    ? "Checked " + Ago(DateTime.UtcNow - last.ToUniversalTime())
+                    ? "확인: " + Ago(DateTime.UtcNow - last.ToUniversalTime())
                     : "";
 
             int count = _lastUpdateCount;
@@ -604,10 +604,10 @@ public sealed partial class MainWindow
 
     private static string Ago(TimeSpan t)
     {
-        if (t.TotalMinutes < 1) return "just now";
-        if (t.TotalMinutes < 60) return $"{(int)t.TotalMinutes}m ago";
-        if (t.TotalHours < 24) return $"{(int)t.TotalHours}h {(int)t.Minutes}m ago";
-        return $"{(int)t.TotalDays}d ago";
+        if (t.TotalMinutes < 1) return "방금 전";
+        if (t.TotalMinutes < 60) return $"{(int)t.TotalMinutes}분 전";
+        if (t.TotalHours < 24) return $"{(int)t.TotalHours}시간 {(int)t.Minutes}분 전";
+        return $"{(int)t.TotalDays}일 전";
     }
 
     /// <summary>Update All: purple with a count when there's something to update, else "All up to date".</summary>
@@ -617,7 +617,7 @@ public sealed partial class MainWindow
         Button b;
         if (count > 0)
         {
-            sp.Children.Add(new TextBlock { Text = "Update All", VerticalAlignment = VerticalAlignment.Center });
+            sp.Children.Add(new TextBlock { Text = "모두 업데이트", VerticalAlignment = VerticalAlignment.Center });
             sp.Children.Add(new Border
             {
                 Padding = new Thickness(8, 1, 8, 1), CornerRadius = new CornerRadius(6),
@@ -627,14 +627,14 @@ public sealed partial class MainWindow
             b = new Button { Content = sp, Padding = new Thickness(16, 0, 16, 0) };
             TabsTheme.Apply(b, TabsTheme.PurpleButton, height: 38, fontSize: 14);
             b.Click += (s, e) => UpdateAllButton_Click(UpdateBtn, e);
-            ToolTipService.SetToolTip(b, ToolTipService.GetToolTip(UpdateBtn) as string ?? $"Update {count} game(s)");
+            ToolTipService.SetToolTip(b, ToolTipService.GetToolTip(UpdateBtn) as string ?? $"게임 {count}개 업데이트");
         }
         else
         {
             var tick = TabsTheme.Icon("", 13); // checkmark
             tick.Foreground = TabsTheme.B("#5ECB7D");
             sp.Children.Add(tick);
-            sp.Children.Add(new TextBlock { Text = "All up to date", VerticalAlignment = VerticalAlignment.Center });
+            sp.Children.Add(new TextBlock { Text = "모두 최신 상태", VerticalAlignment = VerticalAlignment.Center });
             b = new Button { Content = sp, Padding = new Thickness(16, 0, 16, 0), IsEnabled = false };
             TabsTheme.Apply(b, new TabsTheme.Look("#121824", "#263042", TabsTheme.TextMuted, "#121824", true), height: 38, fontSize: 14);
         }

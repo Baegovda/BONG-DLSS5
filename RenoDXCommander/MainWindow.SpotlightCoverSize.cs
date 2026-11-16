@@ -27,7 +27,7 @@ public sealed partial class MainWindow
     {
         if (_coverGrip != null) return;
         _coverGrip = new ResizeGrip { Reference = () => LayoutRoot, Visibility = Visibility.Collapsed };
-        ToolTipService.SetToolTip(_coverGrip, "Drag to resize the covers. Double-click to reset.");
+        ToolTipService.SetToolTip(_coverGrip, "끌어서 커버 크기를 조절하세요. 두 번 클릭하면 초기화됩니다.");
         double startHeight = 0;
         _coverGrip.DragStarted += () => startHeight = CoverHeight;
         _coverGrip.DragDelta += dy =>

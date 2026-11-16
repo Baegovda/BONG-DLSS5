@@ -26,7 +26,7 @@ internal sealed partial class DetailLayoutHost
     {
         if (_window.ViewModel.SelectedGame is not { } card) return null;
         _shotsRoot = new StackPanel { Spacing = 14 };
-        _shotsRoot.Children.Add(MutedText("Looking for screenshots…"));
+        _shotsRoot.Children.Add(MutedText("스크린샷 찾는 중…"));
         int seq = ++_shotsSeq;
 
         var rhiFolder = _window.ViewModel.BuildScreenshotSavePath(card.GameName);
@@ -86,9 +86,9 @@ internal sealed partial class DetailLayoutHost
         var head = new StackPanel { Spacing = 8 };
         head.Children.Add(new TextBlock
         {
-            Text = folder == null ? "No screenshots yet"
-                 : shots.Count == 0 ? "No screenshots yet"
-                 : shots.Count == 1 ? "1 screenshot" : $"{shots.Count} screenshots",
+            Text = folder == null ? "아직 스크린샷 없음"
+                 : shots.Count == 0 ? "아직 스크린샷 없음"
+                 : shots.Count == 1 ? "스크린샷 1개" : $"스크린샷 {shots.Count}개",
             FontSize = 14,
             FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
             Foreground = TabsTheme.B(TabsTheme.TextPrimary),
@@ -96,17 +96,17 @@ internal sealed partial class DetailLayoutHost
         if (folder != null)
         {
             head.Children.Add(MutedText(folder));
-            var open = new Button { Content = "Open folder", HorizontalAlignment = HorizontalAlignment.Left };
+            var open = new Button { Content = "폴더 열기", HorizontalAlignment = HorizontalAlignment.Left };
             TabsTheme.Apply(open, TabsTheme.IconButton, height: 34, fontSize: 12);
             open.Click += (_, _) => ShowInExplorer(folder, select: null);
             head.Children.Add(open);
         }
         if (shots.Count == 0)
             head.Children.Add(MutedText(folder == null
-                ? "Take a screenshot in the game with ReShade's screenshot key (Print Screen by default), or set a folder in Settings › ReShade › Screenshot folder."
-                : "Take one in the game with ReShade's screenshot key (Print Screen by default)."));
+                ? "게임에서 ReShade 스크린샷 키(기본값 Print Screen)로 스크린샷을 찍거나, 설정 › ReShade › 스크린샷 폴더에서 폴더를 지정하세요."
+                : "게임에서 ReShade 스크린샷 키(기본값 Print Screen)로 찍으세요."));
         else
-            head.Children.Add(MutedText("Click a screenshot to open it. Right-click for more: set it as the banner, copy it or delete it."));
+            head.Children.Add(MutedText("스크린샷을 클릭하면 열립니다. 마우스 오른쪽 클릭으로 배너로 설정, 복사, 삭제를 할 수 있습니다."));
         _shotsRoot.Children.Add(TabsTheme.MakeCard(head, 16));
         if (shots.Count == 0) return;
 
@@ -143,7 +143,7 @@ internal sealed partial class DetailLayoutHost
         if (_shotsRoot!.Children.LastOrDefault() is Button { Tag: "ShotsMore" } old) _shotsRoot.Children.Remove(old);
         if (end < shots.Count)
         {
-            var more = new Button { Content = $"Show more ({shots.Count - end} left)", Tag = "ShotsMore", HorizontalAlignment = HorizontalAlignment.Left };
+            var more = new Button { Content = $"더 보기 ({shots.Count - end}개 남음)", Tag = "ShotsMore", HorizontalAlignment = HorizontalAlignment.Left };
             TabsTheme.Apply(more, TabsTheme.IconButton, height: 36, fontSize: 13);
             more.Click += (_, _) => AddShotThumbs(card, grid, shots, end);
             _shotsRoot.Children.Add(more);
@@ -155,7 +155,7 @@ internal sealed partial class DetailLayoutHost
         var image = new Image { Stretch = Stretch.UniformToFill };
         var fallback = new TextBlock
         {
-            Text = Path.GetExtension(file.Name).ToUpperInvariant().TrimStart('.') + " screenshot",
+            Text = Path.GetExtension(file.Name).ToUpperInvariant().TrimStart('.') + " 스크린샷",
             FontSize = 12,
             Foreground = TabsTheme.B(TabsTheme.TextMuted),
             HorizontalAlignment = HorizontalAlignment.Center,
@@ -188,8 +188,8 @@ internal sealed partial class DetailLayoutHost
             HorizontalContentAlignment = HorizontalAlignment.Stretch,
             VerticalContentAlignment = VerticalAlignment.Stretch,
         };
-        ToolTipService.SetToolTip(btn, $"{file.Name}\n{file.LastWriteTime:g}\nClick to open, right-click for more");
-        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(btn, $"Screenshot {file.LastWriteTime:g}");
+        ToolTipService.SetToolTip(btn, $"{file.Name}\n{file.LastWriteTime:g}\n클릭하여 열기, 마우스 오른쪽 클릭으로 더 보기");
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(btn, $"스크린샷 {file.LastWriteTime:g}");
         btn.Click += (_, _) => OpenShotFile(file.FullName);
         btn.ContextFlyout = MakeShotMenu(card, file, btn);
         return btn;
@@ -204,21 +204,21 @@ internal sealed partial class DetailLayoutHost
             item.Click += (_, _) => action();
             menu.Items.Add(item);
         }
-        Add("Open", () => OpenShotFile(file.FullName));
+        Add("열기", () => OpenShotFile(file.FullName));
         // HDR .jxr screenshots can't be shown as the banner
         bool bannerOk = !file.Extension.Equals(".jxr", StringComparison.OrdinalIgnoreCase);
-        Add(bannerOk ? "Set as banner" : "Set as banner (not for .jxr)", () => _ = _window.SetBannerFromFileAsync(card, file.FullName), bannerOk);
-        Add("Copy to clipboard", () => _ = CopyShotAsync(file.FullName));
-        Add("Show in folder", () => ShowInExplorer(file.DirectoryName ?? "", select: file.FullName));
+        Add(bannerOk ? "배너로 설정" : "배너로 설정 (.jxr 불가)", () => _ = _window.SetBannerFromFileAsync(card, file.FullName), bannerOk);
+        Add("클립보드에 복사", () => _ = CopyShotAsync(file.FullName));
+        Add("폴더에서 보기", () => ShowInExplorer(file.DirectoryName ?? "", select: file.FullName));
         menu.Items.Add(new MenuFlyoutSeparator());
-        Add("Delete (to the Recycle Bin)", () =>
+        Add("삭제 (휴지통으로)", () =>
         {
             bool ok;
             try { ok = Overlay.OverlayNative.RecycleFile(file.FullName); }
             catch (Exception ex) { CrashReporter.Log($"[DetailLayoutHost.DeleteShot] {ex.Message}"); ok = false; }
             CrashReporter.Log($"[DetailLayoutHost.DeleteShot] {(ok ? "Moved to the Recycle Bin" : "Couldn't delete")}: {file.Name}");
             if (ok && thumb.Parent is Panel p) p.Children.Remove(thumb);
-            else if (!ok) _window.ShowStatusBarMessage($"Couldn't delete {file.Name}", TimeSpan.FromSeconds(6));
+            else if (!ok) _window.ShowStatusBarMessage($"{file.Name}을(를) 삭제할 수 없습니다", TimeSpan.FromSeconds(6));
         });
         return menu;
     }
@@ -256,12 +256,12 @@ internal sealed partial class DetailLayoutHost
             data.SetStorageItems(new[] { file });
             Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(data);
             Windows.ApplicationModel.DataTransfer.Clipboard.Flush();
-            _window.ShowStatusBarMessage($"Copied {Path.GetFileName(path)}", TimeSpan.FromSeconds(4));
+            _window.ShowStatusBarMessage($"{Path.GetFileName(path)} 복사됨", TimeSpan.FromSeconds(4));
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or System.Runtime.InteropServices.COMException or ArgumentException)
         {
             CrashReporter.Log($"[DetailLayoutHost.CopyShot] {ex.Message}");
-            _window.ShowStatusBarMessage("Couldn't copy the screenshot", TimeSpan.FromSeconds(6));
+            _window.ShowStatusBarMessage("스크린샷을 복사할 수 없습니다", TimeSpan.FromSeconds(6));
         }
     }
 }

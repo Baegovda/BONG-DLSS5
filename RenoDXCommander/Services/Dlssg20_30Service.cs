@@ -136,7 +136,7 @@ public class Dlssg20_30Service
         var newPkg   = Path.Combine(_stagingDir, "pkg.new");
         try
         {
-            progress?.Report(("Downloading 20/30 FG Unlock...", 10));
+            progress?.Report(("20/30 FG Unlock 다운로드 중...", 10));
             using (var response = await _http.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
             {
                 if (!response.IsSuccessStatusCode)
@@ -150,7 +150,7 @@ public class Dlssg20_30Service
                 await net.CopyToAsync(file).ConfigureAwait(false);
             }
 
-            progress?.Report(("Extracting 20/30 FG Unlock...", 70));
+            progress?.Report(("20/30 FG Unlock 압축 해제 중...", 70));
             if (Directory.Exists(newPkg)) Directory.Delete(newPkg, recursive: true);
             Directory.CreateDirectory(newPkg);
             int extracted = 0;
@@ -190,7 +190,7 @@ public class Dlssg20_30Service
             LatestVersion = tag;
             HasUpdate = false;
             _crashReporter.Log($"[Dlssg20_30Service.EnsureStaging] Staged {tag} ({extracted} files)");
-            progress?.Report(("20/30 FG Unlock ready", 100));
+            progress?.Report(("20/30 FG Unlock 준비 완료", 100));
 
             try
             {

@@ -74,12 +74,12 @@ public partial class SettingsHandler
 
             var dialog = new ContentDialog
             {
-                Title = "DXVK Variant Changed",
-                Content = $"DXVK variant changed to {variantLabel}."
+                Title = "DXVK 변형 변경됨",
+                Content = $"DXVK 변형이 {variantLabel}(으)로 변경되었습니다."
                     + (gamesWithDxvk.Count > 0
-                        ? $"\n\nSwitching {gamesWithDxvk.Count} game(s) to the {variantLabel} build."
-                        : "\n\nNo games currently have DXVK installed."),
-                CloseButtonText = "OK",
+                        ? $"\n\n게임 {gamesWithDxvk.Count}개를 {variantLabel} 빌드로 전환합니다."
+                        : "\n\n현재 DXVK가 설치된 게임이 없습니다."),
+                CloseButtonText = "확인",
                 XamlRoot = _window.Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -235,13 +235,13 @@ public partial class SettingsHandler
 
             var dialog = new ContentDialog
             {
-                Title = "ReShade Build Channel Changed",
-                Content = $"ReShade build channel changed to {channelLabel}.\n\n"
+                Title = "ReShade 빌드 채널 변경됨",
+                Content = $"ReShade 빌드 채널이 {channelLabel}(으)로 변경되었습니다.\n\n"
                     + (totalCount > 0
-                        ? $"Switching {totalCount} game(s) to the {channelLabel} build."
-                          + (vulkanCount > 0 ? $"\n{vulkanCount} Vulkan game(s) updated via global layer." : "")
-                        : "No games currently have ReShade installed."),
-                CloseButtonText = "OK",
+                        ? $"게임 {totalCount}개를 {channelLabel} 빌드로 전환합니다."
+                          + (vulkanCount > 0 ? $"\nVulkan 게임 {vulkanCount}개가 전역 레이어를 통해 업데이트되었습니다." : "")
+                        : "현재 ReShade가 설치된 게임이 없습니다."),
+                CloseButtonText = "확인",
                 XamlRoot = _window.Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };

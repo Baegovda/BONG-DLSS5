@@ -83,14 +83,14 @@ internal sealed partial class DetailLayoutHost
     /// <summary>Short name for a section, used on tabs.</summary>
     internal static string GetTitle(string key) => key switch
     {
-        "Components"          => "Components",
-        "GameOverrides"       => "Game Overrides",
+        "Components"          => "구성 요소",
+        "GameOverrides"       => "게임 재정의",
         "NeuralRendering"     => "Neural Rendering",
         "NvidiaProfileDlss"   => "DLSS / Streamline",
-        "NvidiaProfileDriver" => "Driver Settings",
-        "Management"          => "Management",
-        "Extras"              => "Extras",
-        OverviewKey           => "Overview",
+        "NvidiaProfileDriver" => "드라이버 설정",
+        "Management"          => "관리",
+        "Extras"              => "추가 기능",
+        OverviewKey           => "개요",
         _                     => key,
     };
 

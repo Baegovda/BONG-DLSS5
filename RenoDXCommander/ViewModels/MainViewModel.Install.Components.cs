@@ -149,7 +149,7 @@ public partial class MainViewModel
             return;
 
         card.IsInstalling = true;
-        card.ActionMessage = "Installing emulator addons...";
+        card.ActionMessage = "에뮬레이터 애드온 설치 중...";
         _crashReporter.Log($"[MainViewModel.InstallEmulatorAddonsAsync] Starting bundle install for {card.GameName}");
 
         int installed = 0;
@@ -188,7 +188,7 @@ public partial class MainViewModel
                     failed++;
                     continue;
                 }
-                card.ActionMessage = $"Downloading {wikiName}... ({installed + 1}/{card.EmulatorAddonNames.Count})";
+                card.ActionMessage = $"{wikiName} 다운로드 중... ({installed + 1}/{card.EmulatorAddonNames.Count})";
 
                 try
                 {
@@ -225,8 +225,8 @@ public partial class MainViewModel
                 card.Status = installed > 0 ? GameStatus.Installed : GameStatus.Available;
                 card.InstalledAddonFileName = $"{installed} addons";
                 card.ActionMessage = failed == 0
-                    ? $"✅ {installed} addons installed!"
-                    : $"✅ {installed} installed, {failed} failed.";
+                    ? $"✅ 애드온 {installed}개 설치됨!"
+                    : $"✅ {installed}개 설치됨, {failed}개 실패.";
                 card.FadeMessage(m => card.ActionMessage = m, card.ActionMessage);
                 card.NotifyAll();
                 _filterViewModel.UpdateCounts();
@@ -235,7 +235,7 @@ public partial class MainViewModel
         }
         catch (Exception ex)
         {
-            card.ActionMessage = $"❌ Failed: {ex.Message}";
+            card.ActionMessage = $"❌ 실패: {ex.Message}";
             _crashReporter.WriteCrashReport("InstallEmulatorAddonsAsync", ex, note: $"Game: {card.GameName}");
         }
         finally
@@ -281,7 +281,7 @@ public partial class MainViewModel
 
         card.Status = GameStatus.Available;
         card.InstalledAddonFileName = null;
-        card.ActionMessage = $"✖ {removed} addons removed.";
+        card.ActionMessage = $"✖ 애드온 {removed}개 제거됨.";
         card.FadeMessage(m => card.ActionMessage = m, card.ActionMessage);
         card.NotifyAll();
         SaveLibrary();
@@ -322,7 +322,7 @@ public partial class MainViewModel
         if (!await CheckInstallWarningAsync(card.GameName, "relimiter")) return;
 
         card.UlIsInstalling = true;
-        card.UlActionMessage = "Downloading ReLimiter...";
+        card.UlActionMessage = "ReLimiter 다운로드 중...";
         card.UlProgress = 0;
         try
         {
@@ -405,7 +405,7 @@ public partial class MainViewModel
                 card.UlInstalledVersion = _latestUlVersion?.TrimStart('v', 'V')
                     ?? ReadUlInstalledVersion(card.Is32Bit);
                 card.UlStatus = GameStatus.Installed;
-                card.UlActionMessage = "✅ ReLimiter installed!";
+                card.UlActionMessage = "✅ ReLimiter 설치됨!";
                 card.UlIsInstalling = false;
                 card.NotifyAll();
                 card.FadeMessage(m => card.UlActionMessage = m, card.UlActionMessage);
@@ -415,7 +415,7 @@ public partial class MainViewModel
         {
             DispatcherQueue?.TryEnqueue(() =>
             {
-                card.UlActionMessage = $"❌ Install failed: {ex.Message}";
+                card.UlActionMessage = $"❌ 설치 실패: {ex.Message}";
                 card.UlIsInstalling = false;
                 card.NotifyAll();
             });
@@ -431,7 +431,7 @@ public partial class MainViewModel
     {
         if (File.Exists(GetUlCachePath(is32Bit)))
         {
-            progress?.Report(("Installing from cache...", 50));
+            progress?.Report(("캐시에서 설치 중...", 50));
             return;
         }
 
@@ -452,7 +452,7 @@ public partial class MainViewModel
         Directory.CreateDirectory(DownloadPaths.FrameLimiter);
         var tempPath = GetUlCachePath(is32Bit) + ".tmp";
 
-        progress?.Report(("Downloading...", 0));
+        progress?.Report(("다운로드 중...", 0));
         using var resp = await _http.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
         resp.EnsureSuccessStatusCode();
 
@@ -469,7 +469,7 @@ public partial class MainViewModel
                 await file.WriteAsync(buffer.AsMemory(0, read));
                 downloaded += read;
                 if (total > 0)
-                    progress?.Report(($"Downloading... {downloaded / 1024} KB", (double)downloaded / total * 100));
+                    progress?.Report(($"다운로드 중... {downloaded / 1024} KB", (double)downloaded / total * 100));
             }
         }
 
@@ -479,7 +479,7 @@ public partial class MainViewModel
         // Save version metadata for update detection
         if (!string.IsNullOrEmpty(_latestUlVersion))
             SaveUlMeta(_latestUlVersion, is32Bit);
-        progress?.Report(("Downloaded!", 100));
+        progress?.Report(("다운로드 완료!", 100));
     }
 
     private async Task FetchLatestUlReleaseInfoAsync(bool is32Bit)
@@ -569,13 +569,13 @@ public partial class MainViewModel
             card.UlInstalledFile = null;
             card.UlInstalledVersion = null;
             card.UlStatus = GameStatus.NotInstalled;
-            card.UlActionMessage = "✖ ReLimiter removed.";
+            card.UlActionMessage = "✖ ReLimiter 제거됨.";
             card.NotifyAll();
             card.FadeMessage(m => card.UlActionMessage = m, card.UlActionMessage);
         }
         catch (Exception ex)
         {
-            card.UlActionMessage = $"❌ Uninstall failed: {ex.Message}";
+            card.UlActionMessage = $"❌ 제거 실패: {ex.Message}";
             _crashReporter.WriteCrashReport("UninstallUl", ex, note: $"Game: {card.GameName}");
         }
     }
@@ -645,7 +645,7 @@ public partial class MainViewModel
 
         if (File.Exists(GetDcCachePath(is32Bit)))
         {
-            progress?.Report(("Installing from cache...", 50));
+            progress?.Report(("캐시에서 설치 중...", 50));
             return;
         }
 
@@ -666,7 +666,7 @@ public partial class MainViewModel
         Directory.CreateDirectory(DownloadPaths.FrameLimiter);
         var tempPath = GetDcCachePath(is32Bit) + ".tmp";
 
-        progress?.Report(("Downloading...", 0));
+        progress?.Report(("다운로드 중...", 0));
         using var resp = await _http.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
         resp.EnsureSuccessStatusCode();
 
@@ -683,7 +683,7 @@ public partial class MainViewModel
                 await file.WriteAsync(buffer.AsMemory(0, read));
                 downloaded += read;
                 if (total > 0)
-                    progress?.Report(($"Downloading... {downloaded / 1024} KB", (double)downloaded / total * 100));
+                    progress?.Report(($"다운로드 중... {downloaded / 1024} KB", (double)downloaded / total * 100));
             }
         }
 
@@ -693,7 +693,7 @@ public partial class MainViewModel
         // Save version metadata for update detection
         if (!string.IsNullOrEmpty(_latestDcVersion))
             SaveDcMeta(_latestDcVersion, is32Bit);
-        progress?.Report(("Downloaded!", 100));
+        progress?.Report(("다운로드 완료!", 100));
     }
 
     private async Task FetchLatestDcReleaseInfoAsync(bool is32Bit)
@@ -770,7 +770,7 @@ public partial class MainViewModel
         if (!await CheckInstallWarningAsync(card.GameName, "dc")) return;
 
         card.DcIsInstalling = true;
-        card.DcActionMessage = "Downloading Display Commander...";
+        card.DcActionMessage = "Display Commander 다운로드 중...";
         card.DcProgress = 0;
         try
         {
@@ -851,7 +851,7 @@ public partial class MainViewModel
                 if (cachedVersion == "latest_build") cachedVersion = null;
                 card.DcInstalledVersion = peVersion ?? cachedVersion ?? ReadDcInstalledVersion(card.Is32Bit);
                 card.DcStatus = GameStatus.Installed;
-                card.DcActionMessage = "✅ Display Commander installed!";
+                card.DcActionMessage = "✅ Display Commander 설치됨!";
                 card.DcIsInstalling = false;
                 card.NotifyAll();
                 card.FadeMessage(m => card.DcActionMessage = m, card.DcActionMessage);
@@ -861,7 +861,7 @@ public partial class MainViewModel
         {
             DispatcherQueue?.TryEnqueue(() =>
             {
-                card.DcActionMessage = $"❌ Install failed: {ex.Message}";
+                card.DcActionMessage = $"❌ 설치 실패: {ex.Message}";
                 card.DcIsInstalling = false;
                 card.NotifyAll();
             });
@@ -900,13 +900,13 @@ public partial class MainViewModel
             card.DcInstalledFile = null;
             card.DcInstalledVersion = null;
             card.DcStatus = GameStatus.NotInstalled;
-            card.DcActionMessage = "✖ Display Commander removed.";
+            card.DcActionMessage = "✖ Display Commander 제거됨.";
             card.NotifyAll();
             card.FadeMessage(m => card.DcActionMessage = m, card.DcActionMessage);
         }
         catch (Exception ex)
         {
-            card.DcActionMessage = $"❌ Uninstall failed: {ex.Message}";
+            card.DcActionMessage = $"❌ 제거 실패: {ex.Message}";
             _crashReporter.WriteCrashReport("UninstallDc", ex, note: $"Game: {card.GameName}");
         }
     }
@@ -1005,7 +1005,7 @@ public partial class MainViewModel
             sections.Add((currentHeader, currentBody.ToString().TrimEnd()));
 
         if (sections.Count == 0)
-            return "(No changelog entries found)";
+            return "(변경 내역 항목이 없습니다)";
 
         // Find the section matching the installed version
         int startIndex = 0;

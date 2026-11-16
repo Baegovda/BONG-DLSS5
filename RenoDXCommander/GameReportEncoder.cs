@@ -26,18 +26,18 @@ public static class GameReportEncoder
         // Gatekeep: ask user to correct overrides first
         var gateDlg = new ContentDialog
         {
-            Title = "Before you submit",
+            Title = "제출하기 전에",
             Content = new TextBlock
             {
-                Text = "Please use the overrides on this panel to correct any wrong values " +
-                       "(bitness, graphics API, game name, etc.) before generating a report. " +
-                       "This helps us update the manifest faster.\n\n" +
-                       "Have you corrected everything you can?",
+                Text = "보고서를 만들기 전에 이 패널의 재정의를 사용해 잘못된 값 " +
+                       "(비트, 그래픽 API, 게임 이름 등)을 수정해 주세요. " +
+                       "매니페스트를 더 빠르게 업데이트하는 데 도움이 됩니다.\n\n" +
+                       "수정할 수 있는 항목을 모두 수정했나요?",
                 TextWrapping = TextWrapping.Wrap,
                 FontSize = 12,
             },
-            PrimaryButtonText = "Yes, continue",
-            CloseButtonText = "Go back",
+            PrimaryButtonText = "예, 계속",
+            CloseButtonText = "돌아가기",
             XamlRoot = xamlRoot,
             RequestedTheme = ElementTheme.Dark,
         };
@@ -48,7 +48,7 @@ public static class GameReportEncoder
         // Show dialog with optional note
         var noteBox = new TextBox
         {
-            PlaceholderText = "Describe the issue (optional)",
+            PlaceholderText = "문제 설명 (선택 사항)",
             AcceptsReturn = true,
             TextWrapping = TextWrapping.Wrap,
             MinHeight = 80,
@@ -57,7 +57,7 @@ public static class GameReportEncoder
 
         var dlg = new ContentDialog
         {
-            Title = "Copy Game Report",
+            Title = "게임 보고서 복사",
             Content = new StackPanel
             {
                 Spacing = 8,
@@ -65,8 +65,8 @@ public static class GameReportEncoder
                 {
                     new TextBlock
                     {
-                        Text = "This saves a report file and copies it to your clipboard. " +
-                               "Paste it directly into Discord or attach it to a GitHub issue.",
+                        Text = "보고서 파일을 저장하고 클립보드에 복사합니다. " +
+                               "Discord에 바로 붙여넣거나 GitHub 이슈에 첨부하세요.",
                         TextWrapping = TextWrapping.Wrap,
                         FontSize = 12,
                         Opacity = 0.7,
@@ -74,8 +74,8 @@ public static class GameReportEncoder
                     noteBox,
                 },
             },
-            PrimaryButtonText = "Copy to Clipboard",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = "클립보드에 복사",
+            CloseButtonText = "취소",
             XamlRoot = xamlRoot,
             RequestedTheme = ElementTheme.Dark,
         };

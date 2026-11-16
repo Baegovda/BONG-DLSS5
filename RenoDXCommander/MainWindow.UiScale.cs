@@ -92,7 +92,7 @@ public sealed partial class MainWindow
             ViewModel.SaveSettingsPublic(); // debounced, so a fast scroll writes once
             ApplyUiScale(percent);
             _settingsHandler.SelectUiScale();
-            ShowStatusBarMessage($"Interface size {percent}%", TimeSpan.FromSeconds(2));
+            ShowStatusBarMessage($"인터페이스 크기 {percent}%", TimeSpan.FromSeconds(2));
         }
         catch (Exception ex)
         {

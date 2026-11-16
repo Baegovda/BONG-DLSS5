@@ -72,7 +72,7 @@ public static class HotkeyManager
     /// </summary>
     public static string FormatHotkeyDisplay(int vk, bool shift, bool ctrl, bool alt)
     {
-        if (vk == 0) return "None";
+        if (vk == 0) return "없음";
 
         var parts = new List<string>();
         if (ctrl) parts.Add("Ctrl");

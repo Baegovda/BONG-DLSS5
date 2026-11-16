@@ -85,9 +85,9 @@ public sealed partial class MainWindow
             var cog = new CogDialog("ReLimiter", Content.XamlRoot);
 
             // ── Frame Limiter ─────────────────────────────────────────────────────
-            cog.AddSection("Frame Limiter");
+            cog.AddSection("프레임 제한기");
             if (!ulIniExists)
-                cog.AddWarning("Deploy relimiter.ini (under Files) to change these settings.");
+                cog.AddWarning("이 설정을 변경하려면 relimiter.ini를 배포하세요 (파일 아래).");
 
             var vrrPresets = VrrFpsPresets;
             var vrrFpsSet = new HashSet<int>(vrrPresets.Select(p => p.Fps));
@@ -95,10 +95,10 @@ public sealed partial class MainWindow
             // Items: Off, presets, "<n> (Custom)" when the current value isn't a preset, "Custom..."
             List<string> BuildFpsItems(int fps)
             {
-                var items = new List<string> { "Off" };
+                var items = new List<string> { "꺼짐" };
                 items.AddRange(vrrPresets.Select(p => p.Label));
                 if (fps > 0 && !vrrFpsSet.Contains(fps))
-                    items.Add($"{fps} (Custom)");
+                    items.Add($"{fps} (사용자 지정)");
                 items.Add("Custom...");
                 return items;
             }
@@ -113,15 +113,15 @@ public sealed partial class MainWindow
             var targetFpsCombo = CogDialog.MakeCombo(fpsItems, FpsIndex(fpsItems, currentTargetFps));
             bool suppressFpsChange = false;
 
-            var targetFpsRow = cog.AddRow("Target FPS", targetFpsCombo,
-                "Frame rate cap for this game, saved in its relimiter.ini. Each VRR preset sits just under that refresh rate. " +
-                "Off removes the cap; Custom... lets you type your own value.");
+            var targetFpsRow = cog.AddRow("목표 FPS", targetFpsCombo,
+                "이 게임의 프레임 제한으로, relimiter.ini에 저장됩니다. 각 VRR 프리셋은 해당 주사율 바로 아래 값입니다. " +
+                "꺼짐은 제한을 해제하고, Custom...에서는 직접 값을 입력할 수 있습니다.");
 
             // Inline custom FPS input (shown when "Custom..." is selected; no nested dialogs)
             var customFpsBox = CogDialog.MakeTextBox("", "20-1000");
-            var customFpsBtn = CogDialog.StyledButton("Set", CogButtonKind.Secondary, compact: true);
-            var customFpsRow = cog.AddRow("Custom FPS", CogDialog.Inline(customFpsBox, customFpsBtn),
-                "Type a frame rate from 20 to 1000, then press Set or Enter.");
+            var customFpsBtn = CogDialog.StyledButton("설정", CogButtonKind.Secondary, compact: true);
+            var customFpsRow = cog.AddRow("사용자 지정 FPS", CogDialog.Inline(customFpsBox, customFpsBtn),
+                "20~1000 사이의 프레임 레이트를 입력한 뒤 설정 또는 Enter를 누르세요.");
             customFpsRow.Visibility = Visibility.Collapsed;
 
             // Rebuild the combo after setting a custom value
@@ -142,20 +142,20 @@ public sealed partial class MainWindow
                 var iniFile = CurrentUlIniFile();
                 if (iniFile == null || !File.Exists(iniFile))
                 {
-                    cog.SetError("relimiter.ini wasn't found. Deploy it first.");
+                    cog.SetError("relimiter.ini를 찾을 수 없습니다. 먼저 배포하세요.");
                     return false;
                 }
                 try
                 {
                     AuxInstallService.ApplyUlTargetFps(iniFile, fps);
                     currentTargetFps = fps;
-                    cog.SetSuccess(fps == 0 ? "Target FPS turned off for this game." : $"Target FPS set to {fps} for this game.");
+                    cog.SetSuccess(fps == 0 ? "이 게임의 목표 FPS를 껐습니다." : $"이 게임의 목표 FPS를 {fps}(으)로 설정했습니다.");
                     CrashReporter.Log($"[MainWindow.UlCogButton_Click] target_fps={fps} for '{card.GameName}'");
                     return true;
                 }
                 catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
                 {
-                    cog.SetError($"Couldn't save Target FPS: {ex.Message}");
+                    cog.SetError($"목표 FPS를 저장할 수 없습니다: {ex.Message}");
                     CrashReporter.Log($"[MainWindow.UlCogButton_Click] target_fps write failed — {ex.Message}");
                     return false;
                 }
@@ -197,7 +197,7 @@ public sealed partial class MainWindow
                 if (string.IsNullOrEmpty(card.InstallPath)) return;
                 if (!int.TryParse(customFpsBox.Text, out var customFps) || customFps < 20 || customFps > 1000)
                 {
-                    cog.SetError("Enter a whole number from 20 to 1000.");
+                    cog.SetError("20~1000 사이의 정수를 입력하세요.");
                     return;
                 }
                 if (WriteTargetFps(customFps))
@@ -214,27 +214,27 @@ public sealed partial class MainWindow
             };
 
             // ── Compatibility ─────────────────────────────────────────────────────
-            cog.AddSection("Compatibility");
+            cog.AddSection("호환성");
             var dlssHooksCombo = cog.AddCombo("DLSS Hooks",
-                "Shows DLSS version and preset info on the ReLimiter overlay. Turn it off if the game crashes with it on.",
-                new[] { "Off", "On" }, currentDlssHooks ? 1 : 0, i =>
+                "ReLimiter 오버레이에 DLSS 버전 및 프리셋 정보를 표시합니다. 켰을 때 게임이 충돌하면 끄세요.",
+                new[] { "꺼짐", "켜짐" }, currentDlssHooks ? 1 : 0, i =>
                 {
                     var iniFile = CurrentUlIniFile();
                     if (iniFile == null || !File.Exists(iniFile))
                     {
-                        cog.SetError("relimiter.ini wasn't found. Deploy it first.");
+                        cog.SetError("relimiter.ini를 찾을 수 없습니다. 먼저 배포하세요.");
                         return false;
                     }
                     try
                     {
                         AuxInstallService.ApplyUlDlssHooks(iniFile, i == 1);
-                        cog.SetSuccess(i == 1 ? "DLSS Hooks turned on for this game." : "DLSS Hooks turned off for this game.");
+                        cog.SetSuccess(i == 1 ? "이 게임의 DLSS Hooks를 켰습니다." : "이 게임의 DLSS Hooks를 껐습니다.");
                         CrashReporter.Log($"[MainWindow.UlCogButton_Click] dlss_info_hooks={(i == 1)} for '{card.GameName}'");
                         return true;
                     }
                     catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
                     {
-                        cog.SetError($"Couldn't save DLSS Hooks: {ex.Message}");
+                        cog.SetError($"DLSS Hooks를 저장할 수 없습니다: {ex.Message}");
                         CrashReporter.Log($"[MainWindow.UlCogButton_Click] dlss_info_hooks write failed — {ex.Message}");
                         return false;
                     }
@@ -255,26 +255,26 @@ public sealed partial class MainWindow
             }
 
             // ── Files ─────────────────────────────────────────────────────────────
-            cog.AddSection("Files");
-            var openIniBtn = cog.MakeOpenFileButton("Open relimiter.ini", ulIniFile);
-            var deployBtn = cog.MakeButton("Deploy relimiter.ini", CogButtonKind.Primary, () =>
+            cog.AddSection("파일");
+            var openIniBtn = cog.MakeOpenFileButton("relimiter.ini 열기", ulIniFile);
+            var deployBtn = cog.MakeButton("relimiter.ini 배포", CogButtonKind.Primary, () =>
             {
                 if (string.IsNullOrEmpty(card.InstallPath)) return;
                 AuxInstallService.CopyUlIni(card.InstallPath);
                 openIniBtn.IsEnabled = ulIniFile != null && File.Exists(ulIniFile);
-                cog.SetSuccess("relimiter.ini copied to the game folder. Close and reopen this dialog to change its settings.");
+                cog.SetSuccess("relimiter.ini를 게임 폴더에 복사했습니다. 설정을 변경하려면 이 대화 상자를 닫았다가 다시 여세요.");
                 CrashReporter.Log($"[MainWindow.UlCogButton_Click] Deployed relimiter.ini for '{card.GameName}'");
-            }, "Copies RHI's relimiter.ini template into the game folder, replacing the game's current one.");
+            }, "RHI의 relimiter.ini 템플릿을 게임 폴더에 복사하여 현재 파일을 교체합니다.");
 
-            var openLogBtn = cog.MakeOpenFileButton("Open ReLimiter log", logFile);
+            var openLogBtn = cog.MakeOpenFileButton("ReLimiter 로그 열기", logFile);
 
             // Copied as a file (not text) so Discord shows the log's real name
-            var copyLogBtn = cog.MakeButton("Copy ReLimiter log", CogButtonKind.Secondary, async () =>
+            var copyLogBtn = cog.MakeButton("ReLimiter 로그 복사", CogButtonKind.Secondary, async () =>
             {
-                if (logFile == null || !File.Exists(logFile)) { cog.SetError("The ReLimiter log wasn't found."); return; }
+                if (logFile == null || !File.Exists(logFile)) { cog.SetError("ReLimiter 로그를 찾을 수 없습니다."); return; }
                 await CopyFileToClipboardAsFileAsync(logFile);
-                cog.SetSuccess($"Copied {Path.GetFileName(logFile)} to the clipboard. Paste it into Discord to attach it.");
-            }, "Copies the ReLimiter log to the clipboard as a file.");
+                cog.SetSuccess($"{Path.GetFileName(logFile)}을(를) 클립보드에 복사했습니다. Discord에 붙여넣어 첨부하세요.");
+            }, "ReLimiter 로그를 파일 형태로 클립보드에 복사합니다.");
             copyLogBtn.IsEnabled = logFile != null;
 
             cog.AddButtons(deployBtn, openIniBtn, openLogBtn, copyLogBtn);

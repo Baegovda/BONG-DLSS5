@@ -135,7 +135,7 @@ public partial class SettingsHandler
             // 2. Search box + label
             _settingsSearchBox = new TextBox
             {
-                PlaceholderText = "e.g. hotkey, HDR, ReBAR",
+                PlaceholderText = "예: 단축키, HDR, ReBAR",
                 FontSize = 13,
                 MinHeight = 34,
                 CornerRadius = new CornerRadius(8),
@@ -143,15 +143,15 @@ public partial class SettingsHandler
                 Background = UIFactory.Brush(ResourceKeys.SurfaceInputBrush),
                 BorderBrush = UIFactory.Brush(ResourceKeys.BorderDefaultBrush),
             };
-            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(_settingsSearchBox, "Find a setting");
+            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(_settingsSearchBox, "설정 찾기");
             ToolTipService.SetToolTip(_settingsSearchBox,
-                "Searches setting names, descriptions and tooltips as you type. Enter searches straight away, Esc clears.");
+                "입력하는 동안 설정 이름, 설명, 도구 설명을 검색합니다. Enter는 즉시 검색, Esc는 지우기입니다.");
             _settingsSearchBox.TextChanged += SettingsSearchBox_TextChanged;
             _settingsSearchBox.KeyDown += SettingsSearchBox_KeyDown;
             _searchPanel = new StackPanel { Spacing = 4 };
             _searchPanel.Children.Add(new TextBlock
             {
-                Text = "Find a setting",
+                Text = "설정 찾기",
                 FontSize = 11,
                 Margin = new Thickness(4, 0, 4, 0),
                 Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
@@ -904,18 +904,18 @@ public partial class SettingsHandler
         var header = new StackPanel { Spacing = 2 };
         header.Children.Add(new TextBlock
         {
-            Text = "Search results",
+            Text = "검색 결과",
             FontSize = 18,
             FontWeight = Microsoft.UI.Text.FontWeights.Bold,
             Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
         });
         string countText = matches.Count switch
         {
-            0 => $"No settings match \"{q}\"",
-            1 => $"1 setting matches \"{q}\"",
-            _ => $"{matches.Count} settings match \"{q}\"",
+            0 => $"\"{q}\"와(과) 일치하는 설정이 없습니다",
+            1 => $"\"{q}\"와(과) 일치하는 설정 1개",
+            _ => $"\"{q}\"와(과) 일치하는 설정 {matches.Count}개",
         };
-        if (matches.Count > MaxSearchResults) countText += $". Showing the first {MaxSearchResults}; keep typing to narrow it down.";
+        if (matches.Count > MaxSearchResults) countText += $". 처음 {MaxSearchResults}개를 표시합니다. 더 입력하면 범위가 좁혀집니다.";
         header.Children.Add(new TextBlock
         {
             Text = countText,
@@ -955,7 +955,7 @@ public partial class SettingsHandler
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 HorizontalContentAlignment = HorizontalAlignment.Left,
             };
-            ToolTipService.SetToolTip(row, "Go to this setting");
+            ToolTipService.SetToolTip(row, "이 설정으로 이동");
             var captured = entry;
             row.Click += (_, _) =>
             {

@@ -171,7 +171,7 @@ public static class OsIniEditor
 
         // "auto" is always allowed (it means: use the default)
         if (kind != OsIniKind.Text && !options.Any(o => o.Value.Equals(Auto, StringComparison.OrdinalIgnoreCase)))
-            options.Insert(0, new OsIniOption(Auto, def != null ? $"auto (default: {def})" : "auto (default)"));
+            options.Insert(0, new OsIniOption(Auto, def != null ? $"auto (기본값: {def})" : "auto (기본값)"));
 
         return new OsIniSetting(section, key, value, help, kind, options, def);
     }
@@ -286,7 +286,7 @@ public static class OsIniEditor
     {
         var iniPath = Path.Combine(gameDir, OptiScalerService.IniFileName);
         if (values.Count == 0) return null;
-        if (!File.Exists(iniPath)) return "OptiScaler.ini wasn't found in the game folder.";
+        if (!File.Exists(iniPath)) return "게임 폴더에서 OptiScaler.ini를 찾을 수 없습니다.";
         try
         {
             if (backup) Backup(gameDir, iniPath);

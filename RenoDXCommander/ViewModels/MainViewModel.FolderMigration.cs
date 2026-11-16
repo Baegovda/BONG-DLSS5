@@ -161,7 +161,7 @@ public partial class MainViewModel
                 AfterFolderMigration(game.Name, store, oldDir, newDir, outcome);
                 var shown = InstallFolderMover.IsInside(newDir, root) && !InstallFolderMover.SamePath(newDir, root)
                     ? Path.GetRelativePath(root, newDir) : newDir;
-                var msg = $"Moved {game.Name}'s mods to {shown}";
+                var msg = $"{game.Name}의 모드를 {shown}(으)로 옮겼습니다";
                 lock (_folderMigrationNotices) _folderMigrationNotices.Add((game.Name, store, msg));
             }
             else if (!outcome.NothingToMove)

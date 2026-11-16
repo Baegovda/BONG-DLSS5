@@ -78,14 +78,14 @@ public partial class DragDropHandler
         if (e.DataView.Contains(Windows.ApplicationModel.DataTransfer.StandardDataFormats.StorageItems))
         {
             e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
-            e.DragUIOverride.Caption = "Drop to add game, install addon, install preset, or extract archive";
+            e.DragUIOverride.Caption = "놓아서 게임 추가, 애드온 설치, 프리셋 설치 또는 압축 해제";
             e.DragUIOverride.IsCaptionVisible = true;
             e.DragUIOverride.IsGlyphVisible = true;
         }
         else if (e.DataView.Contains(Windows.ApplicationModel.DataTransfer.StandardDataFormats.Text))
         {
             e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
-            e.DragUIOverride.Caption = "Drop URL to download addon";
+            e.DragUIOverride.Caption = "URL을 놓아서 애드온 다운로드";
             e.DragUIOverride.IsCaptionVisible = true;
             e.DragUIOverride.IsGlyphVisible = true;
         }
@@ -215,18 +215,18 @@ public partial class DragDropHandler
                                     };
                                     var pickerDialog = new Microsoft.UI.Xaml.Controls.ContentDialog
                                     {
-                                        Title = "🌙 Install Luma Addon",
+                                        Title = "🌙 Luma 애드온 설치",
                                         Content = new Microsoft.UI.Xaml.Controls.StackPanel
                                         {
                                             Spacing = 8,
                                             Children =
                                             {
-                                                new Microsoft.UI.Xaml.Controls.TextBlock { Text = $"Install {addonName} to:", TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap, FontSize = 12 },
+                                                new Microsoft.UI.Xaml.Controls.TextBlock { Text = $"{addonName} 설치 위치:", TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap, FontSize = 12 },
                                                 combo,
                                             }
                                         },
-                                        PrimaryButtonText = "Install",
-                                        CloseButtonText = "Cancel",
+                                        PrimaryButtonText = "설치",
+                                        CloseButtonText = "취소",
                                         XamlRoot = _window.Content.XamlRoot,
                                         RequestedTheme = Microsoft.UI.Xaml.ElementTheme.Dark,
                                     };
@@ -285,18 +285,18 @@ public partial class DragDropHandler
                                     };
                                     var pickerDialog = new Microsoft.UI.Xaml.Controls.ContentDialog
                                     {
-                                        Title = "Install Luma Mod",
+                                        Title = "Luma 모드 설치",
                                         Content = new Microsoft.UI.Xaml.Controls.StackPanel
                                         {
                                             Spacing = 8,
                                             Children =
                                             {
-                                                new Microsoft.UI.Xaml.Controls.TextBlock { Text = $"Luma mod detected: {Path.GetFileName(file.Path)}\n\nSelect game to install to:", TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap, FontSize = 12 },
+                                                new Microsoft.UI.Xaml.Controls.TextBlock { Text = $"Luma 모드 감지됨: {Path.GetFileName(file.Path)}\n\n설치할 게임을 선택하세요:", TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap, FontSize = 12 },
                                                 combo,
                                             }
                                         },
-                                        PrimaryButtonText = "Install",
-                                        CloseButtonText = "Cancel",
+                                        PrimaryButtonText = "설치",
+                                        CloseButtonText = "취소",
                                         XamlRoot = _window.Content.XamlRoot,
                                         RequestedTheme = Microsoft.UI.Xaml.ElementTheme.Dark,
                                     };

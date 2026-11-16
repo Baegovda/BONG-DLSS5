@@ -93,7 +93,7 @@ public sealed class DisplayModeItem
     /// <summary>A value as shown to the user ("700 nits", "F12", "On", ...).</summary>
     public string Format(string? value)
     {
-        if (value == null) return "Not set";
+        if (value == null) return "설정 안 됨";
         switch (Kind)
         {
             case DisplayModeValueKind.Choice:
@@ -102,7 +102,7 @@ public sealed class DisplayModeItem
             case DisplayModeValueKind.ReShadeKey:
                 return HotkeyManager.FormatHotkeyDisplay(value);
             case DisplayModeValueKind.Text:
-                return value.Length == 0 ? "None" : value;
+                return value.Length == 0 ? "없음" : value;
             case DisplayModeValueKind.Number:
             case DisplayModeValueKind.Decimal:
                 if (Key is DisplayModeItemKeys.UlTargetFps or DisplayModeItemKeys.DcFpsLimit && IsZero(value)) return "Off";
@@ -139,11 +139,11 @@ public sealed class DisplayModeItem
 /// <summary>All items, in the order they're listed.</summary>
 public static class DisplayModeItems
 {
-    public const string GroupHdr = "HDR and brightness";
-    public const string GroupFrameRate = "Frame rate";
-    public const string GroupImage = "Image";
-    public const string GroupControls = "Controls";
-    public const string GroupLaunch = "When RHI launches the game";
+    public const string GroupHdr = "HDR 및 밝기";
+    public const string GroupFrameRate = "프레임 속도";
+    public const string GroupImage = "이미지";
+    public const string GroupControls = "조작";
+    public const string GroupLaunch = "RHI가 게임을 실행할 때";
 
     public static IReadOnlyList<string> Groups { get; } = new[] { GroupHdr, GroupFrameRate, GroupImage, GroupControls, GroupLaunch };
 
@@ -154,11 +154,11 @@ public static class DisplayModeItems
 
     // ── Reasons ───────────────────────────────────────────────────────────────
 
-    private const string NoReShadeIni = "ReShade isn't installed (no reshade.ini)";
-    private const string NoRenoDx = "No RenoDX mod installed";
-    private const string NoReLimiter = "ReLimiter isn't installed (no relimiter.ini)";
-    private const string NoDc = "Display Commander isn't installed (no DisplayCommander.ini)";
-    private const string NoNvidia = "Needs an NVIDIA GPU and driver";
+    private const string NoReShadeIni = "ReShade가 설치되어 있지 않음 (reshade.ini 없음)";
+    private const string NoRenoDx = "설치된 RenoDX 모드 없음";
+    private const string NoReLimiter = "ReLimiter가 설치되어 있지 않음 (relimiter.ini 없음)";
+    private const string NoDc = "Display Commander가 설치되어 있지 않음 (DisplayCommander.ini 없음)";
+    private const string NoNvidia = "NVIDIA GPU 및 드라이버 필요";
 
     private static string? NeedReShade(DisplayModeContext c) => File.Exists(c.ReShadeIni) ? null : NoReShadeIni;
     private static string? NeedRenoDx(DisplayModeContext c) => !c.HasRenoDx ? NoRenoDx : NeedReShade(c);
@@ -169,33 +169,33 @@ public static class DisplayModeItems
     private static IReadOnlyList<DisplayModeItem> Build() => new List<DisplayModeItem>
     {
         // ── HDR and brightness ────────────────────────────────────────────────
-        RdxNits(DisplayModeItemKeys.RdxPeakNits, "toneMapPeakNits", "Peak brightness (RenoDX)",
-            "RenoDX's peak brightness. Set it to your display's peak: TVs and monitors are often very different."),
-        RdxNits(DisplayModeItemKeys.RdxGameNits, "toneMapGameNits", "Game brightness (RenoDX)",
-            "RenoDX's game (paper white) brightness. A darker room usually wants a lower value."),
-        RdxNits(DisplayModeItemKeys.RdxUiNits, "toneMapUINits", "UI brightness (RenoDX)",
-            "RenoDX's brightness for menus and the HUD."),
+        RdxNits(DisplayModeItemKeys.RdxPeakNits, "toneMapPeakNits", "최대 밝기 (RenoDX)",
+            "RenoDX의 최대 밝기입니다. 디스플레이의 최대 밝기로 설정하세요: TV와 모니터는 크게 다른 경우가 많습니다."),
+        RdxNits(DisplayModeItemKeys.RdxGameNits, "toneMapGameNits", "게임 밝기 (RenoDX)",
+            "RenoDX의 게임(종이 흰색) 밝기입니다. 어두운 방에서는 보통 더 낮은 값이 좋습니다."),
+        RdxNits(DisplayModeItemKeys.RdxUiNits, "toneMapUINits", "UI 밝기 (RenoDX)",
+            "메뉴와 HUD에 대한 RenoDX의 밝기입니다."),
         new()
         {
-            Key = DisplayModeItemKeys.RtxHdrPeak, Label = "RTX HDR peak brightness", Group = GroupHdr, Kind = DisplayModeValueKind.Number,
+            Key = DisplayModeItemKeys.RtxHdrPeak, Label = "RTX HDR 최대 밝기", Group = GroupHdr, Kind = DisplayModeValueKind.Number,
             Unit = "nits", Min = 100, Max = 10000,
-            Help = "Peak brightness for NVIDIA RTX HDR (NVIDIA driver profile). Only for games with RTX HDR turned on in the RenoDX ⚙.",
-            Unavailable = c => !c.IsRtxHdrEnabled ? "RTX HDR isn't on for this game" : NeedNvidia(c),
+            Help = "NVIDIA RTX HDR의 최대 밝기입니다 (NVIDIA 드라이버 프로필). RenoDX ⚙에서 RTX HDR을 켠 게임에만 해당합니다.",
+            Unavailable = c => !c.IsRtxHdrEnabled ? "이 게임에서 RTX HDR이 켜져 있지 않음" : NeedNvidia(c),
             Read = c =>
             {
                 uint v = c.Nvidia!.GetRtxHdrPeakBrightness(c.GameName, c.InstallPath);
                 return v > 0 ? v.ToString(CultureInfo.InvariantCulture) : null;
             },
             Write = (c, v) => uint.TryParse(v, out var n) && c.Nvidia!.SetRtxHdrPeakBrightness(c.GameName, c.InstallPath, n)
-                ? null : "Couldn't write the NVIDIA profile",
+                ? null : "NVIDIA 프로필에 기록할 수 없음",
         },
 
         // ── Frame rate ────────────────────────────────────────────────────────
         new()
         {
-            Key = DisplayModeItemKeys.UlTargetFps, Label = "ReLimiter frame rate cap", Group = GroupFrameRate, Kind = DisplayModeValueKind.Number,
+            Key = DisplayModeItemKeys.UlTargetFps, Label = "ReLimiter 프레임 속도 상한", Group = GroupFrameRate, Kind = DisplayModeValueKind.Number,
             Unit = "FPS", Min = 20, Max = 1000, AllowZero = true,
-            Help = "target_fps in the game's relimiter.ini. 0 = off.",
+            Help = "게임의 relimiter.ini에 있는 target_fps입니다. 0 = 꺼짐.",
             Unavailable = NeedReLimiter,
             // No relimiter.ini = no value (not "off"); a file without target_fps = off
             Read = c => !File.Exists(c.ReLimiterIni) ? null
@@ -203,7 +203,7 @@ public static class DisplayModeItems
                 && int.TryParse(v, NumberStyles.Integer, CultureInfo.InvariantCulture, out var n) ? n.ToString(CultureInfo.InvariantCulture) : "0",
             Write = (c, v) =>
             {
-                if (!int.TryParse(v, NumberStyles.Integer, CultureInfo.InvariantCulture, out var n)) return "Not a number";
+                if (!int.TryParse(v, NumberStyles.Integer, CultureInfo.InvariantCulture, out var n)) return "숫자가 아님";
                 AuxInstallService.ApplyUlTargetFps(c.ReLimiterIni, n);
                 foreach (var extra in ReLimiterExtraInis(c)) AuxInstallService.ApplyUlTargetFps(extra, n);
                 return null;
@@ -211,9 +211,9 @@ public static class DisplayModeItems
         },
         new()
         {
-            Key = DisplayModeItemKeys.DcFpsLimit, Label = "Display Commander FPS limit", Group = GroupFrameRate, Kind = DisplayModeValueKind.Decimal,
+            Key = DisplayModeItemKeys.DcFpsLimit, Label = "Display Commander FPS 제한", Group = GroupFrameRate, Kind = DisplayModeValueKind.Decimal,
             Unit = "FPS", Min = 20, Max = 1000, AllowZero = true,
-            Help = "fps_limit in the game's DisplayCommander.ini. 0 = no limit. Decimals allowed (e.g. 117.5).",
+            Help = "게임의 DisplayCommander.ini에 있는 fps_limit입니다. 0 = 제한 없음. 소수 허용 (예: 117.5).",
             Unavailable = NeedDc,
             Read = c => !File.Exists(c.DcIni) ? null
                 : Dlssg20_30Service.ReadIniValue(c.DcIni, "DisplayCommander", "fps_limit") is { } v
@@ -223,8 +223,8 @@ public static class DisplayModeItems
         },
         new()
         {
-            Key = DisplayModeItemKeys.DriverFpsCap, Label = "NVIDIA driver FPS limit", Group = GroupFrameRate, Kind = DisplayModeValueKind.Choice,
-            Help = "The driver's Max Frame Rate for this game (NVIDIA profile). Follow global = no value of its own.",
+            Key = DisplayModeItemKeys.DriverFpsCap, Label = "NVIDIA 드라이버 FPS 제한", Group = GroupFrameRate, Kind = DisplayModeValueKind.Choice,
+            Help = "이 게임에 대한 드라이버의 최대 프레임 속도입니다 (NVIDIA 프로필). 전역 설정 따름 = 자체 값 없음.",
             Choices = DriverFpsChoices,
             Unavailable = NeedNvidia,
             Read = c => c.Nvidia!.GetPerGameFpsLimit(c.GameName, c.InstallPath) is uint v ? v.ToString(CultureInfo.InvariantCulture) : "global",
@@ -233,13 +233,13 @@ public static class DisplayModeItems
                 bool ok = v == "global"
                     ? c.Nvidia!.ClearPerGameFpsLimit(c.GameName, c.InstallPath)
                     : uint.TryParse(v, out var n) && c.Nvidia!.SetPerGameFpsLimit(c.GameName, c.InstallPath, n);
-                return ok ? null : "Couldn't write the NVIDIA profile";
+                return ok ? null : "NVIDIA 프로필에 기록할 수 없음";
             },
         },
         new()
         {
-            Key = DisplayModeItemKeys.MfgMode, Label = "DLSS frame generation", Group = GroupFrameRate, Kind = DisplayModeValueKind.Choice,
-            Help = "The driver's frame generation override for this game: off, a fixed multiplier (e.g. 2x for a 120 Hz TV, 4x for a 240 Hz monitor) or dynamic.",
+            Key = DisplayModeItemKeys.MfgMode, Label = "DLSS 프레임 생성", Group = GroupFrameRate, Kind = DisplayModeValueKind.Choice,
+            Help = "이 게임에 대한 드라이버의 프레임 생성 재정의: 꺼짐, 고정 배수(예: 120 Hz TV는 2x, 240 Hz 모니터는 4x) 또는 동적.",
             Choices = () => MfgChoices,
             Unavailable = NeedNvidia,
             Read = c =>
@@ -277,51 +277,51 @@ public static class DisplayModeItems
         // ── Image ─────────────────────────────────────────────────────────────
         new()
         {
-            Key = DisplayModeItemKeys.DlssSrPreset, Label = "DLSS Super Resolution preset", Group = GroupImage, Kind = DisplayModeValueKind.Choice,
-            Help = "The driver's DLSS SR preset override for this game (NVIDIA profile).",
+            Key = DisplayModeItemKeys.DlssSrPreset, Label = "DLSS 슈퍼 해상도 프리셋", Group = GroupImage, Kind = DisplayModeValueKind.Choice,
+            Help = "이 게임에 대한 드라이버의 DLSS SR 프리셋 재정의입니다 (NVIDIA 프로필).",
             Choices = () => DlssPresetService.SrPresets.Select(p => (p.Name, p.Value.ToString(CultureInfo.InvariantCulture))).ToList(),
             Unavailable = NeedNvidia,
             Read = c => c.Nvidia!.GetSrPreset(c.GameName, c.InstallPath).ToString(CultureInfo.InvariantCulture),
-            Write = (c, v) => uint.TryParse(v, out var p) && c.Nvidia!.SetSrPreset(c.GameName, c.InstallPath, p) ? null : "Couldn't write the NVIDIA profile",
+            Write = (c, v) => uint.TryParse(v, out var p) && c.Nvidia!.SetSrPreset(c.GameName, c.InstallPath, p) ? null : "NVIDIA 프로필에 기록할 수 없음",
         },
         new()
         {
-            Key = DisplayModeItemKeys.DlssSrScale, Label = "DLSS Super Resolution render scale", Group = GroupImage, Kind = DisplayModeValueKind.Choice,
-            Help = "The driver's DLSS SR render scale override, e.g. Performance on a 4K TV and Quality on a 1440p monitor.",
+            Key = DisplayModeItemKeys.DlssSrScale, Label = "DLSS 슈퍼 해상도 렌더 배율", Group = GroupImage, Kind = DisplayModeValueKind.Choice,
+            Help = "드라이버의 DLSS SR 렌더 배율 재정의입니다. 예: 4K TV에서는 Performance, 1440p 모니터에서는 Quality.",
             Choices = () => DlssPresetService.RenderScaleOptions.Where(o => o.Value != 0xFFFFFFFF)
                 .Select(o => (o.Name, o.Value.ToString(CultureInfo.InvariantCulture))).ToList(),
             Unavailable = NeedNvidia,
             Read = c => c.Nvidia!.GetSrRenderScale(c.GameName, c.InstallPath).ToString(CultureInfo.InvariantCulture),
-            Write = (c, v) => uint.TryParse(v, out var p) && c.Nvidia!.SetSrRenderScale(c.GameName, c.InstallPath, p) ? null : "Couldn't write the NVIDIA profile",
+            Write = (c, v) => uint.TryParse(v, out var p) && c.Nvidia!.SetSrRenderScale(c.GameName, c.InstallPath, p) ? null : "NVIDIA 프로필에 기록할 수 없음",
         },
         new()
         {
-            Key = DisplayModeItemKeys.DlssRrPreset, Label = "DLSS Ray Reconstruction preset", Group = GroupImage, Kind = DisplayModeValueKind.Choice,
-            Help = "The driver's DLSS Ray Reconstruction preset override for this game (NVIDIA profile). Used in games with ray reconstruction.",
+            Key = DisplayModeItemKeys.DlssRrPreset, Label = "DLSS 레이 재구성 프리셋", Group = GroupImage, Kind = DisplayModeValueKind.Choice,
+            Help = "이 게임에 대한 드라이버의 DLSS 레이 재구성 프리셋 재정의입니다 (NVIDIA 프로필). 레이 재구성을 사용하는 게임에 적용됩니다.",
             Choices = () => DlssPresetService.RrPresets.Select(p => (p.Name, p.Value.ToString(CultureInfo.InvariantCulture))).ToList(),
             Unavailable = NeedNvidia,
             Read = c => c.Nvidia!.GetRrPreset(c.GameName, c.InstallPath).ToString(CultureInfo.InvariantCulture),
-            Write = (c, v) => uint.TryParse(v, out var p) && c.Nvidia!.SetRrPreset(c.GameName, c.InstallPath, p) ? null : "Couldn't write the NVIDIA profile",
+            Write = (c, v) => uint.TryParse(v, out var p) && c.Nvidia!.SetRrPreset(c.GameName, c.InstallPath, p) ? null : "NVIDIA 프로필에 기록할 수 없음",
         },
         new()
         {
-            Key = DisplayModeItemKeys.DlssRrScale, Label = "DLSS Ray Reconstruction render scale", Group = GroupImage, Kind = DisplayModeValueKind.Choice,
-            Help = "The driver's DLSS Ray Reconstruction render scale override. Used instead of the Super Resolution one while ray reconstruction is on.",
+            Key = DisplayModeItemKeys.DlssRrScale, Label = "DLSS 레이 재구성 렌더 배율", Group = GroupImage, Kind = DisplayModeValueKind.Choice,
+            Help = "드라이버의 DLSS 레이 재구성 렌더 배율 재정의입니다. 레이 재구성이 켜져 있는 동안 슈퍼 해상도 배율 대신 사용됩니다.",
             Choices = () => DlssPresetService.RenderScaleOptions.Where(o => o.Value != 0xFFFFFFFF)
                 .Select(o => (o.Name, o.Value.ToString(CultureInfo.InvariantCulture))).ToList(),
             Unavailable = NeedNvidia,
             Read = c => c.Nvidia!.GetRrRenderScale(c.GameName, c.InstallPath).ToString(CultureInfo.InvariantCulture),
-            Write = (c, v) => uint.TryParse(v, out var p) && c.Nvidia!.SetRrRenderScale(c.GameName, c.InstallPath, p) ? null : "Couldn't write the NVIDIA profile",
+            Write = (c, v) => uint.TryParse(v, out var p) && c.Nvidia!.SetRrRenderScale(c.GameName, c.InstallPath, p) ? null : "NVIDIA 프로필에 기록할 수 없음",
         },
         new()
         {
-            Key = DisplayModeItemKeys.RsPreset, Label = "ReShade preset", Group = GroupImage, Kind = DisplayModeValueKind.Text,
-            Help = "The ReShade preset file the game loads (PresetPath in reshade.ini), e.g. a sharper preset for the TV. A name like TV.ini is relative to the game folder.",
+            Key = DisplayModeItemKeys.RsPreset, Label = "ReShade 프리셋", Group = GroupImage, Kind = DisplayModeValueKind.Text,
+            Help = "게임이 불러오는 ReShade 프리셋 파일입니다 (reshade.ini의 PresetPath). 예: TV용 더 선명한 프리셋. TV.ini 같은 이름은 게임 폴더 기준 상대 경로입니다.",
             Unavailable = NeedReShade,
             Read = c => Dlssg20_30Service.ReadIniValue(c.ReShadeIni, "GENERAL", "PresetPath"),
             Write = (c, v) =>
             {
-                if (v.Length == 0) return "Enter a preset file name";
+                if (v.Length == 0) return "프리셋 파일 이름을 입력하세요";
                 Dlssg20_30Service.WriteIniValue(c.ReShadeIni, "GENERAL", "PresetPath", v);
                 return null;
             },
@@ -330,24 +330,24 @@ public static class DisplayModeItems
         // ── Controls ──────────────────────────────────────────────────────────
         new()
         {
-            Key = DisplayModeItemKeys.RsOverlayKey, Label = "ReShade overlay key", Group = GroupControls, Kind = DisplayModeValueKind.ReShadeKey,
-            Help = "The key that opens the ReShade overlay. Saved to every reshade*.ini in the game folder.",
+            Key = DisplayModeItemKeys.RsOverlayKey, Label = "ReShade 오버레이 키", Group = GroupControls, Kind = DisplayModeValueKind.ReShadeKey,
+            Help = "ReShade 오버레이를 여는 키입니다. 게임 폴더의 모든 reshade*.ini에 저장됩니다.",
             Unavailable = NeedReShade,
             Read = c => Dlssg20_30Service.ReadIniValue(c.ReShadeIni, "INPUT", "KeyOverlay"),
             Write = (c, v) => { foreach (var f in ReShadeInis(c)) AuxInstallService.ApplyOverlayHotkey(f, v); return null; },
         },
         new()
         {
-            Key = DisplayModeItemKeys.RsScreenshotKey, Label = "ReShade screenshot key", Group = GroupControls, Kind = DisplayModeValueKind.ReShadeKey,
-            Help = "The key for a ReShade screenshot (Backspace = none). Saved to every reshade*.ini in the game folder.",
+            Key = DisplayModeItemKeys.RsScreenshotKey, Label = "ReShade 스크린샷 키", Group = GroupControls, Kind = DisplayModeValueKind.ReShadeKey,
+            Help = "ReShade 스크린샷 키입니다 (Backspace = 없음). 게임 폴더의 모든 reshade*.ini에 저장됩니다.",
             Unavailable = NeedReShade,
             Read = c => Dlssg20_30Service.ReadIniValue(c.ReShadeIni, "INPUT", "KeyScreenshot"),
             Write = (c, v) => { foreach (var f in ReShadeInis(c)) AuxInstallService.ApplyScreenshotHotkey(f, v); return null; },
         },
         new()
         {
-            Key = DisplayModeItemKeys.RsGamepadNav, Label = "ReShade controller navigation", Group = GroupControls, Kind = DisplayModeValueKind.Choice,
-            Help = "Lets a controller move around the ReShade overlay (GamepadNavigation in reshade.ini). Handy on the TV.",
+            Key = DisplayModeItemKeys.RsGamepadNav, Label = "ReShade 컨트롤러 탐색", Group = GroupControls, Kind = DisplayModeValueKind.Choice,
+            Help = "컨트롤러로 ReShade 오버레이를 탐색할 수 있게 합니다 (reshade.ini의 GamepadNavigation). TV에서 편리합니다.",
             Choices = () => OffOn01,
             Unavailable = NeedReShade,
             Read = c => Dlssg20_30Service.ReadIniValue(c.ReShadeIni, "INPUT", "GamepadNavigation") is { } v ? (v == "1" ? "1" : "0") : "0",
@@ -355,8 +355,8 @@ public static class DisplayModeItems
         },
         new()
         {
-            Key = DisplayModeItemKeys.UlOsdKey, Label = "ReLimiter OSD key", Group = GroupControls, Kind = DisplayModeValueKind.ReLimiterKey,
-            Help = "The key that shows ReLimiter's on-screen display (osd_toggle_key in relimiter.ini).",
+            Key = DisplayModeItemKeys.UlOsdKey, Label = "ReLimiter OSD 키", Group = GroupControls, Kind = DisplayModeValueKind.ReLimiterKey,
+            Help = "ReLimiter의 화면 표시(OSD)를 보여 주는 키입니다 (relimiter.ini의 osd_toggle_key).",
             Unavailable = NeedReLimiter,
             Read = c => Dlssg20_30Service.ReadIniValue(c.ReLimiterIni, "FrameLimiter", "osd_toggle_key"),
             Write = (c, v) =>
@@ -370,33 +370,33 @@ public static class DisplayModeItems
         // ── When RHI launches the game ────────────────────────────────────────
         new()
         {
-            Key = DisplayModeItemKeys.Hdr, Label = "Windows HDR on launch", Group = GroupLaunch, Kind = DisplayModeValueKind.Choice, AtLaunch = true,
-            Help = "Turn Windows HDR on when RHI launches the game (off again when it closes). The HDR button on the game page sets this for the current mode.",
+            Key = DisplayModeItemKeys.Hdr, Label = "실행 시 Windows HDR", Group = GroupLaunch, Kind = DisplayModeValueKind.Choice, AtLaunch = true,
+            Help = "RHI가 게임을 실행할 때 Windows HDR을 켭니다 (게임이 종료되면 다시 끔). 게임 페이지의 HDR 버튼은 현재 모드에 이 값을 설정합니다.",
             Choices = () => OffOn,
         },
         new()
         {
-            Key = DisplayModeItemKeys.HdrDisplay, Label = "HDR display", Group = GroupLaunch, Kind = DisplayModeValueKind.Choice, AtLaunch = true,
-            Help = "Which display gets HDR turned on, e.g. the TV in TV mode. Settings = the displays chosen in Settings › Display.",
+            Key = DisplayModeItemKeys.HdrDisplay, Label = "HDR 디스플레이", Group = GroupLaunch, Kind = DisplayModeValueKind.Choice, AtLaunch = true,
+            Help = "HDR을 켤 디스플레이입니다. 예: TV 모드에서는 TV. 설정 = 설정 › 디스플레이에서 선택한 디스플레이.",
             Choices = HdrDisplayChoices,
         },
         new()
         {
-            Key = DisplayModeItemKeys.Resolution, Label = "Resolution on launch", Group = GroupLaunch, Kind = DisplayModeValueKind.Choice, AtLaunch = true,
-            Help = "Switch the desktop resolution when RHI launches the game (put back when it closes). On = the target resolution in Settings › Display.",
+            Key = DisplayModeItemKeys.Resolution, Label = "실행 시 해상도", Group = GroupLaunch, Kind = DisplayModeValueKind.Choice, AtLaunch = true,
+            Help = "RHI가 게임을 실행할 때 바탕 화면 해상도를 전환합니다 (게임이 종료되면 복원). 켜짐 = 설정 › 디스플레이의 목표 해상도.",
             Choices = ResolutionChoices,
         },
         new()
         {
-            Key = DisplayModeItemKeys.LaunchArgs, Label = "Launch arguments", Group = GroupLaunch, Kind = DisplayModeValueKind.Text, AtLaunch = true,
-            Help = "Arguments RHI passes to the game in this mode (instead of the ones in Game Overrides), e.g. -fullscreen.",
+            Key = DisplayModeItemKeys.LaunchArgs, Label = "실행 인수", Group = GroupLaunch, Kind = DisplayModeValueKind.Text, AtLaunch = true,
+            Help = "이 모드에서 RHI가 게임에 전달하는 인수입니다 (게임 재정의의 인수 대신 사용). 예: -fullscreen.",
         },
     };
 
     private static DisplayModeItem RdxNits(string key, string iniKey, string label, string help) => new()
     {
         Key = key, Label = label, Group = GroupHdr, Kind = DisplayModeValueKind.Number, Unit = "nits", Min = 1, Max = 10000,
-        Help = help + $" Saved as {iniKey} in every [renodx-preset] section of reshade.ini.",
+        Help = help + $" reshade.ini의 모든 [renodx-preset] 섹션에 {iniKey}(으)로 저장됩니다.",
         Unavailable = NeedRenoDx,
         Read = c => ReadRdx(c.ReShadeIni, iniKey),
         Write = (c, v) => WriteRdx(c.ReShadeIni, iniKey, v),
@@ -442,7 +442,7 @@ public static class DisplayModeItems
     /// </summary>
     internal static string? WriteRdx(string iniPath, string iniKey, string value)
     {
-        if (!File.Exists(iniPath)) return "reshade.ini wasn't found";
+        if (!File.Exists(iniPath)) return "reshade.ini를 찾을 수 없음";
         var text = File.ReadAllText(iniPath);
         var eol = text.Contains("\r\n") ? "\r\n" : "\n";
         var lines = text.Split('\n').Select(l => l.TrimEnd('\r')).ToList();
@@ -515,17 +515,17 @@ public static class DisplayModeItems
 
     // ── Choice lists ──────────────────────────────────────────────────────────
 
-    private static readonly IReadOnlyList<(string, string)> OffOn = new[] { ("Off", "Off"), ("On", "On") };
-    private static readonly IReadOnlyList<(string, string)> OffOn01 = new[] { ("Off", "0"), ("On", "1") };
+    private static readonly IReadOnlyList<(string, string)> OffOn = new[] { ("꺼짐", "Off"), ("켜짐", "On") };
+    private static readonly IReadOnlyList<(string, string)> OffOn01 = new[] { ("꺼짐", "0"), ("켜짐", "1") };
 
     private static readonly IReadOnlyList<(string, string)> MfgChoices = new[]
     {
-        ("Off", "off"), ("2x", "fixed:1"), ("3x", "fixed:2"), ("4x", "fixed:3"), ("5x", "fixed:4"), ("6x", "fixed:5"), ("Dynamic", "dynamic"),
+        ("꺼짐", "off"), ("2x", "fixed:1"), ("3x", "fixed:2"), ("4x", "fixed:3"), ("5x", "fixed:4"), ("6x", "fixed:5"), ("동적", "dynamic"),
     };
 
     private static IReadOnlyList<(string, string)> DriverFpsChoices()
     {
-        var list = new List<(string, string)> { ("Follow global", "global"), ("Off", "0") };
+        var list = new List<(string, string)> { ("전역 설정 따름", "global"), ("꺼짐", "0") };
         foreach (var fps in new uint[] { 30, 40, 48, 50, 58, 60, 72, 90, 97, 100, 116, 117, 120, 138, 141, 144, 157, 160, 165, 175, 196, 200, 224, 225, 240, 280, 300, 360, 480 })
             list.Add(($"{fps} FPS", fps.ToString(CultureInfo.InvariantCulture)));
         return list;
@@ -535,7 +535,7 @@ public static class DisplayModeItems
     private static IReadOnlyList<(string, string)> ResolutionChoices()
     {
         if (_resolutions != null) return _resolutions;
-        var list = new List<(string, string)> { ("Off", "Off"), ("On (Settings target)", "On") };
+        var list = new List<(string, string)> { ("꺼짐", "Off"), ("켜짐 (설정의 목표값)", "On") };
         try
         {
             foreach (var r in ResolutionToggleService.GetSupportedResolutions().OrderByDescending(r => r.Width).ThenByDescending(r => r.Height).ThenByDescending(r => r.RefreshRate))
@@ -550,7 +550,7 @@ public static class DisplayModeItems
 
     private static IReadOnlyList<(string, string)> HdrDisplayChoices()
     {
-        var list = new List<(string, string)> { ("Settings", "default") };
+        var list = new List<(string, string)> { ("설정", "default") };
         try
         {
             foreach (var d in HdrToggleService.GetAllDisplays().Where(d => d.HdrSupported))

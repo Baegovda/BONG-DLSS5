@@ -88,7 +88,7 @@ public partial class MainViewModel : ObservableObject
         set => _settingsViewModel.LastSeenVersion = value;
     }
 
-    public string UpdateButtonTooltip => "Update ReShade, RenoDX, ReLimiter, Display Commander, OptiScaler, RE Framework, DXVK, Luma and DOF Fix for all games";
+    public string UpdateButtonTooltip => "모든 게임의 ReShade, RenoDX, ReLimiter, Display Commander, OptiScaler, RE Framework, DXVK, Luma 및 DOF Fix 업데이트";
 
     /// <summary>
     /// The global shader picker button is disabled while custom shaders are active.
@@ -709,7 +709,7 @@ public partial class MainViewModel : ObservableObject
 
     // Settings file I/O delegated to SettingsViewModel
 
-    [ObservableProperty] private string _statusText = "Loading...";
+    [ObservableProperty] private string _statusText = "로딩 중...";
     [ObservableProperty] private string _subStatusText = "";
     [ObservableProperty] private bool _isLoading = true;
     [ObservableProperty] private bool _isBackgroundScanning;

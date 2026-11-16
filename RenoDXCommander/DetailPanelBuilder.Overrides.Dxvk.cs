@@ -36,7 +36,7 @@ public partial class DetailPanelBuilder
         };
         var mgmtTitle = new TextBlock
         {
-            Text       = "Management",
+            Text       = "관리",
             FontSize   = 13,
             FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
             Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
@@ -83,7 +83,7 @@ public partial class DetailPanelBuilder
 
         var changeFolderBtn = new Button
         {
-            Content = "Change install folder",
+            Content = "설치 폴더 변경",
             FontSize = 11,
             Height = 32,
             HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -95,7 +95,7 @@ public partial class DetailPanelBuilder
             Tag = card,
         };
         changeFolderBtn.Click += (s, ev) => _window.BrowseFolder_Click(s, ev);
-        ToolTipService.SetToolTip(changeFolderBtn, "Change the install folder for this game. Use when auto-detection picked the wrong directory.");
+        ToolTipService.SetToolTip(changeFolderBtn, "이 게임의 설치 폴더를 변경합니다. 자동 감지가 잘못된 폴더를 선택했을 때 사용하세요.");
         Grid.SetColumn(changeFolderBtn, 0);
         mgmtRow.Children.Add(changeFolderBtn);
 
@@ -105,7 +105,7 @@ public partial class DetailPanelBuilder
 
         var resetFolderBtn = new Button
         {
-            Content = "Reset install folder",
+            Content = "설치 폴더 초기화",
             FontSize = 11,
             Height = 32,
             HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -119,8 +119,8 @@ public partial class DetailPanelBuilder
         };
         resetFolderBtn.Click += (s, ev) => _window.ResetInstallFolder_Click(s, ev);
         ToolTipService.SetToolTip(resetFolderBtn, card.IsManuallyAdded
-            ? "You added this game yourself, so there's no detected folder to go back to. Use Change install folder."
-            : "Go back to the install folder RHI detected, if you changed it.");
+            ? "직접 추가한 게임이므로 되돌아갈 감지된 폴더가 없습니다. 설치 폴더 변경을 사용하세요."
+            : "변경한 경우, RHI가 감지한 설치 폴더로 되돌립니다.");
         Grid.SetColumn(resetFolderBtn, 2);
         mgmtRow.Children.Add(resetFolderBtn);
 
@@ -130,7 +130,7 @@ public partial class DetailPanelBuilder
 
         var removeGameBtn = new Button
         {
-            Content = "Remove from RHI",
+            Content = "RHI에서 제거",
             FontSize = 11,
             Height = 32,
             HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -143,8 +143,8 @@ public partial class DetailPanelBuilder
         };
         removeGameBtn.Click += (s, ev) => _window.RemoveManualGame_Click(s, ev);
         ToolTipService.SetToolTip(removeGameBtn, card.IsManuallyAdded
-            ? "Remove this game from RHI. You added it yourself, so add it again to get it back."
-            : "Remove this game from RHI for good: it won't come back when RHI scans your games (unlike Hide). Undo in Settings › Tools & Maintenance › Removed games.");
+            ? "RHI에서 이 게임을 제거합니다. 직접 추가한 게임이므로 다시 추가하면 복구됩니다."
+            : "RHI에서 이 게임을 영구적으로 제거합니다. 숨기기와 달리 RHI가 게임을 검색해도 다시 나타나지 않습니다. 설정 › 도구 및 유지 관리 › 제거된 게임에서 되돌릴 수 있습니다.");
         Grid.SetColumn(removeGameBtn, 4);
         mgmtRow.Children.Add(removeGameBtn);
 
@@ -154,7 +154,7 @@ public partial class DetailPanelBuilder
 
         var mgmtResetOverridesBtn = new Button
         {
-            Content = "Reset Overrides",
+            Content = "재정의 초기화",
             FontSize = 11,
             Height = 32,
             HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -170,7 +170,7 @@ public partial class DetailPanelBuilder
             ctx.ResetAction?.Invoke();
         };
         Grid.SetColumn(mgmtResetOverridesBtn, 6);
-        ToolTipService.SetToolTip(mgmtResetOverridesBtn, "Reset all per-game overrides back to defaults (DLL names, channels, shaders, addons, launch settings, update inclusion).");
+        ToolTipService.SetToolTip(mgmtResetOverridesBtn, "게임별 재정의(DLL 이름, 채널, 셰이더, 애드온, 실행 설정, 업데이트 포함 여부)를 모두 기본값으로 초기화합니다.");
         mgmtRow.Children.Add(mgmtResetOverridesBtn);
 
         var sep3 = new Border { Width = 1, Background = UIFactory.Brush(ResourceKeys.BorderDefaultBrush), Margin = new Thickness(8, 4, 8, 4) };
@@ -179,7 +179,7 @@ public partial class DetailPanelBuilder
 
         var reportBtn = new Button
         {
-            Content = "Copy Report",
+            Content = "보고서 복사",
             FontSize = 11,
             Height = 32,
             HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -205,25 +205,25 @@ public partial class DetailPanelBuilder
         }
         reportBtn.Click += (s, ev) => CopyReport();
         Grid.SetColumn(reportBtn, 8);
-        ToolTipService.SetToolTip(reportBtn, "Copy a diagnostic report for this game to the clipboard. Useful for Discord or GitHub support.");
+        ToolTipService.SetToolTip(reportBtn, "이 게임의 진단 보고서를 클립보드에 복사합니다. Discord 또는 GitHub 지원 요청 시 유용합니다.");
         mgmtRow.Children.Add(reportBtn);
 
         if (Layout.IsTabs)
         {
             // Tabs (mockup A): the same four actions as tiles
             var tiles = new Controls.AutoFitGrid { MinColumnWidth = 220 };
-            tiles.Children.Add(TabsTheme.MakeTile("Change install folder", "Point RHI at a different folder for this game", false,
+            tiles.Children.Add(TabsTheme.MakeTile("설치 폴더 변경", "이 게임에 다른 폴더를 지정합니다", false,
                 (s, ev) => _window.BrowseFolder_Click(changeFolderBtn, ev), TabsTooltip(changeFolderBtn)));
-            tiles.Children.Add(TabsTheme.MakeTile("Reset Overrides", "Put every per-game setting back to global", false,
+            tiles.Children.Add(TabsTheme.MakeTile("재정의 초기화", "모든 게임별 설정을 전역 설정으로 되돌립니다", false,
                 (s, ev) => ctx.ResetAction?.Invoke(), TabsTooltip(mgmtResetOverridesBtn)));
-            tiles.Children.Add(TabsTheme.MakeTile("Copy Report", "Copy this game’s setup to share for support", false,
+            tiles.Children.Add(TabsTheme.MakeTile("보고서 복사", "지원 요청용으로 이 게임의 구성을 복사합니다", false,
                 (s, ev) => CopyReport(), TabsTooltip(reportBtn)));
             if (!card.IsManuallyAdded)
-                tiles.Children.Add(TabsTheme.MakeTile("Reset install folder", "Go back to the folder RHI detected", false,
+                tiles.Children.Add(TabsTheme.MakeTile("설치 폴더 초기화", "RHI가 감지한 폴더로 되돌립니다", false,
                     (s, ev) => _window.ResetInstallFolder_Click(resetFolderBtn, ev), TabsTooltip(resetFolderBtn)));
-            tiles.Children.Add(TabsTheme.MakeTile("Remove from RHI", card.IsManuallyAdded
-                    ? "Remove this game you added yourself"
-                    : "Take this game out of RHI for good; undo in Settings", true,
+            tiles.Children.Add(TabsTheme.MakeTile("RHI에서 제거", card.IsManuallyAdded
+                    ? "직접 추가한 이 게임을 제거합니다"
+                    : "RHI에서 이 게임을 영구적으로 제거합니다. 설정에서 되돌릴 수 있습니다", true,
                 (s, ev) => _window.RemoveManualGame_Click(removeGameBtn, ev), TabsTooltip(removeGameBtn)));
             mgmtBody.Children.Add(tiles);
             return;

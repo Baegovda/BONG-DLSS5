@@ -13,10 +13,10 @@ public partial class GameCardViewModel
 
     // ── REF computed properties ───────────────────────────────────────────────────
 
-    public string RefActionLabel => RefIsInstalling ? "Installing..."
-        : RefStatus == GameStatus.UpdateAvailable ? "⬆  Update RE Framework"
-        : RefStatus == GameStatus.Installed ? "↺  Reinstall RE Framework"
-        : "⬇  Install RE Framework";
+    public string RefActionLabel => RefIsInstalling ? "설치 중..."
+        : RefStatus == GameStatus.UpdateAvailable ? "⬆  RE Framework 업데이트"
+        : RefStatus == GameStatus.Installed ? "↺  RE Framework 재설치"
+        : "⬇  RE Framework 설치";
 
     public string RefBtnBackground  => RefStatus == GameStatus.UpdateAvailable ? "#201838" : "#182840";
     public string RefBtnForeground  => RefStatus == GameStatus.UpdateAvailable ? "#B898E8" : "#7AACDD";
@@ -28,16 +28,16 @@ public partial class GameCardViewModel
 
     public string RefStatusText => RefIsInstalling ? "Installing…"
         : RefStatus == GameStatus.UpdateAvailable ? "Update"
-        : RefStatus == GameStatus.Installed ? (RefInstalledVersion ?? "Installed")
+        : RefStatus == GameStatus.Installed ? (RefInstalledVersion ?? "설치됨")
         : "Ready";
     public string RefStatusColor => RefIsInstalling ? "#D4A856"
         : RefStatus == GameStatus.UpdateAvailable ? "#B898E8"
         : RefStatus == GameStatus.Installed ? "#5ECB7D"
         : "#A0AABB";
     public string RefShortAction => RefIsInstalling ? "…"
-        : RefStatus == GameStatus.UpdateAvailable ? "⬆ Update"
-        : RefStatus == GameStatus.Installed ? "↺ Reinstall"
-        : "⬇ Install";
+        : RefStatus == GameStatus.UpdateAvailable ? "⬆ 업데이트"
+        : RefStatus == GameStatus.Installed ? "↺ 재설치"
+        : "⬇ 설치";
 
     public bool IsRefNotInstalling => !RefIsInstalling;
     public bool IsRefInstalled => RefStatus == GameStatus.Installed || RefStatus == GameStatus.UpdateAvailable;

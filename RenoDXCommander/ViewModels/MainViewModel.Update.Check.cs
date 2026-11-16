@@ -41,7 +41,7 @@ public partial class MainViewModel
             return;
         }
 
-        using var activity = BeginActivity("Checking for updates...");
+        using var activity = BeginActivity("업데이트 확인 중...");
 
         // If the user changed the channel to Custom after the last install, the record's Channel
         // is stale — patch it here so CheckReShadeUpdateLocal correctly skips custom/legacy channels.

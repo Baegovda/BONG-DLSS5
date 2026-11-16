@@ -101,9 +101,9 @@ public sealed partial class MainWindow
                 if (SettingsPanel.Visibility != Visibility.Visible) return;
                 var dialog = new ContentDialog
                 {
-                    Title = "Folder not found",
-                    Content = $"\"{typed}\" doesn't exist. The addon watch folder was not changed.",
-                    CloseButtonText = "OK",
+                    Title = "폴더를 찾을 수 없음",
+                    Content = $"\"{typed}\"이(가) 없습니다. 애드온 감시 폴더가 변경되지 않았습니다.",
+                    CloseButtonText = "확인",
                     XamlRoot = Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 };

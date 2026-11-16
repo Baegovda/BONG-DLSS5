@@ -38,7 +38,7 @@ public partial class DetailPanelBuilder
         bool staged        = _window.ViewModel.AddonPackServiceInstance.IsDownloaded("MFG Ada Unlock");
 
         var   addonVersion = AddonPackService.LoadAddonVersion("MFG Ada Unlock");
-        string statusText  = isInstalled ? (string.IsNullOrEmpty(addonVersion) ? "Installed" : $"v{addonVersion}") : "Ready";
+        string statusText  = isInstalled ? (string.IsNullOrEmpty(addonVersion) ? "설치됨" : $"v{addonVersion}") : "Ready";
         string statusColor = isInstalled ? "#5ECB7D" : "#A0AABB";
 
         var row = new Grid { ColumnSpacing = 8 };
@@ -57,7 +57,7 @@ public partial class DetailPanelBuilder
             Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
             VerticalAlignment = VerticalAlignment.Center,
         };
-        ToolTipService.SetToolTip(label, "MFG Unlock — unlocks DLSS Multi Frame Generation (3x/4x/6x) on RTX 40 Series GPUs, brings DLSS frame generation (DLSS-G and XMX) to RTX 20 and 30 Series (experimental), and runs Intel XeSS frame generation (XeMFG, 2x to 6x) on RTX 20 to 50 Series. Requires ReShade.");
+        ToolTipService.SetToolTip(label, "MFG Unlock — RTX 40 시리즈 GPU에서 DLSS 멀티 프레임 생성(3x/4x/6x)을 잠금 해제하고, RTX 20 및 30 시리즈에 DLSS 프레임 생성(DLSS-G 및 XMX)을 제공하며(실험적), RTX 20~50 시리즈에서 Intel XeSS 프레임 생성(XeMFG, 2x~6x)을 실행합니다. ReShade가 필요합니다.");
         Grid.SetColumn(label, 0);
         row.Children.Add(label);
 
@@ -73,7 +73,7 @@ public partial class DetailPanelBuilder
         };
         if (isInstalled)
         {
-            ToolTipService.SetToolTip(statusBlock, "Click to open GitHub releases");
+            ToolTipService.SetToolTip(statusBlock, "클릭하여 GitHub 릴리스 열기");
             statusBlock.PointerPressed += (s, e) =>
                 _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/mavismmg/MFGAdaUnlock-RenoDx/releases"));
             AttachLinkCursor(statusBlock);
@@ -84,7 +84,7 @@ public partial class DetailPanelBuilder
         // Col 2 — Info button (always blue)
         var infoBtn = new Button
         {
-            Content = "Info",
+            Content = "정보",
             FontSize = 11,
             Padding = new Thickness(6, 2, 6, 2),
             Width = 36,
@@ -95,7 +95,7 @@ public partial class DetailPanelBuilder
             BorderThickness = new Thickness(1),
             CornerRadius = new CornerRadius(8),
         };
-        ToolTipService.SetToolTip(infoBtn, "Open MFG Unlock GitHub page");
+        ToolTipService.SetToolTip(infoBtn, "MFG Unlock GitHub 페이지 열기");
         infoBtn.Click += (s, e) =>
             _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/mavismmg/MFGAdaUnlock-RenoDx"));
         Grid.SetColumn(infoBtn, 2);
@@ -106,22 +106,22 @@ public partial class DetailPanelBuilder
         bool btnEnabled = true;
         if (!rsInstalled)
         {
-            btnLabel   = "⚠  ReShade required";
+            btnLabel   = "⚠  ReShade 필요";
             btnEnabled = false;
         }
         else if (rtx40Conflict)
         {
-            btnLabel   = "⚠  Universal MFG Unlocker installed";
+            btnLabel   = "⚠  Universal MFG Unlocker 설치됨";
             btnEnabled = false;
         }
         else if (!staged)
         {
-            btnLabel   = "⬇  Install MFG Unlock";
+            btnLabel   = "⬇  MFG Unlock 설치";
             btnEnabled = true; // will download on demand when clicked
         }
         else
         {
-            btnLabel = isInstalled ? "↺  Reinstall MFG Unlock" : "⬇  Install MFG Unlock";
+            btnLabel = isInstalled ? "↺  MFG Unlock 재설치" : "⬇  MFG Unlock 설치";
         }
 
         var installBtn = new Button
@@ -140,15 +140,15 @@ public partial class DetailPanelBuilder
         };
 
         if (!rsInstalled)
-            ToolTipService.SetToolTip(installBtn, "Install ReShade first — MFG Unlock requires it");
+            ToolTipService.SetToolTip(installBtn, "먼저 ReShade를 설치하세요 — MFG Unlock에 필요합니다");
         else if (rtx40Conflict)
-            ToolTipService.SetToolTip(installBtn, "Universal MFG Unlocker is already installed and conflicts. Remove it first.");
+            ToolTipService.SetToolTip(installBtn, "Universal MFG Unlocker가 이미 설치되어 있어 충돌합니다. 먼저 제거하세요.");
 
         installBtn.Click += async (s, e) =>
         {
             if (string.IsNullOrEmpty(installPath)) return;
             installBtn.IsEnabled = false;
-            installBtn.Content   = "Downloading...";
+            installBtn.Content   = "다운로드 중...";
             try
             {
                 // Download on demand if not yet staged
@@ -164,7 +164,7 @@ public partial class DetailPanelBuilder
                 if (!File.Exists(stagedPath))
                 {
                     CrashReporter.Log("[BuildMfgAdaUnlockRow] Staged file still not found after download attempt");
-                    _window.DispatcherQueue?.TryEnqueue(() => installBtn.Content = "Download failed");
+                    _window.DispatcherQueue?.TryEnqueue(() => installBtn.Content = "다운로드 실패");
                     return;
                 }
 
@@ -179,7 +179,7 @@ public partial class DetailPanelBuilder
 
                 // Intel's XeSS files for the mod's XeMFG modes, in the game's exe folder.
                 // Not fatal: DLSS-G works without them.
-                _window.DispatcherQueue?.TryEnqueue(() => installBtn.Content = "Installing XeSS files...");
+                _window.DispatcherQueue?.TryEnqueue(() => installBtn.Content = "XeSS 파일 설치 중...");
                 var mfgSvc = App.Services.GetRequiredService<Rtx40MfgService>();
                 await mfgSvc.EnsureXessStagingAsync().ConfigureAwait(false);
                 if (!mfgSvc.DeployAdaXessFiles(installPath))
@@ -200,7 +200,7 @@ public partial class DetailPanelBuilder
         row.Children.Add(installBtn);
 
         // Col 4 — Cog
-        var cogBtn = CogDialog.MakeCogButton("MFG Unlock settings");
+        var cogBtn = CogDialog.MakeCogButton("MFG Unlock 설정");
         cogBtn.Click += async (s, e) =>
         {
             try
@@ -232,7 +232,7 @@ public partial class DetailPanelBuilder
             Opacity = isInstalled ? 1.0 : 0,
             IsHitTestVisible = isInstalled,
         };
-        ToolTipService.SetToolTip(removeBtn, "Remove MFG Unlock from this game");
+        ToolTipService.SetToolTip(removeBtn, "이 게임에서 MFG Unlock 제거");
         removeBtn.Click += (s, e) =>
         {
             if (string.IsNullOrEmpty(installPath)) return;
@@ -356,7 +356,7 @@ public partial class DetailPanelBuilder
             GraphicsApiType.DirectX10 => "DirectX 10",
             GraphicsApiType.DirectX11 => "DirectX 11",
             GraphicsApiType.OpenGL    => "OpenGL",
-            _ => "an older graphics API",
+            _ => "구형 그래픽 API",
         };
     }
 
@@ -365,32 +365,32 @@ public partial class DetailPanelBuilder
         var installPath = card.InstallPath ?? "";
         var iniPath = string.IsNullOrEmpty(installPath) ? "" : Path.Combine(installPath, MfgAdaIniName);
 
-        cog.AddIntro("MFG Unlock unlocks DLSS multi frame generation (3x, 4x and 6x) on RTX 40 Series GPUs, " +
-                     "brings DLSS frame generation (DLSS-G and XMX) to RTX 20 and 30 Series GPUs (experimental), " +
-                     "and runs Intel XeSS frame generation (XeMFG, 2x to 6x) on RTX 20 to RTX 50 Series GPUs.");
+        cog.AddIntro("MFG Unlock은 RTX 40 시리즈 GPU에서 DLSS 멀티 프레임 생성(3x, 4x, 6x)을 잠금 해제하고, " +
+                     "RTX 20 및 30 시리즈 GPU에 DLSS 프레임 생성(DLSS-G 및 XMX)을 제공하며(실험적), " +
+                     "RTX 20~RTX 50 시리즈 GPU에서 Intel XeSS 프레임 생성(XeMFG, 2x~6x)을 실행합니다.");
 
         // Graphics API support, from the mod's README comparison table (1.8.0). Dual-API games with
         // DirectX 12 get no warning: the user can run the DX12 version.
         var apis = new HashSet<GraphicsApiType>(card.DetectedApis ?? new HashSet<GraphicsApiType>()) { card.GraphicsApi };
         if (apis.Contains(GraphicsApiType.DirectX12)) { }
         else if (apis.Contains(GraphicsApiType.Vulkan))
-            cog.AddWarning("This is a Vulkan game. As of MFG Unlock 1.8.0, Vulkan support is experimental: Intel XeMFG (CUDA) needs the game " +
-                           "to use DLSS Super Resolution or Ray Reconstruction, NVIDIA DLSS-G is experimental, and XeMFG via DLSS-G (XMX) is DirectX 12 only. " +
-                           "Some Vulkan games also need a launch option before ReShade loads (for example +r_allowBlackListedLayers 1).");
+            cog.AddWarning("Vulkan 게임입니다. MFG Unlock 1.8.0 기준 Vulkan 지원은 실험적입니다. Intel XeMFG (CUDA)는 게임이 " +
+                           "DLSS 슈퍼 해상도 또는 레이 재구성을 사용해야 하고, NVIDIA DLSS-G는 실험적이며, XeMFG via DLSS-G (XMX)는 DirectX 12 전용입니다. " +
+                           "일부 Vulkan 게임은 ReShade가 로드되기 전에 실행 옵션도 필요합니다(예: +r_allowBlackListedLayers 1).");
         else if (apis.Overlaps(new[] { GraphicsApiType.DirectX8, GraphicsApiType.DirectX9, GraphicsApiType.DirectX10,
                                        GraphicsApiType.DirectX11, GraphicsApiType.OpenGL }))
-            cog.AddWarning($"This game uses {ApiDisplayName(card.GraphicsApi, apis)}. As of MFG Unlock 1.8.0, it only works in DirectX 12 games " +
-                           "(and experimentally in Vulkan games), so it won't work here.");
+            cog.AddWarning($"이 게임은 {ApiDisplayName(card.GraphicsApi, apis)}을(를) 사용합니다. MFG Unlock 1.8.0 기준 DirectX 12 게임에서만 작동하므로 " +
+                           "(Vulkan 게임은 실험적) 여기서는 작동하지 않습니다.");
 
-        cog.AddSection("Frame generation");
+        cog.AddSection("프레임 생성");
         Button? openIniBtn = null;
         ComboBox? dlssSrCombo = null;
         int current = string.IsNullOrEmpty(iniPath) ? 0 : ReadMfgAdaFgMethod(iniPath);
-        cog.AddCombo("Frame generation method",
-            "NVIDIA DLSS-G: NVIDIA's frame generation, 3x to 6x on RTX 40 Series and, experimentally, on RTX 20 and 30 Series (needs a DLSS Frame Generation DLL 310 or newer; RTX 20/30 need one game restart the first time). " +
-            "Intel XeMFG (CUDA): Intel's XeSS frame generation, 2x to 6x on RTX 20 to RTX 50 Series. " +
-            "XeMFG via DLSS-G (XMX): the game's DLSS frame generation, with Intel's model generating the frames. " +
-            "Restart the game after changing this, and turn frame generation on in the game's own menu.",
+        cog.AddCombo("프레임 생성 방식",
+            "NVIDIA DLSS-G: NVIDIA의 프레임 생성으로, RTX 40 시리즈에서 3x~6x, RTX 20 및 30 시리즈에서는 실험적으로 작동합니다(DLSS 프레임 생성 DLL 310 이상 필요, RTX 20/30은 처음 한 번 게임 재시작 필요). " +
+            "Intel XeMFG (CUDA): Intel의 XeSS 프레임 생성으로, RTX 20~RTX 50 시리즈에서 2x~6x. " +
+            "XeMFG via DLSS-G (XMX): 게임의 DLSS 프레임 생성을 사용하되 Intel 모델이 프레임을 생성합니다. " +
+            "변경 후 게임을 재시작하고, 게임 자체 메뉴에서 프레임 생성을 켜세요.",
             MfgAdaFgMethods, current,
             i =>
             {
@@ -399,24 +399,24 @@ public partial class DetailPanelBuilder
                 if (openIniBtn != null) openIniBtn.IsEnabled = true; // the ini may not have existed before
                 if (dlssSrCombo != null) dlssSrCombo.IsEnabled = i == 1; // DLSS-SR input is an XeMFG (CUDA) option
                 CrashReporter.Log($"[MfgAdaCog] '{card.GameName}': frame generation method = {MfgAdaFgMethods[i]}");
-                cog.SetSuccess("Saved. Restart the game if it's running.");
+                cog.SetSuccess("저장했습니다. 게임이 실행 중이면 재시작하세요.");
                 return true;
             },
             isEnabled: !string.IsNullOrEmpty(iniPath));
 
         // [Adapters] DlssSr: lets XeMFG work in games with DLSS Super Resolution but no DLSS frame generation
         bool dlssSrOn = !string.IsNullOrEmpty(iniPath) && Dlssg20_30Service.ReadIniValue(iniPath, "Adapters", "DlssSr") == "1";
-        dlssSrCombo = cog.AddCombo("DLSS-SR input (experimental)",
-            "For games that use DLSS Super Resolution but have no DLSS frame generation for XeMFG to hook into. " +
-            "The camera is assumed and the HUD is interpolated with the scene. Only used with Intel XeMFG (CUDA). Restart the game after changing it.",
-            new[] { "Off", "On" }, dlssSrOn ? 1 : 0,
+        dlssSrCombo = cog.AddCombo("DLSS-SR 입력 (실험적)",
+            "DLSS 슈퍼 해상도는 사용하지만 XeMFG가 연결할 DLSS 프레임 생성이 없는 게임용입니다. " +
+            "카메라는 추정되며 HUD는 장면과 함께 보간됩니다. Intel XeMFG (CUDA)에서만 사용됩니다. 변경 후 게임을 재시작하세요.",
+            new[] { "꺼짐", "켜짐" }, dlssSrOn ? 1 : 0,
             i =>
             {
                 if (string.IsNullOrEmpty(iniPath)) return false;
                 Dlssg20_30Service.WriteIniValue(iniPath, "Adapters", "DlssSr", i == 1 ? "1" : "0");
                 if (openIniBtn != null) openIniBtn.IsEnabled = true;
                 CrashReporter.Log($"[MfgAdaCog] '{card.GameName}': DLSS-SR input = {(i == 1 ? "On" : "Off")}");
-                cog.SetSuccess("Saved. Restart the game if it's running.");
+                cog.SetSuccess("저장했습니다. 게임이 실행 중이면 재시작하세요.");
                 return true;
             },
             isEnabled: !string.IsNullOrEmpty(iniPath) && current == 1);
@@ -425,23 +425,23 @@ public partial class DetailPanelBuilder
         switch (Rtx40MfgService.GetAdaXessState(installPath, out var xessDetail))
         {
             case Rtx40MfgService.AdaXessState.Ready:
-                cog.AddNote("Intel XeSS files (libxess_fg.dll and libxell.dll) are in the game folder, so both XeMFG methods are ready.");
+                cog.AddNote("Intel XeSS 파일(libxess_fg.dll 및 libxell.dll)이 게임 폴더에 있으므로 두 XeMFG 방식 모두 사용할 수 있습니다.");
                 break;
             case Rtx40MfgService.AdaXessState.WrongVersion:
-                cog.AddWarning($"The game folder has a version of Intel's XeSS files that MFG Unlock doesn't accept ({xessDetail}). " +
-                               "Reinstall MFG Unlock to replace them. The game's own copies are kept as a backup and put back if you remove the mod.");
+                cog.AddWarning($"게임 폴더에 MFG Unlock이 허용하지 않는 버전의 Intel XeSS 파일이 있습니다({xessDetail}). " +
+                               "MFG Unlock을 재설치하여 교체하세요. 게임 원본 파일은 백업으로 보관되며 모드를 제거하면 복원됩니다.");
                 break;
             default:
-                cog.AddWarning($"Intel XeSS files are missing from the game folder ({xessDetail}). Both XeMFG methods need them. " +
-                               "Reinstall MFG Unlock to add them.");
+                cog.AddWarning($"게임 폴더에 Intel XeSS 파일이 없습니다({xessDetail}). 두 XeMFG 방식 모두 이 파일이 필요합니다. " +
+                               "MFG Unlock을 재설치하여 추가하세요.");
                 break;
         }
 
-        cog.AddNote("Other settings are in the mod's panel in the ReShade overlay.");
-        openIniBtn = cog.MakeOpenFileButton("Open MFGAdaUnlock.ini", string.IsNullOrEmpty(iniPath) ? null : iniPath);
+        cog.AddNote("기타 설정은 ReShade 오버레이의 모드 패널에 있습니다.");
+        openIniBtn = cog.MakeOpenFileButton("MFGAdaUnlock.ini 열기", string.IsNullOrEmpty(iniPath) ? null : iniPath);
         cog.AddButtons(
             openIniBtn,
-            cog.MakeButton("Open GitHub page", CogButtonKind.Secondary,
+            cog.MakeButton("GitHub 페이지 열기", CogButtonKind.Secondary,
                 async () => { await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/mavismmg/MFGAdaUnlock-RenoDx")); }));
     }
 
@@ -462,7 +462,7 @@ public partial class DetailPanelBuilder
 
         _window.ViewModel.SetLastUiAction($"BuildDlssEnablerRow:StagedVersion({card.GameName})");
         // Status text
-        string statusText  = isInstalled ? (deSvc.StagedVersion ?? "Installed") : "Ready";
+        string statusText  = isInstalled ? (deSvc.StagedVersion ?? "설치됨") : "Ready";
         string statusColor = isInstalled ? "#5ECB7D" : "#A0AABB";
 
         _window.ViewModel.SetLastUiAction($"BuildDlssEnablerRow:BuildGrid({card.GameName})");
@@ -485,7 +485,7 @@ public partial class DetailPanelBuilder
             Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
             VerticalAlignment = VerticalAlignment.Center,
         };
-        ToolTipService.SetToolTip(label, "DLSS Enabler — standalone proxy DLL that enables DLSS in games that don't natively support it.");
+        ToolTipService.SetToolTip(label, "DLSS Enabler — DLSS를 기본 지원하지 않는 게임에서 DLSS를 사용할 수 있게 해 주는 독립형 프록시 DLL입니다.");
         Grid.SetColumn(label, 0);
         row.Children.Add(label);
 
@@ -501,7 +501,7 @@ public partial class DetailPanelBuilder
         };
         if (isInstalled)
         {
-            ToolTipService.SetToolTip(statusBlock, $"Installed as: {currentDllName}\nClick to open GitHub releases");
+            ToolTipService.SetToolTip(statusBlock, $"설치된 이름: {currentDllName}\n클릭하여 GitHub 릴리스 열기");
             statusBlock.PointerPressed += (s, e) =>
                 _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/RankFTW/rhi-repo/releases"));
             AttachLinkCursor(statusBlock);
@@ -512,7 +512,7 @@ public partial class DetailPanelBuilder
         // Col 2 — Info button
         var infoBtn = new Button
         {
-            Content = "Info",
+            Content = "정보",
             FontSize = 11,
             Padding = new Thickness(6, 2, 6, 2),
             Width = 36,
@@ -523,7 +523,7 @@ public partial class DetailPanelBuilder
             BorderThickness = new Thickness(1),
             CornerRadius = new CornerRadius(8),
         };
-        ToolTipService.SetToolTip(infoBtn, "Open DLSS Enabler Nexus page");
+        ToolTipService.SetToolTip(infoBtn, "DLSS Enabler Nexus 페이지 열기");
         infoBtn.Click += (s, e) =>
             _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://www.nexusmods.com/site/mods/757"));
         Grid.SetColumn(infoBtn, 2);
@@ -532,9 +532,9 @@ public partial class DetailPanelBuilder
         // Col 3 — Install button
         string installBtnLabel;
         if (osConflict)
-            installBtnLabel = "Installed via OptiScaler";
+            installBtnLabel = "OptiScaler로 설치됨";
         else
-            installBtnLabel = isInstalled ? "↺  Reinstall DLSS Enabler" : "⬇  Install DLSS Enabler";
+            installBtnLabel = isInstalled ? "↺  DLSS Enabler 재설치" : "⬇  DLSS Enabler 설치";
 
         var installBtn = new Button
         {
@@ -560,13 +560,13 @@ public partial class DetailPanelBuilder
             installBtn.IsEnabled = false;
             installBtn.IsHitTestVisible = false;
             installBtn.Opacity = 0.35;
-            ToolTipService.SetToolTip(installBtn, "Cannot install alongside OptiScaler — DLSS Enabler is already included within OptiScaler");
+            ToolTipService.SetToolTip(installBtn, "OptiScaler와 함께 설치할 수 없습니다 — DLSS Enabler는 이미 OptiScaler에 포함되어 있습니다");
         }
         else
         {
             ToolTipService.SetToolTip(installBtn, isInstalled
-                ? $"Reinstall DLSS Enabler (currently '{currentDllName}')"
-                : "Install DLSS Enabler — choose which DLL name to use");
+                ? $"DLSS Enabler 재설치 (현재 '{currentDllName}')"
+                : "DLSS Enabler 설치 — 사용할 DLL 이름 선택");
 
             installBtn.Click += async (s, e) =>
             {
@@ -575,7 +575,7 @@ public partial class DetailPanelBuilder
                 if (chosen == null) return;
 
                 installBtn.IsEnabled = false;
-                installBtn.Content   = "Installing...";
+                installBtn.Content   = "설치 중...";
                 try
                 {
                     bool ok = await deSvc.InstallStandaloneAsync(gameName, installPath, store, chosen, currentDllName);
@@ -586,14 +586,14 @@ public partial class DetailPanelBuilder
                     }
                     else
                     {
-                        installBtn.Content   = "Install failed";
+                        installBtn.Content   = "설치 실패";
                         installBtn.IsEnabled = true;
                     }
                 }
                 catch (Exception ex)
                 {
                     CrashReporter.Log($"[BuildDlssEnablerRow] Install failed — {ex.Message}");
-                    installBtn.Content   = "Install failed";
+                    installBtn.Content   = "설치 실패";
                     installBtn.IsEnabled = true;
                 }
             };
@@ -602,7 +602,7 @@ public partial class DetailPanelBuilder
         row.Children.Add(installBtn);
 
         // Col 4 — Cog button
-        var cogBtn = CogDialog.MakeCogButton(osConflict ? "Cannot install alongside OptiScaler" : "DLSS Enabler settings");
+        var cogBtn = CogDialog.MakeCogButton(osConflict ? "OptiScaler와 함께 설치할 수 없음" : "DLSS Enabler 설정");
         cogBtn.IsEnabled = !osConflict;
         cogBtn.IsHitTestVisible = !osConflict;
         cogBtn.Opacity = osConflict ? 0.35 : 1.0;
@@ -637,7 +637,7 @@ public partial class DetailPanelBuilder
             Opacity = isInstalled ? 1.0 : 0,
             IsHitTestVisible = isInstalled,
         };
-        ToolTipService.SetToolTip(removeBtn, "Remove standalone DLSS Enabler from this game");
+        ToolTipService.SetToolTip(removeBtn, "이 게임에서 독립형 DLSS Enabler 제거");
         removeBtn.Click += (s, e) =>
         {
             if (string.IsNullOrEmpty(installPath) || string.IsNullOrEmpty(currentDllName)) return;
@@ -709,17 +709,17 @@ public partial class DetailPanelBuilder
             });
 
             if (isRecommended)
-                contentRow.Children.Add(MakeBadge("Recommended", "#1A3A20", "#6AE87A", "#2A5A30"));
+                contentRow.Children.Add(MakeBadge("권장", "#1A3A20", "#6AE87A", "#2A5A30"));
             AddExtraDllBadges(contentRow, btn, option, "DLSS Enabler");
             if (!isRhiOwned && isDxgiConflict)
-                contentRow.Children.Add(MakeBadge("May conflict with ReShade/OS", "#2A1A10", "#CC9955", "#5A3A18"));
+                contentRow.Children.Add(MakeBadge("ReShade/OS와 충돌 가능", "#2A1A10", "#CC9955", "#5A3A18"));
             if (isCurrent)
-                contentRow.Children.Add(MakeBadge("Current", "#182840", "#7AACDD", "#2A4468"));
+                contentRow.Children.Add(MakeBadge("현재", "#182840", "#7AACDD", "#2A4468"));
 
             btn.Content = contentRow;
 
             if (!isRhiOwned && isDxgiConflict)
-                ToolTipService.SetToolTip(btn, "dxgi.dll may conflict with ReShade or OS components if they also use this name.");
+                ToolTipService.SetToolTip(btn, "ReShade 또는 OS 구성 요소가 같은 이름을 사용하면 dxgi.dll이 충돌할 수 있습니다.");
 
             btn.Tag    = name;
             btn.Click += (s, ev) =>
@@ -737,7 +737,7 @@ public partial class DetailPanelBuilder
 
         var pickerDialog = new ContentDialog
         {
-            Title = "Choose DLSS Enabler DLL name",
+            Title = "DLSS Enabler DLL 이름 선택",
             Content = new StackPanel
             {
                 Spacing = 8,
@@ -745,7 +745,7 @@ public partial class DetailPanelBuilder
                 {
                     new TextBlock
                     {
-                        Text = "Select the filename for the standalone DLSS Enabler DLL. Most games work with version.dll.",
+                        Text = "독립형 DLSS Enabler DLL의 파일 이름을 선택하세요. 대부분의 게임은 version.dll로 작동합니다.",
                         FontSize = 11,
                         Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush),
                         TextWrapping = TextWrapping.Wrap,
@@ -753,7 +753,7 @@ public partial class DetailPanelBuilder
                     scrollViewer,
                 }
             },
-            CloseButtonText = "Cancel",
+            CloseButtonText = "취소",
             XamlRoot        = _window.Content.XamlRoot,
         };
 

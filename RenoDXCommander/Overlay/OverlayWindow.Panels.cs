@@ -194,7 +194,7 @@ internal sealed partial class OverlayWindow
         var session = new StackPanel { Spacing = 4 };
         session.Children.Add(_sessionText);
         session.Children.Add(_sessionSince);
-        tiles.Children.Add(MakeCard("Session", session, stretch: true));
+        tiles.Children.Add(MakeCard("세션", session, stretch: true));
         UpdateSessionText();
 
         // Total playtime from Steam's own records (read off the UI thread)
@@ -208,12 +208,12 @@ internal sealed partial class OverlayWindow
         if (appId is int id)
         {
             var value = BigText("…");
-            var note = SmallText("On Steam, not counting this session");
+            var note = SmallText("Steam 기준, 이번 세션 제외");
             var rhiCount = RhiPlaytime(card!);
             var body = new StackPanel { Spacing = 4 };
             body.Children.Add(value);
             body.Children.Add(note);
-            var tile = MakeCard("Total playtime", body, stretch: true);
+            var tile = MakeCard("총 플레이 시간", body, stretch: true);
             tiles.Children.Add(tile);
             int openCount = _openCount;
             _ = Task.Run(() => SteamPlaytimeService.GetMinutes(id)).ContinueWith(t =>
@@ -238,13 +238,13 @@ internal sealed partial class OverlayWindow
             var body = new StackPanel { Spacing = 4 };
             body.Children.Add(BigText(FormatDuration(time)));
             body.Children.Add(SmallText(since));
-            tiles.Children.Add(MakeCard("Total playtime", body, stretch: true));
+            tiles.Children.Add(MakeCard("총 플레이 시간", body, stretch: true));
         }
 
         if (MakeHdrTile() is { } hdrTile) tiles.Children.Add(hdrTile);
 
         if (OverlayNative.Battery() is var (percent, charging))
-            tiles.Children.Add(MakeCard("Battery", BigText($"{percent}%{(charging ? ", charging" : "")}"), stretch: true));
+            tiles.Children.Add(MakeCard("배터리", BigText($"{percent}%{(charging ? ", 충전 중" : "")}"), stretch: true));
 
         _homeBox.Children.Add(tiles);
     }
@@ -256,17 +256,17 @@ internal sealed partial class OverlayWindow
         if (time < TimeSpan.FromMinutes(1)) return null;
         var since = GameJournalStore.CountingSince();
         return (time, since is DateTime d
-            ? $"Counted by RHI while the game is in front, since {d.ToLocalTime():d MMM yyyy}"
-            : "Counted by RHI while the game is in front");
+            ? $"게임이 전면에 있는 동안 RHI가 집계, {d.ToLocalTime():d MMM yyyy}부터"
+            : "게임이 전면에 있는 동안 RHI가 집계");
     }
 
     private void UpdateSessionText()
     {
         if (_sessionText == null) return;
         // Big: the time played; small: since when (so the big line fits a narrow tile)
-        _sessionText.Text = _gameStart is DateTime start ? FormatDuration(DateTime.Now - start) : "Playing now";
+        _sessionText.Text = _gameStart is DateTime start ? FormatDuration(DateTime.Now - start) : "지금 플레이 중";
         if (_sessionSince != null)
-            _sessionSince.Text = _gameStart is DateTime s ? $"Playing since {s:t}" : "";
+            _sessionSince.Text = _gameStart is DateTime s ? $"{s:t}부터 플레이 중" : "";
     }
 
     private TextBlock? _sessionSince;
@@ -294,16 +294,16 @@ internal sealed partial class OverlayWindow
 
         var installed = rows.Count > 0
             ? MakeTable(rows)
-            : (UIElement)SmallText("RHI hasn't installed anything in this game yet.");
+            : (UIElement)SmallText("RHI가 아직 이 게임에 아무것도 설치하지 않았습니다.");
         var gameBody = new StackPanel { Spacing = 10 };
         gameBody.Children.Add(installed);
         if (MakeDlssSection(card) is { } dlss)
         {
-            gameBody.Children.Add(SubHeading("DLSS and Streamline"));
+            gameBody.Children.Add(SubHeading("DLSS 및 Streamline"));
             gameBody.Children.Add(dlss);
         }
         if (MakeUltraPlusButton(card) is { } upButton) gameBody.Children.Add(upButton); // unlock_extra.txt only
-        _gameBox.Children.Add(MakeCard("This game", gameBody, stretch: true));
+        _gameBox.Children.Add(MakeCard("이 게임", gameBody, stretch: true));
     }
 
     // ── Info and links ────────────────────────────────────────────────────────
@@ -319,16 +319,16 @@ internal sealed partial class OverlayWindow
             TextWrapping = TextWrapping.Wrap,
             MaxHeight = 140,
             FontSize = 16,
-            PlaceholderText = "Codes, routes, settings to remember… Only you see these.",
+            PlaceholderText = "기억할 코드, 경로, 설정… 본인만 볼 수 있습니다.",
         };
         TabsTheme.StyleInput(_notesBox);
         _notesBox.MinHeight = 76; // StyleInput sets a one-line height and small text
         _notesBox.FontSize = 15;
         ScrollViewer.SetVerticalScrollBarVisibility(_notesBox, ScrollBarVisibility.Auto);
-        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(_notesBox, "Your notes for this game");
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(_notesBox, "이 게임에 대한 메모");
         _notesBox.TextChanged += (_, _) => QueueNotesSave();
         _notesBox.LostFocus += (_, _) => SaveNotes();
-        _infoBox.Children.Add(MakeCard("Your notes", _notesBox, stretch: true));
+        _infoBox.Children.Add(MakeCard("내 메모", _notesBox, stretch: true));
 
         // Mod notes and links share one card (kept short so the column fits without scrolling)
         var info = new StackPanel { Spacing = 10 };
@@ -353,10 +353,10 @@ internal sealed partial class OverlayWindow
         }
         Link("Nexus Mods", card.NexusModsUrl);
         Link("PCGamingWiki", card.PcgwUrl);
-        Link("Ultrawide fix", card.UwFixUrl);
+        Link("울트라와이드 수정", card.UwFixUrl);
         Link("Ultra+", card.UltraPlusUrl);
-        Link(card.IsLumaMode ? "RenoDX notes" : "Mod notes", card.NotesUrl);
-        if (card.IsLumaMode) Link("Luma notes", card.LumaNotesUrl);
+        Link(card.IsLumaMode ? "RenoDX 노트" : "모드 노트", card.NotesUrl);
+        if (card.IsLumaMode) Link("Luma 노트", card.LumaNotesUrl);
         Link("Discord", card.DiscordUrl);
         if (links.Count > 0)
         {
@@ -365,7 +365,7 @@ internal sealed partial class OverlayWindow
             {
                 var btn = new Button { Content = label };
                 TabsTheme.Apply(btn, TabsTheme.BlueButton, height: 36, fontSize: 14);
-                ToolTipService.SetToolTip(btn, "Opens in your browser, outside the game");
+                ToolTipService.SetToolTip(btn, "게임 밖의 브라우저에서 열립니다");
                 btn.Click += async (_, _) =>
                 {
                     Close(returnToGame: false); // the browser comes to the front
@@ -377,7 +377,7 @@ internal sealed partial class OverlayWindow
             info.Children.Add(wrap);
         }
         if (info.Children.Count > 0)
-            _infoBox.Children.Add(MakeCard(links.Count > 0 && info.Children.Count > 1 ? "Mod notes and links" : links.Count > 0 ? "Links" : "Mod notes", info, stretch: true));
+            _infoBox.Children.Add(MakeCard(links.Count > 0 && info.Children.Count > 1 ? "모드 노트 및 링크" : links.Count > 0 ? "링크" : "모드 노트", info, stretch: true));
     }
 
     private TextBox? _notesBox;
@@ -454,7 +454,7 @@ internal sealed partial class OverlayWindow
                     Padding = new Thickness(10, 2, 10, 3),
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Center,
-                    Child = new TextBlock { Text = "Update available", FontSize = 13, Foreground = TabsTheme.B("#D9C8FF") },
+                    Child = new TextBlock { Text = "업데이트 있음", FontSize = 13, Foreground = TabsTheme.B("#D9C8FF") },
                 };
                 Grid.SetRow(pill, i);
                 Grid.SetColumn(pill, 2);

@@ -51,7 +51,7 @@ public partial class DetailPanelBuilder
 
         var appId = ResolveCommunityAppId(card, _window.ViewModel.Manifest);
         badge.Tag = appId;
-        ToolTipService.SetToolTip(badge, appId != null ? "Open the Steam Community page" : null);
+        ToolTipService.SetToolTip(badge, appId != null ? "Steam 커뮤니티 페이지 열기" : null);
         // Underlined like the other clickable badges (engine, authors)
         _window.DetailSourceText.TextDecorations = appId != null
             ? Windows.UI.Text.TextDecorations.Underline

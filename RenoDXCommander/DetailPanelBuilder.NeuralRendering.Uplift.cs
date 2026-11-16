@@ -40,13 +40,13 @@ public partial class DetailPanelBuilder
 
         var verItem = await DispatchAsync<string?>(_window.DispatcherQueue!, () => addonVersionCombo.SelectedItem as string).ConfigureAwait(false);
         var wanted = PinnedFromCombo(verItem);
-        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = wanted == null ? "Downloading GITC Uplift..." : $"Downloading GITC Uplift v{wanted}...");
+        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = wanted == null ? "GITC Uplift 다운로드 중..." : $"GITC Uplift v{wanted} 다운로드 중...");
         var (sourceDir, pinned) = await upliftSvc.EnsureSourceAsync(wanted).ConfigureAwait(false);
         if (sourceDir == null)
             throw new InvalidOperationException("GITC Uplift couldn't be downloaded");
         _window.ViewModel.SetNrAddonVersion(gameName, pinned, store);
 
-        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "Getting the NR DLL...");
+        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "NR DLL 가져오는 중...");
         var sel = await DispatchAsync<string?>(_window.DispatcherQueue!, () => nrVersionCombo.SelectedItem as string).ConfigureAwait(false);
         var nrSrc = await ResolveNrDllSourceAsync(sel, dlssSvc).ConfigureAwait(false);
         if (nrSrc == null)
@@ -56,13 +56,13 @@ public partial class DetailPanelBuilder
         bool launchpad = _window.ViewModel.GetUpliftLaunchpad(gameName, card.HasDlssUpscaler, store);
         if (launchpad && !UpliftService.LaunchpadStaged)
         {
-            _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "Downloading iMMERSE Launchpad...");
+            _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "iMMERSE Launchpad 다운로드 중...");
             await _shaderPackService.EnsurePacksAsync(new[] { UpliftService.LaunchpadPackId }).ConfigureAwait(false);
         }
 
         int upliftKey = _window.ViewModel.Settings.UpliftEnableKey;
         bool keepRsIni = _window.ViewModel.GetKeepRsIniUpdated(gameName, store);
-        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "Installing GITC Uplift...");
+        _window.DispatcherQueue?.TryEnqueue(() => statusBtn.Content = "GITC Uplift 설치 중...");
         await Task.Run(() =>
         {
             upliftSvc.Install(installPath, card.Is32Bit, nrSrc, sourceDir, pinned);

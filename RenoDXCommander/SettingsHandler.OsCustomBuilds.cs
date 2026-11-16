@@ -42,13 +42,13 @@ public partial class SettingsHandler
             card.Child = body;
 
             var head = new StackPanel { Spacing = 3 };
-            head.Children.Add(new TextBlock { Text = "Custom OptiScaler builds", Style = FindStyle("SettingsCardTitleStyle") });
+            head.Children.Add(new TextBlock { Text = "사용자 지정 OptiScaler 빌드", Style = FindStyle("SettingsCardTitleStyle") });
             head.Children.Add(new TextBlock
             {
-                Text = "Add any OptiScaler build: a download link (GitHub, Discord or anywhere else), a zip, 7z or rar, a folder, "
-                     + "or an OptiScaler.dll. Then pick it in a game's OptiScaler settings, or as the Default version above. "
-                     + "RHI installs it like the other versions but never updates it: add the new one yourself when it changes. "
-                     + "Only add builds from people you trust.",
+                Text = "어떤 OptiScaler 빌드든 추가할 수 있습니다: 다운로드 링크(GitHub, Discord 등), zip, 7z, rar, 폴더 "
+                     + "또는 OptiScaler.dll. 추가한 후 게임의 OptiScaler 설정이나 위의 기본 버전에서 선택하세요. "
+                     + "RHI는 다른 버전처럼 설치하지만 업데이트는 하지 않으므로, 새 버전이 나오면 직접 추가하세요. "
+                     + "신뢰할 수 있는 사람의 빌드만 추가하세요.",
                 Style = FindStyle("SettingsCardDescStyle"),
                 TextWrapping = TextWrapping.Wrap,
             });
@@ -63,17 +63,17 @@ public partial class SettingsHandler
             linkRow.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             _osCustomLinkBox = new TextBox
             {
-                PlaceholderText = "Paste a download link (GitHub release file, Discord attachment, ...)",
+                PlaceholderText = "다운로드 링크 붙여넣기 (GitHub 릴리스 파일, Discord 첨부 파일 등)",
                 Style = FindStyle("SettingsTextBoxStyle"),
             };
-            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(_osCustomLinkBox, "Custom OptiScaler download link");
-            var addLink = MakeCustomFoldersButton("Add link", primary: true,
-                "Downloads the build once and adds it. Use the file's direct link: for Discord, right-click the attachment › Copy Link.");
+            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(_osCustomLinkBox, "사용자 지정 OptiScaler 다운로드 링크");
+            var addLink = MakeCustomFoldersButton("링크 추가", primary: true,
+                "빌드를 한 번 다운로드하여 추가합니다. 파일의 직접 링크를 사용하세요. Discord는 첨부 파일을 마우스 오른쪽 버튼으로 클릭 › 링크 복사.");
             addLink.Click += async (s, e) =>
             {
                 var link = _osCustomLinkBox.Text.Trim();
-                if (link.Length == 0) { SetOsCustomStatus("Paste a download link first.", error: true); return; }
-                if (!OsCustomBuildService.IsUrl(link, out _)) { SetOsCustomStatus("That isn't a web link (it should start with https://).", error: true); return; }
+                if (link.Length == 0) { SetOsCustomStatus("먼저 다운로드 링크를 붙여넣으세요.", error: true); return; }
+                if (!OsCustomBuildService.IsUrl(link, out _)) { SetOsCustomStatus("웹 링크가 아닙니다 (https://로 시작해야 합니다).", error: true); return; }
                 if (await AddOsCustomBuildAsync(link, replace: null)) _osCustomLinkBox.Text = "";
             };
             _osCustomLinkBox.KeyDown += (s, e) =>
@@ -90,16 +90,16 @@ public partial class SettingsHandler
             body.Children.Add(linkRow);
 
             var buttons = new WrapPanel { HorizontalSpacing = 8, VerticalSpacing = 8 };
-            var addFile = MakeCustomFoldersButton("Add file", primary: false,
-                "A zip, 7z or rar with an OptiScaler build in it, or an OptiScaler.dll on its own.");
+            var addFile = MakeCustomFoldersButton("파일 추가", primary: false,
+                "OptiScaler 빌드가 들어 있는 zip, 7z, rar 파일 또는 OptiScaler.dll 단독 파일.");
             addFile.Click += async (s, e) =>
             {
                 var file = await PickOsCustomFileAsync();
                 if (file != null) await AddOsCustomBuildAsync(file, replace: null);
             };
             buttons.Children.Add(addFile);
-            var addFolder = MakeCustomFoldersButton("Add folder", primary: false,
-                "A folder with an unpacked OptiScaler build (OptiScaler.dll in it, or up to 3 folders down).");
+            var addFolder = MakeCustomFoldersButton("폴더 추가", primary: false,
+                "압축을 푼 OptiScaler 빌드가 있는 폴더 (OptiScaler.dll이 그 안 또는 최대 3단계 하위 폴더에 있어야 함).");
             addFolder.Click += async (s, e) =>
             {
                 var folder = await _window.PickFolderAsync();
@@ -142,7 +142,7 @@ public partial class SettingsHandler
             var builds = OsCustomBuildService.All;
             if (builds.Count == 0)
             {
-                _osCustomList.Children.Add(new TextBlock { Text = "No custom builds yet.", Style = FindStyle("SettingsNoteStyle") });
+                _osCustomList.Children.Add(new TextBlock { Text = "아직 사용자 지정 빌드가 없습니다.", Style = FindStyle("SettingsNoteStyle") });
                 return;
             }
             foreach (var build in builds)
@@ -171,17 +171,17 @@ public partial class SettingsHandler
         int using_ = GamesUsingOsBuild(build).Count;
         var facts = new List<string>();
         if (!string.IsNullOrWhiteSpace(build.DllVersion)) facts.Add(build.DllVersion!);
-        facts.Add(build.IsOs10 ? "OptiScaler 10 layout" : "flat layout");
-        facts.Add("added " + build.AddedUtc.ToLocalTime().ToString("d MMM yyyy", System.Globalization.CultureInfo.CurrentCulture));
-        if (using_ > 0) facts.Add(using_ == 1 ? "used by 1 game" : $"used by {using_} games");
+        facts.Add(build.IsOs10 ? "OptiScaler 10 구조" : "단일 폴더 구조");
+        facts.Add("추가됨 " + build.AddedUtc.ToLocalTime().ToString("d MMM yyyy", System.Globalization.CultureInfo.CurrentCulture));
+        if (using_ > 0) facts.Add(using_ == 1 ? "게임 1개에서 사용 중" : $"게임 {using_}개에서 사용 중");
         var detail = new TextBlock
         {
             Text = string.Join(" · ", facts),
             Style = FindStyle("SettingsHelpStyle"),
             TextTrimming = TextTrimming.CharacterEllipsis,
         };
-        ToolTipService.SetToolTip(detail, $"From: {build.Origin}\nFolder: {build.Dir}"
-            + (build.LooksLikeOptiScaler ? "" : "\nThis OptiScaler.dll doesn't identify itself as OptiScaler."));
+        ToolTipService.SetToolTip(detail, $"출처: {build.Origin}\n폴더: {build.Dir}"
+            + (build.LooksLikeOptiScaler ? "" : "\n이 OptiScaler.dll은 자신을 OptiScaler로 식별하지 않습니다."));
         text.Children.Add(detail);
         row.Children.Add(text);
 
@@ -194,33 +194,33 @@ public partial class SettingsHandler
             VerticalAlignment = VerticalAlignment.Center,
         };
         ToolTipService.SetToolTip(nr,
-            "Also install NVIDIA's nvngx_dlssnr.dll with this build, and show the Neural Rendering settings in its OptiScaler ⚙. "
-          + "Turn it on for Neural Rendering forks (like DLSS NR and F5). Ticked automatically when the build has the F5-style forwarder. "
-          + "Applies to the next install.");
+            "이 빌드와 함께 NVIDIA의 nvngx_dlssnr.dll도 설치하고, OptiScaler ⚙에 Neural Rendering 설정을 표시합니다. "
+          + "Neural Rendering 포크(DLSS NR, F5 등)에서 켜세요. 빌드에 F5 방식 포워더가 있으면 자동으로 체크됩니다. "
+          + "다음 설치부터 적용됩니다.");
         nr.Click += (s, e) =>
         {
             if (!OsCustomBuildService.SetNeedsNrDll(build.Slug, nr.IsChecked == true))
-                SetOsCustomStatus("Couldn't save that change.", error: true);
+                SetOsCustomStatus("변경 사항을 저장하지 못했습니다.", error: true);
         };
         actions.Children.Add(nr);
 
-        var replace = MakeCustomFoldersButton("Replace", primary: false,
-            "Swap this build's files for a newer version (from the link box, a file or a folder). Games using it can be updated straight after.");
+        var replace = MakeCustomFoldersButton("교체", primary: false,
+            "이 빌드의 파일을 새 버전으로 교체합니다(링크 상자, 파일 또는 폴더에서). 이 빌드를 사용하는 게임은 바로 업데이트할 수 있습니다.");
         var flyout = new MenuFlyout();
-        var fromLink = new MenuFlyoutItem { Text = "From the link above" };
+        var fromLink = new MenuFlyoutItem { Text = "위의 링크에서" };
         fromLink.Click += async (s, e) =>
         {
             var link = _osCustomLinkBox?.Text.Trim() ?? "";
-            if (!OsCustomBuildService.IsUrl(link, out _)) { SetOsCustomStatus("Paste the new download link in the box first.", error: true); return; }
+            if (!OsCustomBuildService.IsUrl(link, out _)) { SetOsCustomStatus("먼저 새 다운로드 링크를 상자에 붙여넣으세요.", error: true); return; }
             if (await AddOsCustomBuildAsync(link, replace: build) && _osCustomLinkBox != null) _osCustomLinkBox.Text = "";
         };
-        var fromFile = new MenuFlyoutItem { Text = "From a file..." };
+        var fromFile = new MenuFlyoutItem { Text = "파일에서..." };
         fromFile.Click += async (s, e) =>
         {
             var file = await PickOsCustomFileAsync();
             if (file != null) await AddOsCustomBuildAsync(file, replace: build);
         };
-        var fromFolder = new MenuFlyoutItem { Text = "From a folder..." };
+        var fromFolder = new MenuFlyoutItem { Text = "폴더에서..." };
         fromFolder.Click += async (s, e) =>
         {
             var folder = await _window.PickFolderAsync();
@@ -232,16 +232,16 @@ public partial class SettingsHandler
         replace.Flyout = flyout;
         actions.Children.Add(replace);
 
-        var rename = MakeCustomFoldersButton("Rename", primary: false, "Change the name shown in the version lists.");
+        var rename = MakeCustomFoldersButton("이름 바꾸기", primary: false, "버전 목록에 표시되는 이름을 변경합니다.");
         rename.Click += async (s, e) =>
         {
-            var name = await AskOsCustomNameAsync("Rename custom build", build.Name);
+            var name = await AskOsCustomNameAsync("사용자 지정 빌드 이름 바꾸기", build.Name);
             if (name == null || name == build.Name) return;
-            if (!OsCustomBuildService.Rename(build.Slug, name)) SetOsCustomStatus("Couldn't rename it.", error: true);
+            if (!OsCustomBuildService.Rename(build.Slug, name)) SetOsCustomStatus("이름을 바꾸지 못했습니다.", error: true);
         };
         actions.Children.Add(rename);
 
-        var remove = MakeCustomFoldersButton("Remove", primary: false, "Delete this build from RHI. Games that have it installed keep their files.");
+        var remove = MakeCustomFoldersButton("제거", primary: false, "RHI에서 이 빌드를 삭제합니다. 이미 설치된 게임의 파일은 유지됩니다.");
         remove.Click += async (s, e) => await RemoveOsCustomBuildAsync(build);
         actions.Children.Add(remove);
 
@@ -266,10 +266,10 @@ public partial class SettingsHandler
             var ofn = new NativeInterop.OpenFileName();
             ofn.structSize = System.Runtime.InteropServices.Marshal.SizeOf(ofn);
             ofn.hwndOwner = hwnd;
-            ofn.filter = "OptiScaler builds (*.zip;*.7z;*.rar;*.dll)\0*.zip;*.7z;*.rar;*.dll\0All Files (*.*)\0*.*\0";
+            ofn.filter = "OptiScaler 빌드 (*.zip;*.7z;*.rar;*.dll)\0*.zip;*.7z;*.rar;*.dll\0모든 파일 (*.*)\0*.*\0";
             ofn.file = new string(new char[260]);
             ofn.maxFile = ofn.file.Length;
-            ofn.title = "Choose an OptiScaler build";
+            ofn.title = "OptiScaler 빌드 선택";
             ofn.flags = 0x00080000 | 0x00001000; // OFN_EXPLORER | OFN_FILEMUSTEXIST
             return NativeInterop.GetOpenFileName(ref ofn) ? ofn.file.TrimEnd('\0') : null;
         });
@@ -281,12 +281,12 @@ public partial class SettingsHandler
     /// <summary>Adds (or, with <paramref name="replace"/>, replaces) a build. True when it worked.</summary>
     private async Task<bool> AddOsCustomBuildAsync(string source, OsCustomBuild? replace)
     {
-        if (_osCustomBusy) { SetOsCustomStatus("Still working on the last one...", error: false); return false; }
+        if (_osCustomBusy) { SetOsCustomStatus("이전 작업을 아직 처리 중입니다...", error: false); return false; }
         string name;
         if (replace != null) name = replace.Name;
         else
         {
-            var asked = await AskOsCustomNameAsync("Name this OptiScaler build", OsCustomBuildService.SuggestName(source));
+            var asked = await AskOsCustomNameAsync("이 OptiScaler 빌드 이름 지정", OsCustomBuildService.SuggestName(source));
             if (asked == null) return false;
             name = asked;
         }
@@ -295,14 +295,14 @@ public partial class SettingsHandler
         try
         {
             var progress = new Progress<string>(m => SetOsCustomStatus(m, error: false));
-            SetOsCustomStatus(replace != null ? $"Replacing {replace.Name}..." : $"Adding {name}...", error: false);
+            SetOsCustomStatus(replace != null ? $"{replace.Name} 교체 중..." : $"{name} 추가 중...", error: false);
             var result = await Task.Run(() => OsCustomBuildService.ImportAsync(source, name, replace?.Slug, progress, _window.LifetimeToken));
             if (result.Build == null)
             {
-                SetOsCustomStatus(result.Error ?? "It couldn't be added.", error: true);
+                SetOsCustomStatus(result.Error ?? "추가하지 못했습니다.", error: true);
                 return false;
             }
-            var done = replace != null ? $"Replaced {result.Build.Name}." : $"Added {result.Build.Name}. Pick it in a game's OptiScaler settings.";
+            var done = replace != null ? $"{result.Build.Name}을(를) 교체했습니다." : $"{result.Build.Name}을(를) 추가했습니다. 게임의 OptiScaler 설정에서 선택하세요.";
             SetOsCustomStatus(result.Note != null ? done + " " + result.Note : done, error: result.Note != null);
             if (replace != null) await OfferOsCustomRedeployAsync(result.Build);
             return true;
@@ -317,15 +317,15 @@ public partial class SettingsHandler
         if (games.Count == 0) return;
         var dialog = new ContentDialog
         {
-            Title = "Update the games using it?",
+            Title = "이 빌드를 사용하는 게임을 업데이트할까요?",
             Content = new TextBlock
             {
-                Text = (games.Count == 1 ? $"{games[0].GameName} has" : $"{games.Count} games have")
-                     + $" {build.Name} installed. Put the new files in now? Your OptiScaler.ini settings are kept.",
+                Text = (games.Count == 1 ? $"{games[0].GameName}에" : $"게임 {games.Count}개에")
+                     + $" {build.Name}이(가) 설치되어 있습니다. 지금 새 파일을 넣을까요? OptiScaler.ini 설정은 유지됩니다.",
                 TextWrapping = TextWrapping.Wrap,
             },
-            PrimaryButtonText = "Update",
-            CloseButtonText = "Not now",
+            PrimaryButtonText = "업데이트",
+            CloseButtonText = "나중에",
             DefaultButton = ContentDialogButton.Primary,
             XamlRoot = _window.Content.XamlRoot,
         };
@@ -334,7 +334,7 @@ public partial class SettingsHandler
         int ok = 0;
         foreach (var card in games)
         {
-            SetOsCustomStatus($"Updating {card.GameName}...", error: false);
+            SetOsCustomStatus($"{card.GameName} 업데이트 중...", error: false);
             try
             {
                 await os.UpdateAsync(card, variantHint: build.Id);
@@ -343,7 +343,7 @@ public partial class SettingsHandler
             catch (Exception ex) { CrashReporter.Log($"[SettingsHandler.OsCustomRedeploy] {card.GameName}: {ex.Message}"); }
         }
         ViewModel.SaveLibraryPublic();
-        SetOsCustomStatus(ok == games.Count ? $"Updated {ok} game{(ok == 1 ? "" : "s")}." : $"Updated {ok} of {games.Count} games. See the log for the others.",
+        SetOsCustomStatus(ok == games.Count ? $"게임 {ok}개를 업데이트했습니다." : $"게임 {games.Count}개 중 {ok}개를 업데이트했습니다. 나머지는 로그를 확인하세요.",
             error: ok != games.Count);
     }
 
@@ -352,23 +352,23 @@ public partial class SettingsHandler
         var games = GamesUsingOsBuild(build);
         var dialog = new ContentDialog
         {
-            Title = $"Remove {build.Name}?",
+            Title = $"{build.Name}을(를) 제거할까요?",
             Content = new TextBlock
             {
                 Text = games.Count == 0
-                    ? "Its files are deleted from RHI."
-                    : $"{games.Count} game{(games.Count == 1 ? " has" : "s have")} it installed. They keep their files, but can't be updated or reinstalled with it. Pick another version in their OptiScaler settings.",
+                    ? "RHI에서 해당 파일이 삭제됩니다."
+                    : $"게임 {games.Count}개에 설치되어 있습니다. 해당 게임의 파일은 유지되지만 이 빌드로 업데이트하거나 재설치할 수 없습니다. 각 게임의 OptiScaler 설정에서 다른 버전을 선택하세요.",
                 TextWrapping = TextWrapping.Wrap,
             },
-            PrimaryButtonText = "Remove",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = "제거",
+            CloseButtonText = "취소",
             DefaultButton = ContentDialogButton.Close,
             XamlRoot = _window.Content.XamlRoot,
         };
         if (await DialogService.ShowSafeAsync(dialog) != ContentDialogResult.Primary) return;
         // The Default version can't point at a build that's gone
         if (ViewModel.Settings.OsDefaultVariant == build.Id) ViewModel.SetOsDefaultVariant(OsVariants.Stable);
-        if (!OsCustomBuildService.Remove(build.Slug)) SetOsCustomStatus("Couldn't delete its files (in use?). Try again.", error: true);
-        else SetOsCustomStatus($"Removed {build.Name}.", error: false);
+        if (!OsCustomBuildService.Remove(build.Slug)) SetOsCustomStatus("파일을 삭제하지 못했습니다(사용 중일 수 있음). 다시 시도하세요.", error: true);
+        else SetOsCustomStatus($"{build.Name}을(를) 제거했습니다.", error: false);
     }
 }

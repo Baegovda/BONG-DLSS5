@@ -30,7 +30,7 @@ public partial class MainViewModel
         {
             var dontShowAgain = new CheckBox
             {
-                Content = "Don't show this warning again",
+                Content = "이 경고를 다시 표시하지 않음",
                 Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
                 Margin = new Microsoft.UI.Xaml.Thickness(0, 8, 0, 0),
             };
@@ -38,20 +38,20 @@ public partial class MainViewModel
             var contentPanel = new StackPanel();
             contentPanel.Children.Add(new TextBlock
             {
-                Text = "⚠ ADVANCED FEATURE — USE AT YOUR OWN RISK\n\n"
-                    + "DXVK is an unofficial DirectX-to-Vulkan translation layer.\n"
-                    + "No support will be provided if a game is not compatible.\n\n"
-                    + "WHO SHOULD USE THIS:\n"
-                    + "• Primarily benefits older DX8/DX9 games (e.g. FFXIV, Morrowind)\n"
-                    + "• Enables ReShade compute shaders on games that don't support them natively\n"
-                    + "• Can reduce CPU-bound stuttering in older titles\n\n"
-                    + "IMPORTANT WARNINGS:\n"
-                    + "• Anti-cheat games may ban players using DXVK\n"
-                    + "• Game overlays (Steam, NVIDIA, RTSS) may conflict or stop working\n"
-                    + "• Exclusive fullscreen is blocked — use borderless windowed\n"
-                    + "• First launch will be slow due to shader compilation (improves on subsequent runs)\n"
-                    + "• Some games may crash or have graphical glitches with DXVK\n\n"
-                    + "Do you want to continue?",
+                Text = "⚠ 고급 기능 — 사용에 따른 책임은 본인에게 있습니다\n\n"
+                    + "DXVK는 비공식 DirectX-to-Vulkan 변환 레이어입니다.\n"
+                    + "게임이 호환되지 않아도 지원은 제공되지 않습니다.\n\n"
+                    + "이런 경우에 사용하세요:\n"
+                    + "• 주로 오래된 DX8/DX9 게임에 효과적입니다 (예: FFXIV, Morrowind)\n"
+                    + "• 기본적으로 지원하지 않는 게임에서 ReShade 컴퓨트 셰이더를 사용할 수 있게 합니다\n"
+                    + "• 오래된 게임에서 CPU 병목으로 인한 끊김을 줄일 수 있습니다\n\n"
+                    + "중요 경고:\n"
+                    + "• 안티치트 게임은 DXVK 사용자를 차단할 수 있습니다\n"
+                    + "• 게임 오버레이(Steam, NVIDIA, RTSS)가 충돌하거나 작동하지 않을 수 있습니다\n"
+                    + "• 전용 전체 화면이 차단됩니다 — 테두리 없는 창 모드를 사용하세요\n"
+                    + "• 첫 실행은 셰이더 컴파일 때문에 느립니다 (이후 실행부터 개선됨)\n"
+                    + "• 일부 게임은 DXVK 사용 시 충돌하거나 그래픽 오류가 발생할 수 있습니다\n\n"
+                    + "계속할까요?",
                 TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
                 Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
                 FontSize = 13,
@@ -60,10 +60,10 @@ public partial class MainViewModel
 
             var warningDialog = new ContentDialog
             {
-                Title = "⚠ DXVK Warning",
+                Title = "⚠ DXVK 경고",
                 Content = contentPanel,
-                PrimaryButtonText = "Continue",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "계속",
+                CloseButtonText = "취소",
                 XamlRoot = xamlRoot,
                 RequestedTheme = Microsoft.UI.Xaml.ElementTheme.Dark,
             };
@@ -86,7 +86,7 @@ public partial class MainViewModel
         _dxvkService.LiliumPresetIndex = GetLiliumPreset(card.GameName, card.Source ?? "");
 
         card.DxvkIsInstalling = true;
-        card.DxvkActionMessage = "Installing DXVK...";
+        card.DxvkActionMessage = "DXVK 설치 중...";
         card.DxvkProgress = 0;
         try
         {
@@ -104,7 +104,7 @@ public partial class MainViewModel
                 overlayHotkey: _settingsViewModel.OverlayHotkey,
                 screenshotHotkey: _settingsViewModel.ScreenshotHotkey);
 
-            card.DxvkActionMessage = "✅ DXVK installed!";
+            card.DxvkActionMessage = "✅ DXVK 설치됨!";
             card.DxvkEnabled = true; // must be set so RequiresVulkanInstall returns true for DX11
             card.NotifyAll();
             card.FadeMessage(m => card.DxvkActionMessage = m, card.DxvkActionMessage);
@@ -133,7 +133,7 @@ public partial class MainViewModel
         }
         catch (Exception ex)
         {
-            card.DxvkActionMessage = $"❌ Install failed: {ex.Message}";
+            card.DxvkActionMessage = $"❌ 설치 실패: {ex.Message}";
             _crashReporter.WriteCrashReport("InstallDxvk", ex, note: $"Game: {card.GameName}");
         }
         finally
@@ -154,7 +154,7 @@ public partial class MainViewModel
         if (string.IsNullOrEmpty(card.InstallPath)) return;
 
         card.DxvkIsInstalling = true;
-        card.DxvkActionMessage = "Removing DXVK...";
+        card.DxvkActionMessage = "DXVK 제거 중...";
         try
         {
             await _dxvkService.UninstallAsync(card);
@@ -178,7 +178,7 @@ public partial class MainViewModel
                 SaveGameApiCache();
             }
             
-            card.DxvkActionMessage = "✖ DXVK removed.";
+            card.DxvkActionMessage = "✖ DXVK 제거됨.";
             card.NotifyAll();
             card.FadeMessage(m => card.DxvkActionMessage = m, card.DxvkActionMessage);
             SaveLibrary();
@@ -192,7 +192,7 @@ public partial class MainViewModel
         }
         catch (Exception ex)
         {
-            card.DxvkActionMessage = $"❌ Uninstall failed: {ex.Message}";
+            card.DxvkActionMessage = $"❌ 제거 실패: {ex.Message}";
             _crashReporter.WriteCrashReport("UninstallDxvk", ex, note: $"Game: {card.GameName}");
         }
         finally
@@ -215,7 +215,7 @@ public partial class MainViewModel
         if (string.IsNullOrEmpty(card.InstallPath)) return;
 
         card.DxvkIsInstalling = true;
-        card.DxvkActionMessage = "Updating DXVK...";
+        card.DxvkActionMessage = "DXVK 업데이트 중...";
         card.DxvkProgress = 0;
         try
         {
@@ -239,7 +239,7 @@ public partial class MainViewModel
 
             _dxvkService.SelectedVariant = savedVariant;
 
-            card.DxvkActionMessage = "✅ DXVK updated!";
+            card.DxvkActionMessage = "✅ DXVK 업데이트됨!";
             card.DxvkStatus = GameStatus.Installed;
             card.NotifyAll();
             card.FadeMessage(m => card.DxvkActionMessage = m, card.DxvkActionMessage);
@@ -252,7 +252,7 @@ public partial class MainViewModel
         }
         catch (Exception ex)
         {
-            card.DxvkActionMessage = $"❌ Update failed: {ex.Message}";
+            card.DxvkActionMessage = $"❌ 업데이트 실패: {ex.Message}";
             _crashReporter.WriteCrashReport("UpdateDxvk", ex, note: $"Game: {card.GameName}");
         }
         finally
@@ -269,7 +269,7 @@ public partial class MainViewModel
     /// </summary>
     public string? CopyDxvkConf(GameCardViewModel card)
     {
-        if (string.IsNullOrEmpty(card.InstallPath)) return "The game folder wasn't found.";
+        if (string.IsNullOrEmpty(card.InstallPath)) return "게임 폴더를 찾을 수 없습니다.";
         // Set the correct preset index before calling the service so CopyConfToGame
         // uses the right Lilium HDR preset content for this specific game.
         _dxvkService.LiliumPresetIndex = GetLiliumPreset(card.GameName, card.Source ?? "");
@@ -289,7 +289,7 @@ public partial class MainViewModel
         if (enabled && card.Mod?.IsGenericSource == true && card.InstalledRecord != null && card.DxvkRecord == null)
         {
             card.DxvkEnabled = false;
-            card.DxvkActionMessage = "The RenoDX Source mod already sets up DXVK for this game.";
+            card.DxvkActionMessage = "RenoDX Source 모드가 이미 이 게임에 DXVK를 설정합니다.";
             _crashReporter.Log($"[MainViewModel.HandleDxvkToggleAsync] '{card.GameName}': skipped, Source mod's DXVK proxy is installed");
             return;
         }

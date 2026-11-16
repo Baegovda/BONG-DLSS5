@@ -22,8 +22,8 @@ public partial class MainViewModel
     private async Task RunBackgroundScanAndMergeAsync(SavedGameLibrary savedLib, bool isStartup = false)
     {
         IsBackgroundScanning = true;
-        BackgroundScanStatusText = "Scanning for changes...";
-        using var activity = BeginActivity("Checking for new games and mod info...");
+        BackgroundScanStatusText = "변경 사항 검색 중...";
+        using var activity = BeginActivity("새 게임 및 모드 정보 확인 중...");
         _crashReporter.Log("[MainViewModel.RunBackgroundScanAndMergeAsync] Starting background scan...");
 
         try
@@ -916,10 +916,10 @@ public partial class MainViewModel
     private static string FormatAge(DateTime utc)
     {
         var age = DateTime.UtcNow - utc;
-        if (age.TotalMinutes < 1) return "just now";
-        if (age.TotalHours   < 1) return $"{(int)age.TotalMinutes}m ago";
-        if (age.TotalDays    < 1) return $"{(int)age.TotalHours}h ago";
-        return $"{(int)age.TotalDays}d ago";
+        if (age.TotalMinutes < 1) return "방금";
+        if (age.TotalHours   < 1) return $"{(int)age.TotalMinutes}분 전";
+        if (age.TotalDays    < 1) return $"{(int)age.TotalHours}시간 전";
+        return $"{(int)age.TotalDays}일 전";
     }
 
     /// <summary>

@@ -74,9 +74,9 @@ public partial class SettingsHandler
                 Child = grid,
             };
             ToolTipService.SetToolTip(panel,
-                "RHI checks every hour with a GitHub token, every 4 hours without (GitHub allows far fewer requests without one). " +
-                "On: each check refreshes mod data and checks all components and RHI itself for updates. " +
-                "Minimal: each check refreshes mod data, DLSS versions and checks RHI itself; component checks only run when you check now, Refresh or Update All.");
+                "RHI는 GitHub 토큰이 있으면 1시간마다, 없으면 4시간마다 확인합니다 (토큰이 없으면 GitHub 요청 허용량이 훨씬 적습니다). " +
+                "켜짐: 확인할 때마다 모드 데이터를 새로 고치고 모든 구성 요소와 RHI 자체의 업데이트를 확인합니다. " +
+                "최소: 확인할 때마다 모드 데이터와 DLSS 버전을 새로 고치고 RHI 자체를 확인합니다. 구성 요소 확인은 지금 확인, 새로 고침 또는 모두 업데이트를 할 때만 실행됩니다.");
 
             // Above the "RHI checks every hour..." note when it sits right before the button
             int index = column.Children.IndexOf(button);
@@ -151,9 +151,9 @@ public partial class SettingsHandler
             // Minimal mode: the 4-hour run refreshes data (manifests, mod lists, DLSS versions, RHI's own
             // version) but skips component update checks, and LastUpdateCheckUtc only moves on a full check.
             bool minimal = string.Equals(ViewModel.Settings.BackgroundUpdateChecks, "Minimal", StringComparison.OrdinalIgnoreCase);
-            _nextCheckLabel.Text = minimal ? "Next data refresh in" : "Next check in";
+            _nextCheckLabel.Text = minimal ? "다음 데이터 새로 고침까지" : "다음 확인까지";
             _nextCheckValue.Text = FormatNextUpdateCheck(ViewModel.NextUpdateCheckUtc, now);
-            _lastCheckLabel.Text = minimal ? "Last full check" : "Last checked";
+            _lastCheckLabel.Text = minimal ? "마지막 전체 확인" : "마지막 확인";
             _lastCheckValue.Text = FormatLastUpdateCheck(ViewModel.Settings.LastUpdateCheckUtc, now);
         }
         catch (Exception ex) { CrashReporter.Log($"[SettingsHandler.UpdateCountdownText] {ex.Message}"); }
@@ -162,12 +162,12 @@ public partial class SettingsHandler
     /// <summary>"2h 41m 20s"; "After startup" before the periodic timer has started.</summary>
     internal static string FormatNextUpdateCheck(DateTime? nextUtc, DateTime nowUtc)
     {
-        if (nextUtc == null) return "After startup";
+        if (nextUtc == null) return "시작 후";
         var remaining = nextUtc.Value - nowUtc;
-        if (remaining <= TimeSpan.Zero) return "Any moment";
+        if (remaining <= TimeSpan.Zero) return "곧";
         // Round up so the display reaches 0s exactly when the check is due
         var secs = (long)Math.Ceiling(remaining.TotalSeconds);
-        return $"{secs / 3600}h {secs % 3600 / 60:00}m {secs % 60:00}s";
+        return $"{secs / 3600}시간 {secs % 3600 / 60:00}분 {secs % 60:00}초";
     }
 
     /// <summary>"Just now" / "18m ago" / "1h 18m ago" / "2d 3h ago"; "Not yet" when empty or unparsable.</summary>
@@ -176,12 +176,12 @@ public partial class SettingsHandler
         if (string.IsNullOrWhiteSpace(lastUtcText)
             || !DateTime.TryParse(lastUtcText, System.Globalization.CultureInfo.InvariantCulture,
                    System.Globalization.DateTimeStyles.RoundtripKind, out var last))
-            return "Not yet";
+            return "아직 안 함";
         var lastUtc = last.Kind == DateTimeKind.Local ? last.ToUniversalTime() : last;
         var ago = nowUtc - lastUtc;
-        if (ago < TimeSpan.FromMinutes(1)) return "Just now"; // includes clock skew (future timestamps)
-        if (ago < TimeSpan.FromHours(1)) return $"{(int)ago.TotalMinutes}m ago";
-        if (ago < TimeSpan.FromDays(1)) return $"{(int)ago.TotalHours}h {ago.Minutes:00}m ago";
-        return $"{(int)ago.TotalDays}d {ago.Hours}h ago";
+        if (ago < TimeSpan.FromMinutes(1)) return "방금"; // includes clock skew (future timestamps)
+        if (ago < TimeSpan.FromHours(1)) return $"{(int)ago.TotalMinutes}분 전";
+        if (ago < TimeSpan.FromDays(1)) return $"{(int)ago.TotalHours}시간 {ago.Minutes:00}분 전";
+        return $"{(int)ago.TotalDays}일 {ago.Hours}시간 전";
     }
 }

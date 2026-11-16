@@ -45,8 +45,8 @@ public sealed partial class MainWindow
                     RefreshStatusBar();
                     if (!silent) StatusDot.Fill = UIFactory.Brush(loading ? ResourceKeys.AccentAmberBrush : ResourceKeys.AccentGreenBrush);
                     if (!silent) ToolTipService.SetToolTip(StatusDot, loading
-                        ? "Scanning your game library…"
-                        : "Game library up to date.");
+                        ? "게임 라이브러리 검색 중…"
+                        : "게임 라이브러리가 최신 상태입니다.");
                     if (!loading)
                     {
                         if (!silent) ViewModel.MarkInitialized();
@@ -57,14 +57,14 @@ public sealed partial class MainWindow
                         // Show one-line notice in status bar if this session was auto-restarted after a freeze
                         if (ViewModel.WasAutoRestarted)
                         {
-                            ShowStatusBarMessage("⚠ RHI restarted after a UI freeze — check Settings → session log for details",
+                            ShowStatusBarMessage("⚠ UI 멈춤 후 RHI가 다시 시작되었습니다 — 자세한 내용은 설정 → 세션 로그를 확인하세요",
                                 TimeSpan.FromSeconds(12));
                         }
 
                         // Show one-line notice if the GitHub token was found to be expired/revoked at startup
                         if (App._gitHubTokenExpiredOnStartup)
                         {
-                            ShowStatusBarMessage("⚠ GitHub sign-in expired — add a token in Settings → Accounts & Data to restore the download rate limit",
+                            ShowStatusBarMessage("⚠ GitHub 로그인이 만료되었습니다 — 다운로드 속도 제한을 복구하려면 설정 → 계정 및 데이터에서 토큰을 추가하세요",
                                 TimeSpan.FromSeconds(15));
                         }
                         // On Refresh (silent=true), the ListView still has its old item selected
@@ -112,11 +112,11 @@ public sealed partial class MainWindow
                     InstalledCountText.Text = $"{ViewModel.InstalledCount} ReShade";
                     break;
                 case nameof(ViewModel.TotalGames):
-                    GameCountText.Text = $"{ViewModel.TotalGames} shown";
+                    GameCountText.Text = $"{ViewModel.TotalGames}개 표시";
                     break;
                 case nameof(ViewModel.HiddenCount):
                     HiddenCountText.Text = ViewModel.HiddenCount > 0
-                        ? $"· {ViewModel.HiddenCount} hidden" : "";
+                        ? $"· {ViewModel.HiddenCount}개 숨김" : "";
                     break;
                 case nameof(ViewModel.FilterMode):
                     RefreshFilterButtonStyles();
@@ -132,8 +132,8 @@ public sealed partial class MainWindow
                 case nameof(ViewModel.IsBackgroundScanning):
                     HdrModsListBtn.IsEnabled = !ViewModel.IsBackgroundScanning;
                     ToolTipService.SetToolTip(HdrModsListBtn, ViewModel.IsBackgroundScanning
-                        ? "Loading mod data, please wait..."
-                        : "Browse all games with available HDR mods");
+                        ? "모드 데이터를 불러오는 중입니다. 잠시 기다려 주세요..."
+                        : "HDR 모드가 있는 모든 게임 찾아보기");
                     break;
                 case nameof(ViewModel.CurrentPage):
                     UpdatePageVisibility();
