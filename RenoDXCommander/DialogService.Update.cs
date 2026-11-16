@@ -35,9 +35,10 @@ public partial class DialogService
         _checkingForAppUpdate = true;
         try
         {
-            if (ViewModel.SkipUpdateCheck)
+            // Korean build: automatic app updates would replace this build with the English release.
+            if (KoreanBuild.DisableAppAutoUpdate || ViewModel.SkipUpdateCheck)
             {
-                CrashReporter.Log("[DialogService.CheckForAppUpdateAsync] Update check skipped (disabled in settings)");
+                CrashReporter.Log("[DialogService.CheckForAppUpdateAsync] Update check skipped (Korean build or disabled in settings)");
                 return;
             }
 
