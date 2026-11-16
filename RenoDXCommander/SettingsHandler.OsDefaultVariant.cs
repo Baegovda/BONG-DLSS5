@@ -109,8 +109,8 @@ public partial class SettingsHandler
         combo.Items.Add("켜짐");
         combo.SelectedIndex = ViewModel.Settings.OsNightlyCleanup ? 1 : 0;
         ToolTipService.SetToolTip(combo,
-            "RHI는 다운로드한 모든 OptiScaler Nightly 빌드의 사본을 보관하며, 각각 약 200-300 MB입니다. " +
-            "켜짐: 새 Nightly 빌드를 다운로드하면 이전 빌드가 삭제됩니다. RHI는 최신 빌드와 " +
+            "BONG DLSS5는 다운로드한 모든 OptiScaler Nightly 빌드의 사본을 보관하며, 각각 약 200-300 MB입니다. " +
+            "켜짐: 새 Nightly 빌드를 다운로드하면 이전 빌드가 삭제됩니다. BONG DLSS5는 최신 빌드와 " +
             "게임의 OptiScaler ⚙에서 고정한 빌드는 유지합니다. 삭제된 빌드는 나중에 선택하면 다시 다운로드됩니다. " +
             "이미 OptiScaler가 설치된 게임에는 영향이 없습니다.");
         combo.SelectionChanged += (s, e) =>

@@ -189,7 +189,7 @@ public sealed class UpdateLogWindow : Window
         {
             listPanel.Children.Add(new TextBlock
             {
-                Text       = "아직 기록된 구성 요소 업데이트가 없습니다.\n\nRHI가 ReShade, RenoDX 애드온, 셰이더 팩, OptiScaler, Display Commander 또는 기타 구성 요소의 새 버전을 다운로드할 때마다 업데이트가 기록됩니다.",
+                Text       = "아직 기록된 구성 요소 업데이트가 없습니다.\n\nBONG DLSS5가 ReShade, RenoDX 애드온, 셰이더 팩, OptiScaler, Display Commander 또는 기타 구성 요소의 새 버전을 다운로드할 때마다 업데이트가 기록됩니다.",
                 FontSize   = 12,
                 Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush),
                 TextWrapping = TextWrapping.Wrap,

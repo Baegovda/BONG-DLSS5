@@ -48,15 +48,15 @@ public partial class SettingsHandler
             var head = new StackPanel { Spacing = 3 };
             head.Children.Add(new TextBlock
             {
-                Text = "RHI 오버레이",
+                Text = "BONG DLSS5 오버레이",
                 FontSize = 18,
                 FontWeight = Microsoft.UI.Text.FontWeights.Bold,
                 Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
             });
             head.Children.Add(new TextBlock
             {
-                Text = "키나 컨트롤러로 게임 위에 여는 전체 화면 RHI 페이지입니다: 도전 과제, 스크린샷, 메모, "
-                     + "플레이 시간, 게임의 모드 구성. 트레이 상태를 포함해 RHI가 실행 중이면 작동합니다.",
+                Text = "키나 컨트롤러로 게임 위에 여는 전체 화면 BONG DLSS5 페이지입니다: 도전 과제, 스크린샷, 메모, "
+                     + "플레이 시간, 게임의 모드 구성. 트레이 상태를 포함해 BONG DLSS5가 실행 중이면 작동합니다.",
                 FontSize = 12,
                 LineHeight = 17,
                 TextWrapping = TextWrapping.Wrap,
@@ -83,16 +83,16 @@ public partial class SettingsHandler
             columns.Children.Add(right);
 
             // Left: on / off
-            var onRow = MakeSettingRow("RHI 오버레이", out var onCell);
+            var onRow = MakeSettingRow("BONG DLSS5 오버레이", out var onCell);
             var combo = new ComboBox { Style = FindStyle("SettingsComboStyle") };
             combo.Items.Add(new ComboBoxItem { Content = "꺼짐" });
             combo.Items.Add(new ComboBoxItem { Content = "켜짐" });
             combo.SelectedIndex = ViewModel.Settings.RhiOverlayEnabled ? 1 : 0;
             ToolTipService.SetToolTip(combo,
-                "게임에서 단축키를 누르면 게임 위에 RHI가 열립니다. 다시 누르거나 Esc를 누르면 돌아갑니다.\n"
+                "게임에서 단축키를 누르면 게임 위에 BONG DLSS5가 열립니다. 다시 누르거나 Esc를 누르면 돌아갑니다.\n"
               + "게임에는 아무것도 설치되지 않습니다. 테두리 없는 창 모드, 창 모드 게임 및 "
               + "Windows 전체 화면 최적화를 사용하는 게임에서 작동하며, 진짜 전용 전체 화면에서는 표시되지 않습니다.");
-            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(combo, "RHI 오버레이");
+            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(combo, "BONG DLSS5 오버레이");
             combo.SelectionChanged += (s, e) =>
             {
                 if (combo.SelectedIndex < 0) return;
@@ -116,7 +116,7 @@ public partial class SettingsHandler
             ToolTipService.SetToolTip(padCombo,
                 "게임에서 View + Menu(Back + Start, PlayStation은 Share + Options)를 0.5초 동안 누르면 "
               + "오버레이가 열리거나 닫힙니다. 열려 있는 동안: D-패드로 이동, A로 선택, B로 뒤로, LB / RB로 열 간 이동, 오른쪽 스틱으로 스크롤.");
-            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(padCombo, "컨트롤러로 RHI 오버레이 열기");
+            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(padCombo, "컨트롤러로 BONG DLSS5 오버레이 열기");
             padCombo.SelectionChanged += (s, e) =>
             {
                 if (padCombo.SelectedIndex < 0) return;
@@ -142,7 +142,7 @@ public partial class SettingsHandler
             ToolTipService.SetToolTip(box,
                 "여기를 클릭한 후 Ctrl, Alt 또는 Shift와 함께 원하는 키를 누르세요 (예: Alt + `). "
               + "Backspace를 누르면 기본값(Alt + `)으로 돌아갑니다.");
-            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(box, "RHI 오버레이 단축키");
+            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(box, "BONG DLSS5 오버레이 단축키");
             box.PreviewKeyDown += RhiOverlayHotkeyBox_PreviewKeyDown;
             keyCell.Child = box;
             right.Children.Add(keyRow);
@@ -158,7 +158,7 @@ public partial class SettingsHandler
               + "게임이 컨트롤러 입력에 반응하지 않게 합니다 (Windows에서는 다른 방법으로 게임의 컨트롤러 입력을 막을 수 없습니다).\n"
               + "실험적: 온라인 게임은 연결이 끊길 수 있고, 안티치트가 문제를 삼을 수 있으며, 일부 게임은 재개할 때 "
               + "잠깐 끊길 수 있습니다. 싱글플레이 게임 전용.");
-            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(pauseCombo, "RHI 오버레이가 열려 있는 동안 게임 일시 정지");
+            Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(pauseCombo, "BONG DLSS5 오버레이가 열려 있는 동안 게임 일시 정지");
             pauseCombo.SelectionChanged += (s, e) =>
             {
                 if (pauseCombo.SelectedIndex < 0) return;

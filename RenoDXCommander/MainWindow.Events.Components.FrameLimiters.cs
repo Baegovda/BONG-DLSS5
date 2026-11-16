@@ -264,7 +264,7 @@ public sealed partial class MainWindow
                 openIniBtn.IsEnabled = ulIniFile != null && File.Exists(ulIniFile);
                 cog.SetSuccess("relimiter.ini를 게임 폴더에 복사했습니다. 설정을 변경하려면 이 대화 상자를 닫았다가 다시 여세요.");
                 CrashReporter.Log($"[MainWindow.UlCogButton_Click] Deployed relimiter.ini for '{card.GameName}'");
-            }, "RHI의 relimiter.ini 템플릿을 게임 폴더에 복사하여 현재 파일을 교체합니다.");
+            }, "BONG DLSS5의 relimiter.ini 템플릿을 게임 폴더에 복사하여 현재 파일을 교체합니다.");
 
             var openLogBtn = cog.MakeOpenFileButton("ReLimiter 로그 열기", logFile);
 

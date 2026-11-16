@@ -254,14 +254,14 @@ public class DldsrService : IDldsrService
             CrashReporter.Log($"[DldsrService.CaptureCurrentState] Access denied: {ex.Message}");
             throw new UnauthorizedAccessException(
                 "DLDSR 레지스트리 키를 읽을 수 없습니다. 관리자 권한이 필요합니다.\n\n" +
-                "RHI 설정에서 관리자 모드를 켜거나 RHI를 관리자 권한으로 실행하세요.");
+                "BONG DLSS5 설정에서 관리자 모드를 켜거나 BONG DLSS5를 관리자 권한으로 실행하세요.");
         }
         catch (System.Security.SecurityException ex)
         {
             CrashReporter.Log($"[DldsrService.CaptureCurrentState] Security exception: {ex.Message}");
             throw new UnauthorizedAccessException(
                 "DLDSR 레지스트리 키를 읽을 수 없습니다. 관리자 권한이 필요합니다.\n\n" +
-                "RHI 설정에서 관리자 모드를 켜거나 RHI를 관리자 권한으로 실행하세요.");
+                "BONG DLSS5 설정에서 관리자 모드를 켜거나 BONG DLSS5를 관리자 권한으로 실행하세요.");
         }
 
         if (monitors.Count == 0)

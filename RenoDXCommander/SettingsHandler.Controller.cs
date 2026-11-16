@@ -46,7 +46,7 @@ public partial class SettingsHandler
             combo.Items.Add(new ComboBoxItem { Content = "켜짐" });
             combo.SelectedIndex = ViewModel.Settings.ControllerSupport ? 1 : 0;
             ToolTipService.SetToolTip(combo,
-                "Spotlight 레이아웃에서 Xbox 또는 PlayStation 컨트롤러를 사용합니다 (RHI가 활성 창일 때만).\n"
+                "Spotlight 레이아웃에서 Xbox 또는 PlayStation 컨트롤러를 사용합니다 (BONG DLSS5가 활성 창일 때만).\n"
               + "방향 패드 또는 왼쪽 스틱: 이동   A: 선택   B: 뒤로   Y: 실행   X: 게임 메뉴\n"
               + "LB / RB: 이전 / 다음 게임 (사이드 패널 및 설정에서는 섹션)\n"
               + "LT / RT: 10개 게임 뒤로 / 앞으로 (길게 누르면 계속)   보기: 필터   메뉴: 설정\n"

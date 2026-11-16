@@ -50,7 +50,7 @@ public sealed partial class MainWindow
                     Foreground = UIFactory.Brush(ResourceKeys.AccentBlueBrush),
                 };
                 ToolTipService.SetToolTip(_customGamesNotice,
-                    "RHI가 사용자 지정 게임 폴더(설정 › 도구 및 유지 관리)에서 아직 목록에 없는 게임을 찾았습니다. 클릭하여 추가할 게임을 선택하세요.");
+                    "BONG DLSS5가 사용자 지정 게임 폴더(설정 › 도구 및 유지 관리)에서 아직 목록에 없는 게임을 찾았습니다. 클릭하여 추가할 게임을 선택하세요.");
                 _customGamesNotice.Click += async (s, e) =>
                 {
                     try { await ShowCustomGamesReviewAsync(); }
@@ -87,13 +87,13 @@ public sealed partial class MainWindow
                 var check = new CheckBox { IsChecked = true, MinWidth = 0, VerticalAlignment = VerticalAlignment.Center };
                 ToolTipService.SetToolTip(check, "이 게임 포함");
                 var nameBox = new TextBox { Text = c.SuggestedName, FontSize = 13, PlaceholderText = "게임 이름" };
-                ToolTipService.SetToolTip(nameBox, "RHI에 표시되는 이름입니다. RHI가 모드를 찾을 수 있도록 게임의 실제 제목을 사용하세요.");
+                ToolTipService.SetToolTip(nameBox, "BONG DLSS5에 표시되는 이름입니다. BONG DLSS5가 모드를 찾을 수 있도록 게임의 실제 제목을 사용하세요.");
                 var exeCombo = new ComboBox { HorizontalAlignment = HorizontalAlignment.Stretch, FontSize = 12 };
                 foreach (var exe in c.Exes)
                     exeCombo.Items.Add($"{exe.RelativePath}  ({FormatExeSize(exe.SizeBytes)})");
                 exeCombo.SelectedIndex = 0;
                 ToolTipService.SetToolTip(exeCombo,
-                    "RHI가 실행하고 옆에 설치할 exe입니다. 가장 적합한 항목이 선택되며, 런처이거나 잘못된 버전이면 변경하세요.");
+                    "BONG DLSS5가 실행하고 옆에 설치할 exe입니다. 가장 적합한 항목이 선택되며, 런처이거나 잘못된 버전이면 변경하세요.");
 
                 var head = new Grid { ColumnSpacing = 8 };
                 head.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });

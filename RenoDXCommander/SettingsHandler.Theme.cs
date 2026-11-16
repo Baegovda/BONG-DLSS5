@@ -43,7 +43,7 @@ public partial class SettingsHandler
             head.Children.Add(new TextBlock { Text = "색상 테마", Style = FindStyle("SettingsCardTitleStyle") });
             head.Children.Add(new TextBlock
             {
-                Text = "RHI의 색상을 변경합니다. 테마를 고르거나 사용자 지정을 선택해 직접 색상을 정하세요. 변경 사항은 바로 적용됩니다.",
+                Text = "BONG DLSS5의 색상을 변경합니다. 테마를 고르거나 사용자 지정을 선택해 직접 색상을 정하세요. 변경 사항은 바로 적용됩니다.",
                 Style = FindStyle("SettingsCardDescStyle"),
                 TextWrapping = TextWrapping.Wrap,
             });
@@ -100,7 +100,7 @@ public partial class SettingsHandler
             var buttons = new Controls.WrapPanel { HorizontalSpacing = 8, VerticalSpacing = 8 };
             buttons.Children.Add(MakeThemeButton("테마에서 시작...", "사용자 지정 색상을 기본 제공 테마의 색상으로 바꿉니다.",
                 (btn) => ShowStartFromMenu(btn)));
-            buttons.Children.Add(MakeThemeButton("기본값으로 초기화", "사용자 지정 색상을 RHI 기본 색상으로 되돌립니다.",
+            buttons.Children.Add(MakeThemeButton("기본값으로 초기화", "사용자 지정 색상을 BONG DLSS5 기본 색상으로 되돌립니다.",
                 _ => SetCustom(ThemePalette.Default, save: true)));
             buttons.Children.Add(MakeThemeButton("테마 공유", "색상 코드를 복사합니다. 누구나 테마 가져오기에 붙여 넣어 사용할 수 있습니다.",
                 (btn) => ShowShareThemeFlyout(btn)));

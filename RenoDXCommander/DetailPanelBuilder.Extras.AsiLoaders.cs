@@ -319,7 +319,7 @@ public partial class DetailPanelBuilder
             if (isTaken)
                 contentRow.Children.Add(MakeBadge("사용 중", "#2A1818", "#CC6666", "#5A2828"));
             if (isRhiOwned)
-                contentRow.Children.Add(MakeBadge("RHI에서 사용 중", "#2A1818", "#CC6666", "#5A2828"));
+                contentRow.Children.Add(MakeBadge("BONG DLSS5에서 사용 중", "#2A1818", "#CC6666", "#5A2828"));
             if (isRhiConflict && !isRhiOwned)
                 contentRow.Children.Add(MakeBadge("ReShade/OS와 충돌 가능", "#2A1A10", "#CC9955", "#5A3A18"));
             if (isCurrent)
@@ -331,7 +331,7 @@ public partial class DetailPanelBuilder
             if (isTaken)
                 ToolTipService.SetToolTip(btn, $"게임 폴더에 '{name}'이(가) 이미 있습니다. 선택하면 ASI Loader가 체인 로드할 수 있도록 기존 파일의 이름을 '{Path.GetFileNameWithoutExtension(name)}Hooked.dll'(으)로 변경합니다.");
             else if (isRhiOwned)
-                ToolTipService.SetToolTip(btn, "이 파일 이름은 RHI가 관리하는 구성 요소(ReShade, OptiScaler 또는 DC)에서 이미 사용 중입니다. 다른 이름을 선택하세요.");
+                ToolTipService.SetToolTip(btn, "이 파일 이름은 BONG DLSS5가 관리하는 구성 요소(ReShade, OptiScaler 또는 DC)에서 이미 사용 중입니다. 다른 이름을 선택하세요.");
 
             btn.Tag = name;
             btn.Click += (s, ev) =>
@@ -549,8 +549,8 @@ public partial class DetailPanelBuilder
             btn.Content = contentRow;
             // Blocked names got their tooltip from AddExtraDllBadges
             if (!isRhiOwned && isOnDisk && name.StartsWith("bink", StringComparison.OrdinalIgnoreCase))
-                ToolTipService.SetToolTip(btn, $"'{name}'이(가) 이미 있습니다({onDiskConflicts[name]}). RTX Encore는 이 파일을 '{System.IO.Path.GetFileNameWithoutExtension(name)}Hooked.dll'(으)로 옆에 두어야 합니다. RHI가 이름을 바꾸고 제거 시 되돌립니다.");
-            else if (!isRhiOwned && isOnDisk) ToolTipService.SetToolTip(btn, $"'{name}'이(가) 이미 있습니다({onDiskConflicts[name]}). RHI가 백업한 뒤 제거 시 복원합니다.");
+                ToolTipService.SetToolTip(btn, $"'{name}'이(가) 이미 있습니다({onDiskConflicts[name]}). RTX Encore는 이 파일을 '{System.IO.Path.GetFileNameWithoutExtension(name)}Hooked.dll'(으)로 옆에 두어야 합니다. BONG DLSS5가 이름을 바꾸고 제거 시 되돌립니다.");
+            else if (!isRhiOwned && isOnDisk) ToolTipService.SetToolTip(btn, $"'{name}'이(가) 이미 있습니다({onDiskConflicts[name]}). BONG DLSS5가 백업한 뒤 제거 시 복원합니다.");
             btn.Tag = name;
             btn.Click += (s, ev) => { chosen = (s as Button)?.Tag as string; if (s is FrameworkElement fe) FindParentContentDialog(fe)?.Hide(); };
             listPanel.Children.Add(btn);
@@ -559,7 +559,7 @@ public partial class DetailPanelBuilder
         var pickerDialog = new ContentDialog
         {
             Title = "RTX Encore DLL 이름 선택",
-            Content = new StackPanel { Spacing = 8, Children = { new TextBlock { Text = "RTX Encore의 파일 이름을 선택하세요. RHI 구성 요소가 사용 중인 이름은 비활성화됩니다. 주황색 이름은 디스크에 이미 파일이 있습니다 — RHI가 백업한 뒤 제거 시 복원합니다.", FontSize = 11, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), TextWrapping = TextWrapping.Wrap }, scrollViewer } },
+            Content = new StackPanel { Spacing = 8, Children = { new TextBlock { Text = "RTX Encore의 파일 이름을 선택하세요. BONG DLSS5 구성 요소가 사용 중인 이름은 비활성화됩니다. 주황색 이름은 디스크에 이미 파일이 있습니다 — BONG DLSS5가 백업한 뒤 제거 시 복원합니다.", FontSize = 11, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), TextWrapping = TextWrapping.Wrap }, scrollViewer } },
             CloseButtonText = "취소", XamlRoot = _window.Content.XamlRoot, RequestedTheme = ElementTheme.Dark,
         };
         await DialogService.ShowSafeAsync(pickerDialog);

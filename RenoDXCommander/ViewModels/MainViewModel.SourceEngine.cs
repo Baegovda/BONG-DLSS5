@@ -96,7 +96,7 @@ public partial class MainViewModel
         }
         if (card.RequiresVulkanInstall)
         {
-            card.ActionMessage = "이 게임은 RHI에서 Vulkan으로 설정되어 있습니다. Game Overrides에서 그래픽 API를 DirectX 9로 설정한 다음 다시 설치하세요.";
+            card.ActionMessage = "이 게임은 BONG DLSS5에서 Vulkan으로 설정되어 있습니다. Game Overrides에서 그래픽 API를 DirectX 9로 설정한 다음 다시 설치하세요.";
             return false;
         }
 

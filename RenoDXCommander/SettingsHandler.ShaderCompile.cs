@@ -181,7 +181,7 @@ public partial class SettingsHandler
             _shaderCompileBar.Visibility = ours ? Visibility.Visible : Visibility.Collapsed;
         }
         SetShaderCompileStatus(ours
-            ? "셰이더 컴파일 중입니다. 몇 분 정도 걸리고 CPU를 일부 사용하지만 RHI는 계속 사용할 수 있습니다."
+            ? "셰이더 컴파일 중입니다. 몇 분 정도 걸리고 CPU를 일부 사용하지만 BONG DLSS5는 계속 사용할 수 있습니다."
             : "NVIDIA 셰이더 컴파일러가 이미 실행 중입니다(NVIDIA 앱 또는 유휴 작업이 시작함).");
     }
 

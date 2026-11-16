@@ -88,7 +88,7 @@ public static class NvAppOverrideLimitService
             if (changedFlags == 0)
             {
                 return skipped > 0
-                    ? new Result(false, "NVIDIA App의 파일 형식을 RHI가 인식하지 못해 아무것도 변경하지 않았습니다. 최신 NVIDIA App에서 설정 저장 방식이 바뀌었을 수 있습니다.")
+                    ? new Result(false, "NVIDIA App의 파일 형식을 BONG DLSS5가 인식하지 못해 아무것도 변경하지 않았습니다. 최신 NVIDIA App에서 설정 저장 방식이 바뀌었을 수 있습니다.")
                     : new Result(true, "제한이 이미 해제되어 있습니다. 변경할 내용이 없습니다.");
             }
 
@@ -104,7 +104,7 @@ public static class NvAppOverrideLimitService
         catch (UnauthorizedAccessException ex)
         {
             CrashReporter.Log($"[NvAppOverrideLimitService.RemoveLimits] Access denied: {ex.Message}");
-            return new Result(false, "Windows에서 RHI의 NVIDIA App 파일 변경을 허용하지 않았습니다. NVIDIA App을 닫고 다시 시도하세요.");
+            return new Result(false, "Windows에서 BONG DLSS5의 NVIDIA App 파일 변경을 허용하지 않았습니다. NVIDIA App을 닫고 다시 시도하세요.");
         }
         catch (IOException ex)
         {

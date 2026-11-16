@@ -47,7 +47,7 @@ public partial class SettingsHandler
             {
                 Text = "어떤 OptiScaler 빌드든 추가할 수 있습니다: 다운로드 링크(GitHub, Discord 등), zip, 7z, rar, 폴더 "
                      + "또는 OptiScaler.dll. 추가한 후 게임의 OptiScaler 설정이나 위의 기본 버전에서 선택하세요. "
-                     + "RHI는 다른 버전처럼 설치하지만 업데이트는 하지 않으므로, 새 버전이 나오면 직접 추가하세요. "
+                     + "BONG DLSS5는 다른 버전처럼 설치하지만 업데이트는 하지 않으므로, 새 버전이 나오면 직접 추가하세요. "
                      + "신뢰할 수 있는 사람의 빌드만 추가하세요.",
                 Style = FindStyle("SettingsCardDescStyle"),
                 TextWrapping = TextWrapping.Wrap,
@@ -241,7 +241,7 @@ public partial class SettingsHandler
         };
         actions.Children.Add(rename);
 
-        var remove = MakeCustomFoldersButton("제거", primary: false, "RHI에서 이 빌드를 삭제합니다. 이미 설치된 게임의 파일은 유지됩니다.");
+        var remove = MakeCustomFoldersButton("제거", primary: false, "BONG DLSS5에서 이 빌드를 삭제합니다. 이미 설치된 게임의 파일은 유지됩니다.");
         remove.Click += async (s, e) => await RemoveOsCustomBuildAsync(build);
         actions.Children.Add(remove);
 
@@ -356,7 +356,7 @@ public partial class SettingsHandler
             Content = new TextBlock
             {
                 Text = games.Count == 0
-                    ? "RHI에서 해당 파일이 삭제됩니다."
+                    ? "BONG DLSS5에서 해당 파일이 삭제됩니다."
                     : $"게임 {games.Count}개에 설치되어 있습니다. 해당 게임의 파일은 유지되지만 이 빌드로 업데이트하거나 재설치할 수 없습니다. 각 게임의 OptiScaler 설정에서 다른 버전을 선택하세요.",
                 TextWrapping = TextWrapping.Wrap,
             },

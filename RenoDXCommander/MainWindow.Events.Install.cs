@@ -536,7 +536,7 @@ public sealed partial class MainWindow
                 var panel = new StackPanel { Spacing = 8 };
                 panel.Children.Add(new TextBlock
                 {
-                    Text = "엔진 버전을 Unreal Engine 5.0–5.6으로 전환하여 이 게임에서 DOF Fix 애드온을 사용할 수 있게 합니다.\n\nRHI가 UE 버전을 자동으로 감지할 수 없을 때 사용하세요 (예: Game Pass 게임).",
+                    Text = "엔진 버전을 Unreal Engine 5.0–5.6으로 전환하여 이 게임에서 DOF Fix 애드온을 사용할 수 있게 합니다.\n\nBONG DLSS5가 UE 버전을 자동으로 감지할 수 없을 때 사용하세요 (예: Game Pass 게임).",
                     TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
                     FontSize = 12,
                 });
@@ -981,7 +981,7 @@ public sealed partial class MainWindow
             {
                 string undoNote = card.IsManuallyAdded
                     ? "직접 추가한 게임입니다. 되돌리려면 다시 추가하세요."
-                    : "RHI가 게임을 검색해도 다시 나타나지 않습니다. 되돌리려면 설정 › 도구 및 유지 관리 › 제거된 게임을 사용하세요.";
+                    : "BONG DLSS5가 게임을 검색해도 다시 나타나지 않습니다. 되돌리려면 설정 › 도구 및 유지 관리 › 제거된 게임을 사용하세요.";
                 // Build a list of installed components to show in the dialog
                 var installed = new List<string>();
                 if (card.RsRecord != null || card.RsStatus == Models.GameStatus.Installed) installed.Add("ReShade");
@@ -1002,7 +1002,7 @@ public sealed partial class MainWindow
                     var panel = new StackPanel { Spacing = 8 };
                     panel.Children.Add(new TextBlock
                     {
-                        Text = $"RHI에서 {card.GameName}을(를) 제거하시겠습니까?",
+                        Text = $"BONG DLSS5에서 {card.GameName}을(를) 제거하시겠습니까?",
                         FontSize = 13,
                         FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                         Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
@@ -1016,7 +1016,7 @@ public sealed partial class MainWindow
                     });
                     panel.Children.Add(new TextBlock
                     {
-                        Text = $"설치됨: {componentList}. 제거하지 않으면 게임 폴더에 남으며 RHI가 더 이상 업데이트하지 않습니다.",
+                        Text = $"설치됨: {componentList}. 제거하지 않으면 게임 폴더에 남으며 BONG DLSS5가 더 이상 업데이트하지 않습니다.",
                         TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
                         FontSize = 12,
                         Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
@@ -1024,7 +1024,7 @@ public sealed partial class MainWindow
 
                     var uninstallCheck = new CheckBox
                     {
-                        Content = "게임 폴더에서 RHI가 관리하는 모든 구성 요소도 제거",
+                        Content = "게임 폴더에서 BONG DLSS5가 관리하는 모든 구성 요소도 제거",
                         FontSize = 12,
                         IsChecked = false,
                     };
@@ -1051,7 +1051,7 @@ public sealed partial class MainWindow
                         Title = "게임 제거",
                         Content = new TextBlock
                         {
-                            Text = $"RHI에서 {card.GameName}을(를) 제거하시겠습니까?\n\n{undoNote}",
+                            Text = $"BONG DLSS5에서 {card.GameName}을(를) 제거하시겠습니까?\n\n{undoNote}",
                             FontSize = 12,
                             TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
                         },

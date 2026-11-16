@@ -17,7 +17,7 @@ public partial class SettingsHandler
     private const string UpliftKeyTip =
         "게임 중 NR을 켜고 끄는 GITC Uplift 키입니다(Uplift 패널의 Enable hotkey). "
         + "상자를 클릭하고 키를 누르세요. Backspace 또는 ↺ 버튼을 누르면 없음으로 되돌아갑니다.\n\n"
-        + "RHI는 게임에 Uplift를 설치할 때 해당 게임의 reshade.ini에 이 키를 기록합니다. 없음은 각 게임의 기존 키를 그대로 둡니다.";
+        + "BONG DLSS5는 게임에 Uplift를 설치할 때 해당 게임의 reshade.ini에 이 키를 기록합니다. 없음은 각 게임의 기존 키를 그대로 둡니다.";
 
     private static string UpliftKeyText(int vk) =>
         vk <= 0 ? "없음" : HotkeyManager.FormatHotkeyDisplay($"{vk},0,0,0");
@@ -98,7 +98,7 @@ public partial class SettingsHandler
             body.Children.Add(row);
 
             var write = MakeCustomFoldersButton("모든 Uplift 게임에 키 기록", primary: true,
-                "RHI로 GITC Uplift가 설치된 모든 게임의 reshade.ini에 키를 기록합니다. "
+                "BONG DLSS5로 GITC Uplift가 설치된 모든 게임의 reshade.ini에 키를 기록합니다. "
                 + "숨긴 게임과 자체 reshade.ini를 유지하도록 설정된 게임은 건너뜁니다.");
             write.HorizontalAlignment = HorizontalAlignment.Left;
             write.Click += async (s, e) =>

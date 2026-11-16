@@ -52,7 +52,7 @@ public class AddonPackService : IAddonPackService
     private static readonly AddonEntry Renodx5Entry = new(
         SectionId: "renodx-dlss5",
         PackageName: "DLSS5 Tool",
-        PackageDescription: "DLSS 호환 게임에서 DLSS Neural Rendering을 사용할 수 있게 합니다. RTX 20, 30, 40, 50 시리즈 GPU를 지원합니다. RHI가 이 애드온과 함께 nvngx_dlssnr.dll을 게임 폴더에 자동으로 배포합니다.",
+        PackageDescription: "DLSS 호환 게임에서 DLSS Neural Rendering을 사용할 수 있게 합니다. RTX 20, 30, 40, 50 시리즈 GPU를 지원합니다. BONG DLSS5가 이 애드온과 함께 nvngx_dlssnr.dll을 게임 폴더에 자동으로 배포합니다.",
         DownloadUrl: null,
         DownloadUrl32: null,
         DownloadUrl64: null,

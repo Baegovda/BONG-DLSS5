@@ -231,9 +231,9 @@ public sealed class CustomFolderScanService : ICustomFolderScanService
 
         var segments = p.Split('\\', StringSplitOptions.RemoveEmptyEntries);
         if (segments.Any(s => s.Equals("WindowsApps", StringComparison.OrdinalIgnoreCase)))
-            return "Game Pass / Microsoft Store 폴더(WindowsApps)는 사용할 수 없습니다. RHI가 해당 게임을 자동으로 찾습니다.";
+            return "Game Pass / Microsoft Store 폴더(WindowsApps)는 사용할 수 없습니다. BONG DLSS5가 해당 게임을 자동으로 찾습니다.";
         if (segments.Any(s => s.Equals("steamapps", StringComparison.OrdinalIgnoreCase)))
-            return "Steam 라이브러리 폴더는 사용할 수 없습니다. RHI가 Steam 게임을 자동으로 찾습니다.";
+            return "Steam 라이브러리 폴더는 사용할 수 없습니다. BONG DLSS5가 Steam 게임을 자동으로 찾습니다.";
 
         foreach (var sf in new[] { Environment.SpecialFolder.ProgramFiles, Environment.SpecialFolder.ProgramFilesX86,
                                    Environment.SpecialFolder.UserProfile })

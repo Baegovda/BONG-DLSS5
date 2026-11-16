@@ -114,7 +114,7 @@ public partial class AuxInstallService
             throw new FileNotFoundException(
                 $"스테이징 폴더에서 ReShade DLL을 찾을 수 없습니다.\n" +
                 $"예상 위치: {rsStagedPath}\n" +
-                $"reshade.me에서 ReShade를 다운로드하려면 RHI를 다시 시작하세요.");
+                $"reshade.me에서 ReShade를 다운로드하려면 BONG DLSS5를 다시 시작하세요.");
         }
 
         // ── Back up foreign DLL at destination ──────────────────────────────────

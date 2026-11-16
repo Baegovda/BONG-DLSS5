@@ -39,7 +39,7 @@ public sealed partial class MainWindow
                           "먼저 일반 새로 고침을 시도하세요 — 전체 재검색 없이 대부분의 문제를 해결하며, 선택한 게임은 완전히 다시 검색합니다 (예: DLSS 추가 또는 제거). " +
                           "게임이 누락되었거나, 경로가 바뀌었거나, 게임에 DLSS가 추가되었거나, 게임 카드에 DLSS 섹션이 없을 때 최후의 수단으로 전체 새로 고침을 사용하세요.\n\n" +
                           "캐시를 다시 만드는 동안 다음 몇 번의 재시작은 몇 초 더 걸릴 수 있습니다.\n\n" +
-                          "새로 고침이 진행되는 동안 RHI를 닫지 마세요 — 일찍 닫으면 라이브러리가 누락되어 검색을 다시 해야 합니다.",
+                          "새로 고침이 진행되는 동안 BONG DLSS5를 닫지 마세요 — 일찍 닫으면 라이브러리가 누락되어 검색을 다시 해야 합니다.",
                 PrimaryButtonText = "계속",
                 CloseButtonText = "취소",
                 DefaultButton = ContentDialogButton.Close,
@@ -94,7 +94,7 @@ public sealed partial class MainWindow
                 // instead of showing "Checking components..." with nothing happening.
                 if (ViewModel.IsLibraryOperationRunning)
                 {
-                    progressText.Text = "RHI의 게임 검색이 끝나기를 기다리는 중...";
+                    progressText.Text = "BONG DLSS5의 게임 검색이 끝나기를 기다리는 중...";
                     _crashReporter.Log("[MainWindow.CheckForUpdatesButton_Click] A scan is running — waiting for it to finish");
                 }
                 else progressText.Text = "구성 요소 확인 중...";
@@ -267,7 +267,7 @@ public sealed partial class MainWindow
     private void LinkRhiGithub_Click(object sender, RoutedEventArgs e)
     {
         _ = Windows.System.Launcher.LaunchUriAsync(
-            new Uri("https://github.com/RankFTW/RHI"));
+            new Uri("https://github.com/Baegovda/BONG-DLSS5"));
     }
 
     private void LinkReLimiterGithub_Click(object sender, RoutedEventArgs e)
@@ -419,7 +419,7 @@ public sealed partial class MainWindow
             var dialog = new ContentDialog
             {
                 Title = CogDialog.MakeDialogTitle("모드 제작자 후원",
-                    "RHI가 관리하는 모드를 만드는 사람들입니다. 작업이 마음에 드신다면 후원을 고려해 주세요."),
+                    "BONG DLSS5가 관리하는 모드를 만드는 사람들입니다. 작업이 마음에 드신다면 후원을 고려해 주세요."),
                 Content = scroll,
                 CloseButtonText = "닫기",
                 XamlRoot = Content.XamlRoot,

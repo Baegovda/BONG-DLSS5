@@ -101,7 +101,7 @@ public static class TrayIconService
             AppendMenu(hMenu, MF_SEPARATOR, 0, null);
         }
 
-        AppendMenu(hMenu, MF_STRING, 1, "RHI 열기");
+        AppendMenu(hMenu, MF_STRING, 1, "BONG DLSS5 열기");
         AppendMenu(hMenu, MF_STRING, 2, "종료");
 
         // Required for the menu to close when clicking away

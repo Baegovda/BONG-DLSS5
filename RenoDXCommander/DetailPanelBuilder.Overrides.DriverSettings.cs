@@ -752,7 +752,7 @@ public partial class DetailPanelBuilder
                                     || card.DcStatus is GameStatus.Installed or GameStatus.UpdateAvailable;
                 var fpsTip = "이 게임에만 적용되는 NVIDIA 드라이버 프레임 속도 제한입니다. Global은 설정 페이지에서 지정한 제한을 따릅니다. 꺼짐은 전역 제한이 설정되어 있어도 이 게임의 드라이버 제한을 끕니다.";
                 if (hasFrameLimiter)
-                    fpsTip += "\n\n이 게임에 ReLimiter 또는 Display Commander가 설치되어 있어 RHI가 드라이버 제한을 꺼짐으로 설정했습니다. 두 제한기를 동시에 사용하면 끊김이 생길 수 있습니다.";
+                    fpsTip += "\n\n이 게임에 ReLimiter 또는 Display Commander가 설치되어 있어 BONG DLSS5가 드라이버 제한을 꺼짐으로 설정했습니다. 두 제한기를 동시에 사용하면 끊김이 생길 수 있습니다.";
                 ToolTipService.SetToolTip(fpsCombo, fpsTip);
 
                 var fpsInit = true;

@@ -36,7 +36,7 @@
                     </Border>
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock FontSize="15" FontWeight="Bold">
-                            <Run Text="RHI" Foreground="{StaticResource AccentTealBrush}"/>
+                            <Run Text="BONG DLSS5" Foreground="{StaticResource AccentTealBrush}"/>
                         </TextBlock>
                         <TextBlock Text="간편한 PC 게이밍" FontSize="10" Foreground="{StaticResource AccentTealDimBrush}"/>
                     </StackPanel>
@@ -108,7 +108,7 @@
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutItem Text="RenoDX 위키" Click="LinkRenoDxWiki_Click"/>
                                 <MenuFlyoutItem Text="Luma 위키" Click="LinkLumaWiki_Click"/>
-                                <MenuFlyoutItem Text="RHI GitHub" Click="LinkRhiGithub_Click"/>
+                                <MenuFlyoutItem Text="BONG DLSS5 GitHub" Click="LinkRhiGithub_Click"/>
                                 <MenuFlyoutItem Text="ReLimiter GitHub" Click="LinkReLimiterGithub_Click"/>
                             </MenuFlyout>
                         </Button.Flyout>
@@ -394,8 +394,8 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <!-- Left box: Launch, links, badges -->
-                            <Border Grid.Column="0" Background="{StaticResource SurfaceComponentTableBrush}" CornerRadius="12"
-                                    BorderBrush="{StaticResource BorderDefaultBrush}" BorderThickness="1" Padding="16,14">
+                            <Border Grid.Column="0" Background="{StaticResource GlassCardFillBrush}" CornerRadius="12"
+                                    BorderBrush="{StaticResource GlassCardStrokeBrush}" BorderThickness="1" Padding="16,14">
                             <Grid RowSpacing="10">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -556,8 +556,8 @@
                             </Grid>
                             </Border>
                             <!-- Right box: Hide, Favourite, Config, Browse -->
-                            <Border Grid.Column="1" Background="{StaticResource SurfaceComponentTableBrush}"
-                                    BorderBrush="{StaticResource BorderDefaultBrush}" BorderThickness="1"
+                            <Border Grid.Column="1" Background="{StaticResource GlassCardFillBrush}"
+                                    BorderBrush="{StaticResource GlassCardStrokeBrush}" BorderThickness="1"
                                     CornerRadius="12" Padding="12,10" VerticalAlignment="Stretch"
                                     MinWidth="160">
                                 <Grid ColumnSpacing="4" RowSpacing="4" VerticalAlignment="Center">
@@ -617,8 +617,8 @@
 
 
                         <!-- ── Component status table ── -->
-                        <Border x:Name="DetailComponentSection" x:FieldModifier="internal" Background="{StaticResource SurfaceComponentTableBrush}" CornerRadius="12"
-                                BorderBrush="{StaticResource BorderDefaultBrush}" BorderThickness="1" Padding="14,12">
+                        <Border x:Name="DetailComponentSection" x:FieldModifier="internal" Background="{StaticResource GlassCardFillBrush}" CornerRadius="12"
+                                BorderBrush="{StaticResource GlassCardStrokeBrush}" BorderThickness="1" Padding="14,12">
                             <StackPanel Spacing="10">
                                 <Grid ColumnSpacing="8">
                                     <Grid.ColumnDefinitions>
@@ -1078,8 +1078,8 @@
 
                         <!-- ── Game Overrides section ── -->
                         <Border x:Name="OverridesContainer" x:FieldModifier="internal"
-                                Background="{StaticResource SurfaceComponentTableBrush}" CornerRadius="12"
-                                BorderBrush="{StaticResource BorderDefaultBrush}" BorderThickness="1"
+                                Background="{StaticResource GlassCardFillBrush}" CornerRadius="12"
+                                BorderBrush="{StaticResource GlassCardStrokeBrush}" BorderThickness="1"
                                 Padding="14,12" Visibility="Collapsed">
                             <StackPanel Spacing="8">
                                 <!-- Collapse header — wired in BuildOverridesPanel -->
@@ -1092,24 +1092,24 @@
 
                         <!-- ── Neural Rendering section ── -->
                         <Border x:Name="NeuralRenderingContainer" x:FieldModifier="internal"
-                                Background="{StaticResource SurfaceComponentTableBrush}" CornerRadius="12"
-                                BorderBrush="{StaticResource BorderDefaultBrush}" BorderThickness="1"
+                                Background="{StaticResource GlassCardFillBrush}" CornerRadius="12"
+                                BorderBrush="{StaticResource GlassCardStrokeBrush}" BorderThickness="1"
                                 Padding="14,12" Visibility="Collapsed">
                             <StackPanel x:Name="NeuralRenderingPanel" x:FieldModifier="internal" Spacing="6"/>
                         </Border>
 
                         <!-- ── DLSS / Streamline section ── -->
                         <Border x:Name="NvidiaProfileDlssContainer" x:FieldModifier="internal"
-                                Background="{StaticResource SurfaceComponentTableBrush}" CornerRadius="12"
-                                BorderBrush="{StaticResource BorderDefaultBrush}" BorderThickness="1"
+                                Background="{StaticResource GlassCardFillBrush}" CornerRadius="12"
+                                BorderBrush="{StaticResource GlassCardStrokeBrush}" BorderThickness="1"
                                 Padding="14,12" Visibility="Collapsed">
                             <StackPanel x:Name="NvidiaProfileDlssPanel" x:FieldModifier="internal" Spacing="6"/>
                         </Border>
 
                         <!-- ── Driver Settings section ── -->
                         <Border x:Name="NvidiaProfileDriverContainer" x:FieldModifier="internal"
-                                Background="{StaticResource SurfaceComponentTableBrush}" CornerRadius="12"
-                                BorderBrush="{StaticResource BorderDefaultBrush}" BorderThickness="1"
+                                Background="{StaticResource GlassCardFillBrush}" CornerRadius="12"
+                                BorderBrush="{StaticResource GlassCardStrokeBrush}" BorderThickness="1"
                                 Padding="14,12" Visibility="Collapsed">
                             <StackPanel x:Name="NvidiaProfileDriverPanel" x:FieldModifier="internal" Spacing="6"/>
                         </Border>
@@ -1120,15 +1120,15 @@
 
                         <!-- ── Management section (folder, reset, report) ── -->
                         <Border x:Name="ManagementContainer" x:FieldModifier="internal"
-                                Background="{StaticResource SurfaceComponentTableBrush}" CornerRadius="12"
-                                BorderBrush="{StaticResource BorderDefaultBrush}" BorderThickness="1"
+                                Background="{StaticResource GlassCardFillBrush}" CornerRadius="12"
+                                BorderBrush="{StaticResource GlassCardStrokeBrush}" BorderThickness="1"
                                 Padding="14,12" Visibility="Collapsed">
                             <StackPanel x:Name="ManagementPanel" x:FieldModifier="internal" Spacing="6"/>
                         </Border>
                         <!-- ── Extras section ── -->
                         <Border x:Name="ExtrasContainer" x:FieldModifier="internal"
-                                Background="{StaticResource SurfaceComponentTableBrush}" CornerRadius="12"
-                                BorderBrush="{StaticResource BorderDefaultBrush}" BorderThickness="1"
+                                Background="{StaticResource GlassCardFillBrush}" CornerRadius="12"
+                                BorderBrush="{StaticResource GlassCardStrokeBrush}" BorderThickness="1"
                                 Padding="14,12" Visibility="Collapsed">
                             <StackPanel Spacing="6">
                                 <StackPanel x:Name="ExtrasPanel" x:FieldModifier="internal" Spacing="6"/>
@@ -1205,7 +1205,7 @@
                             <StackPanel Spacing="3">
                                 <TextBlock Text="일반" FontSize="18" FontWeight="Bold"
                                            Foreground="{StaticResource TextPrimaryBrush}"/>
-                                <TextBlock Text="업데이트 및 PC에서 RHI가 동작하는 방식입니다. 처음이라면 여기서 시작하세요."
+                                <TextBlock Text="업데이트 및 PC에서 BONG DLSS5가 동작하는 방식입니다. 처음이라면 여기서 시작하세요."
                                            FontSize="12" LineHeight="17" TextWrapping="Wrap" Foreground="{StaticResource TextSecondaryBrush}"/>
                             </StackPanel>
 
@@ -1224,14 +1224,16 @@
                                         <StackPanel Grid.Column="0" Spacing="9" Margin="0,0,20,0" VerticalAlignment="Top">
                                             <TextBlock Text="업데이트 확인" Style="{StaticResource SettingsHeadStyle}"/>
                                             <TextBlock Style="{StaticResource SettingsNoteStyle}"
-                                                       Text="RHI는 실행 중일 때 1시간마다 확인합니다(GitHub 토큰이 없으면 4시간마다). 기다리지 않으려면 지금 확인하세요."/>
+                                                       Text="BONG DLSS5는 실행 중일 때 1시간마다 확인합니다(GitHub 토큰이 없으면 4시간마다). 기다리지 않으려면 지금 확인하세요."/>
                                             <Button x:Name="CheckForUpdatesBtn" Content="업데이트 확인"
                                                     Click="CheckForUpdatesButton_Click"
-                                                    Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource SettingsButtonBlueBrush}"
+                                                    Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource OnAccentTextBrush}"
                                                     ToolTipService.ToolTip="모든 구성 요소와 앱의 업데이트를 확인합니다">
                                                 <Button.Resources>
-                                                    <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="SettingsButtonBlueBrush"/>
-                                                    <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="SettingsButtonBlueBrush"/>
+                                                    <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="AccentGradientHoverBrush"/>
+                                                    <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="AccentGradientBrush"/>
+                                                    <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="OnAccentTextBrush"/>
+                                                    <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="OnAccentTextBrush"/>
                                                 </Button.Resources>
                                             </Button>
                                             <Grid ColumnSpacing="10">
@@ -1263,7 +1265,7 @@
                                                     Content="선택"
                                                     Click="GlobalUpdateInclusion_Click"
                                                     Style="{StaticResource SettingsButtonStyle}" Foreground="{StaticResource SettingsLabelBrush}"
-                                                    ToolTipService.ToolTip="RHI가 업데이트를 확인할 구성 요소를 선택합니다. 끈 구성 요소는 시작 시나 모두 업데이트 중에 확인되지 않습니다."/>
+                                                    ToolTipService.ToolTip="BONG DLSS5가 업데이트를 확인할 구성 요소를 선택합니다. 끈 구성 요소는 시작 시나 모두 업데이트 중에 확인되지 않습니다."/>
                                         </StackPanel>
 
                                         <Border Grid.Column="1" Width="1" Background="{StaticResource BorderDefaultBrush}"/>
@@ -1279,7 +1281,7 @@
                                                 <TextBlock Text="구성 요소" Style="{StaticResource SettingsLabelStyle}"/>
                                                 <ComboBox Grid.Column="1" x:Name="AutoUpdateComponentsCombo" x:FieldModifier="internal"
                                                           Style="{StaticResource SettingsComboStyle}"
-                                                          ToolTipService.ToolTip="켜짐이면 RHI가 업데이트 확인 후 백그라운드에서 구성 요소 업데이트를 자동으로 설치합니다. 업데이트가 감지될 때 실행 중인 게임은 종료된 후 업데이트됩니다. 앱 업데이트에는 적용되지 않습니다."
+                                                          ToolTipService.ToolTip="켜짐이면 BONG DLSS5가 업데이트 확인 후 백그라운드에서 구성 요소 업데이트를 자동으로 설치합니다. 업데이트가 감지될 때 실행 중인 게임은 종료된 후 업데이트됩니다. 앱 업데이트에는 적용되지 않습니다."
                                                           SelectionChanged="AutoUpdateComponentsCombo_SelectionChanged">
                                                     <ComboBoxItem Content="꺼짐"/>
                                                     <ComboBoxItem Content="켜짐"/>
@@ -1316,7 +1318,7 @@
                                                 </ComboBox>
                                             </Grid>
                                             <TextBlock Style="{StaticResource SettingsNoteStyle}"
-                                                       Text="RHI 자체 업데이트는 묻지 않고 설치되지 않습니다."/>
+                                                       Text="BONG DLSS5 자체 업데이트는 묻지 않고 설치되지 않습니다."/>
                                         </StackPanel>
                                     </Grid>
                                 </StackPanel>
@@ -1344,7 +1346,7 @@
                                                 <TextBlock Text="닫을 때 트레이로" Style="{StaticResource SettingsLabelStyle}"/>
                                                 <ComboBox Grid.Column="1" x:Name="CloseToTrayCombo" x:FieldModifier="internal"
                                                           Style="{StaticResource SettingsComboStyle}"
-                                                          ToolTipService.ToolTip="창을 닫아도 RHI가 시스템 트레이에서 계속 실행됩니다."
+                                                          ToolTipService.ToolTip="창을 닫아도 BONG DLSS5가 시스템 트레이에서 계속 실행됩니다."
                                                           SelectionChanged="CloseToTrayCombo_SelectionChanged">
                                                     <ComboBoxItem Content="꺼짐"/>
                                                     <ComboBoxItem Content="켜짐"/>
@@ -1385,7 +1387,7 @@
                                         <StackPanel Grid.Column="2" Spacing="9" Margin="20,0,0,0" VerticalAlignment="Top">
                                             <TextBlock Text="관리자 모드" Style="{StaticResource SettingsHeadStyle}"/>
                                             <TextBlock Style="{StaticResource SettingsNoteStyle}"
-                                                       Text="매번 확인 창 없이 RHI를 관리자 권한으로 실행합니다. ReBAR, DLSS 표시기, Smooth Motion, 저지연 Ultra에 필요합니다."/>
+                                                       Text="매번 확인 창 없이 BONG DLSS5를 관리자 권한으로 실행합니다. ReBAR, DLSS 표시기, Smooth Motion, 저지연 Ultra에 필요합니다."/>
                                             <Grid ColumnSpacing="10">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"/>
@@ -1394,7 +1396,7 @@
                                                 <TextBlock Text="관리자 모드" Style="{StaticResource SettingsLabelStyle}"/>
                                                 <ComboBox Grid.Column="1" x:Name="AdminModeCombo" x:FieldModifier="internal"
                                                           Style="{StaticResource SettingsComboStyle}"
-                                                          ToolTipService.ToolTip="RHI를 관리자 권한으로 실행하는 예약 작업을 만들어 매번 확인 창이 뜨지 않게 합니다. RHI를 다시 시작한 후 적용됩니다."
+                                                          ToolTipService.ToolTip="BONG DLSS5를 관리자 권한으로 실행하는 예약 작업을 만들어 매번 확인 창이 뜨지 않게 합니다. BONG DLSS5를 다시 시작한 후 적용됩니다."
                                                           SelectionChanged="AdminModeCombo_SelectionChanged">
                                                     <ComboBoxItem Content="꺼짐"/>
                                                     <ComboBoxItem Content="켜짐"/>
@@ -1436,7 +1438,7 @@
                             <StackPanel Spacing="3">
                                 <TextBlock Text="계정 및 데이터" FontSize="18" FontWeight="Bold"
                                            Foreground="{StaticResource TextPrimaryBrush}"/>
-                                <TextBlock Text="RHI가 모드 정보를 가져오는 곳과 사용할 수 있는 계정입니다."
+                                <TextBlock Text="BONG DLSS5가 모드 정보를 가져오는 곳과 사용할 수 있는 계정입니다."
                                            FontSize="12" LineHeight="17" TextWrapping="Wrap" Foreground="{StaticResource TextSecondaryBrush}"/>
                             </StackPanel>
 
@@ -1456,7 +1458,7 @@
                                             <TextBlock Text="GitHub 토큰" Style="{StaticResource SettingsHeadStyle}"/>
                                             <TextBlock Style="{StaticResource SettingsNoteStyle}"
                                                        ToolTipService.ToolTip="토큰을 사용하면 GitHub API 요청 한도가 시간당 60회에서 5,000회로 늘어납니다. 업데이트 확인, DLSS 버전 조회, 매니페스트 가져오기의 안정성이 향상됩니다."
-                                                       Text="토큰이 없으면 RHI는 시간당 GitHub 요청이 60회로 제한되며, 토큰을 사용하면 5,000회로 늘어납니다."/>
+                                                       Text="토큰이 없으면 BONG DLSS5는 시간당 GitHub 요청이 60회로 제한되며, 토큰을 사용하면 5,000회로 늘어납니다."/>
 
                                             <!-- Status text (connected / code display / error) -->
                                             <TextBlock x:Name="GitHubStatusText" x:FieldModifier="internal"
@@ -1539,13 +1541,13 @@
                                                 <TextBlock Text="출처" Style="{StaticResource SettingsLabelStyle}"/>
                                                 <ComboBox Grid.Column="1" x:Name="RenoDxDbSourceCombo" x:FieldModifier="internal"
                                                           Style="{StaticResource SettingsComboStyle}"
-                                                          ToolTipService.ToolTip="RHI 데이터베이스는 커뮤니티가 관리하는 RHI 데이터베이스를 사용합니다(권장). RenoDX 위키는 RenoDX 위키 스크래퍼를 사용합니다. 이 설정을 바꾸면 즉시 새로 고침됩니다.">
-                                                    <ComboBoxItem Content="RHI 데이터베이스" Tag="DbOnly"/>
+                                                          ToolTipService.ToolTip="BONG DLSS5 데이터베이스는 커뮤니티가 관리하는 BONG DLSS5 데이터베이스를 사용합니다(권장). RenoDX 위키는 RenoDX 위키 스크래퍼를 사용합니다. 이 설정을 바꾸면 즉시 새로 고침됩니다.">
+                                                    <ComboBoxItem Content="BONG DLSS5 데이터베이스" Tag="DbOnly"/>
                                                     <ComboBoxItem Content="RenoDX 위키" Tag="WikiOnly"/>
                                                 </ComboBox>
                                             </Grid>
                                             <TextBlock Style="{StaticResource SettingsHelpStyle}"
-                                                       Text="RHI가 어떤 게임에 모드가 있는지 조회하는 곳입니다. 바꾸면 라이브러리가 새로 고침됩니다."/>
+                                                       Text="BONG DLSS5가 어떤 게임에 모드가 있는지 조회하는 곳입니다. 바꾸면 라이브러리가 새로 고침됩니다."/>
 
                                             <!-- Nexus Mods (shown when FeatureFlags.NexusMods is on) -->
                                             <Border x:Name="NexusModsCard" x:FieldModifier="internal"
@@ -1572,7 +1574,7 @@
                                                             <Button Grid.Column="1" x:Name="NexusConnectBtn" x:FieldModifier="internal"
                                                                     Content="연결"
                                                                     Click="NexusConnectBtn_Click"
-                                                                    ToolTipService.ToolTip="RHI가 Nexus에서 모드를 다운로드할 수 있도록 브라우저에서 Nexus Mods에 로그인합니다."
+                                                                    ToolTipService.ToolTip="BONG DLSS5가 Nexus에서 모드를 다운로드할 수 있도록 브라우저에서 Nexus Mods에 로그인합니다."
                                                                     Style="{StaticResource SettingsButtonStyle}" Foreground="{StaticResource SettingsLabelBrush}"/>
                                                         </Grid>
                                                     </Grid>
@@ -1594,7 +1596,7 @@
                                                             <ColumnDefinition Width="*" MaxWidth="210"/>
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Text="nxm:// 링크" Style="{StaticResource SettingsLabelStyle}"
-                                                                   ToolTipService.ToolTip="RHI를 nxm:// 처리기로 등록해 Nexus의 &quot;Mod Manager Download&quot; 버튼이 RHI에서 바로 열리게 합니다."/>
+                                                                   ToolTipService.ToolTip="BONG DLSS5를 nxm:// 처리기로 등록해 Nexus의 &quot;Mod Manager Download&quot; 버튼이 BONG DLSS5에서 바로 열리게 합니다."/>
                                                         <Grid Grid.Column="1" ColumnSpacing="6">
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="*"/>
@@ -1608,7 +1610,7 @@
                                                                     Content="등록"
                                                                     Click="NxmRegisterBtn_Click"
                                                                     Style="{StaticResource SettingsButtonStyle}" Foreground="{StaticResource SettingsLabelBrush}"
-                                                                    ToolTipService.ToolTip="Nexus &quot;Mod Manager Download&quot; 링크를 RHI에서 엽니다."/>
+                                                                    ToolTipService.ToolTip="Nexus &quot;Mod Manager Download&quot; 링크를 BONG DLSS5에서 엽니다."/>
                                                         </Grid>
                                                     </Grid>
                                                 </StackPanel>
@@ -1735,11 +1737,13 @@
                                             <Button x:Name="ApplyHotkeyBtn" x:FieldModifier="internal"
                                                     Content="모든 게임에 쓰기"
                                                     Click="ApplyScreenshotPath_Click"
-                                                    Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource SettingsButtonBlueBrush}"
+                                                    Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource OnAccentTextBrush}"
                                                     ToolTipService.ToolTip="오버레이 키, 스크린샷 키, 스크린샷 폴더, 효과 목록 스타일을 모든 게임의 reshade.ini에 씁니다. 숨긴 게임과 자체 reshade.ini를 유지하도록 설정된 게임은 건너뜁니다.">
                                                 <Button.Resources>
-                                                    <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="SettingsButtonBlueBrush"/>
-                                                    <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="SettingsButtonBlueBrush"/>
+                                                    <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="AccentGradientHoverBrush"/>
+                                                    <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="AccentGradientBrush"/>
+                                                    <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="OnAccentTextBrush"/>
+                                                    <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="OnAccentTextBrush"/>
                                                 </Button.Resources>
                                             </Button>
                                             <TextBlock Style="{StaticResource SettingsNoteStyle}"
@@ -1781,11 +1785,13 @@
                                             <Button x:Name="ApplyScreenshotPathBtn"
                                                     Content="모든 게임에 최대 밝기 쓰기"
                                                     Click="ApplyPeakNitsToAll_Click"
-                                                    Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource SettingsButtonBlueBrush}"
+                                                    Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource OnAccentTextBrush}"
                                                     ToolTipService.ToolTip="최대 nits 값을 모든 게임의 reshade.ini에 씁니다. 숨긴 게임과 자체 reshade.ini를 유지하도록 설정된 게임은 건너뜁니다.">
                                                 <Button.Resources>
-                                                    <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="SettingsButtonBlueBrush"/>
-                                                    <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="SettingsButtonBlueBrush"/>
+                                                    <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="AccentGradientHoverBrush"/>
+                                                    <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="AccentGradientBrush"/>
+                                                    <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="OnAccentTextBrush"/>
+                                                    <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="OnAccentTextBrush"/>
                                                 </Button.Resources>
                                             </Button>
                                         </StackPanel>
@@ -1814,15 +1820,15 @@
                                                 <TextBlock Text="셰이더" Style="{StaticResource SettingsLabelStyle}"/>
                                                 <ComboBox Grid.Column="1" x:Name="CustomShadersCombo" x:FieldModifier="internal"
                                                           Style="{StaticResource SettingsComboStyle}"
-                                                          ToolTipService.ToolTip="RHI 관리: 내장 셰이더 팩을 모든 게임에 배포합니다.&#10;사용자 지정: 자신의 셰이더 폴더를 사용합니다.&#10;꺼짐: RHI가 어떤 게임의 셰이더도 건드리지 않습니다."
+                                                          ToolTipService.ToolTip="BONG DLSS5 관리: 내장 셰이더 팩을 모든 게임에 배포합니다.&#10;사용자 지정: 자신의 셰이더 폴더를 사용합니다.&#10;꺼짐: BONG DLSS5가 어떤 게임의 셰이더도 건드리지 않습니다."
                                                           SelectionChanged="CustomShadersCombo_SelectionChanged">
                                                     <ComboBoxItem Content="꺼짐"/>
-                                                    <ComboBoxItem Content="RHI 관리"/>
+                                                    <ComboBoxItem Content="BONG DLSS5 관리"/>
                                                     <ComboBoxItem Content="사용자 지정"/>
                                                 </ComboBox>
                                             </Grid>
                                             <TextBlock Style="{StaticResource SettingsHelpStyle}"
-                                                       Text="이 설정을 바꾸면 모든 게임의 셰이더가 업데이트되므로 RHI가 먼저 확인합니다."/>
+                                                       Text="이 설정을 바꾸면 모든 게임의 셰이더가 업데이트되므로 BONG DLSS5가 먼저 확인합니다."/>
                                             <Grid ColumnSpacing="10">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"/>
@@ -1858,19 +1864,19 @@
                                                     <TextBox x:Name="AddonWatchFolderBox" x:FieldModifier="internal"
                                                              PlaceholderText="다운로드 (기본값)"
                                                              Style="{StaticResource SettingsTextBoxStyle}"
-                                                             ToolTipService.ToolTip="RHI가 이 폴더에서 RenoDX 애드온 파일(.addon64/.addon32)과 압축 파일을 감시합니다. 기본값은 다운로드 폴더입니다."
+                                                             ToolTipService.ToolTip="BONG DLSS5가 이 폴더에서 RenoDX 애드온 파일(.addon64/.addon32)과 압축 파일을 감시합니다. 기본값은 다운로드 폴더입니다."
                                                              KeyDown="AddonWatchFolderBox_KeyDown"
                                                              LostFocus="AddonWatchFolderBox_LostFocus"/>
                                                     <Button Grid.Column="1" Content="찾아보기" Click="BrowseAddonWatchFolder_Click"
                                                             Style="{StaticResource SettingsIconButtonStyle}" Foreground="{StaticResource SettingsLabelBrush}"
-                                                            ToolTipService.ToolTip="RHI가 애드온 다운로드를 감시할 폴더 선택"/>
+                                                            ToolTipService.ToolTip="BONG DLSS5가 애드온 다운로드를 감시할 폴더 선택"/>
                                                     <Button Grid.Column="2" Content="초기화" Click="ResetAddonWatchFolder_Click"
                                                             Style="{StaticResource SettingsIconButtonStyle}" Foreground="{StaticResource SettingsLabelBrush}"
                                                             ToolTipService.ToolTip="다운로드 폴더로 되돌리기"/>
                                                 </Grid>
                                             </Grid>
                                             <TextBlock Style="{StaticResource SettingsHelpStyle}"
-                                                       Text="RHI가 다운로드한 RenoDX 애드온 파일을 여기서 찾습니다."/>
+                                                       Text="BONG DLSS5가 다운로드한 RenoDX 애드온 파일을 여기서 찾습니다."/>
                                         </StackPanel>
                                     </Grid>
                                 </StackPanel>
@@ -1886,7 +1892,7 @@
                             <StackPanel Spacing="3">
                                 <TextBlock Text="디스플레이 및 HDR" FontSize="18" FontWeight="Bold"
                                            Foreground="{StaticResource TextPrimaryBrush}"/>
-                                <TextBlock Text="RHI로 게임을 실행할 때 화면에 일어나는 일과, NVIDIA 제어판 없이 쓸 수 있는 디스플레이 옵션입니다."
+                                <TextBlock Text="BONG DLSS5로 게임을 실행할 때 화면에 일어나는 일과, NVIDIA 제어판 없이 쓸 수 있는 디스플레이 옵션입니다."
                                            FontSize="12" LineHeight="17" TextWrapping="Wrap" Foreground="{StaticResource TextSecondaryBrush}"/>
                             </StackPanel>
 
@@ -1920,7 +1926,7 @@
                                                     </Grid.ColumnDefinitions>
                                                     <ComboBox x:Name="HdrAutoToggleCombo" x:FieldModifier="internal"
                                                               Style="{StaticResource SettingsComboStyle}"
-                                                              ToolTipService.ToolTip="켜짐이면 RHI로 게임을 실행할 때 Windows HDR이 자동으로 켜지고 게임 종료 시 꺼집니다."
+                                                              ToolTipService.ToolTip="켜짐이면 BONG DLSS5로 게임을 실행할 때 Windows HDR이 자동으로 켜지고 게임 종료 시 꺼집니다."
                                                               SelectionChanged="HdrAutoToggleCombo_SelectionChanged">
                                                         <ComboBoxItem Content="꺼짐"/>
                                                         <ComboBoxItem Content="켜짐"/>
@@ -2014,11 +2020,13 @@
                                             <Button Content="적용"
                                                     x:Name="ColorApplyBtn" x:FieldModifier="internal"
                                                     Click="ColorApplyBtn_Click"
-                                                    Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource SettingsButtonBlueBrush}"
+                                                    Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource OnAccentTextBrush}"
                                                     ToolTipService.ToolTip="선택한 모니터에 색 심도와 다이내믹 레인지를 적용합니다.">
                                                 <Button.Resources>
-                                                    <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="SettingsButtonBlueBrush"/>
-                                                    <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="SettingsButtonBlueBrush"/>
+                                                    <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="AccentGradientHoverBrush"/>
+                                                    <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="AccentGradientBrush"/>
+                                                    <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="OnAccentTextBrush"/>
+                                                    <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="OnAccentTextBrush"/>
                                                 </Button.Resources>
                                             </Button>
                                             <Grid ColumnSpacing="10">
@@ -2167,8 +2175,10 @@
                                                 Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource AccentBlueBrush}"
                                                 ToolTipService.ToolTip="빠른 적용에 사용할 DLSS / Streamline 버전, 프리셋, 렌더 배율을 선택합니다.">
                                             <Button.Resources>
-                                                <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="SettingsButtonBlueBrush"/>
-                                                <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="SettingsButtonBlueBrush"/>
+                                                <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="AccentGradientHoverBrush"/>
+                                                <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="AccentGradientBrush"/>
+                                                <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="OnAccentTextBrush"/>
+                                                <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="OnAccentTextBrush"/>
                                             </Button.Resources>
                                         </Button>
                                         <TextBlock Style="{StaticResource SettingsNoteStyle}" Foreground="{StaticResource AccentBlueBrush}"
@@ -2245,11 +2255,13 @@
                                             <TextBlock Style="{StaticResource SettingsNoteStyle}"
                                                        Text="여러 게임에 DLSS 및 Streamline 버전과 프리셋을 한 번에 적용합니다."/>
                                             <Button Content="일괄 배포" Click="MassDlssDeploy_Click"
-                                                    Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource SettingsButtonBlueBrush}"
+                                                    Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource OnAccentTextBrush}"
                                                     ToolTipService.ToolTip="DLSS 및 Streamline DLL 버전과 DLSS 프리셋을 여러 게임에 한 번에 배포합니다. 원본은 자동으로 백업됩니다. 설정한 기본값이 미리 채워집니다.">
                                                 <Button.Resources>
-                                                    <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="SettingsButtonBlueBrush"/>
-                                                    <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="SettingsButtonBlueBrush"/>
+                                                    <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="AccentGradientHoverBrush"/>
+                                                    <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="AccentGradientBrush"/>
+                                                    <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="OnAccentTextBrush"/>
+                                                    <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="OnAccentTextBrush"/>
                                                 </Button.Resources>
                                             </Button>
                                         </StackPanel>
@@ -2573,11 +2585,13 @@
                                             <Button x:Name="ApplyUlHotkeyBtn" x:FieldModifier="internal"
                                                     Content="모든 ReLimiter 게임에 쓰기"
                                                     Click="ApplyUlOsdHotkey_Click"
-                                                    Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource SettingsButtonBlueBrush}"
+                                                    Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource OnAccentTextBrush}"
                                                     ToolTipService.ToolTip="오버레이 키, 공유 프리셋, DLSS 후킹, 목표 FPS를 모든 게임의 relimiter.ini에 씁니다. 숨긴 게임은 건너뜁니다.">
                                                 <Button.Resources>
-                                                    <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="SettingsButtonBlueBrush"/>
-                                                    <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="SettingsButtonBlueBrush"/>
+                                                    <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="AccentGradientHoverBrush"/>
+                                                    <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="AccentGradientBrush"/>
+                                                    <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="OnAccentTextBrush"/>
+                                                    <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="OnAccentTextBrush"/>
                                                 </Button.Resources>
                                             </Button>
                                         </StackPanel>
@@ -2596,7 +2610,7 @@
                                                 <TextBlock Text="GPU 종류" Style="{StaticResource SettingsLabelStyle}"/>
                                                 <ComboBox Grid.Column="1" x:Name="OsGpuCombo" x:FieldModifier="internal"
                                                           Style="{StaticResource SettingsComboStyle}"
-                                                          ToolTipService.ToolTip="이 PC의 GPU 브랜드입니다. RHI는 이를 바탕으로 설치할 OptiScaler.ini를 고릅니다. DLSS 입력은 AMD와 Intel에서 표시됩니다."
+                                                          ToolTipService.ToolTip="이 PC의 GPU 브랜드입니다. BONG DLSS5는 이를 바탕으로 설치할 OptiScaler.ini를 고릅니다. DLSS 입력은 AMD와 Intel에서 표시됩니다."
                                                           SelectionChanged="OsGpuCombo_SelectionChanged">
                                                     <x:String>NVIDIA</x:String>
                                                     <x:String>AMD</x:String>
@@ -2653,11 +2667,13 @@
                                             <Button x:Name="ApplyOsHotkeyBtn" x:FieldModifier="internal"
                                                     Content="모든 OptiScaler 게임에 키 쓰기"
                                                     Click="ApplyOsHotkey_Click"
-                                                    Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource SettingsButtonBlueBrush}"
+                                                    Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource OnAccentTextBrush}"
                                                     ToolTipService.ToolTip="OptiScaler가 설치된 모든 게임의 OptiScaler.ini에 오버레이 키를 씁니다. 숨긴 게임은 건너뜁니다.">
                                                 <Button.Resources>
-                                                    <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="SettingsButtonBlueBrush"/>
-                                                    <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="SettingsButtonBlueBrush"/>
+                                                    <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="AccentGradientHoverBrush"/>
+                                                    <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="AccentGradientBrush"/>
+                                                    <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="OnAccentTextBrush"/>
+                                                    <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="OnAccentTextBrush"/>
                                                 </Button.Resources>
                                             </Button>
                                         </StackPanel>
@@ -2714,16 +2730,16 @@
                                         <!-- Right: Folders and logs -->
                                         <StackPanel Grid.Column="2" Spacing="9" Margin="20,0,0,0" VerticalAlignment="Top">
                                             <TextBlock Text="폴더 및 로그" Style="{StaticResource SettingsHeadStyle}"
-                                                       ToolTipService.ToolTip="모든 RHI 데이터는 AppData에 저장됩니다. Logs 폴더에는 문제 해결에 유용한 세션 사용 로그가 있습니다."/>
+                                                       ToolTipService.ToolTip="모든 BONG DLSS5 데이터는 AppData에 저장됩니다. Logs 폴더에는 문제 해결에 유용한 세션 사용 로그가 있습니다."/>
                                             <TextBlock Style="{StaticResource SettingsNoteStyle}"
                                                        Text="자신의 ReShade, DLSS, Streamline DLL을 Custom 폴더에 넣으면 게임별 재정의로 사용할 수 있습니다."/>
                                             <controls:WrapPanel HorizontalSpacing="8" VerticalSpacing="8">
-                                                <Button x:Name="OpenAppDataBtn" Content="RHI 데이터" Click="OpenAppDataFolder_Click"
+                                                <Button x:Name="OpenAppDataBtn" Content="BONG DLSS5 데이터" Click="OpenAppDataFolder_Click"
                                                         Style="{StaticResource SettingsButtonStyle}" Foreground="{StaticResource SettingsLabelBrush}"
-                                                        ToolTipService.ToolTip="AppData의 RHI 데이터 폴더 열기"/>
+                                                        ToolTipService.ToolTip="AppData의 BONG DLSS5 데이터 폴더 열기"/>
                                                 <Button x:Name="OpenDownloadsBtn" Content="다운로드" Click="OpenDownloadsFolder_Click"
                                                         Style="{StaticResource SettingsButtonStyle}" Foreground="{StaticResource SettingsLabelBrush}"
-                                                        ToolTipService.ToolTip="RHI 다운로드 폴더 열기"/>
+                                                        ToolTipService.ToolTip="BONG DLSS5 다운로드 폴더 열기"/>
                                                 <Button x:Name="OpenCustomBtn" Content="사용자 지정" Click="OpenCustomFolder_Click"
                                                         Style="{StaticResource SettingsButtonStyle}" Foreground="{StaticResource SettingsLabelBrush}"
                                                         ToolTipService.ToolTip="자신의 ReShade, DLSS, Streamline DLL용 Custom 폴더 열기"/>
@@ -2731,16 +2747,18 @@
                                                         Style="{StaticResource SettingsButtonStyle}" Foreground="{StaticResource SettingsLabelBrush}"
                                                         ToolTipService.ToolTip="Logs 폴더 열기"/>
                                                 <Button x:Name="CopyLogsArchiveBtn" Content="로그 복사" Click="CopyLogsArchive_Click"
-                                                        Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource SettingsButtonBlueBrush}"
+                                                        Style="{StaticResource SettingsPrimaryButtonStyle}" Foreground="{StaticResource OnAccentTextBrush}"
                                                         ToolTipService.ToolTip="모든 로그를 zip 압축 파일로 만들어 클립보드에 복사합니다 — Discord에 바로 붙여 넣으세요">
                                                     <Button.Resources>
-                                                        <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="SettingsButtonBlueBrush"/>
-                                                        <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="SettingsButtonBlueBrush"/>
+                                                        <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="AccentGradientHoverBrush"/>
+                                                        <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="AccentGradientBrush"/>
+                                                        <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="OnAccentTextBrush"/>
+                                                        <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="OnAccentTextBrush"/>
                                                     </Button.Resources>
                                                 </Button>
                                                 <Button x:Name="ExportGameDataBtn" x:FieldModifier="internal" Content="게임 데이터 내보내기" Click="ExportGameData_Click"
                                                         Style="{StaticResource SettingsButtonStyle}" Foreground="{StaticResource SettingsLabelBrush}"
-                                                        ToolTipService.ToolTip="게임 라이브러리 데이터(API, exe 경로, 엔진 정보)를 모아 JSON 파일을 클립보드에 복사합니다 — Discord에 붙여 넣어 RHI 커뮤니티 데이터베이스와 공유하세요"/>
+                                                        ToolTipService.ToolTip="게임 라이브러리 데이터(API, exe 경로, 엔진 정보)를 모아 JSON 파일을 클립보드에 복사합니다 — Discord에 붙여 넣어 BONG DLSS5 커뮤니티 데이터베이스와 공유하세요"/>
                                             </controls:WrapPanel>
                                         </StackPanel>
                                     </Grid>
@@ -2829,14 +2847,14 @@
                                 HorizontalAlignment="Center">
 
                         <!-- ── About ───────────────────────────────────────────────── -->
-                        <Border Background="{StaticResource SurfaceRaisedBrush}" CornerRadius="10" Padding="20,16"
-                                BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="1">
+                        <Border Background="{StaticResource GlassCardFillBrush}" CornerRadius="10" Padding="20,16"
+                                BorderBrush="{StaticResource GlassCardStrokeBrush}" BorderThickness="1">
                             <StackPanel Spacing="10">
                                 <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,0,0,4">
                                     <Image Source="icon.ico" Width="48" Height="48"/>
                                     <StackPanel VerticalAlignment="Center" Spacing="4">
                                         <TextBlock FontSize="20" FontWeight="Bold">
-                                            <Run Text="RHI" Foreground="{StaticResource AccentTealBrush}"/>
+                                            <Run Text="BONG DLSS5" Foreground="{StaticResource AccentTealBrush}"/>
                                         </TextBlock>
                                         <TextBlock x:Name="AboutVersionText" x:FieldModifier="internal" FontSize="12" Foreground="{StaticResource InlineDescriptionBrush}"/>
                                     </StackPanel>
@@ -2849,7 +2867,7 @@
                                 <Border Background="{StaticResource SurfaceToolbarBrush}" CornerRadius="8" Padding="14,10"
                                         BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="1">
                                     <StackPanel Spacing="4">
-                                        <TextBlock Text="RHI가 관리하는 항목" FontSize="12" FontWeight="SemiBold"
+                                        <TextBlock Text="BONG DLSS5가 관리하는 항목" FontSize="12" FontWeight="SemiBold"
                                                    Foreground="{StaticResource TextPrimaryBrush}"/>
                                         <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource InlineDescriptionBrush}" LineHeight="18"
                                                    Text="ReShade 및 셰이더 팩 · RenoDX HDR 모드 · Luma Framework · DLSS/Streamline 버전 교체 및 프리셋 · NVIDIA 드라이버 프로필 설정 (VSync, 저지연, ReBAR, Smooth Motion, 전원) · OptiScaler · ReLimiter 및 Display Commander 프레임 제한기 · RE Framework · DXVK · UE-Extended 네이티브 HDR · 모든 항목의 게임별 재정의."/>
@@ -2864,15 +2882,15 @@
                                         <TextBlock Text="싱글플레이 전용" FontSize="12" FontWeight="SemiBold"
                                                    Foreground="{StaticResource AccentRedBrush}"/>
                                         <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource InlineDescriptionBrush}" LineHeight="18"
-                                                   Text="RHI는 전체 애드온을 지원하는 ReShade와 OptiScaler를 설치하고 DLSS/Streamline DLL을 교체할 수 있습니다. 이러한 수정은 온라인 또는 멀티플레이 게임에서 안티치트에 감지될 수 있습니다. 온라인으로 플레이하기 전에 ReShade와 OptiScaler를 제거하고 DLSS/Streamline을 기본값으로 복원하세요."/>
+                                                   Text="BONG DLSS5는 전체 애드온을 지원하는 ReShade와 OptiScaler를 설치하고 DLSS/Streamline DLL을 교체할 수 있습니다. 이러한 수정은 온라인 또는 멀티플레이 게임에서 안티치트에 감지될 수 있습니다. 온라인으로 플레이하기 전에 ReShade와 OptiScaler를 제거하고 DLSS/Streamline을 기본값으로 복원하세요."/>
                                     </StackPanel>
                                 </Border>
                             </StackPanel>
                         </Border>
 
                         <!-- ── Credits ─────────────────────────────────────────────── -->
-                        <Border Background="{StaticResource SurfaceRaisedBrush}" CornerRadius="10" Padding="20,16"
-                                BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="1">
+                        <Border Background="{StaticResource GlassCardFillBrush}" CornerRadius="10" Padding="20,16"
+                                BorderBrush="{StaticResource GlassCardStrokeBrush}" BorderThickness="1">
                             <StackPanel Spacing="10">
                                 <TextBlock Text="크레딧 및 감사의 말" FontSize="13" FontWeight="SemiBold"
                                            Foreground="{StaticResource TextPrimaryBrush}"/>
@@ -3090,8 +3108,8 @@
                                 <Border Background="{StaticResource SurfaceStatusBarBrush}" CornerRadius="8" Padding="12,10" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="1">
                                     <StackPanel Spacing="3">
                                         <TextBlock FontSize="12">
-                                            <Run Text="RHI" FontWeight="SemiBold" Foreground="{StaticResource AccentGreenBrush}"/>
-                                            <Run Text=" 제작: RankFTW" Foreground="{StaticResource TextTertiaryBrush}"/>
+                                            <Run Text="BONG DLSS5" FontWeight="SemiBold" Foreground="{StaticResource AccentGreenBrush}"/>
+                                            <Run Text=" 원작: RankFTW (ReShade HDR Installer)" Foreground="{StaticResource TextTertiaryBrush}"/>
                                         </TextBlock>
                                         <TextBlock FontSize="11" Foreground="{StaticResource InlineDescriptionBrush}" TextWrapping="Wrap"
                                                    Text="비공식 도우미 앱입니다. RenoDX, Crosire, pmnoxx와 관련이 없습니다."/>
@@ -3104,8 +3122,8 @@
                         </Border>
 
                         <!-- ── Links ───────────────────────────────────────────────── -->
-                        <Border Background="{StaticResource SurfaceRaisedBrush}" CornerRadius="10" Padding="20,16"
-                                BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="1">
+                        <Border Background="{StaticResource GlassCardFillBrush}" CornerRadius="10" Padding="20,16"
+                                BorderBrush="{StaticResource GlassCardStrokeBrush}" BorderThickness="1">
                             <StackPanel Spacing="8">
                                 <TextBlock Text="링크" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}"/>
                                 <HyperlinkButton NavigateUri="https://github.com/clshortfuse/renodx" Padding="0">

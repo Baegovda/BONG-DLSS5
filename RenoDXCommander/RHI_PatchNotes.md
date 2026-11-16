@@ -1,39 +1,39 @@
-**Recommended: add a GitHub token.** Without one, RHI is limited to 60 GitHub requests an hour, so installs and update checks can fail. A token raises that to 5,000.
+**Recommended: add a GitHub token.** Without one, BONG DLSS5 is limited to 60 GitHub requests an hour, so installs and update checks can fail. A token raises that to 5,000.
 
 1. Go to [github.com/settings/tokens](https://github.com/settings/tokens) and choose **Generate new token (classic)**. Any name and expiry; leave every scope unticked.
-2. In RHI open **Settings → Accounts & Data → GitHub token**, paste it and click **Save**.
+2. In BONG DLSS5 open **Settings → Accounts & Data → GitHub token**, paste it and click **Save**.
 
 ## v2.9.3
 
 ### New
 
-**RHI overlay**
-- Press Alt + ` in a game, or hold View + Menu on a controller, and RHI opens full screen over it, like the Steam overlay. Press it again, or Esc (B on a controller), to go back to the game. RHI must be running, but the tray is fine. It only opens over games in your RHI library, not over other apps.
+**BONG DLSS5 overlay**
+- Press Alt + ` in a game, or hold View + Menu on a controller, and BONG DLSS5 opens full screen over it, like the Steam overlay. Press it again, or Esc (B on a controller), to go back to the game. BONG DLSS5 must be running, but the tray is fine. It only opens over games in your BONG DLSS5 library, not over other apps.
 - Everything is on one screen, laid out to fit it: three columns on wide and ultrawide screens (your game info, screenshots, achievements), two or one on narrower ones. Each column scrolls on its own.
-- Session and playtime: how long you've been playing, your total playtime (Steam's own count for Steam games; for other games RHI counts the time the game is in front), whether Windows HDR is on for the game's monitor (with its peak brightness) and, on handhelds and laptops, the battery.
+- Session and playtime: how long you've been playing, your total playtime (Steam's own count for Steam games; for other games BONG DLSS5 counts the time the game is in front), whether Windows HDR is on for the game's monitor (with its peak brightness) and, on handhelds and laptops, the battery.
 - Achievements: your Steam or Xbox achievements for the game, with search, unlock dates and rarity. Locked ones are sorted most-earned first, so the easiest next ones are at the top. Uses the switches in Settings › Achievements.
 - Screenshots: your ReShade screenshots of the game, newest first. Open one large and step through them, copy, delete (to the Recycle Bin) or open it. New screenshots show up straight away.
-- This game: what RHI has installed in the game, with versions and any updates waiting, plus its DLSS and Streamline versions and the DLSS presets and render scale set in its NVIDIA profile.
-- Info and links: your own notes for the game (also under Game notes… when you right-click a game in RHI), the RenoDX and Luma notes, and the game's Nexus, PCGamingWiki, ultrawide fix, Ultra+ and Discord links.
-- Nothing is installed into the game, so it works with any game RHI knows, including games started from Steam or a shortcut. It works in borderless and windowed games and games using Windows' fullscreen optimisations, but can't show over true exclusive fullscreen.
-- It's off by default: turn it on in Settings › RHI overlay, where you can also change the key or turn off the controller shortcut.
-- Turn it off for one game with the new cog button beside the game's name in Spotlight (Game settings › RHI overlay). Its key then goes to that game instead.
-- Games can still see your controller while the overlay is open. To stop that, turn on Pause the game while open in Settings › RHI overlay: RHI freezes the game until you go back to it. It's experimental and off by default; single-player games only.
+- This game: what BONG DLSS5 has installed in the game, with versions and any updates waiting, plus its DLSS and Streamline versions and the DLSS presets and render scale set in its NVIDIA profile.
+- Info and links: your own notes for the game (also under Game notes… when you right-click a game in BONG DLSS5), the RenoDX and Luma notes, and the game's Nexus, PCGamingWiki, ultrawide fix, Ultra+ and Discord links.
+- Nothing is installed into the game, so it works with any game BONG DLSS5 knows, including games started from Steam or a shortcut. It works in borderless and windowed games and games using Windows' fullscreen optimisations, but can't show over true exclusive fullscreen.
+- It's off by default: turn it on in Settings › BONG DLSS5 overlay, where you can also change the key or turn off the controller shortcut.
+- Turn it off for one game with the new cog button beside the game's name in Spotlight (Game settings › BONG DLSS5 overlay). Its key then goes to that game instead.
+- Games can still see your controller while the overlay is open. To stop that, turn on Pause the game while open in Settings › BONG DLSS5 overlay: BONG DLSS5 freezes the game until you go back to it. It's experimental and off by default; single-player games only.
 
 **HSF frame generation**
 - New HSF row in Extras › MFG Unlocks. HSF (Hunter's Sloppy Frames, by Capt-Hunter) is a ReShade add-on that adds DLSS frame generation, up to 6x, to DirectX 9, 11, 12 and Vulkan games that don't have it, 32-bit games included (Vulkan: 64-bit games).
 - One click installs everything it needs: the add-on, HSF's Streamline and frame generation files, HSF.ini, HSF.fx and iMMERSE LaunchPad for optical flow, with HSF's licence files in its own folder. Set the multiplier and turn FRAME GEN on in HSF's tab in the ReShade overlay.
-- DirectX 12 games work from the first launch: RHI sets up HSF's DirectX 12 mode before the game starts, so there's no restart. It follows your Rendering API override, and the ⚙ can set it up for a game RHI doesn't know runs DirectX 12.
-- RHI keeps HSF up to date in the games it installed it in. Each update brings HSF's clean HSF.ini, as HSF asks, with your HSF settings carried over. The ⚙ shows the installed version and DirectX 12 mode, and turns LaunchPad off if you use LumeniteFX or the game's own motion instead.
-- RTX 20, 30 and 40 cards: installing HSF offers Universal MFG Unlocker too, which those cards need for HSF's frame generation (RTX 40 for more than 2x). RHI detects your graphics card and doesn't ask on RTX 50. 64-bit games get the usual DLL name choice next to the game's exe; 32-bit games get it in HSF's own folder, where HSF loads it. It comes without the RTXMFG-XeSS folder, which HSF doesn't use.
-- Vulkan games use ReShade's Vulkan layer. RHI tells you when a DirectX copy of ReShade (dxgi.dll) in the game's folder would keep HSF out.
+- DirectX 12 games work from the first launch: BONG DLSS5 sets up HSF's DirectX 12 mode before the game starts, so there's no restart. It follows your Rendering API override, and the ⚙ can set it up for a game BONG DLSS5 doesn't know runs DirectX 12.
+- BONG DLSS5 keeps HSF up to date in the games it installed it in. Each update brings HSF's clean HSF.ini, as HSF asks, with your HSF settings carried over. The ⚙ shows the installed version and DirectX 12 mode, and turns LaunchPad off if you use LumeniteFX or the game's own motion instead.
+- RTX 20, 30 and 40 cards: installing HSF offers Universal MFG Unlocker too, which those cards need for HSF's frame generation (RTX 40 for more than 2x). BONG DLSS5 detects your graphics card and doesn't ask on RTX 50. 64-bit games get the usual DLL name choice next to the game's exe; 32-bit games get it in HSF's own folder, where HSF loads it. It comes without the RTXMFG-XeSS folder, which HSF doesn't use.
+- Vulkan games use ReShade's Vulkan layer. BONG DLSS5 tells you when a DirectX copy of ReShade (dxgi.dll) in the game's folder would keep HSF out.
 - Needs ReShade with add-on support and an RTX 40 or newer GPU (RTX 20 and 30 through Universal MFG Unlocker). Never use it in games with online anti-cheat.
 
 **Display modes (Monitor / TV)**
-- Save sets of the settings RHI applies to a game and switch between them from its page, e.g. one for your monitor and one for your TV, or for trying different setups. Modes don't change your display themselves.
+- Save sets of the settings BONG DLSS5 applies to a game and switch between them from its page, e.g. one for your monitor and one for your TV, or for trying different setups. Modes don't change your display themselves.
 - Turn it on in Settings › Display › Display modes. The switch then appears beside the HDR and resolution buttons in Classic+, Tabs and Spotlight, and in the game menu (right-click a game).
 - It starts with Monitor and TV. Add up to 6 modes (e.g. Handheld), rename and reorder them, and set each mode's values with Edit... (e.g. DLDSR on, DLSS preset M at 50% and HDR on). Every game you switch to that mode gets them.
-- What a mode can swap: RenoDX peak, game and UI brightness; RTX HDR peak brightness; ReLimiter, Display Commander and NVIDIA driver frame rate caps; DLSS frame generation (off, 2x to 6x or dynamic); DLSS Super Resolution and Ray Reconstruction presets and render scales; the ReShade preset; ReShade overlay and screenshot keys, ReShade controller navigation and the ReLimiter OSD key; and, when you launch from RHI, Windows HDR, which display gets HDR, the resolution and the launch arguments.
+- What a mode can swap: RenoDX peak, game and UI brightness; RTX HDR peak brightness; ReLimiter, Display Commander and NVIDIA driver frame rate caps; DLSS frame generation (off, 2x to 6x or dynamic); DLSS Super Resolution and Ray Reconstruction presets and render scales; the ReShade preset; ReShade overlay and screenshot keys, ReShade controller navigation and the ReLimiter OSD key; and, when you launch from BONG DLSS5, Windows HDR, which display gets HDR, the resolution and the launch arguments.
 - Custom mode for one game: the ⚙ beside a game's mode switch can make a Custom mode just for that game. Tick the settings it changes and set their values right there. It shows as Custom beside your other modes only for that game; settings it doesn't tick get the game's normal values while it's picked. Delete it from the same ⚙.
 - Games start with their mode off and use your global settings. Click a game's active mode again (or pick Off in the ⚙ or the game menu) to turn its mode off: it goes back to your global settings (peak brightness, ReShade keys, ReLimiter frame rate cap and OSD key; the NVIDIA frame rate cap follows the global one), and settings with no global value go back to what the game had before you first switched it. HDR and resolution go back to the game's HDR and Resolution buttons.
 - A mode only needs the values that differ: anything a mode has no value for uses the game's normal value (your global setting, or what the game had before modes).
@@ -42,35 +42,35 @@
 - ReShade and ReLimiter installs and updates, and the Settings buttons that write peak brightness, keys or ReLimiter settings to all games, keep a game's display mode values while it's in a mode. Settings › Display modes says so at the top.
 
 **Source engine games**
-- RenoDX's Source engine mod now installs from RHI in one click for the games in the Source list (Half-Life 2, Portal, Portal 2, Left 4 Dead 2, Team Fortress 2, Garry's Mod and more), with a Source Engine badge on the game.
-- RHI does the whole setup from the RenoDX instructions: ReShade as d3d9.dll in the right folder, DXVK (stable) loaded through ReShade, and the reshade.ini and dxvk.conf settings. 32-bit games use the bin folder and 64-bit games the main folder. Garry's Mod gets both versions set up (bin for 32-bit, bin\win64 for 64-bit), sharing one set of shaders. Updating the mod keeps it all up to date, and uninstalling removes it again.
+- RenoDX's Source engine mod now installs from BONG DLSS5 in one click for the games in the Source list (Half-Life 2, Portal, Portal 2, Left 4 Dead 2, Team Fortress 2, Garry's Mod and more), with a Source Engine badge on the game.
+- BONG DLSS5 does the whole setup from the RenoDX instructions: ReShade as d3d9.dll in the right folder, DXVK (stable) loaded through ReShade, and the reshade.ini and dxvk.conf settings. 32-bit games use the bin folder and 64-bit games the main folder. Garry's Mod gets both versions set up (bin for 32-bit, bin\win64 for 64-bit), sharing one set of shaders. Updating the mod keeps it all up to date, and uninstalling removes it again.
 - -insecure is added to the game's launch options in RHI. It turns VAC off, so don't join VAC-secured servers while the mod is installed. If you start the game from Steam, add -insecure to its launch options there too.
 - In the game, set High Dynamic Range to Full in the advanced video settings.
-- If RHI already installed ReShade in a 32-bit Source game's main folder, it's moved to bin.
+- If BONG DLSS5 already installed ReShade in a 32-bit Source game's main folder, it's moved to bin.
 
 **Colour themes**
-- New Colour theme setting in Settings › General. Pick Default, OLED Black, Midnight Blue, Ember, Forest, Kiro, Slate, High Contrast or Colour-blind Friendly and RHI changes colour straight away, no restart needed.
-- Custom lets you choose your own colours: background, panels, text, accent, buttons and the status colours (installed, update available, warning, error). Start from any built-in theme and adjust it from there. RHI warns you if text would be hard to read.
+- New Colour theme setting in Settings › General. Pick Default, OLED Black, Midnight Blue, Ember, Forest, Kiro, Slate, High Contrast or Colour-blind Friendly and BONG DLSS5 changes colour straight away, no restart needed.
+- Custom lets you choose your own colours: background, panels, text, accent, buttons and the status colours (installed, update available, warning, error). Start from any built-in theme and adjust it from there. BONG DLSS5 warns you if text would be hard to read.
 - Share a custom theme as a line of text: Share theme copies a code (RHI-THEME:...), and Import theme takes a code someone shared, pasted in, and applies their colours. No files needed.
 - Colour-blind Friendly swaps the green, purple, amber and red status colours for blue, pink, yellow and orange, which stay distinct with red-green colour blindness.
 
 **All OptiScaler settings**
-- New All Settings section in the OptiScaler ⚙: every setting in the game's OptiScaler.ini, with the options the installed OptiScaler build lists in its own ini. Custom builds and forks show their own settings and values (like F5's FG outputs) without waiting for an RHI update.
+- New All Settings section in the OptiScaler ⚙: every setting in the game's OptiScaler.ini, with the options the installed OptiScaler build lists in its own ini. Custom builds and forks show their own settings and values (like F5's FG outputs) without waiting for an BONG DLSS5 update.
 - Pick a section or search all settings; hover one for its description. Nothing is written until you press Apply, and the old ini is backed up first.
 - Applied changes are saved for that game and written again when OptiScaler is reinstalled, updated or switched to another version.
 - New Save ini and Load saved ini buttons at the bottom of the OptiScaler ⚙. Save a game's OptiScaler.ini under any name (as many as you like), or add one from a file, then load it into any game. The game keeps using it after a reinstall or update.
 
 **Foveated DLSS5 Tool**
 - New Foveated switch in Neural Rendering for the DLSS5 Tool and DLSS5 Tool + DX11 Bridge methods. It installs FoveatedDLSS5 (by maximedgoulet) instead of the stock add-on: Neural Rendering runs at full resolution in the centre of the screen, at lower resolution around it, and not at all at the edges. The author measured about 65% more fps, and the gain is biggest on ultrawide screens.
-- With the switch on, the version list shows Foveated releases. Latest keeps it up to date on its own, and RHI's stock DLSS5 Tool updates no longer replace it. Switching while installed swaps the add-on in place.
+- With the switch on, the version list shows Foveated releases. Latest keeps it up to date on its own, and BONG DLSS5's stock DLSS5 Tool updates no longer replace it. Switching while installed swaps the add-on in place.
 - Each download is checked against the hash published with the release.
 - It's a pre-release built on an older DLSS5 Tool (7.5.0-rc5). Turn on foveation and set the zones in the add-on's own settings in the ReShade overlay.
 
 **ANR FG preset**
 - New ANR FG preset in the OptiScaler ⚙. It installs ANR FG (Apex Neural Rendering frame generation, beta) and sets OptiScaler up to run it in place of the game's DLSS frame generation. Turn on DLSS frame generation in the game to use it.
-- Needs OptiScaler Nightly, or a fork or custom build based on a recent Nightly (RHI checks the installed build), and a game with DLSS frame generation. Works on NVIDIA RTX 20 and newer and GTX 16, AMD RX 5000 and newer, and Intel Arc.
-- RHI downloads the newest ANR FG release from Apex Compute's GitHub and checks it against the release's published hashes. Applying the preset again updates it, and your ANR settings (nr_fg.ini) are kept.
-- Warning: ANR FG is closed source. Apex Compute publishes only the DLL, not its code, so nobody outside Apex Compute can check what it does. RHI tells you this before the first install, and you decide whether to go ahead.
+- Needs OptiScaler Nightly, or a fork or custom build based on a recent Nightly (BONG DLSS5 checks the installed build), and a game with DLSS frame generation. Works on NVIDIA RTX 20 and newer and GTX 16, AMD RX 5000 and newer, and Intel Arc.
+- BONG DLSS5 downloads the newest ANR FG release from Apex Compute's GitHub and checks it against the release's published hashes. Applying the preset again updates it, and your ANR settings (nr_fg.ini) are kept.
+- Warning: ANR FG is closed source. Apex Compute publishes only the DLL, not its code, so nobody outside Apex Compute can check what it does. BONG DLSS5 tells you this before the first install, and you decide whether to go ahead.
 
 **Screenshots in Spotlight**
 - New picture button beside the game's name in Spotlight: opens your ReShade screenshots of the game in the side panel, newest first.
@@ -95,14 +95,14 @@ Search now works much like Steam's:
 
 
 **Game Pass games**
-- Game Pass games installed to an Xbox games folder (the Xbox app's default) now use that folder instead of the protected WindowsApps one. The folder no longer changes when the game updates, so installed mods stay recognised, and RHI can read the game's files to detect its graphics API and DLSS like any other game.
+- Game Pass games installed to an Xbox games folder (the Xbox app's default) now use that folder instead of the protected WindowsApps one. The folder no longer changes when the game updates, so installed mods stay recognised, and BONG DLSS5 can read the game's files to detect its graphics API and DLSS like any other game.
 - Existing installs carry over on their own: nothing is moved or reinstalled.
 
 **GITC Uplift**
 - GITC Uplift 2.0 starts every game session with NR off. Turn it on in game with Uplift's NR on/off key (below) or in its tab in the ReShade overlay.
-- New GITC Uplift card in Settings › Components with an NR on/off key: the key that turns Uplift's NR on and off in game. RHI writes it into games when it installs Uplift, and Write key to all Uplift games writes it to every game with Uplift.
+- New GITC Uplift card in Settings › Components with an NR on/off key: the key that turns Uplift's NR on and off in game. BONG DLSS5 writes it into games when it installs Uplift, and Write key to all Uplift games writes it to every game with Uplift.
 - GITC Uplift now installs iMMERSE Launchpad, which gives it motion vectors in games without DLSS, and turns it on above the Uplift effect in ReShade. It's on by default in games without DLSS, including existing installs. Games with DLSS use their own motion vectors: turn on the new iMMERSE Launchpad toggle under the Neural Rendering section if those look wrong in a game.
-- iMMERSE Launchpad is kept at the top of the game's ReShade effects, above GITC Uplift and HSF, which use its motion in the same frame. HSF switched it on at the bottom of the list. RHI moves it when the game isn't running and changes nothing else.
+- iMMERSE Launchpad is kept at the top of the game's ReShade effects, above GITC Uplift and HSF, which use its motion in the same frame. HSF switched it on at the bottom of the list. BONG DLSS5 moves it when the game isn't running and changes nothing else.
 - Neural Rendering: added a GITC Uplift link to the links at the bottom of the section.
 
 **DLSS5 Feeder 2.0**
@@ -113,7 +113,7 @@ Search now works much like Steam's:
 **Top bar and game list sizes**
 - Resize the top bar in every layout: drag its bottom edge, or pick a size in Settings › General › Top bar size. It changes size on its own, on top of the interface size.
 - Resize the game list in Classic+ and Tabs: drag its right edge, or pick a size in Settings › General › Game list size. Its text, rows and width change together.
-- RHI remembers the sizes. Double-click an edge to reset it.
+- BONG DLSS5 remembers the sizes. Double-click an edge to reset it.
 
 **Shader picker**
 - Bigger, and uses the space: packs are cards in two columns, highlighted when selected, with a green tick when downloaded and their full description.
@@ -128,7 +128,7 @@ Search now works much like Steam's:
 - New options in Settings › Display & HDR hide the HDR or Resolution button on game pages. A game's own HDR and resolution choice still applies when you launch it from RHI.
 
 **Achievements**
-- New Show hidden button beside the achievement search, in Spotlight and in the RHI overlay. It shows the name and description of hidden achievements you haven't unlocked yet, which may spoil the story. Off by default.
+- New Show hidden button beside the achievement search, in Spotlight and in the BONG DLSS5 overlay. It shows the name and description of hidden achievements you haven't unlocked yet, which may spoil the story. Off by default.
 
 **Spotlight**
 - The Covers at bottom / top button is now a cog by the game counts. It has Covers below the game page and a new No background option, which gives the search, filters and covers the page colour instead of their own panel colour.
@@ -146,19 +146,19 @@ Search now works much like Steam's:
 ### Bug Fixes
 
 **HDR and resolution when a game closes**
-- Fixed HDR and resolution not going back after you refreshed or restarted RHI while a game it started was running. RHI now remembers the games it started (Launch button or an RHI shortcut): they still show as running, and HDR and resolution go back when they close. If a game closed while RHI wasn't open, RHI switches them back the next time it starts.
-- Fixed HDR and resolution never going back for games started through a launch exe from RHI's game data, and staying changed when RHI couldn't find a way to start the game.
-- Fixed one game turning HDR off or changing the resolution back while another game started from RHI was still running.
+- Fixed HDR and resolution not going back after you refreshed or restarted BONG DLSS5 while a game it started was running. BONG DLSS5 now remembers the games it started (Launch button or an BONG DLSS5 shortcut): they still show as running, and HDR and resolution go back when they close. If a game closed while BONG DLSS5 wasn't open, BONG DLSS5 switches them back the next time it starts.
+- Fixed HDR and resolution never going back for games started through a launch exe from BONG DLSS5's game data, and staying changed when BONG DLSS5 couldn't find a way to start the game.
+- Fixed one game turning HDR off or changing the resolution back while another game started from BONG DLSS5 was still running.
 
 **Game Pass games**
-- Fixed Game Pass games installed to an Xbox games folder never showing as running when launched from RHI, so HDR and resolution weren't switched back when they closed.
+- Fixed Game Pass games installed to an Xbox games folder never showing as running when launched from BONG DLSS5, so HDR and resolution weren't switched back when they closed.
 - Fixed Game Pass games with GITC Uplift showing an unknown graphics API after every launch.
 - Fixed Game Pass games getting the wrong game folder, a folder-style name (Halo- Campaign Evolved) and not launching when Windows couldn't list installed apps.
 
 **Settings not saved**
-- Fixed ReBAR changes (turning ReBAR on or off globally, the ReBAR mode and per-game ReBAR) not being saved since v2.8.9. RHI reported them as done, but the helper that writes them couldn't find a file it needs.
+- Fixed ReBAR changes (turning ReBAR on or off globally, the ReBAR mode and per-game ReBAR) not being saved since v2.8.9. BONG DLSS5 reported them as done, but the helper that writes them couldn't find a file it needs.
 - Fixed a fresh Display Commander install getting no DisplayCommander.ini since v2.8.9.
-- Fixed Low Latency Mode sometimes not being saved to the game's NVIDIA profile when RHI had to ask for admin to change it.
+- Fixed Low Latency Mode sometimes not being saved to the game's NVIDIA profile when BONG DLSS5 had to ask for admin to change it.
 
 **Vulkan ReShade**
 - Fixed Vulkan games keeping an old ReShade version (for example 6.7.3 after 6.8.0 came out). Installing ReShade on a Vulkan game now also brings the shared Vulkan ReShade up to the chosen channel, and Vulkan games now show when a ReShade update is available, so Update All updates them.
@@ -166,19 +166,19 @@ Search now works much like Steam's:
 - Fixed choosing a Legacy version on a Vulkan game doing nothing. It now asks to apply the version to all Vulkan games, like the other channels, and switches it.
 
 **RenoDX**
-- Fixed a RenoDX addon saved as a second download (for example renodx-ue-extended (1).addon64) not being recognised, so the game showed Download from Discord. Installing or updating now also removes such copies, so the game no longer loads the mod twice, and dropping one onto RHI installs it under its proper name.
-- Fixed Download from Discord staying on a game after uninstalling an unrecognised RenoDX addon, until RHI was restarted.
-- Fixed the HDR Gaming Database link (KoKlusz's HDR analysis of the game) missing from every game's RenoDX and Luma Info: the database changed its game list to a table, which RHI couldn't read.
+- Fixed a RenoDX addon saved as a second download (for example renodx-ue-extended (1).addon64) not being recognised, so the game showed Download from Discord. Installing or updating now also removes such copies, so the game no longer loads the mod twice, and dropping one onto BONG DLSS5 installs it under its proper name.
+- Fixed Download from Discord staying on a game after uninstalling an unrecognised RenoDX addon, until BONG DLSS5 was restarted.
+- Fixed the HDR Gaming Database link (KoKlusz's HDR analysis of the game) missing from every game's RenoDX and Luma Info: the database changed its game list to a table, which BONG DLSS5 couldn't read.
 
 **Neural Rendering**
-- Fixed a GITC Uplift update while a game was running leaving its add-on and helper on different versions. From Uplift 2.0 the two must match, so RHI now updates both together or waits for the next check.
+- Fixed a GITC Uplift update while a game was running leaving its add-on and helper on different versions. From Uplift 2.0 the two must match, so BONG DLSS5 now updates both together or waits for the next check.
 - Fixed removing DLSS5 Feeder deleting the game's ReShade preset when the preset was there before Feeder.
 - Fixed DLSS5 Feeder's motion vector choice being written to reshade.ini, where Feeder doesn't read it. It's now set in the preset, as Feeder's own installer does.
-- Fixed a 32-bit DLSS5 Feeder install possibly pairing the add-on with a host64 helper from another Feeder release after a 64-bit game was set to an older Feeder version. Feeder 2.0.0 refuses a mismatched pair, so RHI now downloads a matching pair if needed.
+- Fixed a 32-bit DLSS5 Feeder install possibly pairing the add-on with a host64 helper from another Feeder release after a 64-bit game was set to an older Feeder version. Feeder 2.0.0 refuses a mismatched pair, so BONG DLSS5 now downloads a matching pair if needed.
 
 **OptiScaler**
 - Fixed OptiScaler updates deleting custom upscalers and frame generation providers in OptiScaler's custom folder.
-- Fixed OptiPatcher never updating: a change in its release notes stopped RHI reading its version, so it always showed as up to date and new game patches never arrived.
+- Fixed OptiPatcher never updating: a change in its release notes stopped BONG DLSS5 reading its version, so it always showed as up to date and new game patches never arrived.
 - Fixed the OptiScaler ⚙'s FG Nvngx Override being greyed out and not saved when FG Input was DLSSG via Nvngx, where OptiScaler uses it.
 
 **Game info and artwork**
@@ -186,16 +186,16 @@ Search now works much like Steam's:
 - Fixed achievement pictures missing for older Steam games such as Half-Life 2.
 
 **Other**
-- Fixed some GOG games (Ghost Song and other Unity games) showing as 32-bit, so ReShade and RenoDX installed the 32-bit files. RHI was reading GOG's uninstaller instead of the game. Affected games correct themselves on the next launch.
+- Fixed some GOG games (Ghost Song and other Unity games) showing as 32-bit, so ReShade and RenoDX installed the 32-bit files. BONG DLSS5 was reading GOG's uninstaller instead of the game. Affected games correct themselves on the next launch.
 - Fixed RTX Encore missing from the Extras summary (the collapsed section header and Spotlight's Extras tile) in games where it is installed.
 - Fixed buttons briefly flashing bright when the pointer moved over or off them with Windows animation effects on. Thanks Hyydro for finding the cause.
 - Fixed Update History missing updates for GITC Uplift, Universal MFG Unlocker, DLSS Enabler, DLSSNR Cost Scaler, Ultimate ASI Loader, DXVK, RE Framework, UE DOF Fix, ReShade Nightly, DLSS and Streamline files and Nexus mods, and listing DLSS5 Feeder and DX11 Bridge updates as RenoDX DLSS5.
-- Fixed Reset install folder going back to a folder you had picked earlier instead of the one RHI detected, after changing and resetting a game's folder more than once. Refresh corrects games this already happened to.
-- Fixed a game's install folder showing a folder that doesn't exist while RHI starts, for games with a changed install folder.
+- Fixed Reset install folder going back to a folder you had picked earlier instead of the one BONG DLSS5 detected, after changing and resetting a game's folder more than once. Refresh corrects games this already happened to.
+- Fixed a game's install folder showing a folder that doesn't exist while BONG DLSS5 starts, for games with a changed install folder.
 
 ### Manifest Updates
 
-- Phantom Blade Zero: mods now go in the game's exe folder (platform\steam), where the ASI Loader and OptiScaler need to be. RHI moves existing installs there on its own.
+- Phantom Blade Zero: mods now go in the game's exe folder (platform\steam), where the ASI Loader and OptiScaler need to be. BONG DLSS5 moves existing installs there on its own.
 - PD-Upscaler REFramework (Resident Evil 2, 3, 4, 7 and Village) installs again. Its per-game downloads were removed, so it now uses the universal PD-Upscaler build.
 - Ghost Song is always treated as a 64-bit game.
 - Dead Space 2 and Dead Space 3 are no longer matched to a RenoDX mod from the wiki.
@@ -212,7 +212,7 @@ Search now works much like Steam's:
 - Built for performance and ease of use: drop it in, switch it on. Choose a Look, keep characters' faces true to the original with Keep faces, and lower the Resolution to trade a little detail for more speed and less video memory. A status card in ReShade tells you whether it's working and, if not, what to fix.
 - It now replaces DLSS5 Feeder as the default method for 64-bit DX11, DX12 and Vulkan games without DLSS. Games that already have a method keep theirs.
 - Install it from the Neural Rendering section, then in game open ReShade (Home), go to the GITC Uplift tab and tick Enable. For single-player games only.
-- Uplift Version lets you follow the latest release or stay on one. RHI keeps it up to date, and only removes its own files when you uninstall or switch method.
+- Uplift Version lets you follow the latest release or stay on one. BONG DLSS5 keeps it up to date, and only removes its own files when you uninstall or switch method.
 - OpenGL games such as OpenMW are set up for it automatically, so it works with anti-aliasing on.
 
 **Steam and Xbox achievements (Spotlight)**
@@ -228,28 +228,28 @@ Search now works much like Steam's:
 **Custom OptiScaler builds**
 - Use any OptiScaler build you like. Add one in Settings › Components › Custom OptiScaler builds from a download link (GitHub, Discord or anywhere else), a zip, 7z or rar file, a folder, or just an OptiScaler.dll. You can also drag the file onto RHI.
 - Then pick it as the Version in a game's OptiScaler ⚙, or as your Default version. It installs and uninstalls like the built-in versions and keeps your OptiScaler settings.
-- RHI never updates custom builds. When a new version comes out, use Replace and RHI offers to update the games that use it.
-- Adding a Neural Rendering fork? Tick DLSS NR DLL on it so RHI adds NVIDIA's Neural Rendering file too.
+- BONG DLSS5 never updates custom builds. When a new version comes out, use Replace and BONG DLSS5 offers to update the games that use it.
+- Adding a Neural Rendering fork? Tick DLSS NR DLL on it so BONG DLSS5 adds NVIDIA's Neural Rendering file too.
 - Only add builds from people you trust.
 
 **More OptiScaler versions**
-- Popular OptiScaler forks now sit alongside Stable, Nightly, DLSS NR and F5 DLSSNR: Venom, NR PreSR MFG and OpenNR to start with. RHI downloads them and keeps them up to date like the others, and more can be added without an RHI update.
+- Popular OptiScaler forks now sit alongside Stable, Nightly, DLSS NR and F5 DLSSNR: Venom, NR PreSR MFG and OpenNR to start with. BONG DLSS5 downloads them and keeps them up to date like the others, and more can be added without an BONG DLSS5 update.
 
 ### Changes
 
 **OptiScaler**
 - The OptiScaler ⚙ shows the version you have and the latest one, with Check now to look for an update straight away and Update to install it.
 - New Release setting in the OptiScaler ⚙: keep a game on an older release of Stable, DLSS NR, F5 DLSSNR or a fork. Pinned games aren't updated.
-- New Remove old Nightly builds option (Settings › Components › OptiScaler, off by default). Every Nightly build RHI downloads takes 200-300 MB, so turn this on to delete old ones automatically. The newest build and any build a game is pinned to are kept.
+- New Remove old Nightly builds option (Settings › Components › OptiScaler, off by default). Every Nightly build BONG DLSS5 downloads takes 200-300 MB, so turn this on to delete old ones automatically. The newest build and any build a game is pinned to are kept.
 
 **Moving games**
-- After Change install folder or Reset install folder, RHI offers to move the game's mods, settings and presets to the new folder. When RHI corrects a folder itself, it moves them automatically. Nothing is moved while the game is running.
+- After Change install folder or Reset install folder, BONG DLSS5 offers to move the game's mods, settings and presets to the new folder. When BONG DLSS5 corrects a folder itself, it moves them automatically. Nothing is moved while the game is running.
 
 **Spotlight**
 - New Covers at bottom button (right of the search box) moves the game covers, search and filters below the game page. Click Covers at top to undo. The controller follows the layout.
 - The Filters button is now a small filter icon to the left of All / Installed / Favourites / Hidden.
 - The game banner gets taller on wide windows (ultrawide screens, or a small interface size), so its artwork is no longer cropped to a thin, zoomed-in strip.
-- Resize the banner and the game covers with the mouse: drag the banner's bottom edge, or the edge of the cover strip facing the game page, and they change size as you drag. RHI remembers the sizes. Double-click an edge to reset it.
+- Resize the banner and the game covers with the mouse: drag the banner's bottom edge, or the edge of the cover strip facing the game page, and they change size as you drag. BONG DLSS5 remembers the sizes. Double-click an edge to reset it.
 - Hold the left mouse button on the game covers and drag left or right to scroll through them. A click still selects a game.
 
 **Controller**
@@ -260,15 +260,15 @@ Search now works much like Steam's:
 - Interface size (Settings › General, or Ctrl + mouse wheel) now changes in smaller 5% steps and goes up to 200%.
 
 **Other**
-- What's New: the search box is now a small box above the version list, so the notes are taller. The arrow on the left hides the versions and search to widen the notes, and + and − change the text size. RHI remembers both.
-- With a GitHub token (Settings › Accounts & Data), RHI now checks for updates every hour while it's open instead of every 4 hours. Without a token it stays at every 4 hours, because GitHub allows far fewer requests without one.
+- What's New: the search box is now a small box above the version list, so the notes are taller. The arrow on the left hides the versions and search to widen the notes, and + and − change the text size. BONG DLSS5 remembers both.
+- With a GitHub token (Settings › Accounts & Data), BONG DLSS5 now checks for updates every hour while it's open instead of every 4 hours. Without a token it stays at every 4 hours, because GitHub allows far fewer requests without one.
 - MFG Ada Unlock is now called MFG Unlock, to match the mod. It brings DLSS frame generation to RTX 20 and 30 Series cards (experimental). Your installs and settings carry over.
 - Support the Mod Authors (Help › Donate) can show both Ko-fi and Patreon buttons for an author.
 
 ### Bug Fixes
 
 **Performance**
-- Fixed RHI showing "Not Responding" for a minute or more, and sometimes restarting itself, while a demanding game was running.
+- Fixed BONG DLSS5 showing "Not Responding" for a minute or more, and sometimes restarting itself, while a demanding game was running.
 
 **OptiScaler**
 - Fixed F5 DLSSNR, DLSS NR and Nightly installing an old downloaded copy when a newer release was out (for example F5 0.1.29 instead of 0.1.37), even after reinstalling.
@@ -277,21 +277,21 @@ Search now works much like Steam's:
 - Fixed F5 DLSSNR showing the Stable version number on some games, and not being downloaded at startup like the other versions.
 
 **Running games**
-- Fixed RHI tracking a game's crash reporter instead of the game itself (Phantom Blade Zero and other Unreal Engine games from Steam or Epic). The game could show as running after it closed, and HDR and resolution could switch back at the wrong time.
+- Fixed BONG DLSS5 tracking a game's crash reporter instead of the game itself (Phantom Blade Zero and other Unreal Engine games from Steam or Epic). The game could show as running after it closed, and HDR and resolution could switch back at the wrong time.
 
 **Game detection**
 - Fixed some games from the new Epic Games launcher not being found (for example Cyberpunk 2077 and Alan Wake 2).
-- Fixed Launch doing nothing for some Epic games (for example Alan Wake 2): RHI now starts them the same way Epic's own desktop shortcuts do.
+- Fixed Launch doing nothing for some Epic games (for example Alan Wake 2): BONG DLSS5 now starts them the same way Epic's own desktop shortcuts do.
 - Fixed some games being detected as DirectX 12 when they aren't (for example OpenMW, which uses OpenGL), so the wrong ReShade setup was offered.
 
 **Install folders and DLSS**
-- Fixed Reset install folder going back to the folder you picked instead of the one RHI found.
+- Fixed Reset install folder going back to the folder you picked instead of the one BONG DLSS5 found.
 - Fixed the game header still showing the old folder after you changed it.
 - Fixed DLSS / Streamline finding no files for some Unreal Engine games (for example Phantom Blade Zero), including after their install folder was changed.
 
 **Updates**
 - Fixed RE Framework getting stuck on an older version once GitHub's hourly limit was reached (without a GitHub token).
-- Fixed Check for updates spinning forever when GitHub's website was slow to respond. RHI now stops waiting for GitHub's pages after 30 seconds and carries on without them, and the check tells you when it's waiting for RHI's game scan to finish.
+- Fixed Check for updates spinning forever when GitHub's website was slow to respond. BONG DLSS5 now stops waiting for GitHub's pages after 30 seconds and carries on without them, and the check tells you when it's waiting for BONG DLSS5's game scan to finish.
 
 **Game Overrides**
 - Fixed changing the ReShade DLL name renaming Display Commander's file to "--------" (or the other way round). Games this happened to are fixed the next time you open them.
@@ -300,7 +300,7 @@ Search now works much like Steam's:
 - Fixed games using RTX HDR or Auto HDR showing "—" instead of RTX HDR or Auto HDR on the RenoDX row, the Overview card and Spotlight.
 - Fixed hard-to-read headings in What's New, the message of the day and mod release notes when Windows is in Light mode.
 - Fixed the Luma filter chip being cut off when Filters is open.
-- Fixed dropping a ReShade preset onto RHI failing with "Storage Error ... being used by another process" when the preset came from RHI's own presets folder.
+- Fixed dropping a ReShade preset onto BONG DLSS5 failing with "Storage Error ... being used by another process" when the preset came from BONG DLSS5's own presets folder.
 - Fixed the version numbers on the Tabs and Spotlight component cards not opening the mod's page when clicked, and not showing the hand cursor.
 
 ### Manifest Updates
@@ -311,15 +311,15 @@ Search now works much like Steam's:
 
 ### Bug Fixes
 
-- Fixed installing or updating OptiScaler F5 DLSSNR failing with "OptiScaler F5 staging not available". The F5 release renamed its download, and RHI no longer recognised it.
-- Fixed some Unreal Engine games (for example Phantom Blade Zero) showing "No RenoDX mod available" even though the game page said Unreal Engine. This happened when RHI's scan of the game folder didn't recognise the engine, for example if it was scanned while still downloading. Games RHI knows are Unreal Engine 4 or 5 now always get the Unreal Engine mod.
+- Fixed installing or updating OptiScaler F5 DLSSNR failing with "OptiScaler F5 staging not available". The F5 release renamed its download, and BONG DLSS5 no longer recognised it.
+- Fixed some Unreal Engine games (for example Phantom Blade Zero) showing "No RenoDX mod available" even though the game page said Unreal Engine. This happened when BONG DLSS5's scan of the game folder didn't recognise the engine, for example if it was scanned while still downloading. Games BONG DLSS5 knows are Unreal Engine 4 or 5 now always get the Unreal Engine mod.
 
 ## v2.9.0
 
 ### New
 
 **Tabs layout**
-- A new layout switch on the top bar (Classic+ | Tabs | Spotlight). Tabs is a redesigned RHI window that shows the game page one tab at a time instead of one long page. Classic+, the layout you know with the new top bar, stays the default, and every setting is available in every layout.
+- A new layout switch on the top bar (Classic+ | Tabs | Spotlight). Tabs is a redesigned BONG DLSS5 window that shows the game page one tab at a time instead of one long page. Classic+, the layout you know with the new top bar, stays the default, and every setting is available in every layout.
 - **Game header:** the game's name in large type with a Favourite star and Hide, tags for the store, engine, graphics API, 32/64-bit and mod author, the install path with Open folder and Config folder, and links to Nexus Mods, PCGamingWiki, ultrawide fixes and Ultra+. A large Launch button has a menu for the executable, launch arguments and a desktop shortcut, and HDR on launch and Resolution switch are labelled toggles.
 - **Overview tab:** a card for each component (ReShade, RenoDX or Luma, RE Framework, DOF Fix and the frame limiter) with its version, a short description, the main button and Info, ⚙ and remove. ReLimiter and Display Commander share one card with a switch between them. Below, an At a glance tile for every other section shows its summary; click one to open that tab.
 - **Section tabs:**
@@ -329,7 +329,7 @@ Search now works much like Steam's:
   - Extras is grouped into Loaders and upscalers, MFG unlocks and API upgrades, with a description for each component. When something can't be installed, the row says why (for example, DLSS Enabler is already provided by OptiScaler).
   - Management is a row of large buttons: Change install folder, Reset Overrides, Copy Report, Reset install folder and Remove from RHI.
 - **Sidebar:** All, Installed, Favourites and Hidden as one switch, with the engine and mod filters (and your saved search filters) behind a Filters button.
-- The tabs are always in the same order (Overview, Game Overrides, Extras, DLSS / Streamline, Driver Settings, Neural Rendering, Management), and RHI remembers which tab you were on.
+- The tabs are always in the same order (Overview, Game Overrides, Extras, DLSS / Streamline, Driver Settings, Neural Rendering, Management), and BONG DLSS5 remembers which tab you were on.
 - A component's ⚙ settings open right under it on the page instead of in a pop-up. Click ⚙ again, or ✕, to close them.
 
 **Spotlight layout**
@@ -346,32 +346,32 @@ Search now works much like Steam's:
 - Use an Xbox or PlayStation controller in the Spotlight layout. D-pad or left stick moves around, A selects, B goes back (closes a menu, the side panel or Settings), Y launches the game, X opens the game menu, LB / RB switch to the previous / next game, LT / RT skip 10 games back / on (hold them to keep going), View opens and closes Filters, Menu opens and closes Settings and the right stick scrolls. Click the left stick to switch between All, Installed and Favourites, and the right stick to go straight back to the game's cover from anywhere.
 - Up and Down move a row at a time (top bar, filters, covers, the game's buttons, each line of tiles) and Left and Right stay in the row; Up and Down go to whatever is straight above or below. From the cover shelf, Down goes to Launch; left and right on the shelf pick the next game, and the row scrolls to keep the selected cover in the middle (it moves towards the edge only near the start or end of the list). Up goes to the All / Installed / Favourites / Hidden switch and search box, then to Available Mods, Shaders & Addons and the rest of the top bar; Down comes back to the selected game. A tile opens its section in the side panel with the first setting selected; LB / RB move to the previous / next section, and B returns to the tile. On Settings, LB / RB jump between sections, and opening Settings with the controller starts on the section list on the left.
 - Dropdowns open on the current choice; A picks, B closes without changing the setting. Menus and submenus open and close with the D-pad, A and B, and B closes dialogs. In What's New, the D-pad moves through the versions (each one shows as you reach it) and the right stick scrolls the notes.
-- Y shows a "Launching …" message and ignores a second press for the same game for a few seconds. When you come back to RHI afterwards, the game's cover is selected again.
-- When a game you started from RHI closes, RHI comes back to the front on its own, so the controller works straight away without clicking the window. It stays in the tray if you'd put it there.
+- Y shows a "Launching …" message and ignores a second press for the same game for a few seconds. When you come back to BONG DLSS5 afterwards, the game's cover is selected again.
+- When a game you started from BONG DLSS5 closes, BONG DLSS5 comes back to the front on its own, so the controller works straight away without clicking the window. It stays in the tray if you'd put it there.
 - The focused button or tile gets a blue outline, like the selected cover. A bar of button hints shows only what each button does where you are; it appears once you use the controller and hides when you move or click the mouse. While you use the controller, a mouse pointer resting on the window no longer highlights buttons or pops up tooltips as things move under it; move the mouse to use it again.
-- The controller only works while RHI is the active window, so it never does anything in RHI while you're playing. Buttons held when you switch back to RHI are ignored until you let go.
-- PlayStation controllers work too, with nothing extra to install: DualShock 4, DualSense and DualSense Edge, over USB or Bluetooth. The button hints then show PlayStation buttons (✕ ○ □ △, L1 / R1, Options). If DS4Windows or Steam also shows the controller as an Xbox pad, RHI uses that one, so presses never count twice.
+- The controller only works while BONG DLSS5 is the active window, so it never does anything in BONG DLSS5 while you're playing. Buttons held when you switch back to BONG DLSS5 are ignored until you let go.
+- PlayStation controllers work too, with nothing extra to install: DualShock 4, DualSense and DualSense Edge, over USB or Bluetooth. The button hints then show PlayStation buttons (✕ ○ □ △, L1 / R1, Options). If DS4Windows or Steam also shows the controller as an Xbox pad, BONG DLSS5 uses that one, so presses never count twice.
 - Turn it off in Settings › General › Windows and Admin Mode › Controller support.
 
-**Remove a game from RHI**
-- Management has a new Remove from RHI button. Unlike Hide, the game is gone from every list, including Hidden, and doesn't come back when RHI scans your games. You can uninstall its components at the same time.
+**Remove a game from BONG DLSS5**
+- Management has a new Remove from BONG DLSS5 button. Unlike Hide, the game is gone from every list, including Hidden, and doesn't come back when BONG DLSS5 scans your games. You can uninstall its components at the same time.
 - Changed your mind? Settings › Tools & Maintenance › Troubleshooting › Removed games lists every game you've removed, with Restore to put it back. A game you added yourself is deleted instead; add it again to get it back.
 - In Management, Reset install folder is now its own button next to Remove from RHI.
 
 **Custom game folders**
 - Settings › Tools & Maintenance › Custom game folders: add folders where you keep DRM-free or other non-store games. Each folder inside one is treated as a game (or add a single game's folder).
-- RHI checks them when it starts, on Refresh and when you click Scan now. Games it finds are never added on their own: a "new games found in your custom folders" link appears in the status bar, and Review lets you pick which to add.
-- For each game you can fix the name and choose the exe. RHI picks the most likely one (skipping installers, redistributables and crash reporters, and ranking launchers lower) and says "Check the exe" when two look alike. The chosen exe is used to launch the game and decides where components are installed.
+- BONG DLSS5 checks them when it starts, on Refresh and when you click Scan now. Games it finds are never added on their own: a "new games found in your custom folders" link appears in the status bar, and Review lets you pick which to add.
+- For each game you can fix the name and choose the exe. BONG DLSS5 picks the most likely one (skipping installers, redistributables and crash reporters, and ranking launchers lower) and says "Check the exe" when two look alike. The chosen exe is used to launch the game and decides where components are installed.
 - Ignore selected stops a game being offered again, and so does removing a game you added this way. Forget ignored games in the same card undoes that.
 
 ### Changes
 
 **Top bar**
-- A new top bar, the same in all three layouts (the usual RHI window is now called Classic+): Available Mods and Shaders & Addons, when RHI last checked for updates, refresh, Update All with how many games have updates (or All up to date), the layout switch, a Help menu (Quick Start, Guide, Discord, wiki and GitHub links, patch notes, message of the day, update log, About and Donate) and Settings.
-- The Settings button stays lit while Settings is open; click it again, or the RHI logo, to go back to your games.
+- A new top bar, the same in all three layouts (the usual BONG DLSS5 window is now called Classic+): Available Mods and Shaders & Addons, when BONG DLSS5 last checked for updates, refresh, Update All with how many games have updates (or All up to date), the layout switch, a Help menu (Quick Start, Guide, Discord, wiki and GitHub links, patch notes, message of the day, update log, About and Donate) and Settings.
+- The Settings button stays lit while Settings is open; click it again, or the BONG DLSS5 logo, to go back to your games.
 - The game list in Classic+ is the same as in Tabs: dark navy colours, All / Installed / Favourites / Hidden under the search box, and a Filters button next to the counts for the engine and mod filters and your saved search filters.
 - Tooltips everywhere use the same dark navy look.
-- Patch notes, Message from RHI, Support the Mod Authors and Multi Frame Generation are restyled to match; mod authors are shown as cards, two across.
+- Patch notes, Message from BONG DLSS5, Support the Mod Authors and Multi Frame Generation are restyled to match; mod authors are shown as cards, two across.
 - Every other pop-up (Update Inclusion, ReShade presets, confirmations and the rest) uses the same dark navy look.
 - Patch notes list every version down the left; click one to read its notes. A search box finds a word across every version and shows each matching line.
 
@@ -389,11 +389,11 @@ Search now works much like Steam's:
 - New DXGI Spoofing setting in OptiScaler's ⚙ on every version: Auto, True or False. True makes the game see an NVIDIA GPU so it offers DLSS options. Auto turns it on for AMD and Intel and off for NVIDIA. Set it to False if a game crashes or misbehaves with spoofing on. Presets save it too.
 
 **Interface size**
-- New Interface size setting (Settings → General → Windows and Admin Mode), from 50% to 150%. It makes RHI's window smaller or larger without changing Windows' scaling, for TVs and high-DPI screens set to 200% or more. Pop-ups, dropdown lists and tooltips keep the Windows size.
-- Hold Ctrl and turn the mouse wheel anywhere in RHI to change the interface size, like zooming in a browser. The new size shows in the status bar and is remembered.
+- New Interface size setting (Settings → General → Windows and Admin Mode), from 50% to 150%. It makes BONG DLSS5's window smaller or larger without changing Windows' scaling, for TVs and high-DPI screens set to 200% or more. Pop-ups, dropdown lists and tooltips keep the Windows size.
+- Hold Ctrl and turn the mouse wheel anywhere in BONG DLSS5 to change the interface size, like zooming in a browser. The new size shows in the status bar and is remembered.
 
 **Adding games**
-- A game you add yourself (Add Game, or dropping its exe on RHI) now opens straight away, so you don't have to find it in the list. If your search or filter would hide it, they're cleared.
+- A game you add yourself (Add Game, or dropping its exe on BONG DLSS5) now opens straight away, so you don't have to find it in the list. If your search or filter would hide it, they're cleared.
 
 **Message of the day**
 - Links in the message can now be clicked.
@@ -402,38 +402,38 @@ Search now works much like Steam's:
 - The Sign in with GitHub option has been removed. A token (Settings → Accounts & Data → GitHub token) is the way to raise the GitHub limit. If you're already signed in, it keeps working until you sign out.
 
 **RTX Encore**
-- Intel's XeSS files are now installed the way RTX Encore Hub installs them. If the game already has its own copies (Unreal games often keep them under Engine\Plugins), RHI replaces them where they are with the version RTX Encore needs, and puts the game's copies back when you remove RTX Encore. Files the game doesn't have, and Intel's licence, go in RTX Encore's own folder. Games that already have RTX Encore are updated on the next launch.
+- Intel's XeSS files are now installed the way RTX Encore Hub installs them. If the game already has its own copies (Unreal games often keep them under Engine\Plugins), BONG DLSS5 replaces them where they are with the version RTX Encore needs, and puts the game's copies back when you remove RTX Encore. Files the game doesn't have, and Intel's licence, go in RTX Encore's own folder. Games that already have RTX Encore are updated on the next launch.
 - The ⚙ tooltips have been brought up to date with RTX Encore 1.6.0, and XeSS on Tensor Cores is greyed out unless Upscaler is XeSS.
 
 **ASI Loader**
-- When ASI Loader is installed in a game, the DLL name lists for 20/30 FG Unlock, Universal MFG Unlocker, RTX Encore and DLSS Enabler offer a Hooked version of ASI Loader's name (for example versionHooked.dll when ASI Loader is version.dll). ASI Loader loads that file as the real DLL, so the extra runs alongside it. If ASI Loader is later removed, RHI renames the extra back to the normal name so it keeps working.
+- When ASI Loader is installed in a game, the DLL name lists for 20/30 FG Unlock, Universal MFG Unlocker, RTX Encore and DLSS Enabler offer a Hooked version of ASI Loader's name (for example versionHooked.dll when ASI Loader is version.dll). ASI Loader loads that file as the real DLL, so the extra runs alongside it. If ASI Loader is later removed, BONG DLSS5 renames the extra back to the normal name so it keeps working.
 
 ### Bug Fixes
 
 **Launching games**
-- Fixed Epic games failing to start from RHI unless the Epic Games Launcher was already running. Games launched right after RHI opens now go through Epic like they should. When RHI has to start the game's exe directly (launch arguments set, or a chosen launch exe), it starts the Epic Games Launcher in the background first and waits for it.
-- Fixed Steam and Game Pass games launched in the first moments after RHI opens (or from the tray, jump list or a desktop shortcut) skipping Steam or failing to start. RHI now remembers each game's store launch details between sessions.
+- Fixed Epic games failing to start from BONG DLSS5 unless the Epic Games Launcher was already running. Games launched right after BONG DLSS5 opens now go through Epic like they should. When BONG DLSS5 has to start the game's exe directly (launch arguments set, or a chosen launch exe), it starts the Epic Games Launcher in the background first and waits for it.
+- Fixed Steam and Game Pass games launched in the first moments after BONG DLSS5 opens (or from the tray, jump list or a desktop shortcut) skipping Steam or failing to start. BONG DLSS5 now remembers each game's store launch details between sessions.
 
 **Installer**
-- Fixed the installer downloading and installing the Windows App Runtime 2.5.1 on every update for some people, even when it was already installed. The installer no longer installs it. If RHI can't start because the runtime is missing, it now says so and offers to open the download.
-- Fixed every RHI update leaving about 160 MB of old files in your Temp folder (`%TEMP%\.net\RHI`). RHI now removes the old copies a short while after it starts.
+- Fixed the installer downloading and installing the Windows App Runtime 2.5.1 on every update for some people, even when it was already installed. The installer no longer installs it. If BONG DLSS5 can't start because the runtime is missing, it now says so and offers to open the download.
+- Fixed every BONG DLSS5 update leaving about 160 MB of old files in your Temp folder (`%TEMP%\.net\BONG DLSS5`). BONG DLSS5 now removes the old copies a short while after it starts.
 
 **ASI Loader**
 - Fixed the DLL name lists for 20/30 FG Unlock, Universal MFG Unlocker and DLSS Enabler letting you pick the name ASI Loader or another extra was already using, which replaced it. Those names are now greyed out with what's using them.
-- Fixed installing ASI Loader over the name an extra was using: the extra was renamed so ASI Loader loads it, but RHI kept looking for it under the old name, so removing the extra later could delete ASI Loader. RHI now follows the rename and says which extra was moved.
+- Fixed installing ASI Loader over the name an extra was using: the extra was renamed so ASI Loader loads it, but BONG DLSS5 kept looking for it under the old name, so removing the extra later could delete ASI Loader. BONG DLSS5 now follows the rename and says which extra was moved.
 - Fixed reinstalling ASI Loader under the same name renaming its own old copy to a Hooked file, so it was loaded twice.
-- Fixed installing ASI Loader replacing a Hooked file that was already there (for example versionHooked.dll). RHI now stops and says so instead.
+- Fixed installing ASI Loader replacing a Hooked file that was already there (for example versionHooked.dll). BONG DLSS5 now stops and says so instead.
 
 **Antivirus**
-- Fixed RHI downloading DXVK and Universal MFG Unlocker even when no game uses them (and again on every launch when an antivirus deleted them). Antivirus programs often flag these as false positives, so many people saw warnings for files they never installed. They now download only when a game uses them, or when you install them.
-- When an antivirus deletes one of these files straight after RHI downloads it, RHI now says so and explains how to add an exclusion, instead of downloading it again on every launch.
-- Fixed DXVK installs failing with "try clearing the DXVK cache" when an antivirus had removed only its 32-bit files. RHI now checks every DXVK file and downloads it again when one is missing.
+- Fixed BONG DLSS5 downloading DXVK and Universal MFG Unlocker even when no game uses them (and again on every launch when an antivirus deleted them). Antivirus programs often flag these as false positives, so many people saw warnings for files they never installed. They now download only when a game uses them, or when you install them.
+- When an antivirus deletes one of these files straight after BONG DLSS5 downloads it, BONG DLSS5 now says so and explains how to add an exclusion, instead of downloading it again on every launch.
+- Fixed DXVK installs failing with "try clearing the DXVK cache" when an antivirus had removed only its 32-bit files. BONG DLSS5 now checks every DXVK file and downloads it again when one is missing.
 
 **Display**
-- Fixed Output colour settings saying RHI needs to run as administrator when the monitor doesn't support the chosen colour depth (for example 12 bpc on a 10-bit monitor). It now says the monitor doesn't support it, and only mentions admin when that's the actual problem.
+- Fixed Output colour settings saying BONG DLSS5 needs to run as administrator when the monitor doesn't support the chosen colour depth (for example 12 bpc on a 10-bit monitor). It now says the monitor doesn't support it, and only mentions admin when that's the actual problem.
 
 **RTX Encore**
-- Fixed the XeSS upscaler not working: RHI didn't install Intel's libxess.dll, which it needs.
+- Fixed the XeSS upscaler not working: BONG DLSS5 didn't install Intel's libxess.dll, which it needs.
 - Fixed games breaking when RTX Encore was installed as binkw64.dll or bink2w64.dll. The game's own Bink file is now kept beside it as binkw64Hooked.dll (or bink2w64Hooked.dll), as RTX Encore requires.
 - Fixed the rtx-encore.asi option installing the wrong file. It now uses the separate ASI build in RTX Encore's release.
 - Fixed Neural Rendering not finding its DLL when RTX Encore was installed as rtx-encore.asi. The DLL now goes in the plugins folder beside it; existing installs are moved on the next launch.
@@ -441,19 +441,19 @@ Search now works much like Steam's:
 
 **Admin Mode**
 - Fixed the hand cursor over links and badges switching back to the normal pointer after a moment when Drop Helper is on.
-- Fixed desktop shortcuts and jump list entries only opening RHI, without starting the game (or switching HDR on), when RHI wasn't already running.
+- Fixed desktop shortcuts and jump list entries only opening BONG DLSS5, without starting the game (or switching HDR on), when BONG DLSS5 wasn't already running.
 
 **Game page**
 - Fixed some Steam games showing their install path with a lowercase drive letter (c:\steam\...).
 
 **Game Pass and moved games**
-- Fixed installing or updating a component opening a folder browser when the game had been updated or moved since RHI last scanned it. Game Pass games get a new folder with every update. RHI now explains what happened and offers to refresh the game list to find the new folder, with the folder browser still available as an option.
+- Fixed installing or updating a component opening a folder browser when the game had been updated or moved since BONG DLSS5 last scanned it. Game Pass games get a new folder with every update. BONG DLSS5 now explains what happened and offers to refresh the game list to find the new folder, with the folder browser still available as an option.
 
 ### Manifest Updates
 - Support the Mod Authors now includes Kronir and Vaxis from the Ultra+ team, and Patreon links for Lazorr and SammiLucia.
 - Baldur's Gate 3: ReShade now installs as the Vulkan layer, since the game's default exe (bg3.exe) uses Vulkan. Before, it was installed as dxgi.dll, which bg3.exe never loads. ReShade's Info explains how to switch to DX11 for bg3_dx11.exe, and to reinstall ReShade if an older install is still there.
 - New addon in Shaders & Addons: BFI Presenter by artzox, black frame insertion without the usual brightness loss for clearer motion on 120 Hz+ OLEDs and other fixed-refresh displays (DX9, DX11, DX12 and OpenGL games). Its description lists what it needs (G-Sync off, no frame limiter) and links to the setup guide.
-- Support the Mod Authors now includes the ultrawide fix authors RHI links to (Lyall, p1xel8ted and RoseTheFlower) and the Ultra+ team (Lazorr, SammiLucia and mmike0913). Authors who use Patreon get a Patreon button.
+- Support the Mod Authors now includes the ultrawide fix authors BONG DLSS5 links to (Lyall, p1xel8ted and RoseTheFlower) and the Ultra+ team (Lazorr, SammiLucia and mmike0913). Authors who use Patreon get a Patreon button.
 - Mafia: The Old Country: DLSS and Streamline are now found in the game's plugins folder, so the DLSS / Streamline section is no longer empty.
 - DLSS Neural Rendering presets A and B are now in the NR preset list.
 - Lords of the Fallen: engine (Unreal Engine 5.1.1), graphics API (DX12) and 64-bit are now set, so the right mods and options are offered.
@@ -477,7 +477,7 @@ Search now works much like Steam's:
 - "Deploy OptiScaler.ini" is now "Replace with a fresh copy..." at the bottom of the ⚙, and asks before replacing the file.
 
 **Stop the NVIDIA App resetting your DLSS settings**
-- The NVIDIA App resets the DLSS presets and versions you set with RHI on any game NVIDIA hasn't approved for overrides. Settings › Driver Settings › Profiles has a new **Remove NVIDIA App override limits...** button that turns this off.
+- The NVIDIA App resets the DLSS presets and versions you set with BONG DLSS5 on any game NVIDIA hasn't approved for overrides. Settings › Driver Settings › Profiles has a new **Remove NVIDIA App override limits...** button that turns this off.
 - It asks first and keeps a backup of the NVIDIA App's files. It restarts two NVIDIA services, so Windows asks for admin permission and the screen may go black for a second or two.
 - Driver and NVIDIA App updates can bring the limit back, so run it again after updating. Based on JPersson77's nVAppAppApp script.
 
@@ -489,11 +489,11 @@ Search now works much like Steam's:
 - Settings has a search box. Type part of a setting's name or description to see every match, then click one to jump straight to it. It's briefly outlined in blue so you can spot it.
 
 **Status bar**
-- The bottom-left of the window shows what RHI is doing in the background, such as checking for new games, checking for updates or updating DLSS. When it's idle, it shows when RHI last checked for updates and when the next check is due.
+- The bottom-left of the window shows what BONG DLSS5 is doing in the background, such as checking for new games, checking for updates or updating DLSS. When it's idle, it shows when BONG DLSS5 last checked for updates and when the next check is due.
 
 **Load ReShade as ASI**
 - ReShade's ⚙ has a new Load ReShade as ASI option, for use with an ASI loader. It renames ReShade to `ReShade64.asi` (`ReShade32.asi` for 32-bit games), and installs and updates keep that name. Turn it off to go back to the normal DLL name.
-- RHI doesn't install an ASI loader for you: use ASI Loader in Extras or your own. Not available for Vulkan games.
+- BONG DLSS5 doesn't install an ASI loader for you: use ASI Loader in Extras or your own. Not available for Vulkan games.
 
 ### Changes
 
@@ -501,14 +501,14 @@ Search now works much like Steam's:
 - Settings is now organised into 8 sections: General, Accounts & Data, ReShade & RenoDX, Display & HDR, DLSS / Streamline, Driver Settings, Components, and Tools & Maintenance. Related settings sit together (for example every update setting is in General › Updates). Nothing was removed.
 - A list of the sections stays on the left as you scroll. Click one to jump to it. Settings reopens where you left it.
 - Every setting has the same layout: its name on the left, its option on the right, short help underneath where it's needed, and the full explanation when you hover it.
-- General › Updates shows when RHI last checked for updates and counts down to the next check. Pressing "Check for updates" restarts the countdown.
+- General › Updates shows when BONG DLSS5 last checked for updates and counts down to the next check. Pressing "Check for updates" restarts the countdown.
 - Clearer names:
   - Update Inclusion is now Components to check › Choose.
   - Cache All Shaders is now Download all shaders.
   - HDR Auto-Toggle is now Windows HDR, and Resolution Auto-Toggle is now Change resolution.
   - Mass Preset Install is now ReShade preset.
   - "Subfolders" is now "Folder per game".
-  - The folder buttons are RHI data, Downloads, Custom and Logs.
+  - The folder buttons are BONG DLSS5 data, Downloads, Custom and Logs.
   - The "DC.ini" button is now "DisplayCommander.ini".
   - The GitHub sign-in button is now "Sign in with GitHub instead", because a token is the recommended option.
 - The "Apply to All Games" buttons now say what they write, such as "Write peak brightness to all games" and "Write to all ReLimiter games".
@@ -530,7 +530,7 @@ Search now works much like Steam's:
 - RTX Encore is no longer labelled Beta.
 - Its ⚙ now has RTX Encore's settings, so you can set them before you play: frame generation, the XeFG engine, generated frame quality, HUD and UI, upscaling, Smooth Motion, Neural Rendering and compatibility. Changes go straight into the game's `rtx-encore.jsonc` and keep the file's comments. The overlay, shortcuts and diagnostics stay in RTX Encore's in-game menu (Insert). There's also an Open rtx-encore.jsonc button.
 - Installing RTX Encore now also installs the Intel XeSS files its XeFG engine needs, in RTX Encore's own folder, so the game's own files are never touched. Games that already have RTX Encore get them on the next launch.
-- The Neural Rendering DLL RHI installs for RTX Encore is now 310.9.16. Games with RHI's older 310.8.0 copy are moved over on the next launch.
+- The Neural Rendering DLL BONG DLSS5 installs for RTX Encore is now 310.9.16. Games with BONG DLSS5's older 310.8.0 copy are moved over on the next launch.
 
 **20/30 FG Unlock**
 - Its ⚙ now has the mod's main settings. Each one is a dropdown, so you can't enter a value that would switch frame generation off:
@@ -545,19 +545,19 @@ Search now works much like Steam's:
 
 **MFG Ada Unlock**
 - Its ⚙ has a Frame generation method setting: NVIDIA DLSS-G, Intel XeMFG (CUDA) or XeMFG via DLSS-G (XMX). It's the same setting as in the mod's ReShade panel. With XeMFG (CUDA) you can also turn on DLSS-SR input (experimental), for games that have DLSS Super Resolution but no DLSS frame generation. There's also an Open MFGAdaUnlock.ini button.
-- Installing it now also installs the Intel XeSS files its XeMFG modes need, so you no longer have to click "Install / update files" in the mod's panel. If the game ships its own older copies (for example Of Ash and Steel), RHI backs them up and puts them back when you remove the mod. Games that already have the mod get the files on the next launch, and the ⚙ shows whether the right files are there.
+- Installing it now also installs the Intel XeSS files its XeMFG modes need, so you no longer have to click "Install / update files" in the mod's panel. If the game ships its own older copies (for example Of Ash and Steel), BONG DLSS5 backs them up and puts them back when you remove the mod. Games that already have the mod get the files on the next launch, and the ⚙ shows whether the right files are there.
 - The ⚙ warns when a game can't use it: as of the mod's version 1.8.0 it works in DirectX 12 games, experimentally in Vulkan games, and not in DirectX 11 or older.
 
 **Universal MFG Unlocker (formerly RTX 40 MFG)**
 - Renamed to match the mod. It now also supports RTX 30 cards (RTX 20 is experimental) and XeSS frame generation on any GPU. Its links point to the mod's new GitHub page. Existing installs keep working, with nothing to reinstall.
-- RHI now installs the two Intel files the mod's "XeMFG standalone" mode needs, which the mod used to report as missing. Games that already have the mod get them on the next launch. If you put your own copies there, RHI leaves them alone.
+- BONG DLSS5 now installs the two Intel files the mod's "XeMFG standalone" mode needs, which the mod used to report as missing. Games that already have the mod get them on the next launch. If you put your own copies there, BONG DLSS5 leaves them alone.
 - With OptiScaler nightly, F5 or DLSS NR in the same game, the mod is now installed as an OptiScaler plugin, as its author recommends. Games that already have both are moved over on the next launch, and removing OptiScaler moves the mod back. Choose DLSS multi frame generation or XeMFG with FG Output in OptiScaler's ⚙. Stable OptiScaler isn't supported by the mod, so nothing changes there.
 - Installing it in a game that has ReShade now warns that XeMFG standalone doesn't start while ReShade is loaded, and points to OptiScaler as the way to use XeMFG with ReShade. DLSS multi frame generation isn't affected. Tick "Don't show this again" to stop the warning.
 - The ⚙ explains XeMFG and shows whether its files are installed. It also warns when ReShade is installed as dxgi.dll, which can stop some frames at 5x and 6x from reaching the screen.
 
 **Updates**
 - Automatic update checks now run at least every 4 hours, even if you restart RHI. Before, a restart could push the next check out to nearly 8 hours.
-- Refresh now always fetches the latest Ultra+ and ultrawide fix lists, and RHI checks them every 4 hours instead of once a day, so new mods show up much sooner.
+- Refresh now always fetches the latest Ultra+ and ultrawide fix lists, and BONG DLSS5 checks them every 4 hours instead of once a day, so new mods show up much sooner.
 
 **Game list and game page**
 - Clicking the store badge at the top of a game's page (Steam, Epic, GOG and so on) opens the game's Steam Community page. This works for games from any store, as long as the game is also on Steam.
@@ -585,12 +585,12 @@ Search now works much like Steam's:
 ### Bug Fixes
 
 **20/30 FG Unlock**
-- Fixed 20/30 FG Unlock not working since the mod's 0.4.0 release. The mod now comes as a package, but RHI was only copying part of it, so frame generation never started. RHI now installs the whole package, and games that already have it are repaired automatically.
+- Fixed 20/30 FG Unlock not working since the mod's 0.4.0 release. The mod now comes as a package, but BONG DLSS5 was only copying part of it, so frame generation never started. BONG DLSS5 now installs the whole package, and games that already have it are repaired automatically.
 - Fixed choosing a DLL name other than version.dll installing the wrong file. Each name now uses the mod's matching build, listed in the mod's recommended order. winhttp.dll is no longer offered, and games using it are moved to version.dll.
 
 **OptiScaler**
-- Fixed OptiPatcher never loading with the nightly, F5 and DLSS NR builds of OptiScaler. RHI put it in a folder only the stable build reads. It's now in the right place, and games that already have it are fixed on the next launch.
-- Fixed OptiScaler updates deleting its plugins folder, including OptiPatcher and the DXVK files RHI keeps there so DXVK and OptiScaler can work together.
+- Fixed OptiPatcher never loading with the nightly, F5 and DLSS NR builds of OptiScaler. BONG DLSS5 put it in a folder only the stable build reads. It's now in the right place, and games that already have it are fixed on the next launch.
+- Fixed OptiScaler updates deleting its plugins folder, including OptiPatcher and the DXVK files BONG DLSS5 keeps there so DXVK and OptiScaler can work together.
 - Fixed automatic OptiScaler updates still showing the old version afterwards (for example 0.1.34 after updating to 0.1.35.1). The new files were installed. On games that still show the old number, reinstall OptiScaler once.
 - Fixed replacing a game's OptiScaler.ini (and the mass OptiScaler.ini deploy) always using the NVIDIA template. It now uses the same one as a fresh install: the one for your GPU, your DLSS Inputs setting and the game's OptiScaler version.
 - Fixed applying an OptiScaler preset saved on F5 DLSSNR not switching the game to F5.
@@ -601,7 +601,7 @@ Search now works much like Steam's:
 - Fixed the Config button missing, and UE-Extended's Engine.ini settings not being written, for games where PCGamingWiki lists more than one config location (such as Phantom Blade Zero and A Way Out).
 
 **RenoDX**
-- Fixed RenoDX mods hosted on a modder's own site (such as UE-Extended) failing to install when that site can't be reached from your network. RHI now falls back to the same file on the modder's GitHub.
+- Fixed RenoDX mods hosted on a modder's own site (such as UE-Extended) failing to install when that site can't be reached from your network. BONG DLSS5 now falls back to the same file on the modder's GitHub.
 
 **Installer**
 - Fixed the installer downloading and reinstalling the Windows App Runtime on some PCs that already have it, which made every update slow.
@@ -618,12 +618,12 @@ Search now works much like Steam's:
 
 **Settings**
 - Fixed the ReShade overlay key, screenshot key and ReLimiter OSD key being lost if you left Settings without pressing Apply. They now save as soon as you press the key.
-- Fixed a typed screenshot folder, addon watch folder or peak brightness being lost unless you pressed Enter. They now also save when you click away. If a typed addon watch folder doesn't exist, RHI tells you and doesn't save it.
+- Fixed a typed screenshot folder, addon watch folder or peak brightness being lost unless you pressed Enter. They now also save when you click away. If a typed addon watch folder doesn't exist, BONG DLSS5 tells you and doesn't save it.
 - Fixed opening Settings for the first time redeploying shaders to every game.
 - Fixed out-of-date text in Settings, such as the Nexus Mods description.
 
 **DLSS / Streamline auto-update**
-- Fixed a game that had just been auto-updated being skipped by the next auto-update until RHI rescanned it.
+- Fixed a game that had just been auto-updated being skipped by the next auto-update until BONG DLSS5 rescanned it.
 - Fixed the auto-update log only counting Super Resolution updates. It now also counts games where only Ray Reconstruction or Frame Generation was updated.
 
 **ReLimiter**
@@ -661,15 +661,15 @@ Search now works much like Steam's:
 
 **Available Mods**
 - "Available HDR Mods" is now "Available Mods" and also lists Ultra+ mods, in a new Ultra+ column.
-- Source engine games supported by RenoDX's Source addon are now listed. Installing the Source addon from RHI will come in a future update.
+- Source engine games supported by RenoDX's Source addon are now listed. Installing the Source addon from BONG DLSS5 will come in a future update.
 - The Download column is gone: click any tick to open that mod's page.
 - The top of the window shows how many RenoDX, Luma and Ultra+ mods are available.
 - Type RenoDX, Luma or Ultra+ in the search box to show only games with that mod. Add a game name after it to narrow it down, e.g. "luma dead".
 
 **Other changes**
-- Epic games are now detected if you use the new Epic Games Launcher (preview). Before, they disappeared from RHI after switching to it.
-- Faster startup. Games on engines RHI has no special handling for (such as Frostbite, RAGE or Northlight) are no longer fully scanned on every launch. RHI uses the engine listed on PCGamingWiki, and otherwise only scans a game again when its folder changes (for example after a game update) or when you use Full Refresh.
-- Update checks use far less data. RHI used to download every installed RenoDX addon in full on each check just to see whether it had changed (several hundred MB with the generic Unity or UE-Extended addons installed). Now only addons that have actually changed are downloaded.
+- Epic games are now detected if you use the new Epic Games Launcher (preview). Before, they disappeared from BONG DLSS5 after switching to it.
+- Faster startup. Games on engines BONG DLSS5 has no special handling for (such as Frostbite, RAGE or Northlight) are no longer fully scanned on every launch. BONG DLSS5 uses the engine listed on PCGamingWiki, and otherwise only scans a game again when its folder changes (for example after a game update) or when you use Full Refresh.
+- Update checks use far less data. BONG DLSS5 used to download every installed RenoDX addon in full on each check just to see whether it had changed (several hundred MB with the generic Unity or UE-Extended addons installed). Now only addons that have actually changed are downloaded.
 
 ### Bug Fixes
 
@@ -677,18 +677,18 @@ Search now works much like Steam's:
 - Fixed DLSS presets and other driver settings going to the wrong NVIDIA profile for some games (for example Metro 2033 Redux going to the Metro: Last Light Redux profile). Profile fixes now take effect straight away, with no Full Refresh needed.
 
 **Shaders**
-- Fixed RHI deleting and re-copying every ReShade game's shaders on each launch and Refresh, even when nothing had changed. Only new or changed shaders are copied now, so running games keep their shaders.
+- Fixed BONG DLSS5 deleting and re-copying every ReShade game's shaders on each launch and Refresh, even when nothing had changed. Only new or changed shaders are copied now, so running games keep their shaders.
 
 **Downloads and GitHub requests**
 - Fixed the ReShade nightly build being downloaded again on every launch even when it hadn't changed.
-- Fixed RHI using far more GitHub requests than needed, which made it easy to hit GitHub's hourly limit (when that happens, downloads and update checks stop working for a while). RHI now remembers what it has already checked, even after a restart, and the addon update check no longer runs twice at startup.
+- Fixed BONG DLSS5 using far more GitHub requests than needed, which made it easy to hit GitHub's hourly limit (when that happens, downloads and update checks stop working for a while). BONG DLSS5 now remembers what it has already checked, even after a restart, and the addon update check no longer runs twice at startup.
 - Fixed a slow GitHub request being able to hold up the startup update checks for minutes. Requests now give up after 30 seconds.
-- Fixed hitting GitHub's request limit also stopping RHI's game database from updating.
+- Fixed hitting GitHub's request limit also stopping BONG DLSS5's game database from updating.
 
 **DLSS / Streamline**
-- Fixed swapping to an older DLSS or Streamline version still showing the newer version number. RHI now always shows the version that's actually in the game folder.
+- Fixed swapping to an older DLSS or Streamline version still showing the newer version number. BONG DLSS5 now always shows the version that's actually in the game folder.
 - Fixed the version dropdown sometimes showing the wrong version when two versions start the same way (for example 310.9.1 shown as 310.9.16).
-- Fixed a crash report appearing when a DLSS or Streamline version couldn't be changed (for example on a Game Pass game after it updated, while the game is running, or when Windows blocks access to the folder). RHI now explains what went wrong and sets the dropdown back to the installed version.
+- Fixed a crash report appearing when a DLSS or Streamline version couldn't be changed (for example on a Game Pass game after it updated, while the game is running, or when Windows blocks access to the folder). BONG DLSS5 now explains what went wrong and sets the dropdown back to the installed version.
 - Fixed a failed DLSS swap sometimes leaving the game without its DLSS file. The original file is now put back.
 - Fixed Batch Deploy stopping when one game failed. It now carries on and lists any failed games, with the reason, in the summary.
 
@@ -698,15 +698,15 @@ Search now works much like Steam's:
 - Fixed updating an F5 or DLSS NR install forgetting which OptiScaler variant the game uses.
 
 **RTX 40 MFG Unlock**
-- Fixed RTX 40 MFG updates showing the new version in RHI while games kept the old file. Since v1.5 the mod's file is called `MFGUnlocker.dll`, which RHI wasn't picking up. Every game with RTX 40 MFG installed is now updated automatically, with no reinstall needed.
-- Games that miss an update (for example because the game was running) are now updated the next time RHI starts.
+- Fixed RTX 40 MFG updates showing the new version in BONG DLSS5 while games kept the old file. Since v1.5 the mod's file is called `MFGUnlocker.dll`, which BONG DLSS5 wasn't picking up. Every game with RTX 40 MFG installed is now updated automatically, with no reinstall needed.
+- Games that miss an update (for example because the game was running) are now updated the next time BONG DLSS5 starts.
 
 **MFG Ada Unlock and other addons**
-- Fixed addon updates (such as MFG Ada Unlock) not reaching a game that was running when the update downloaded. Outdated copies are now refreshed every time RHI starts.
+- Fixed addon updates (such as MFG Ada Unlock) not reaching a game that was running when the update downloaded. Outdated copies are now refreshed every time BONG DLSS5 starts.
 - Fixed MFG Ada Unlock installed from the Extras section sometimes not receiving updates.
 - Fixed MFG Ada Unlock coming back into a game after you removed it, the next time it updated.
 - Fixed some addons (such as ReShade Screenshot Discord Fix) being copied into games again on every launch even when they hadn't changed.
-- Fixed addons going into the game folder when the game's `reshade.ini` has an `AddonPath` set, so ReShade didn't load them (or kept loading an older copy). RHI now installs them into the `AddonPath` folder and removes the copy it had put in the game folder.
+- Fixed addons going into the game folder when the game's `reshade.ini` has an `AddonPath` set, so ReShade didn't load them (or kept loading an older copy). BONG DLSS5 now installs them into the `AddonPath` folder and removes the copy it had put in the game folder.
 
 **Luma**
 - Fixed Luma mods that are now only on Nexus Mods (such as Mass Effect: Andromeda) showing an update that Update All couldn't install, leaving the buttons purple. These mods are now checked against Nexus Mods, and the Update button opens the Nexus download page.
@@ -724,16 +724,16 @@ Search now works much like Steam's:
 - Fixed Update All showing a crash report for a game on the Custom ReShade channel whose ReShade DLL had been removed from the Custom folder. The game is now skipped and its card shows why.
 
 **Ultimate ASI Loader**
-- Fixed ASI Loader updates never reaching games: RHI downloaded new versions but didn't copy them into game folders. Games with the ASI Loader are now brought up to date automatically at startup.
+- Fixed ASI Loader updates never reaching games: BONG DLSS5 downloaded new versions but didn't copy them into game folders. Games with the ASI Loader are now brought up to date automatically at startup.
 - Fixed the 64-bit ASI Loader being downloaded again on every launch, and the 32-bit copy never updating.
 
 **Settings and install records**
-- Fixed all settings being reset (and the first-time setup shown again) if the settings file was damaged, for example by a crash or power cut while saving. RHI now keeps a backup and restores it automatically. The damaged file is kept as `settings.json.corrupt-…`.
+- Fixed all settings being reset (and the first-time setup shown again) if the settings file was damaged, for example by a crash or power cut while saving. BONG DLSS5 now keeps a backup and restores it automatically. The damaged file is kept as `settings.json.corrupt-…`.
 - Fixed settings sometimes being lost when saved at the same moment as a shader pack update, or while a setting was being changed.
-- Fixed RHI losing track of installed mods (no update badges, and uninstall unable to restore original files) if an install record file was damaged. Records for RenoDX, ReShade and other addons, Luma, RE Framework and DXVK now keep a backup and recover from it.
+- Fixed BONG DLSS5 losing track of installed mods (no update badges, and uninstall unable to restore original files) if an install record file was damaged. Records for RenoDX, ReShade and other addons, Luma, RE Framework and DXVK now keep a backup and recover from it.
 - Fixed two installs or uninstalls finishing at the same time sometimes forgetting one of them.
 - Fixed renaming a game losing its Luma TAA setting.
-- Fixed a cleared OptiScaler Streamline version, OptiScaler NR runtime or ASI Loader install name coming back the next time RHI started.
+- Fixed a cleared OptiScaler Streamline version, OptiScaler NR runtime or ASI Loader install name coming back the next time BONG DLSS5 started.
 
 **Security**
 - Fixed your GitHub token being sent with downloads from other sites (such as ReShade, Nexus Mods and PCGamingWiki). It is now only ever sent to GitHub. Tokens made the recommended way (no scopes ticked) can't access your account, so no action is needed. If you pasted a token with extra permissions, consider replacing it with a new one.
@@ -787,7 +787,7 @@ Search now works much like Steam's:
 - Fixed RTX Encore not auto-updating when a new beta release was available. The update check is now wired into the standard component update flow and the update appears in the update history.
 
 **ReShade Screenshot Discord Fix**
-- Fixed the 32-bit addon not being deployed to 32-bit games. When downloading from GitHub releases, RHI now stages both the `.addon32` and `.addon64` files when both are available as release assets.
+- Fixed the 32-bit addon not being deployed to 32-bit games. When downloading from GitHub releases, BONG DLSS5 now stages both the `.addon32` and `.addon64` files when both are available as release assets.
 
 **OptiScaler Detection**
 - Fixed tools that reference OptiScaler internally (e.g. SCSKiller) being incorrectly detected as an OptiScaler installation. The binary signature scan now only runs when the file has no version resource — if the file clearly identifies itself as a different tool, it is no longer flagged as OptiScaler.
@@ -802,19 +802,19 @@ Search now works much like Steam's:
 ### New
 
 **DLDSR Control**
-- Enable or disable DLDSR (Deep Learning Dynamic Super Resolution) factors directly from RHI without opening NVIDIA Control Panel.
+- Enable or disable DLDSR (Deep Learning Dynamic Super Resolution) factors directly from BONG DLSS5 without opening NVIDIA Control Panel.
 - **DSR Smoothness slider** — adjust smoothness (0–100%) without recapturing. 100 = no sharpening, lower values add sharpening. Recommended range for DLDSR is 55–80 (DLDSR is naturally much sharper than standard DSR, so it needs higher values than you'd expect). Applying smoothness causes the same ~15 second display blackout as applying a full state.
 - **Info button** — click ⓘ next to the header for step-by-step instructions on capturing and applying DLDSR states.
 - **How to use:**
   1. Open **NVIDIA Control Panel → Manage 3D Settings → DSR – Factors**
   2. Enable the DLDSR factors you want (e.g. 1.78x DL, 2.25x DL)
-  3. In RHI Settings, scroll to **DLDSR Control** and click **Capture Current** — give it a name like "1.78x + 2.25x"
+  3. In BONG DLSS5 Settings, scroll to **DLDSR Control** and click **Capture Current** — give it a name like "1.78x + 2.25x"
   4. Now you can disable DLDSR in NVIDIA Control Panel
   5. Whenever you want those factors back, select your saved state and click **Apply** — the screen goes black for ~15 seconds while the GPU restarts, then DLDSR is active
   6. Use the **DSR Smoothness** slider and click **Set** to adjust sharpness/smoothness. This also causes a brief blackout — set it before clicking Apply if you want to apply both in one restart.
 - Useful for toggling DLDSR on/off without navigating NVIDIA Control Panel each time
 - Multiple configurations can be saved (e.g. "Off", "1.78x only", "1.78x + 2.25x")
-- Requires Admin Mode or running RHI as Administrator to read/write the driver registry keys
+- Requires Admin Mode or running BONG DLSS5 as Administrator to read/write the driver registry keys
 
 **Auto HDR (per-game)**
 - Force Windows Auto HDR on a per-game basis from the RenoDX ⚙ cog, directly below the RTX HDR section.
@@ -832,14 +832,14 @@ Search now works much like Steam's:
 
 **Desktop Shortcuts** *(WIP)*
 - Right-click any game in your library and choose **Create Desktop Shortcut** to place a shortcut on your Desktop.
-- Launching the game through the shortcut goes via RHI — HDR Auto-Toggle and Resolution Auto-Toggle fire exactly as they would from clicking Launch inside the app.
+- Launching the game through the shortcut goes via BONG DLSS5 — HDR Auto-Toggle and Resolution Auto-Toggle fire exactly as they would from clicking Launch inside the app.
 - Shortcut icons use the game's own icon: pulled from the game executable for Steam, GOG, EA, Epic, and manually added games. Xbox/Game Pass games pull cover art from the Steam or Microsoft Store since the game executables are not directly accessible — icon quality and visibility for Xbox games is a work in progress and will be improved in a future update.
 - The context menu also includes **Favourite** and **Hide/Show** alongside the existing Open Folder and View Notes items.
 
 **RTX Encore**
 - RTX Encore (SilyNoMeta) is now available as a new Extras row, between OptiScaler and DLSS Enabler.
 - Provides frame generation X2–X6, Smooth Motion on RTX 30, and Neural Rendering for RTX 20/30/40, in games that support DLSS Frame Generation.
-- Click Install to choose a proxy DLL name (version.dll, dinput8.dll, winmm.dll, dxgi.dll, d3d9/10/11/12.dll, and more — or rtx-encore.asi for ASI-loader games). Names in use by other RHI components are disabled. Names with an existing file on disk are shown in amber — RTX Encore backs them up and restores them on uninstall.
+- Click Install to choose a proxy DLL name (version.dll, dinput8.dll, winmm.dll, dxgi.dll, d3d9/10/11/12.dll, and more — or rtx-encore.asi for ASI-loader games). Names in use by other BONG DLSS5 components are disabled. Names with an existing file on disk are shown in amber — RTX Encore backs them up and restores them on uninstall.
 - The ⚙ cog lets you deploy `nvngx_dlssnr.dll` version 310.8.0 for Neural Rendering — RTX Encore requires exactly this version and refuses any other. The file is shared with other NR components and only removed when no other component still needs it.
 - Auto-updates alongside other components.
 
@@ -849,29 +849,29 @@ Search now works much like Steam's:
 ### Changes
 
 **Control Ultimate Edition — OptiScaler FG**
-- When installing OptiScaler FG via the Control install dialog, RHI now automatically pins the game to OptiScaler nightly build 2026-10-04. Newer nightly builds break DLSS Frame Generation compatibility with Control — this ensures it works correctly out of the box.
+- When installing OptiScaler FG via the Control install dialog, BONG DLSS5 now automatically pins the game to OptiScaler nightly build 2026-10-04. Newer nightly builds break DLSS Frame Generation compatibility with Control — this ensures it works correctly out of the box.
 
 **GitHub Personal Access Token**
 - Added a PAT input field in Settings → GitHub API as an alternative to the OAuth sign-in flow.
-- Paste any classic PAT (no scopes needed — RHI only reads public repos). The token is saved locally and never expires unless you revoke it on GitHub.
+- Paste any classic PAT (no scopes needed — BONG DLSS5 only reads public repos). The token is saved locally and never expires unless you revoke it on GitHub.
 - Useful if you prefer not to use OAuth, or if your OAuth session keeps expiring.
 
 ### Bug Fixes
 
 **UI Freeze**
-- RHI now detects and recovers from the UI freeze in about 5 seconds, down from up to 60 seconds.
+- BONG DLSS5 now detects and recovers from the UI freeze in about 5 seconds, down from up to 60 seconds.
 - Fixed the auto-restart incorrectly firing after waking from sleep. A 30-second grace period now suppresses the restart check after a system resume.
 - Fixed the auto-restart firing while an install was in progress. The restart is now deferred up to 30 seconds if any component is mid-install.
 - Fixed a recurring freeze after switching between games quickly. Rapid navigation could queue two back-to-back panel rebuilds, causing the UI thread to hang.
 - Fixed a freeze that could occur when opening the Settings panel while a game was selected. Changing certain global driver settings (VSync, ReBAR) was triggering a panel rebuild that conflicted with the Settings page opening.
-- Fixed RHI silently swallowing internal framework messages (WM_APP/0x8000) that were intended for WinUI rather than the system tray icon. These are now forwarded correctly.
+- Fixed BONG DLSS5 silently swallowing internal framework messages (WM_APP/0x8000) that were intended for WinUI rather than the system tray icon. These are now forwarded correctly.
 - Fixed several places where NVIDIA driver settings were read on the UI thread before opening a dialog. Opening Configure RTX HDR, Multi Frame Gen, or DXVK settings could block the UI for up to 25 seconds if NVAPI was slow. Values are now fetched in the background first.
 - Fixed DLSS version information refreshing on the UI thread after swapping a DLSS DLL, which could stall the UI on slow disks or with antivirus active.
-- Fixed settings, game library, and addon records being left corrupt if RHI was killed mid-write. These files are now written atomically.
-- After an auto-restart, RHI reselects the game that was open before the freeze and shows a brief status bar notice.
+- Fixed settings, game library, and addon records being left corrupt if BONG DLSS5 was killed mid-write. These files are now written atomically.
+- After an auto-restart, BONG DLSS5 reselects the game that was open before the freeze and shows a brief status bar notice.
 
 **DLSS/Streamline Detection**
-- Added `dlssPathOverrides` and `streamlinePathOverrides` manifest fields — allows RHI to find DLSS and Streamline DLLs in games that store them in non-standard deep subdirectories that the recursive scanner doesn't reach. The Sinking City 2 is the first game to use this.
+- Added `dlssPathOverrides` and `streamlinePathOverrides` manifest fields — allows BONG DLSS5 to find DLSS and Streamline DLLs in games that store them in non-standard deep subdirectories that the recursive scanner doesn't reach. The Sinking City 2 is the first game to use this.
 
 **DLSS/Streamline — The Sinking City 2**
 - Fixed the DLSS/Streamline section showing empty for The Sinking City 2. The game stores its DLLs 8 levels deep inside the Engine plugins folder rather than alongside the executable.
@@ -889,13 +889,13 @@ Search now works much like Steam's:
 - Fixed "Start with Windows" disabling itself on every launch. The settings panel was removing the startup entry during initialisation.
 
 **GitHub API**
-- Fixed RenoDX mods not appearing for users whose GitHub session had expired. Previously RHI would keep using a stale login token without realising it had stopped working, causing mods, updates, and downloads to silently fail while the settings page still showed "Connected". RHI now checks the token is valid at startup and clears it immediately if not, showing a notice in the status bar so you know to sign in again.
+- Fixed RenoDX mods not appearing for users whose GitHub session had expired. Previously BONG DLSS5 would keep using a stale login token without realising it had stopped working, causing mods, updates, and downloads to silently fail while the settings page still showed "Connected". BONG DLSS5 now checks the token is valid at startup and clears it immediately if not, showing a notice in the status bar so you know to sign in again.
 
 **Process Doesn't Close**
-- Fixed RHI staying open and using CPU after closing the window. Background tasks now stop on close, with a hard exit fallback to ensure the process always terminates.
+- Fixed BONG DLSS5 staying open and using CPU after closing the window. Background tasks now stop on close, with a hard exit fallback to ensure the process always terminates.
 
 **Appearance**
-- Fixed all dialogs rendering in light theme on systems with Windows set to light mode. RHI now forces dark theme on every dialog.
+- Fixed all dialogs rendering in light theme on systems with Windows set to light mode. BONG DLSS5 now forces dark theme on every dialog.
 
 **DLDSR Control**
 - The Current State display now shows your monitor's friendly name (e.g. "LG ULTRAGEAR", "MSI MPG343CQR") instead of a raw hex identifier.
@@ -905,19 +905,19 @@ Search now works much like Steam's:
 
 **RenoDX**
 - Fixed the installed mod version not appearing after a fresh install until you navigate away and back to the game. The detail panel now updates immediately.
-- Fixed game-specific notes from the RHI database not appearing in the RenoDX info dialog for UE-Extended games.
+- Fixed game-specific notes from the BONG DLSS5 database not appearing in the RenoDX info dialog for UE-Extended games.
 
 **MFG Ada Unlock**
 - Fixed the update check skipping MFG Ada Unlock for users whose staging file was deleted or missing.
 
 **Drag-Drop RenoDX Mods**
-- Fixed RHI incorrectly offering to delete an existing RenoDX mod when a `.addon64` file with a non-standard name was dropped onto a game.
+- Fixed BONG DLSS5 incorrectly offering to delete an existing RenoDX mod when a `.addon64` file with a non-standard name was dropped onto a game.
 
 **Engine.ini**
 - Fixed Engine.ini not being written on install for games that have never been launched when the config path comes from the PCGW database.
 
 **DLSS Fix**
-- Fixed DLSS Fix downloading as an update multiple times per day. A transient network failure during the version check was returning an unknown result, which RHI was incorrectly treating as a new version. The update is now skipped when the version check can't be resolved.
+- Fixed DLSS Fix downloading as an update multiple times per day. A transient network failure during the version check was returning an unknown result, which BONG DLSS5 was incorrectly treating as a new version. The update is now skipped when the version check can't be resolved.
 
 ### Manifest Updates
 - Added `installPathOverrides` for Baldur's Gate 3 (`bin` subfolder)
@@ -949,7 +949,7 @@ Search now works much like Steam's:
 - Hardened single-instance ownership and made the admin task query async with a timeout. The shutdown signal file is now cleaned up so a freshly launched instance doesn't accidentally consume it.
 
 **Installer**
-- Removed the use of `AttachThreadInput` for bringing RHI to the foreground after an update — this could tie RHI's responsiveness to the installer or any other foreground app. Replaced with a safe message-based handoff.
+- Removed the use of `AttachThreadInput` for bringing BONG DLSS5 to the foreground after an update — this could tie BONG DLSS5's responsiveness to the installer or any other foreground app. Replaced with a safe message-based handoff.
 
 **Downloads**
 - Added cancellation and a 10-minute timeout to installer downloads, plus partial file cleanup if the download fails or is cancelled.
@@ -979,10 +979,10 @@ Search now works much like Steam's:
 - Fixed most shader packs not downloading when the shader cache was cleared. Two download tasks were racing at startup, causing packs to be skipped mid-download and never extracted.
 
 **GitHub Sign-In**
-- Fixed a revoked GitHub sign-in token causing 401 errors on every request. RHI now detects the revoked token on startup and clears it automatically, falling back to unauthenticated access.
+- Fixed a revoked GitHub sign-in token causing 401 errors on every request. BONG DLSS5 now detects the revoked token on startup and clears it automatically, falling back to unauthenticated access.
 
 **Other**
-- Fixed ReShade not downloading when reshade.me returns a server error. Their server intermittently returns HTTP 500 even when the page loads correctly. RHI now reads the page regardless of the error code.
+- Fixed ReShade not downloading when reshade.me returns a server error. Their server intermittently returns HTTP 500 even when the page loads correctly. BONG DLSS5 now reads the page regardless of the error code.
 - Fixed OptiScaler presets not saving 6 settings: OptiScaler Version, Upscaler API, Upscaler, FG Enabled, Force Reflex, and Use Games Reflex Markers.
 - Fixed a second older RenoDX addon reappearing in The Witcher 3: Wild Hunt — Remastered (and potentially other games) after every restart.
 - Fixed the Available HDR Mods button showing inconsistent counts depending on when it was clicked. The button is now disabled until the scan completes.
@@ -1004,8 +1004,8 @@ Search now works much like Steam's:
 - Fixed Quick Apply doing nothing on games where SR, RR, or FG version is set to NVIDIA Override. It now correctly disables the override and deploys the chosen version, the same as changing the combo manually.
 
 **Addons**
-- Fixed Unity addon (and any other dual-bitness addon) being silently swapped from 64-bit to 32-bit between sessions. RHI was removing the 64-bit file and replacing it with the 32-bit one whenever the background scan detected a different bitness. Both versions are now kept independently.
-- Fixed MFG Ada Unlock being removed from game folders after restarting the app or installing a mod. RHI was incorrectly treating it as an unmanaged addon and cleaning it up.
+- Fixed Unity addon (and any other dual-bitness addon) being silently swapped from 64-bit to 32-bit between sessions. BONG DLSS5 was removing the 64-bit file and replacing it with the 32-bit one whenever the background scan detected a different bitness. Both versions are now kept independently.
+- Fixed MFG Ada Unlock being removed from game folders after restarting the app or installing a mod. BONG DLSS5 was incorrectly treating it as an unmanaged addon and cleaning it up.
 - Fixed addon updates not being deployed to game folders. When a new version downloaded (e.g. MFG Ada Unlock), it would update in staging but the files in your game folders would remain at the old version until you manually reinstalled.
 
 **Other**
@@ -1086,7 +1086,7 @@ Search now works much like Steam's:
 - Fixed a permanent UI freeze (requiring task manager to kill) when clicking on games with a full DLSS install (SR+RR+FG+Streamline, e.g. Control, Resident Evil 4, God of War Ragnarök). Root cause: WinUI 3 enters an infinite layout loop when a `Grid` with star columns is nested inside a `StackPanel` inside a `ScrollViewer` — a known engine bug. Fixed by replacing all star column definitions in the NVIDIA Profile and DLSS grids with calculated fixed-pixel widths.
 
 ### Manifest Updates
-- Added install warning for The Witcher 3: Wild Hunt — Remastered — the RenoDX mod available in RHI is for the original version; the warning links to the Discord thread for the Remastered-specific mod.
+- Added install warning for The Witcher 3: Wild Hunt — Remastered — the RenoDX mod available in BONG DLSS5 is for the original version; the warning links to the Discord thread for the Remastered-specific mod.
 - Fixed Bye Sweet Carole installing 32-bit ReShade — added to the 64-bit override list.
 - Fixed ReShade not installing correctly on NTE: Neverness To Everness — added DLL name override (`d3d12.dll`).
 - Fixed Saints Row 2 installing 64-bit ReShade — added to the 32-bit override list.
@@ -1097,14 +1097,14 @@ Search now works much like Steam's:
 ## v2.7.9
 
 ### New
-- **Component update history** — a new "Updates" button in the bottom bar opens a dated log of everything RHI has downloaded: ReShade, RenoDX addons, shader packs, OptiScaler, ReLimiter, Display Commander, and more. Entries are grouped by date (Today / Yesterday / full date) and each shows the old and new version. History persists across sessions and can be cleared at any time.
-- **Unity game-specific settings** — RHI now writes the correct per-game INI settings when you install a RenoDX mod for a Unity engine game. Render target upgrades, swapchain format, and other compatibility keys are applied automatically based on the RHI database, with no manual configuration needed.
-- **DLSS Tool ZZZ Load Order** — a new toggle in the Neural Rendering section (DLSS Tool method only) lets you deploy the DLSS Tool addon as `zzz_renodx-dlss.addon64` so it loads last in the ReShade addon order. Toggling On or Off renames the file on disk immediately. RHI recognises both filenames as the same addon — tracking, auto-update, and version swapping all work seamlessly with either name.
-- **Control Ultimate Edition** — installing the Control RR mod now handles everything automatically. RHI upgrades DLSS, deploys the Ray Reconstruction runtime, corrects the HDR preset in renderer.ini, and clears the DLSS SR preset set in the NVIDIA driver profile for the game. A description of what will happen (and a note that this is not an HDR mod) is shown before you confirm.
+- **Component update history** — a new "Updates" button in the bottom bar opens a dated log of everything BONG DLSS5 has downloaded: ReShade, RenoDX addons, shader packs, OptiScaler, ReLimiter, Display Commander, and more. Entries are grouped by date (Today / Yesterday / full date) and each shows the old and new version. History persists across sessions and can be cleared at any time.
+- **Unity game-specific settings** — BONG DLSS5 now writes the correct per-game INI settings when you install a RenoDX mod for a Unity engine game. Render target upgrades, swapchain format, and other compatibility keys are applied automatically based on the BONG DLSS5 database, with no manual configuration needed.
+- **DLSS Tool ZZZ Load Order** — a new toggle in the Neural Rendering section (DLSS Tool method only) lets you deploy the DLSS Tool addon as `zzz_renodx-dlss.addon64` so it loads last in the ReShade addon order. Toggling On or Off renames the file on disk immediately. BONG DLSS5 recognises both filenames as the same addon — tracking, auto-update, and version swapping all work seamlessly with either name.
+- **Control Ultimate Edition** — installing the Control RR mod now handles everything automatically. BONG DLSS5 upgrades DLSS, deploys the Ray Reconstruction runtime, corrects the HDR preset in renderer.ini, and clears the DLSS SR preset set in the NVIDIA driver profile for the game. A description of what will happen (and a note that this is not an HDR mod) is shown before you confirm.
 
 ### Changes
 - Unity games now show the ✓ or 🔨 status icon next to the installed addon, matching the behaviour for UE-Extended and named mod games.
-- Changing the global shader setting (Off / RHI Managed / Custom) in Settings now takes effect immediately across all games — no manual refresh needed.
+- Changing the global shader setting (Off / BONG DLSS5 Managed / Custom) in Settings now takes effect immediately across all games — no manual refresh needed.
 - The RenoDX ⚙ cog Compatibility Settings now show correct named options for every key — Blit Copy Hack, Copy Destinations, Swapchain Format, Tonemap/Scaling Offset, Proxy Revert State, and Swapchain Compat. Upgrade Path and Engine.ini HDR/LUT settings have moved into the UE-Extended Settings section alongside nits, with a vertical divider between the two columns.
 
 ### Bug Fixes
@@ -1139,7 +1139,7 @@ Search now works much like Steam's:
 
 ### New
 - DXVK can now be installed on DirectX 11 games. All three variants (Development, Stable, Lilium HDR) fully support DX11 — the DX11 deploy path was already in place but the toggle was hidden. Lilium HDR uses its DX11-specific preset system (swapchain and render target upgrades). Games where DX12 or Vulkan is also detected are still excluded.
-- To use DXVK on a DX11 game where DX12 is also detected (common with Unreal Engine titles whose PE imports include both), set the Graphics API override to DirectX 11 in Game Overrides — this tells RHI to treat the game as DX11-only and makes the DXVK toggle available.
+- To use DXVK on a DX11 game where DX12 is also detected (common with Unreal Engine titles whose PE imports include both), set the Graphics API override to DirectX 11 in Game Overrides — this tells BONG DLSS5 to treat the game as DX11-only and makes the DXVK toggle available.
 
 ### Bug Fixes
 
@@ -1147,13 +1147,13 @@ Search now works much like Steam's:
 - Fixed OptiScaler auto-update using the wrong variant (Stable instead of Nightly) when a game's tracking record was created before the variant field was added. The update now cross-references the per-game variant setting when the record has no stored variant, so Nightly games always update from Nightly staging.
 
 **Other**
-- Fixed RHI closing instead of restoring when double-clicking the desktop shortcut while minimised to the system tray. Caused by a wrong DLL name in a Windows API declaration (`GetCurrentThreadId` was imported from `user32.dll` instead of `kernel32.dll`), which threw an exception and crashed the running instance on some systems.
+- Fixed BONG DLSS5 closing instead of restoring when double-clicking the desktop shortcut while minimised to the system tray. Caused by a wrong DLL name in a Windows API declaration (`GetCurrentThreadId` was imported from `user32.dll` instead of `kernel32.dll`), which threw an exception and crashed the running instance on some systems.
 - Fixed ASI Loader showing as installed in the Extras header when it wasn't — the tracked DLL name was persisted but the install record was gone. The stale entry is now cleared automatically.
 
 ## v2.7.7
 
 ### Changes
-- Named mods from the RHI database now show a green ✓ or 🔨 status icon in the game header, the same as UE-Extended games.
+- Named mods from the BONG DLSS5 database now show a green ✓ or 🔨 status icon in the game header, the same as UE-Extended games.
 - Unity engine compatibility settings (Swapchain Proxy, Swapchain Encoding, Force Pipeline Cloning, Force Borderless etc.) now appear in the RenoDX ⚙ cog Compatibility Settings section for games that use them.
 
 ### Bug Fixes
@@ -1161,8 +1161,8 @@ Search now works much like Steam's:
 **Freezes & window behaviour**
 - Fixed random UI freezes when navigating between games. A background scan was holding a lock that blocked the NVIDIA profile section from loading.
 - Fixed UI freezing when rapidly scrolling through games with NVIDIA driver profiles.
-- Fixed RHI opening behind other windows on launch.
-- Fixed RHI not coming to the front when restored from the system tray or opened by a second instance.
+- Fixed BONG DLSS5 opening behind other windows on launch.
+- Fixed BONG DLSS5 not coming to the front when restored from the system tray or opened by a second instance.
 - Fixed a maximised window not restoring as maximised on relaunch — it would appear borderless but wasn't actually maximised.
 
 **PCGW links & engine badges**
@@ -1204,7 +1204,7 @@ Search now works much like Steam's:
 - Engine names from PCGamingWiki are now included in the centralized `pcgw_data.json` database. When PE scan can't identify an engine (common for Game Pass and EA App installs), the engine badge is now filled from PCGW data for all 55,000+ games in the database.
 
 ### Manifest Updates
-- Fixed Mount & Blade II: Bannerlord install path — RHI was detecting the wrong subfolder.
+- Fixed Mount & Blade II: Bannerlord install path — BONG DLSS5 was detecting the wrong subfolder.
 - Fixed Sekiro™: Shadows Die Twice not showing its Luma mod.
 - Fixed Arma Reforger NVIDIA profile pointing to the wrong exe.
 - Added Nexus Mods links for CONTROL Resonant and FINAL FANTASY XV WINDOWS EDITION.
@@ -1244,7 +1244,7 @@ Search now works much like Steam's:
 **UI responsiveness**
 - Fixed UI freezing during navigation, installs, uninstalls, and menu interactions. Moved 20+ blocking operations off the UI thread: async logging, cached filesystem state on game cards, debounced settings saves, async 7-Zip extraction, async mass-deploy loops, async cog dialog reads, async auto-update pass, async Settings page init, and more.
 - Fixed UI freezing when selecting certain games with Neural Rendering installed — the NR status panel was doing multiple filesystem reads (File.Exists, GetFileVersion per DLL) on the UI thread. These are now pre-computed on a background thread before the UI is updated.
-- Fixed window size and position not being restored when RHI starts minimized to tray (e.g. on Windows startup). The window now opens at the correct size and position when shown from the tray.
+- Fixed window size and position not being restored when BONG DLSS5 starts minimized to tray (e.g. on Windows startup). The window now opens at the correct size and position when shown from the tray.
 
 **PCGW reliability** (thanks kaeldrin-gh)
 - Fixed PCGamingWiki lookups permanently failing for the rest of a session after a single timeout or rate limit error. The service now pauses temporarily and retries automatically after recovery. Respects the `Retry-After` header on 429 responses.
@@ -1255,7 +1255,7 @@ Search now works much like Steam's:
 - Fixed `renodx-mfgunlock.addon64` being detected as a RenoDX HDR mod — it is now correctly excluded from the game-specific addon scan.
 
 **Startup hang**
-- Fixed RHI hanging indefinitely on "Building cards..." for users with RTX Remix installed on a game (e.g. Fallout New Vegas). RTX Remix creates circular directory symlinks that the DLSS scanner would follow forever. The scanner now stops at depth 8 and bails on paths over 300 characters.
+- Fixed BONG DLSS5 hanging indefinitely on "Building cards..." for users with RTX Remix installed on a game (e.g. Fallout New Vegas). RTX Remix creates circular directory symlinks that the DLSS scanner would follow forever. The scanner now stops at depth 8 and bails on paths over 300 characters.
 
 **Sleep/wake freeze**
 - Fixed the app freezing after waking from sleep when a game with DLSS or driver profile settings was selected. NVAPI reads now run with a 5-second timeout.
@@ -1290,7 +1290,7 @@ Search now works much like Steam's:
 - Fixed the 64-bit Feeder addon being copied to the game folder on 32-bit games when a specific Feeder version was pinned. Versioned staging only stores `.addon64`, so 32-bit games now always use the AddonPackService which has the correct `.addon32`.
 
 **Luma**
-- Fixed a crash when clicking "Install Luma" on a game where Luma was originally installed via drag-drop. These games have no download URL, so RHI now shows "Drop a Luma archive onto the card to reinstall." instead of crashing.
+- Fixed a crash when clicking "Install Luma" on a game where Luma was originally installed via drag-drop. These games have no download URL, so BONG DLSS5 now shows "Drop a Luma archive onto the card to reinstall." instead of crashing.
 
 ### Manifest Updates
 
@@ -1300,7 +1300,7 @@ Search now works much like Steam's:
 
 ### Bug Fixes
 
-- Fixed `DLSS5_Feed.fx` not deploying when the shader staging file had been deleted — RHI now re-extracts it from the cached Feeder zip automatically. Stale registration entries that were blocking re-extraction are also cleared on startup.
+- Fixed `DLSS5_Feed.fx` not deploying when the shader staging file had been deleted — BONG DLSS5 now re-extracts it from the cached Feeder zip automatically. Stale registration entries that were blocking re-extraction are also cleared on startup.
 
 ### Manifest Updates
 
@@ -1311,7 +1311,7 @@ Search now works much like Steam's:
 ### New
 
 - UE-Extended games now show a status icon next to the addon name — a green ✓ for mods marked complete, and 🔨 for mods still in progress.
-- You can now select individual files from your Custom Shaders folder in the shader picker. Files from `%LocalAppData%\RHI\reshade\Custom\Shaders\` and `\Textures\` appear as a "Custom Shaders" section between Recommended and Extra packs, grouped by subfolder. Tick or untick individual files to control exactly what gets deployed. An "Open Custom Folder" button in the Profiles panel opens the folder directly.
+- You can now select individual files from your Custom Shaders folder in the shader picker. Files from `%LocalAppData%\BONG DLSS5\reshade\Custom\Shaders\` and `\Textures\` appear as a "Custom Shaders" section between Recommended and Extra packs, grouped by subfolder. Tick or untick individual files to control exactly what gets deployed. An "Open Custom Folder" button in the Profiles panel opens the folder directly.
 - DXVK has moved to the Extras section, under a new "API Upgrades" sub-header. The install button is always available on eligible games (DX8/9/10). Variant selection (Lilium HDR by default, Development, Stable) and the Lilium preset are now in the DXVK cog alongside the existing present method settings.
 
 ### Neural Rendering
@@ -1326,7 +1326,7 @@ Search now works much like Steam's:
 ### Game Detection
 
 - Unity games now correctly report their API based on Unity's own configuration file, rather than PE import scanning (which reads the Unity player DLL and sees every API). This fixes games like Caves of Qud showing DX12 instead of their actual runtime API.
-- Games with a trademark symbol in their name (®, ™) now correctly match against RHI database entries — Borderlands® 4 and similar were not being found.
+- Games with a trademark symbol in their name (®, ™) now correctly match against BONG DLSS5 database entries — Borderlands® 4 and similar were not being found.
 - Unreal Legacy (UE1/2/3) games that have a DX11 compatibility shim in their imports now correctly show DX9 as their primary API.
 - PCGamingWiki API detection now reads DX9, DX10, Vulkan, and OpenGL in addition to DX11/DX12. Games where PE scanning returns no result will now use PCGW data as the source of truth.
 
@@ -1345,14 +1345,14 @@ Search now works much like Steam's:
 - Fixed Luma mods on Nexus showing "Update Available" repeatedly — this was a false positive from comparing page edit timestamps rather than actual file releases.
 
 **Game Pass**
-- Fixed ReShade being lost after a Game Pass game updates — Windows replaces the install folder with a new versioned path on update. RHI now detects this and reinstalls ReShade automatically on the next launch.
+- Fixed ReShade being lost after a Game Pass game updates — Windows replaces the install folder with a new versioned path on update. BONG DLSS5 now detects this and reinstalls ReShade automatically on the next launch.
 
 **Other**
 - Fixed PCGamingWiki links never appearing on game cards.
 - Fixed the render scale input box keeping keyboard focus after pressing Enter.
 - Fixed occasional incorrect DLSS scan counts when multiple games were scanned at the same time.
 - Fixed file cleanup silently stopping partway through if a file was locked by another process.
-- Window position and size are now saved whenever you finish moving or resizing the window, not only on a clean close — so your layout is preserved even if RHI is force-closed or restarted by an update.
+- Window position and size are now saved whenever you finish moving or resizing the window, not only on a clean close — so your layout is preserved even if BONG DLSS5 is force-closed or restarted by an update.
 - The version number in the status bar is now clickable and checks for app updates.
 
 ### Manifest Updates
@@ -1365,17 +1365,17 @@ Search now works much like Steam's:
 
 ### Diagnostic Logging
 
-This build includes enhanced session logging to help track down a UI freeze that occurs intermittently. Every major UI rendering operation logs timing and state to the session log. If the app freezes, close it and share the log from `%LocalAppData%\RHI\Logs\` — it will help narrow down the cause.
+This build includes enhanced session logging to help track down a UI freeze that occurs intermittently. Every major UI rendering operation logs timing and state to the session log. If the app freezes, close it and share the log from `%LocalAppData%\BONG DLSS5\Logs\` — it will help narrow down the cause.
 
 ## v2.7.2
 
 ### New
 
-- **RHI Database is now the default mod data source** — RHI now uses its own community database instead of scraping the RenoDX wiki. The database is easier to maintain, more reliable, and gives RHI full control over the data without depending on third-party infrastructure. There is also a security benefit: the RenoDX wiki is publicly editable, and with RenoDX's growing userbase and by extension RHI's there is a real risk that someone could upload a malicious file disguised as a legitimate HDR mod — RHI would have no way to prevent it from being delivered to users. The RHI database is controlled and reviewed before any changes go live. Big thanks to Scrungus for the work transferring all wiki mods and details across to the new database. You can still switch back to the RenoDX Wiki scraper in Settings if needed.
+- **BONG DLSS5 Database is now the default mod data source** — BONG DLSS5 now uses its own community database instead of scraping the RenoDX wiki. The database is easier to maintain, more reliable, and gives BONG DLSS5 full control over the data without depending on third-party infrastructure. There is also a security benefit: the RenoDX wiki is publicly editable, and with RenoDX's growing userbase and by extension BONG DLSS5's there is a real risk that someone could upload a malicious file disguised as a legitimate HDR mod — BONG DLSS5 would have no way to prevent it from being delivered to users. The BONG DLSS5 database is controlled and reviewed before any changes go live. Big thanks to Scrungus for the work transferring all wiki mods and details across to the new database. You can still switch back to the RenoDX Wiki scraper in Settings if needed.
 
 ### Bug Fixes
 
-- Fixed UI freezing when navigating between games — RHI was doing filesystem I/O (directory scans for the AppData button) on the UI thread on every card selection. This is now pre-computed in the background at startup and cached per game.
+- Fixed UI freezing when navigating between games — BONG DLSS5 was doing filesystem I/O (directory scans for the AppData button) on the UI thread on every card selection. This is now pre-computed in the background at startup and cached per game.
 - Fixed UI becoming permanently unresponsive after clicking Install on Luma (and potentially other components) — shader pack settings read/write operations were using a synchronous lock that could block the UI thread when background download tasks held the lock concurrently.
 - Fixed DXVK uninstall blocking the UI thread during the ReShade mode switch that follows it.
 - Fixed the shader pack picker briefly freezing the UI when opened during an active shader pack download.
@@ -1400,22 +1400,22 @@ This build includes enhanced session logging to help track down a UI freeze that
 
 ### New
 
-- **Export Game Data** — new button in Settings next to Copy Logs. Gathers your game library data (graphics API, exe paths, engine, store IDs) and copies a zip to clipboard. Paste into Discord to share with the community — submissions help RHI detect APIs and install paths correctly for more games.
-- **GitHub API token support** — if you're hitting rate limits (OptiScaler NR staging not available, version checks not completing), create `%LocalAppData%\RHI\github_api.txt` and paste a GitHub personal access token on a single line. No scopes needed — a free token for public repos takes about 30 seconds to generate at github.com/settings/tokens. Raises the limit from 60 to 5000 API calls per hour.
+- **Export Game Data** — new button in Settings next to Copy Logs. Gathers your game library data (graphics API, exe paths, engine, store IDs) and copies a zip to clipboard. Paste into Discord to share with the community — submissions help BONG DLSS5 detect APIs and install paths correctly for more games.
+- **GitHub API token support** — if you're hitting rate limits (OptiScaler NR staging not available, version checks not completing), create `%LocalAppData%\BONG DLSS5\github_api.txt` and paste a GitHub personal access token on a single line. No scopes needed — a free token for public repos takes about 30 seconds to generate at github.com/settings/tokens. Raises the limit from 60 to 5000 API calls per hour.
 - **Nexus Mods support for Luma** — Luma mods hosted on Nexus Mods (e.g. Mass Effect, Medal of Honor: Airborne, Borderlands 2) now show a "Get on Nexus Mods" button that takes you directly to the download page. Mods with both a GitHub and Nexus link (e.g. Prey, BioShock Remastered) now show both options. Full one-click Nexus install is wired but pending Nexus API approval.
-- **dgVoodoo2 auto-detection** — RHI now automatically detects when a Luma mod requires dgVoodoo2 (for DX9 games like Mass Effect, Borderlands 2, Medal of Honor: Airborne) by reading the Luma wiki's Special Notes column, including which specific dgVoodoo2 version the mod recommends. No longer relies on a hardcoded list.
+- **dgVoodoo2 auto-detection** — BONG DLSS5 now automatically detects when a Luma mod requires dgVoodoo2 (for DX9 games like Mass Effect, Borderlands 2, Medal of Honor: Airborne) by reading the Luma wiki's Special Notes column, including which specific dgVoodoo2 version the mod recommends. No longer relies on a hardcoded list.
 
 ### Changes
 
-- **PCGamingWiki API detection** — RHI now uses PCGamingWiki in the background to verify DirectX versions for games it can't scan directly (Xbox/Game Pass titles, access-denied paths). Halo Infinite, Resonance, and similar titles that previously showed no API badge now correctly show DX12.
-- **PCGamingWiki config path detection** — RHI now scrapes the config file location from PCGamingWiki and uses it to place Engine.ini in the correct folder. Fixes UE-Extended installs for games that haven't been launched yet, where the config folder doesn't exist yet and RHI previously had to guess the project name.
+- **PCGamingWiki API detection** — BONG DLSS5 now uses PCGamingWiki in the background to verify DirectX versions for games it can't scan directly (Xbox/Game Pass titles, access-denied paths). Halo Infinite, Resonance, and similar titles that previously showed no API badge now correctly show DX12.
+- **PCGamingWiki config path detection** — BONG DLSS5 now scrapes the config file location from PCGamingWiki and uses it to place Engine.ini in the correct folder. Fixes UE-Extended installs for games that haven't been launched yet, where the config folder doesn't exist yet and BONG DLSS5 previously had to guess the project name.
 - **Neural Rendering: Feeder and Bridge now support addon version pinning** — the Addon Version dropdown is now active for all four NR methods.
 - **OptiScaler cog Upscaler API defaults to the game's detected API** — opens on DX12 for DX12 games instead of always defaulting to DX11.
-- **More reliable OptiScaler and Neural Rendering install records** — RHI now writes a `rhi_install.txt` file to the game folder on every OptiScaler and Neural Rendering install, recording the exact version, variant, and file list that was deployed. This is used on the next launch to show the correct version (fixes nightly builds reverting to stable version numbers on restart), and on uninstall to know exactly which files to clean up regardless of whether the staging folder has since been updated.
+- **More reliable OptiScaler and Neural Rendering install records** — BONG DLSS5 now writes a `rhi_install.txt` file to the game folder on every OptiScaler and Neural Rendering install, recording the exact version, variant, and file list that was deployed. This is used on the next launch to show the correct version (fixes nightly builds reverting to stable version numbers on restart), and on uninstall to know exactly which files to clean up regardless of whether the staging folder has since been updated.
 
 ### Bug Fixes
 
-- Fixed OptiScaler uninstall leaving DLSS files behind when a NR method (DLSS5 Tool, ShortFuse, Feeder) was also installed — RHI now tracks which component owns each shared file and only removes a file when the last component that deployed it is uninstalled.
+- Fixed OptiScaler uninstall leaving DLSS files behind when a NR method (DLSS5 Tool, ShortFuse, Feeder) was also installed — BONG DLSS5 now tracks which component owns each shared file and only removes a file when the last component that deployed it is uninstalled.
 - Fixed `nvngx_dlss*.dll` files left in the game root (e.g. Mortal Shell II) after uninstalling DLSS5 Tool, when the game's actual DLSS lived in a plugin subfolder.
 - Fixed OptiScaler DLL naming override not correctly tracking the renamed DLL, causing uninstall to leave files behind.
 - Fixed MFG Ada Unlock being reinstalled on every Refresh after removing it via the Extras section.
@@ -1423,13 +1423,13 @@ This build includes enhanced session logging to help track down a UI freeze that
 - Fixed DLSS5 DX11 Bridge and MFG Ada Unlock re-downloading on every launch.
 - Fixed shader pack folder occasionally being renamed to `reshade-shaders-original` during Refresh.
 - Fixed `renodx-dlss5.addon64` reappearing in the addon picker after removing Neural Rendering.
-- Fixed RHI database (rhi-repo) changes not picking up after a standard Refresh — previously required a full restart.
+- Fixed BONG DLSS5 database (rhi-repo) changes not picking up after a standard Refresh — previously required a full restart.
 - Fixed the detail panel not refreshing for the currently selected game after a Refresh.
 - Fixed UE-Extended game notes from the rhi-repo database not appearing in the RenoDX info dialog.
 - Fixed pressing Backspace in the ReShade screenshot hotkey box being recorded as a hotkey — Backspace now clears the shortcut instead (matching ReShade's own behaviour). Thanks to @tzachbon for the contribution.
 - Fixed "Apply to All Games" in Screenshots & Hotkeys doing nothing when the screenshot path is blank — hotkeys and effect list style now apply regardless. Thanks to @tzachbon for the contribution.
 - Fixed UI freezing for a few seconds during OptiScaler downloads — progress and status message updates no longer trigger a full detail panel rebuild. Thanks to @Nypheena for the contribution.
-- Fixed an empty `reshade-shaders-original` folder being created on clean ReShade installs — on a fresh game folder with no prior `reshade-shaders`, RHI was accidentally creating the folder and immediately renaming it as a backup. On uninstall this empty folder would be restored as `reshade-shaders`, leaving just the management marker with no shaders.
+- Fixed an empty `reshade-shaders-original` folder being created on clean ReShade installs — on a fresh game folder with no prior `reshade-shaders`, BONG DLSS5 was accidentally creating the folder and immediately renaming it as a backup. On uninstall this empty folder would be restored as `reshade-shaders`, leaving just the management marker with no shaders.
 - Fixed Luma installs via drag-drop or the downloads watcher missing several post-install steps — ReShade, DLSS, dgVoodoo2, Engine.ini keys, and launch arguments are now all applied correctly regardless of how the Luma archive is installed.
 - Fixed ReShade being deployed as `d3d9.dll` on DX9 games when dgVoodoo2 is also being installed — dgVoodoo2 needs `d3d9.dll` to intercept the game's DX9 calls, so ReShade now correctly installs as `dxgi.dll` instead, hooking dgVoodoo2's DX11 output.
 
@@ -1450,8 +1450,8 @@ This build includes enhanced session logging to help track down a UI freeze that
 ### New
 
 - **OptiScaler DLSS NR variant** — new third option in the OptiScaler version picker alongside Stable and Nightly. Uses a community fork with DLSS 5 Neural Rendering built in. Same features as Nightly (Streamline, FG settings, presets, etc.) plus a new Neural Rendering Settings section in the cog to tune NR behaviour without touching config files. Switch between variants in the OptiScaler cog in the Extras section.
-- **DLSS5 Feeder on 32-bit DX9 games** — the DLSS5 Feeder method in Neural Rendering now fully supports 32-bit DX9 games (Borderlands 2, The Witcher 2, and much more). RHI handles all the setup automatically — still one click.
-- **Luma support for DX9 games** — Borderlands 2, Borderlands: The Pre-Sequel, The Witcher 2, Medal of Honor: Airborne, and Vanquish now work with Luma. RHI automatically handles the DX9 compatibility layer alongside the Luma install. Still one click.
+- **DLSS5 Feeder on 32-bit DX9 games** — the DLSS5 Feeder method in Neural Rendering now fully supports 32-bit DX9 games (Borderlands 2, The Witcher 2, and much more). BONG DLSS5 handles all the setup automatically — still one click.
+- **Luma support for DX9 games** — Borderlands 2, Borderlands: The Pre-Sequel, The Witcher 2, Medal of Honor: Airborne, and Vanquish now work with Luma. BONG DLSS5 automatically handles the DX9 compatibility layer alongside the Luma install. Still one click.
 - **Neural Rendering addon version picker** — the Neural Rendering section now has an Addon Version dropdown. You can pin a game to a specific version of DLSS5 Tool or DLSS Tool (ShortFuse) before installing — useful if a newer release causes issues with a particular game. Defaults to Latest and auto-updates as normal. The picker greys out when Neural Rendering is already installed; uninstall first to switch.
 - **ReShade HDR Metadata** — new addon in the picker. Writes HDR metadata into the swapchain alongside ReShade, fixing washed-out or badly tone-mapped HDR output on TVs and monitors that rely on it to calibrate their HDR pipeline. Works with any DX11/DX12 game running ReShade. No configuration needed.
 
@@ -1460,7 +1460,7 @@ This build includes enhanced session logging to help track down a UI freeze that
 - Fixed Lilium HDR Shaders (and other shader packs) not picking up new releases — updates were silently skipped if the pack was already on disk, even when a newer version was available.
 - Fixed MFG Ada Unlock install button being permanently greyed out on fresh installs — it now downloads on demand when you click Install.
 - Fixed games with manifest install path overrides (e.g. The Witcher 2) showing the wrong install path and missing mod status on first launch.
-- Fixed ReBAR Size Limit writing and reading incorrect values — values set in RHI now show correctly in NVPI, and values set in NVPI are correctly read back by RHI.
+- Fixed ReBAR Size Limit writing and reading incorrect values — values set in BONG DLSS5 now show correctly in NVPI, and values set in NVPI are correctly read back by RHI.
 - Fixed Output Colour Settings applying to the wrong monitor on multi-monitor setups.
 
 ---
@@ -1469,8 +1469,8 @@ This build includes enhanced session logging to help track down a UI freeze that
 
 ### New
 
-- **RTX 40 MFG Unlock v1.3** — updated to the new standalone format. No longer requires ASI Loader — it's a single DLL that you deploy under any proxy name the game loads (version.dll, dinput8.dll, etc.). RHI shows a name picker on install, and automatically cleans up any old ASI-based install on first launch.
-- **20/30 FG Unlock** — new entry in the MFG Unlocks section. Brings DLSS Frame Generation to RTX 20 and 30 series GPUs (D3D12 games only, no ReShade or ASI Loader required). Pick your GPU generation (RTX 30 or RTX 20) in the cog before installing — RHI handles the rest and keeps it updated automatically.
+- **RTX 40 MFG Unlock v1.3** — updated to the new standalone format. No longer requires ASI Loader — it's a single DLL that you deploy under any proxy name the game loads (version.dll, dinput8.dll, etc.). BONG DLSS5 shows a name picker on install, and automatically cleans up any old ASI-based install on first launch.
+- **20/30 FG Unlock** — new entry in the MFG Unlocks section. Brings DLSS Frame Generation to RTX 20 and 30 series GPUs (D3D12 games only, no ReShade or ASI Loader required). Pick your GPU generation (RTX 30 or RTX 20) in the cog before installing — BONG DLSS5 handles the rest and keeps it updated automatically.
 - **Resolution & Colour Control** — automatically switch to a target resolution when a game launches and restore it on exit. Also includes Output Colour Settings to control colour depth and HDR dynamic range per-display, without touching NVIDIA Control Panel.
 - **Standalone DLSS Enabler** — new row in the Extras section. Installs DLSS Enabler as a proxy DLL directly into any game folder, independent of OptiScaler. Updates automatically.
 - **MFG Ada Unlock** — new row in the Extras section. Unlocks DLSS Multi Frame Generation (3x/4x+) on RTX 40-series GPUs. Requires ReShade. Mutually exclusive with RTX 40 MFG Unlock.
@@ -1484,17 +1484,17 @@ This build includes enhanced session logging to help track down a UI freeze that
 
 ### Maintenance
 
-- RHI now tracks every DLL it deploys into game folders using a sentinel file. If the game already had a file at that location, the original is backed up and restored on uninstall. If there was nothing there, a 0-byte marker is written so RHI knows to clean up cleanly. This prevents game-original DLLs from being lost after uninstall, and fixes orphaned leftover files. Covers OptiScaler, DLSS version swaps, RE Framework, and Luma.
-- Added internal RenoDX database service that fetches mod and UE-Extended configuration data from the RHI repository. Includes a dev-only "RenoDX Data Source" setting (Wiki Only / DB Only / Hybrid) for testing and validation ahead of a full transition away from wiki scraping.
+- BONG DLSS5 now tracks every DLL it deploys into game folders using a sentinel file. If the game already had a file at that location, the original is backed up and restored on uninstall. If there was nothing there, a 0-byte marker is written so BONG DLSS5 knows to clean up cleanly. This prevents game-original DLLs from being lost after uninstall, and fixes orphaned leftover files. Covers OptiScaler, DLSS version swaps, RE Framework, and Luma.
+- Added internal RenoDX database service that fetches mod and UE-Extended configuration data from the BONG DLSS5 repository. Includes a dev-only "RenoDX Data Source" setting (Wiki Only / DB Only / Hybrid) for testing and validation ahead of a full transition away from wiki scraping.
 
 ### Bug Fixes
 
 - Fixed DLSS Fix writing the wrong Streamline path in `reshade.ini` — it was pointing to the wrong file, which caused DLSS Fix to fail to hook Streamline correctly.
-- Fixed DLSS Fix config not being written at all when Streamline files were added to a game after RHI had already scanned it (e.g. from a game update or another component install in the same session).
-- Fixed the NR Cost Scaler toggle staying greyed out for an entire session after a fresh RHI install — it downloads in the background at startup but the toggle wasn't updating to reflect it, requiring an install+uninstall workaround to un-grey it.
+- Fixed DLSS Fix config not being written at all when Streamline files were added to a game after BONG DLSS5 had already scanned it (e.g. from a game update or another component install in the same session).
+- Fixed the NR Cost Scaler toggle staying greyed out for an entire session after a fresh BONG DLSS5 install — it downloads in the background at startup but the toggle wasn't updating to reflect it, requiring an install+uninstall workaround to un-grey it.
 - Fixed ASI Loader leaving its INI file behind on uninstall (e.g. uninstalling `winmm.dll` now also removes `winmm.ini`).
 - Fixed a crash when clicking "Apply Peak Nits to All" or "Apply to All Games" in Settings when a game's folder no longer exists on disk.
-- Fixed Admin Mode not being detected on certain system configurations — RHI now uses a more reliable check that correctly handles accounts with full admin rights even when the standard elevation check returns false.
+- Fixed Admin Mode not being detected on certain system configurations — BONG DLSS5 now uses a more reliable check that correctly handles accounts with full admin rights even when the standard elevation check returns false.
 - Fixed the Neural Rendering section showing ReShade as not installed immediately after installing it — you had to navigate away and back to see the correct status.
 - Fixed RE Framework showing a stale build number on the card after an update — the version now syncs correctly on the next update check.
 - Fixed NVIDIA Profile Overrides showing Default/Off on every launch until a manual Refresh — caused by a startup timing issue where profile reads would fail silently before NVAPI finished initialising.
@@ -1535,7 +1535,7 @@ This build includes enhanced session logging to help track down a UI freeze that
 - Fixed Custom render scale in DLSS & Streamline Defaults — selecting "Custom" now shows a text box so you can type in a specific percentage (33–100%).
 - Fixed an intermittent UI freeze where the window would stay active (moveable, minimisable) but all buttons and controls stopped responding. This could happen when opening cogs, install dialogs, or other popups while a background dialog was already showing. Affects the Luma Settings cog, ASI Loader cog, ShortFuse settings, RTX 40 MFG cog, and install warning prompts.
 - Fixed a freeze that could occur when an app update was found while the "Checking for updates…" progress dialog was open — the update dialog would silently block for up to 10 seconds.
-- Fixed a brief freeze when RHI updated the taskbar jump list after launching a game or changing the Recent Games setting — the update now runs in the background.
+- Fixed a brief freeze when BONG DLSS5 updated the taskbar jump list after launching a game or changing the Recent Games setting — the update now runs in the background.
 - Fixed the Batch Deploy DLSS dialog occasionally leaving a ghost overlay that blocked all input after finishing quickly.
 - Fixed a flicker where the entire Overrides panel disappeared and rebuilt itself when changing a DLSS version, preset, render scale, or driver override — now only the NVIDIA Profile section refreshes.
 - Fixed a freeze that could occur when changing a DLSS version and clicking a section header at the same time.
@@ -1560,7 +1560,7 @@ This build includes enhanced session logging to help track down a UI freeze that
 
 - Fixed DLL naming override toggle becoming unresponsive after being toggled — any in-progress drag state is now cleared when the overrides panel rebuilds, and the toggle is always re-enabled via a `finally` block even if file operations throw.
 - Fixed Recent Games Off setting not hiding games from the system tray right-click menu — all call sites now pass an empty list when the setting is off.
-- Fixed Recent Games Off setting not clearing the taskbar jump list — jump list now uses `ICustomDestinationList` instead of `SHAddToRecentDocs`, giving RHI full control to clear it when the setting is toggled off.
+- Fixed Recent Games Off setting not clearing the taskbar jump list — jump list now uses `ICustomDestinationList` instead of `SHAddToRecentDocs`, giving BONG DLSS5 full control to clear it when the setting is toggled off.
 - Fixed reinstalling ASI Loader with a different DLL name leaving the old DLL behind — the previous install is now cleaned up (and any Hooked backup restored) before deploying under the new name.
 - Fixed ShortFuse DLSS Tool download failing with "file in use" when both DLSS5 variants download concurrently — each variant now uses its own temp filename.
 - Fixed ShortFuse DLSS Tool zip extraction failing when the addon file inside the zip doesn't match the expected exact filename — falls back to any `.addon64` entry in the zip.
@@ -1574,7 +1574,7 @@ This build includes enhanced session logging to help track down a UI freeze that
 
 - Fixed OptiScaler install and uninstall not refreshing the Extras section — the installed/uninstalled state now updates immediately without needing a manual refresh.
 - Fixed DLL naming override toggle requiring a refresh to interact with after enabling or disabling — the overrides panel now rebuilds immediately after the toggle operation completes.
-- Fixed RTX 40 MFG Unlock not writing the UAL ini file (`version.ini`, `dinput8.ini`, etc.) on install — without it, UAL didn't know to load `RTX40MFG.asi` and ReShade would stop working. RHI now writes the required `[GlobalSets]` keys to the matching UAL proxy ini file automatically.
+- Fixed RTX 40 MFG Unlock not writing the UAL ini file (`version.ini`, `dinput8.ini`, etc.) on install — without it, UAL didn't know to load `RTX40MFG.asi` and ReShade would stop working. BONG DLSS5 now writes the required `[GlobalSets]` keys to the matching UAL proxy ini file automatically.
 
 ---
 
@@ -1583,7 +1583,7 @@ This build includes enhanced session logging to help track down a UI freeze that
 ### Changes
 
 - DLSS Super Resolution, Ray Reconstruction, and Frame Generation version combos now include **NVIDIA Override** as a selectable option. Choosing it writes the driver's "Latest DLL" flag to the game's NVIDIA profile, equivalent to enabling "DLSS — Enable DLL Override" in Profile Inspector. Selecting any other version or clicking Restore DLSS/SL clears the override. NVIDIA Override is also available as a default in Configure Defaults (applies via Quick Apply) and as a selectable option in Batch Deploy.
-- Added support for per-game custom Engine.ini files, hosted in the rhi-repo `engine-files/` folder and referenced by game name in the manifest. When set, RHI fetches and merges only the keys in that file instead of the standard HDR key set — allowing precise control over what gets written for games where the full set causes issues.
+- Added support for per-game custom Engine.ini files, hosted in the rhi-repo `engine-files/` folder and referenced by game name in the manifest. When set, BONG DLSS5 fetches and merges only the keys in that file instead of the standard HDR key set — allowing precise control over what gets written for games where the full set causes issues.
 
 ### Bug Fixes
 
@@ -1718,7 +1718,7 @@ This build includes enhanced session logging to help track down a UI freeze that
 
 - Fixed OptiPatcher not deploying for NVIDIA users — it was incorrectly gated to AMD/Intel only.
 - Fixed MFG Ada Unlock, DLSS5 Feeder, and DX11 Bridge disappearing from the global addon manager after being switched to API-based auto-updating.
-- Fixed MFG Ada Unlock, DLSS5 Feeder, and DX11 Bridge not auto-updating — these addons use dynamic release filenames so RHI now resolves the download URL from the GitHub releases API rather than a hardcoded URL.
+- Fixed MFG Ada Unlock, DLSS5 Feeder, and DX11 Bridge not auto-updating — these addons use dynamic release filenames so BONG DLSS5 now resolves the download URL from the GitHub releases API rather than a hardcoded URL.
 - Fixed addon update check running before the manifest was applied, causing manifest-driven addons to be silently skipped on every startup.
 - Fixed normal Refresh not re-checking games previously confirmed as "no DLSS" — newly installed DLSS (e.g. a game update that adds frame generation) now shows up on a standard Refresh instead of requiring a Full Refresh., causing manifest-driven addons to be silently skipped on every startup.
 
@@ -1728,7 +1728,7 @@ This build includes enhanced session logging to help track down a UI freeze that
 
 ### Bug Fixes
 
-- Fixed DLSS5 Feeder failing to download for some users — the zip filename changes with each release so the hardcoded URL broke on updates. RHI now resolves the download URL dynamically from the GitHub releases API so Feeder auto-updates correctly going forward.
+- Fixed DLSS5 Feeder failing to download for some users — the zip filename changes with each release so the hardcoded URL broke on updates. BONG DLSS5 now resolves the download URL dynamically from the GitHub releases API so Feeder auto-updates correctly going forward.
 - Fixed DOF Fix install failing — the releases API was returning only the first 30 results by default, pushing DOF Fix releases off the page as the repo grew. Now uses per_page=100.
 
 ---
@@ -1773,7 +1773,7 @@ This build includes enhanced session logging to help track down a UI freeze that
 
 ### Bug Fixes
 
-- Fixed `nvngx_dlssnr.dll` not being removed from the game folder when uninstalling DLSS5 Tool. RHI now uses a sentinel file to track whether it placed the DLL, so it only removes what it deployed.
+- Fixed `nvngx_dlssnr.dll` not being removed from the game folder when uninstalling DLSS5 Tool. BONG DLSS5 now uses a sentinel file to track whether it placed the DLL, so it only removes what it deployed.
 - Fixed Automatic Updates setting reverting to Yes on restart when set to No.
 - Fixed addon downloads aborting entirely when one URL (e.g. the 32-bit variant) returns a 404 — remaining URLs now continue independently.
 - Fixed per-game addon selection being lost when switching the addon mode to Global and back.
@@ -1793,7 +1793,7 @@ This build includes enhanced session logging to help track down a UI freeze that
 
 ### Bug Fixes
 
-- Fixed `RenoDX DLSS5.addon64` being deployed to game folders on every launch due to a stale file left over from renaming the addon to DLSS5 Tool. RHI now removes it automatically on startup and cleans it up from all affected game folders, including per-game addon selections that still referenced the old name.
+- Fixed `RenoDX DLSS5.addon64` being deployed to game folders on every launch due to a stale file left over from renaming the addon to DLSS5 Tool. BONG DLSS5 now removes it automatically on startup and cleans it up from all affected game folders, including per-game addon selections that still referenced the old name.
 - Fixed DLSS5 Tool and DLSS Tool (ShortFuse) being deployed as `.addon32` on 32-bit games, causing a ReShade load error. Both addons now always deploy as `.addon64`.
 
 ---
@@ -1803,8 +1803,8 @@ This build includes enhanced session logging to help track down a UI freeze that
 ### Bug Fixes
 
 - Fixed DLSS5 Tool addon not deploying to game folders after being selected. The internal package name change from "RenoDX DLSS5" to "DLSS5 Tool" was not reflected in all deploy paths.
-- Fixed stale `RenoDX DLSS5.addon64` file from the pre-rename version being re-deployed to games on every startup. RHI now removes it automatically on launch.
-- Fixed co-deployed DLSS and Streamline files not being cleaned up when switching away from DLSS Tool (ShortFuse). Files RHI placed are now fully restored or removed on deselect.
+- Fixed stale `RenoDX DLSS5.addon64` file from the pre-rename version being re-deployed to games on every startup. BONG DLSS5 now removes it automatically on launch.
+- Fixed co-deployed DLSS and Streamline files not being cleaned up when switching away from DLSS Tool (ShortFuse). Files BONG DLSS5 placed are now fully restored or removed on deselect.
 - Fixed mutual exclusivity between DLSS5 Tool and DLSS Tool (ShortFuse) — selecting one now greys out the other in the addon picker.
 
 ---
@@ -1814,7 +1814,7 @@ This build includes enhanced session logging to help track down a UI freeze that
 ### New
 
 - Added a search bar to the shader pack picker — filter by pack name or individual shader filename.
-- **DLSS Tool (ShortFuse)** — ShortFuse's DLSS5 addon is now in the addon picker as a second option alongside DLSS5 Tool. Supports DX12, DX11 and DX9 with HDR scaling. On install, RHI automatically downloads and deploys the newest DLSS SR, RR, FG, NR and Streamline files to the game folder. Supports RTX 20-50 Series. Still WIP — fall back to DLSS5 Tool if you have issues.
+- **DLSS Tool (ShortFuse)** — ShortFuse's DLSS5 addon is now in the addon picker as a second option alongside DLSS5 Tool. Supports DX12, DX11 and DX9 with HDR scaling. On install, BONG DLSS5 automatically downloads and deploys the newest DLSS SR, RR, FG, NR and Streamline files to the game folder. Supports RTX 20-50 Series. Still WIP — fall back to DLSS5 Tool if you have issues.
 - **Updated nvngx_dlssnr.dll** to ShortFuse's latest build, now supporting RTX 20, 30, 40 and 50 Series GPUs with identical performance to the original NVIDIA build on RTX 50 Series.
 
 ### Changes
@@ -1828,7 +1828,7 @@ This build includes enhanced session logging to help track down a UI freeze that
 
 ### New
 
-- **nvngx_dlssnr.dll 310.8.SF** — a modified Neural Rendering DLL by ShortFuse that extends support to RTX 20, 30, 40 and 50 Series GPUs. This is now the default version RHI deploys. Shown as `310.8.1` in Windows Explorer, `310.8.SF` in RHI.
+- **nvngx_dlssnr.dll 310.8.SF** — a modified Neural Rendering DLL by ShortFuse that extends support to RTX 20, 30, 40 and 50 Series GPUs. This is now the default version BONG DLSS5 deploys. Shown as `310.8.1` in Windows Explorer, `310.8.SF` in RHI.
 
 ### Changes
 
@@ -1846,7 +1846,7 @@ This build includes enhanced session logging to help track down a UI freeze that
 ### Bug Fixes
 
 - Fixed "How to use" link not appearing in the per-game addon picker.
-- Fixed `renodx-dlss5.addon64` triggering an install prompt when double-clicked or drag-dropped. It is managed by RHI internally and should only be installed via the addon picker or placed in the Custom Addons folder.
+- Fixed `renodx-dlss5.addon64` triggering an install prompt when double-clicked or drag-dropped. It is managed by BONG DLSS5 internally and should only be installed via the addon picker or placed in the Custom Addons folder.
 
 ### Manifest Updates
 
@@ -1889,4 +1889,4 @@ This build includes enhanced session logging to help track down a UI freeze that
 
 ### New
 
-- **RenoDX DLSS5 addon** — `renodx-dlss5.addon64` is now a first-class addon in the per-game addon picker, listed above RenoDX Upgrade. Enable it per game from the Addons combo → Select. RHI downloads it automatically, keeps it updated silently alongside other components, and deploys `nvngx_dlssnr.dll` to the game folder alongside it if not already present. For 50 Series GPUs only.
+- **RenoDX DLSS5 addon** — `renodx-dlss5.addon64` is now a first-class addon in the per-game addon picker, listed above RenoDX Upgrade. Enable it per game from the Addons combo → Select. BONG DLSS5 downloads it automatically, keeps it updated silently alongside other components, and deploys `nvngx_dlssnr.dll` to the game folder alongside it if not already present. For 50 Series GPUs only.

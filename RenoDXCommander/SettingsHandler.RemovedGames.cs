@@ -32,7 +32,7 @@ public partial class SettingsHandler
             if (Application.Current.Resources.TryGetValue("SettingsLabelBrush", out var brush) && brush is Microsoft.UI.Xaml.Media.Brush b)
                 _removedGamesBtn.Foreground = b;
             ToolTipService.SetToolTip(_removedGamesBtn,
-                "관리 › RHI에서 제거로 뺀 게임입니다. 목록을 열어 다시 추가할 수 있습니다.");
+                "관리 › BONG DLSS5에서 제거로 뺀 게임입니다. 목록을 열어 다시 추가할 수 있습니다.");
             _removedGamesBtn.Click += async (s, e) =>
             {
                 try { await ShowRemovedGamesDialogAsync(); }
@@ -74,7 +74,7 @@ public partial class SettingsHandler
         var list = new StackPanel { Spacing = 6 };
         var empty = new TextBlock
         {
-            Text = "제거된 게임이 없습니다. 게임의 관리 섹션에서 RHI에서 제거를 사용하면 목록에서 뺄 수 있습니다.",
+            Text = "제거된 게임이 없습니다. 게임의 관리 섹션에서 BONG DLSS5에서 제거를 사용하면 목록에서 뺄 수 있습니다.",
             TextWrapping = TextWrapping.Wrap,
             FontSize = 12,
             Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),

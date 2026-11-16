@@ -92,7 +92,7 @@ public sealed partial class MainWindow
         var store = ctx.Store;
         var btn = CogDialog.StyledButton("저장된 ini 불러오기...", CogButtonKind.Secondary);
         ToolTipService.SetToolTip(btn,
-            "저장된 ini 중 하나를 이 게임의 OptiScaler.ini로 사용합니다. RHI가 이를 기억해 재설치나 업데이트 후 다시 적용합니다.");
+            "저장된 ini 중 하나를 이 게임의 OptiScaler.ini로 사용합니다. BONG DLSS5가 이를 기억해 재설치나 업데이트 후 다시 적용합니다.");
 
         var panel = new StackPanel { Spacing = 8, Width = 320 };
         var flyout = new Flyout { Content = panel };

@@ -652,7 +652,7 @@ public sealed partial class MainWindow
             var confirm = new ContentDialog
             {
                 Title = "누락된 프로필을 생성할까요?",
-                Content = "RHI가 라이브러리에서 NVIDIA 드라이버 프로필이 없는 모든 게임에 프로필을 생성합니다. 숨김 게임은 건너뛰며 기존 프로필은 변경되지 않습니다.",
+                Content = "BONG DLSS5가 라이브러리에서 NVIDIA 드라이버 프로필이 없는 모든 게임에 프로필을 생성합니다. 숨김 게임은 건너뛰며 기존 프로필은 변경되지 않습니다.",
                 PrimaryButtonText = "생성",
                 CloseButtonText = "취소",
                 DefaultButton = ContentDialogButton.Close,
@@ -789,7 +789,7 @@ public sealed partial class MainWindow
             bool isAdmin = VulkanLayerService.IsRunningAsAdmin();
             var warningText = "현재 NVIDIA 드라이버 프로필 설정을 저장된 백업으로 덮어씁니다. 되돌릴 수 없습니다.";
             if (!isAdmin)
-                warningText += "\n\n관리자 권한으로 실행 중이 아닙니다. 관리자 권한이 필요한 설정(예: ReBAR)은 복원되지 않습니다. 모든 설정을 가져오려면 RHI를 관리자 권한으로 실행하세요.";
+                warningText += "\n\n관리자 권한으로 실행 중이 아닙니다. 관리자 권한이 필요한 설정(예: ReBAR)은 복원되지 않습니다. 모든 설정을 가져오려면 BONG DLSS5를 관리자 권한으로 실행하세요.";
 
             var confirmResult = await DialogService.ShowSafeAsync(new ContentDialog
             {
@@ -1541,7 +1541,7 @@ public sealed partial class MainWindow
             $"{displayName}은(는) 현재 해상도와 주사율에서 {depth}, {range} 범위를 지원하지 않습니다. "
             + "더 낮은 색 심도를 선택하거나, 모니터가 낮은 주사율에서만 지원한다면 주사율을 낮추세요.",
         NvColorService.NVAPI_INVALID_USER_PRIVILEGE =>
-            $"{displayName}에 색상 설정을 적용할 수 없습니다: NVIDIA 드라이버를 사용하려면 RHI를 관리자 권한으로 실행해야 합니다. 설정에서 관리자 모드를 켜세요.",
+            $"{displayName}에 색상 설정을 적용할 수 없습니다: NVIDIA 드라이버를 사용하려면 BONG DLSS5를 관리자 권한으로 실행해야 합니다. 설정에서 관리자 모드를 켜세요.",
         NvColorService.StatusNotAvailable =>
             $"{displayName}에 색상 설정을 적용할 수 없습니다: NVIDIA 드라이버 인터페이스를 사용할 수 없습니다.",
         _ => $"NVIDIA 드라이버가 {displayName}에 {depth}, {range}을(를) 적용하지 못했습니다 (오류 {status}).",
@@ -1743,7 +1743,7 @@ public sealed partial class MainWindow
 
             content.Children.Add(new TextBlock
             {
-                Text = "드롭다운에서 저장된 상태를 선택하고 적용을 클릭하세요. RHI가 레지스트리 값을 직접 기록하고 디스플레이 재설정을 실행합니다 (드라이버가 다시 초기화되는 동안 약 15초간 화면이 꺼집니다).",
+                Text = "드롭다운에서 저장된 상태를 선택하고 적용을 클릭하세요. BONG DLSS5가 레지스트리 값을 직접 기록하고 디스플레이 재설정을 실행합니다 (드라이버가 다시 초기화되는 동안 약 15초간 화면이 꺼집니다).",
                 FontSize = 12,
                 TextWrapping = TextWrapping.Wrap,
                 Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),

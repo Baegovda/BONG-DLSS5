@@ -20,7 +20,7 @@ public partial class MainViewModel
         if (vulkan && card.Is32Bit)
             return ("64비트 Vulkan 전용", "HSF는 64비트 Vulkan 게임만 지원합니다.");
         if (card.IsDxvkInstalled) return ("먼저 DXVK 제거", "이 게임에 DXVK가 설치되어 있습니다. HSF는 게임 자체의 DirectX가 필요하므로 먼저 DXVK를 제거하세요.");
-        if (card.IsDxvkBlacklisted) return ("안티치트 게임", "이 게임은 RHI의 안티치트 목록에 있습니다. 온라인 안티치트가 있는 게임에서는 절대 HSF를 사용하지 마세요.");
+        if (card.IsDxvkBlacklisted) return ("안티치트 게임", "이 게임은 BONG DLSS5의 안티치트 목록에 있습니다. 온라인 안티치트가 있는 게임에서는 절대 HSF를 사용하지 마세요.");
         if (!card.IsRsInstalled) return ("먼저 ReShade 설치", "먼저 ReShade를 설치하세요: HSF는 ReShade 애드온입니다.");
         if (card.UseNormalReShade) return ("애드온 지원 ReShade 필요", "HSF는 애드온을 지원하는 ReShade가 필요합니다. 이 게임의 ReShade 채널을 No Addons에서 변경하세요.");
         if (vulkan && File.Exists(Path.Combine(card.InstallPath, "dxgi.dll"))

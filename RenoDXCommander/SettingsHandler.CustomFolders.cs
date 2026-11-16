@@ -44,7 +44,7 @@ public partial class SettingsHandler
             head.Children.Add(new TextBlock { Text = "사용자 지정 게임 폴더", Style = FindStyle("SettingsCardTitleStyle") });
             head.Children.Add(new TextBlock
             {
-                Text = "DRM 없는 다운로드 등 지원되는 스토어 외부의 게임을 RHI가 확인하는 폴더입니다. "
+                Text = "DRM 없는 다운로드 등 지원되는 스토어 외부의 게임을 BONG DLSS5가 확인하는 폴더입니다. "
                      + "그 안의 각 폴더는 하나의 게임으로 처리됩니다. 찾은 게임은 추가할지 묻기만 하며, 자동으로 추가되지 않습니다.",
                 Style = FindStyle("SettingsCardDescStyle"),
                 TextWrapping = TextWrapping.Wrap,
@@ -65,7 +65,7 @@ public partial class SettingsHandler
             buttons.Children.Add(addBtn);
 
             _customFoldersScanBtn = MakeCustomFoldersButton("지금 검색", primary: false,
-                "지금 사용자 지정 폴더에서 새 게임을 찾습니다. RHI는 실행 시와 새로 고침 시에도 확인합니다.");
+                "지금 사용자 지정 폴더에서 새 게임을 찾습니다. BONG DLSS5는 실행 시와 새로 고침 시에도 확인합니다.");
             _customFoldersScanBtn.Click += async (s, e) =>
             {
                 try { await ScanCustomFoldersNowAsync(); }

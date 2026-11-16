@@ -36,7 +36,7 @@ public partial class DetailPanelBuilder
             Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
         });
         Para($"{modName}은(는) 비공개 소스입니다. {author}은(는) 코드 없이 완성된 DLL만 배포하므로, 외부에서는 무엇을 하는지 확인할 수 없습니다.");
-        var line = $"RHI는 {author}의 GitHub 릴리스에서 변경 없이 다운로드합니다. 이에 동의하는 경우에만 설치하세요. ";
+        var line = $"BONG DLSS5는 {author}의 GitHub 릴리스에서 변경 없이 다운로드합니다. 이에 동의하는 경우에만 설치하세요. ";
         if (githubUrl == null)
             Para(line + "해당 행의 정보 버튼을 누르면 GitHub 페이지가 열립니다.");
         else

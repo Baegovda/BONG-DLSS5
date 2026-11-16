@@ -143,7 +143,7 @@ public static class DisplayModeItems
     public const string GroupFrameRate = "프레임 속도";
     public const string GroupImage = "이미지";
     public const string GroupControls = "조작";
-    public const string GroupLaunch = "RHI가 게임을 실행할 때";
+    public const string GroupLaunch = "BONG DLSS5가 게임을 실행할 때";
 
     public static IReadOnlyList<string> Groups { get; } = new[] { GroupHdr, GroupFrameRate, GroupImage, GroupControls, GroupLaunch };
 
@@ -371,7 +371,7 @@ public static class DisplayModeItems
         new()
         {
             Key = DisplayModeItemKeys.Hdr, Label = "실행 시 Windows HDR", Group = GroupLaunch, Kind = DisplayModeValueKind.Choice, AtLaunch = true,
-            Help = "RHI가 게임을 실행할 때 Windows HDR을 켭니다 (게임이 종료되면 다시 끔). 게임 페이지의 HDR 버튼은 현재 모드에 이 값을 설정합니다.",
+            Help = "BONG DLSS5가 게임을 실행할 때 Windows HDR을 켭니다 (게임이 종료되면 다시 끔). 게임 페이지의 HDR 버튼은 현재 모드에 이 값을 설정합니다.",
             Choices = () => OffOn,
         },
         new()
@@ -383,13 +383,13 @@ public static class DisplayModeItems
         new()
         {
             Key = DisplayModeItemKeys.Resolution, Label = "실행 시 해상도", Group = GroupLaunch, Kind = DisplayModeValueKind.Choice, AtLaunch = true,
-            Help = "RHI가 게임을 실행할 때 바탕 화면 해상도를 전환합니다 (게임이 종료되면 복원). 켜짐 = 설정 › 디스플레이의 목표 해상도.",
+            Help = "BONG DLSS5가 게임을 실행할 때 바탕 화면 해상도를 전환합니다 (게임이 종료되면 복원). 켜짐 = 설정 › 디스플레이의 목표 해상도.",
             Choices = ResolutionChoices,
         },
         new()
         {
             Key = DisplayModeItemKeys.LaunchArgs, Label = "실행 인수", Group = GroupLaunch, Kind = DisplayModeValueKind.Text, AtLaunch = true,
-            Help = "이 모드에서 RHI가 게임에 전달하는 인수입니다 (게임 재정의의 인수 대신 사용). 예: -fullscreen.",
+            Help = "이 모드에서 BONG DLSS5가 게임에 전달하는 인수입니다 (게임 재정의의 인수 대신 사용). 예: -fullscreen.",
         },
     };
 

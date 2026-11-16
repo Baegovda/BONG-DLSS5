@@ -90,7 +90,7 @@ public partial class DialogService
                         TextWrapping = TextWrapping.Wrap,
                         Foreground   = Brush(ResourceKeys.TextSecondaryBrush),
                         FontSize     = 14,
-                        Text         = $"새 버전의 RHI를 사용할 수 있습니다!\n\n" +
+                        Text         = $"새 버전의 BONG DLSS5를 사용할 수 있습니다!\n\n" +
                                        $"설치됨:  v{updateInfo.CurrentVersion}\n" +
                                        $"사용 가능:  v{updateInfo.DisplayVersion ?? updateInfo.RemoteVersion.ToString()}\n\n" +
                                        "지금 업데이트할까요?",
@@ -529,7 +529,7 @@ public partial class DialogService
         var dlg = new ContentDialog
         {
             Title              = CogDialog.MakeDialogTitle("새로운 기능",
-                                     "모든 RHI 버전의 패치 노트입니다. 왼쪽에서 하나를 선택하거나 전체를 검색하세요."),
+                                     "모든 BONG DLSS5 버전의 패치 노트입니다. 왼쪽에서 하나를 선택하거나 전체를 검색하세요."),
             Content            = sections.Count > 1 ? layout : card,
             CloseButtonText    = "닫기",
             XamlRoot           = _window.Content.XamlRoot,
@@ -624,7 +624,7 @@ public partial class DialogService
 
         var dlg = new ContentDialog
         {
-            Title = CogDialog.MakeDialogTitle("RHI 메시지", "RankFTW의 소식 및 공지"),
+            Title = CogDialog.MakeDialogTitle("BONG DLSS5 메시지", "RankFTW의 소식 및 공지"),
             Content = card,
             CloseButtonText = "확인",
             XamlRoot = _window.Content.XamlRoot,

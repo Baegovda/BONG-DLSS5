@@ -91,7 +91,10 @@ public sealed record ThemePalette(
         string.Join(";", CustomKeys.Select(k => $"{k.Key}={ToHex(Get(k.Key))}"));
 
     /// <summary>Start of a theme share code.</summary>
-    public const string SharePrefix = "RHI-THEME:";
+    public const string SharePrefix = "BONG-THEME:";
+
+    /// <summary>Prefix of codes shared from the original RHI app; still accepted when pasting.</summary>
+    private const string LegacySharePrefix = "RHI" + "-THEME:";
 
     // The colours in a share code, in this order. Never reorder or remove: codes already shared depend on it.
     private static readonly string[] ShareKeys =
@@ -113,8 +116,14 @@ public sealed record ThemePalette(
         palette = Default;
         if (string.IsNullOrWhiteSpace(text)) return false;
         int start = text.IndexOf(SharePrefix, StringComparison.OrdinalIgnoreCase);
+        int prefixLength = SharePrefix.Length;
+        if (start < 0)
+        {
+            start = text.IndexOf(LegacySharePrefix, StringComparison.OrdinalIgnoreCase);
+            prefixLength = LegacySharePrefix.Length;
+        }
         if (start < 0) return false;
-        var body = text[(start + SharePrefix.Length)..].TrimStart();
+        var body = text[(start + prefixLength)..].TrimStart();
         int end = body.IndexOfAny(new[] { ' ', '\t', '\r', '\n' });
         if (end >= 0) body = body[..end];
         var parts = body.Split('-');
@@ -172,6 +181,7 @@ public static class ThemePresets
 {
     public const string DefaultId = "Default";
     public const string CustomId = "Custom";
+    public const string BongHubId = "BongHub";
 
     private static ThemePalette P(string bg, string panel, string border, string muted, string text,
         string accent, string buttons, string installed, string update, string warning, string error) =>
@@ -184,6 +194,9 @@ public static class ThemePresets
     public static readonly IReadOnlyList<ThemePreset> All = new[]
     {
         new ThemePreset(DefaultId, "기본값", ThemePalette.Default),
+        // BongHub: the BONG DLSS5 look (BongHub design system tokens). Default for this build.
+        new ThemePreset(BongHubId, "BongHub",
+            P("#0B0D12", "#1A1D25", "#2E323C", "#6E7686", "#F5F7FA", "#4C8AFE", "#8AA4D8", "#3DDC97", "#A98BFF", "#FF9F43", "#FF5D5D")),
         new ThemePreset("OledBlack", "OLED 블랙",
             P("#000000", "#0A0C0F", "#1E242C", "#66717F", "#E8ECF2", "#4DC9E6", "#7AACDD", "#5ECB7D", "#B898E8", "#D4A856", "#E07070")),
         new ThemePreset("MidnightBlue", "미드나이트 블루",

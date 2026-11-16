@@ -161,7 +161,7 @@ public static class ShortcutService
                 workingDir:  exeDir,
                 iconPath:    iconPath,
                 iconIndex:   iconIndex,
-                description: $"RHI로 {gameName} 실행",
+                description: $"BONG DLSS5로 {gameName} 실행",
                 outputPath:  lnkPath);
 
             return lnkPath;

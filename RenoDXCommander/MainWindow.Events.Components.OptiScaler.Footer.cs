@@ -44,7 +44,7 @@ public sealed partial class MainWindow
         // Replacing resets most settings, so it asks first (a flyout: a second dialog can't open over the cog)
         var replaceBtn = CogDialog.StyledButton("새 사본으로 교체...", CogButtonKind.Secondary);
         ToolTipService.SetToolTip(replaceBtn,
-            "이 게임의 OptiScaler.ini를 RHI 템플릿의 새 사본으로 교체합니다. 게임에 아직 OptiScaler.ini가 없거나 처음부터 다시 시작하려는 경우 사용하세요.");
+            "이 게임의 OptiScaler.ini를 BONG DLSS5 템플릿의 새 사본으로 교체합니다. 게임에 아직 OptiScaler.ini가 없거나 처음부터 다시 시작하려는 경우 사용하세요.");
         var confirmBtn = CogDialog.StyledButton("교체", CogButtonKind.Danger, compact: true);
         var confirmPanel = new StackPanel { Spacing = 8, MaxWidth = 300 };
         confirmPanel.Children.Add(new TextBlock
@@ -72,7 +72,7 @@ public sealed partial class MainWindow
 
         var profile = ViewModel.GetOsIniProfile(card.GameName, ctx.Store);
         footer.Children.Add(MakeOsFooterNote(OsIniLibrary.Exists(profile)
-            ? $"이 게임은 저장된 ini \"{profile}\"을(를) 사용합니다. 새 사본을 사용하면 대부분의 설정이 초기화되고 RHI 템플릿으로 돌아갑니다."
+            ? $"이 게임은 저장된 ini \"{profile}\"을(를) 사용합니다. 새 사본을 사용하면 대부분의 설정이 초기화되고 BONG DLSS5 템플릿으로 돌아갑니다."
             : "새 사본을 사용하면 대부분의 설정이 초기화됩니다."));
 
         var tip = MakeOsFooterNote(

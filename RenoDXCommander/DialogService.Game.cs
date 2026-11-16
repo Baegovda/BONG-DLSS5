@@ -28,7 +28,7 @@ public partial class DialogService
                 FontSize     = 13,
                 Text         = $"다음 위치에서 dxgi.dll 파일이 발견되었습니다:\n{card.InstallPath}\n\n" +
                                $"파일 크기: {sizeKB:N0} KB\n\n" +
-                               "RHI가 이 파일을 ReShade나 Display Commander로 식별할 수 없습니다. " +
+                               "BONG DLSS5가 이 파일을 ReShade나 Display Commander로 식별할 수 없습니다. " +
                                "다른 모드(예: DXVK, Special K, ENB)의 파일일 수 있습니다.\n\n" +
                                "덮어쓰면 기존 모드가 작동하지 않을 수 있습니다. 계속하시겠습니까?",
             },
@@ -59,10 +59,10 @@ public partial class DialogService
         {
             TextWrapping = TextWrapping.Wrap,
             FontSize     = 13,
-            Text         = $"RHI가 {card.GameName}에 RenoDX의 Source 엔진 모드를 설정합니다:\n" +
+            Text         = $"BONG DLSS5가 {card.GameName}에 RenoDX의 Source 엔진 모드를 설정합니다:\n" +
                            "• ReShade를 d3d9.dll로 설치하고 ReShade 프록시를 통해 DXVK(안정) 로드\n" +
                            "• 게임 기본 폴더에 dxvk.conf\n" +
-                           "• RHI의 게임 실행 옵션에 -insecure 추가",
+                           "• BONG DLSS5의 게임 실행 옵션에 -insecure 추가",
         });
         panel.Children.Add(new TextBlock
         {
@@ -71,7 +71,7 @@ public partial class DialogService
             Foreground   = Brush(ResourceKeys.AccentAmberBrush),
             Text         = "-insecure는 모드에 필요한 VAC 끄기 옵션입니다(싱글플레이에서도 VAC가 켜져 있을 수 있음). " +
                            "모드가 설치된 동안 VAC 보안 서버에 접속하지 마세요. VAC 차단을 받을 수 있습니다.\n\n" +
-                           "RHI는 RHI에서 게임을 시작할 때만 -insecure를 추가합니다. Steam에서 시작한다면 " +
+                           "BONG DLSS5는 BONG DLSS5에서 게임을 시작할 때만 -insecure를 추가합니다. Steam에서 시작한다면 " +
                            "Steam의 게임 실행 옵션에도 -insecure를 추가하세요.",
         });
         panel.Children.Add(new TextBlock
@@ -893,7 +893,7 @@ public partial class DialogService
                     FontSize = 13,
                     Text = "Vulkan ReShade 레이어를 설치하려면 C:\\ProgramData\\ReShade\\에 쓰고 " +
                            "시스템 레지스트리 키를 수정해야 하므로 관리자 권한이 필요합니다.\n\n" +
-                           "관리자 모드 사용 — RHI가 항상 관리자 권한으로 실행됩니다(설정 후 UAC 메시지 없음).\n\n" +
+                           "관리자 모드 사용 — BONG DLSS5가 항상 관리자 권한으로 실행됩니다(설정 후 UAC 메시지 없음).\n\n" +
                            "관리자로 다시 시작 — 이 설치를 완료하기 위해 한 번만 관리자 권한으로 다시 시작합니다.",
                 },
                 PrimaryButtonText = "관리자 모드 사용",

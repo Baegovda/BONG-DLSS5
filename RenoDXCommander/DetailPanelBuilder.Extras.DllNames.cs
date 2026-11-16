@@ -57,6 +57,6 @@ public partial class DetailPanelBuilder
         else if (o.IsHooked)
             ToolTipService.SetToolTip(btn,
                 $"ASI Loader가 {o.UalName}(으)로 설치되어 {o.Name}을(를) 실제 {o.UalName}(으)로 로드하므로 {extraName}이(가) 함께 실행됩니다. " +
-                $"ASI Loader를 제거하면 RHI가 이 파일 이름을 다시 {o.UalName}(으)로 바꿉니다.");
+                $"ASI Loader를 제거하면 BONG DLSS5가 이 파일 이름을 다시 {o.UalName}(으)로 바꿉니다.");
     }
 }

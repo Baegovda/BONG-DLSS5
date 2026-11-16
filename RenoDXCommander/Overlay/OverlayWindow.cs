@@ -48,7 +48,7 @@ internal sealed partial class OverlayWindow : Window
         _settings = settings;
         _saveSettings = saveSettings;
         _screenshotFolder = screenshotFolder;
-        Title = "RHI Overlay";
+        Title = "BONG DLSS5 Overlay";
         _hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
 
         try { SystemBackdrop = new OverlayBackdrop(); }
@@ -112,7 +112,7 @@ internal sealed partial class OverlayWindow : Window
         top.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         top.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
         var titles = new StackPanel { Spacing = 4 };
-        titles.Children.Add(new TextBlock { Text = "RHI OVERLAY", FontSize = 12, CharacterSpacing = 120, Foreground = TabsTheme.B(TabsTheme.TextMuted) });
+        titles.Children.Add(new TextBlock { Text = "BONG DLSS5 OVERLAY", FontSize = 12, CharacterSpacing = 120, Foreground = TabsTheme.B(TabsTheme.TextMuted) });
         _title.FontSize = 36;
         _title.FontWeight = Microsoft.UI.Text.FontWeights.SemiBold;
         _title.Foreground = TabsTheme.B(TabsTheme.TextPrimary);

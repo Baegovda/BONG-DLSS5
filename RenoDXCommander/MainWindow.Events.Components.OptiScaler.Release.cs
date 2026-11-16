@@ -135,7 +135,7 @@ public sealed partial class MainWindow
         // Custom builds are never updated: no check
         if (OsVariants.IsCustom(variant))
         {
-            text.Text = $"설치됨: {installed} · 사용자 지정 빌드, RHI가 업데이트하지 않음 (설정 › 구성 요소에서 교체 사용).";
+            text.Text = $"설치됨: {installed} · 사용자 지정 빌드, BONG DLSS5가 업데이트하지 않음 (설정 › 구성 요소에서 교체 사용).";
             check.Visibility = Visibility.Collapsed;
             return row;
         }

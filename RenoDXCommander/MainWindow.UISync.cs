@@ -57,7 +57,7 @@ public sealed partial class MainWindow
                         // Show one-line notice in status bar if this session was auto-restarted after a freeze
                         if (ViewModel.WasAutoRestarted)
                         {
-                            ShowStatusBarMessage("⚠ UI 멈춤 후 RHI가 다시 시작되었습니다 — 자세한 내용은 설정 → 세션 로그를 확인하세요",
+                            ShowStatusBarMessage("⚠ UI 멈춤 후 BONG DLSS5가 다시 시작되었습니다 — 자세한 내용은 설정 → 세션 로그를 확인하세요",
                                 TimeSpan.FromSeconds(12));
                         }
 

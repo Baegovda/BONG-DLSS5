@@ -42,13 +42,13 @@ internal sealed partial class OverlayWindow
         if (!settings.SteamAchievements && !settings.XboxAchievements)
         {
             _achBox.Children.Add(MakeCard("도전 과제", SmallText(
-                "도전 과제가 꺼져 있습니다. RHI의 설정 › 도전 과제(Steam 및 Xbox)에서 켜세요.")));
+                "도전 과제가 꺼져 있습니다. BONG DLSS5의 설정 › 도전 과제(Steam 및 Xbox)에서 켜세요.")));
             return;
         }
         var load = AchievementLoader(card);
         if (load == null)
         {
-            _achBox.Children.Add(MakeCard("도전 과제", SmallText("RHI가 이 게임의 도전 과제를 찾을 수 없습니다.")));
+            _achBox.Children.Add(MakeCard("도전 과제", SmallText("BONG DLSS5가 이 게임의 도전 과제를 찾을 수 없습니다.")));
             return;
         }
 

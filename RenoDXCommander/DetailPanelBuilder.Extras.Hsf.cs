@@ -66,8 +66,8 @@ public partial class DetailPanelBuilder
         if (isInstalled)
         {
             ToolTipService.SetToolTip(statusBlock, rhiInstalled
-                ? $"RHI가 설치한 HSF {installedVer}\n클릭하면 HSF GitHub 페이지가 열립니다"
-                : "HSF가 수동으로 설치되었습니다. 업데이트를 받으려면 RHI로 재설치하세요.\n클릭하면 HSF GitHub 페이지가 열립니다");
+                ? $"BONG DLSS5가 설치한 HSF {installedVer}\n클릭하면 HSF GitHub 페이지가 열립니다"
+                : "HSF가 수동으로 설치되었습니다. 업데이트를 받으려면 BONG DLSS5로 재설치하세요.\n클릭하면 HSF GitHub 페이지가 열립니다");
             statusBlock.PointerPressed += (s, e) => _ = Windows.System.Launcher.LaunchUriAsync(new Uri(HsfService.ReleasesPage));
             AttachLinkCursor(statusBlock);
         }
@@ -281,7 +281,7 @@ public partial class DetailPanelBuilder
         });
         Para("RTX 20, 30, 40 카드는 HSF에 Universal MFG Unlocker가 필요합니다. RTX 20과 30은 모든 프레임 생성에, RTX 40은 2x 초과에 필요합니다. RTX 50 카드는 필요 없습니다.");
         Para(gpu == null
-            ? "RHI가 이 PC에서 NVIDIA 그래픽 카드를 찾지 못했습니다."
+            ? "BONG DLSS5가 이 PC에서 NVIDIA 그래픽 카드를 찾지 못했습니다."
             : $"그래픽 카드: {gpu.Name} ({gpu.FamilyLabel}). {(needs ? "언락커가 필요합니다." : "RTX 카드가 아니므로 DLSS 프레임 생성을 실행할 수 없습니다.")}");
         Para(nextToExe
             ? "게임 exe 옆에 설치됩니다. 다음 단계에서 다른 모드와 충돌하지 않도록 설치할 DLL 이름을 선택합니다."
@@ -333,8 +333,8 @@ public partial class DetailPanelBuilder
         else
         {
             cog.AddNote(rhiInstalled
-                ? $"설치됨: HSF {HsfService.ReadMarker(installPath).Version ?? "(알 수 없는 버전)"}. 새 릴리스가 나오면 RHI가 업데이트합니다."
-                : "수동으로 설치됨. 업데이트를 받으려면 RHI로 재설치하세요.");
+                ? $"설치됨: HSF {HsfService.ReadMarker(installPath).Version ?? "(알 수 없는 버전)"}. 새 릴리스가 나오면 BONG DLSS5가 업데이트합니다."
+                : "수동으로 설치됨. 업데이트를 받으려면 BONG DLSS5로 재설치하세요.");
             cog.AddNote($"DirectX 12 경로: {HsfService.RouteText(installPath)}.");
         }
 
@@ -344,9 +344,9 @@ public partial class DetailPanelBuilder
         {
             cog.AddSection("DirectX 12");
             cog.AddIntro("DirectX 12 게임에서는 HSF 프레임 생성이 게임보다 먼저 시작되어야 합니다. HSF는 첫 "
-                + "DirectX 12 실행 시 이를 설정한 뒤 다시 시작을 요청합니다. RHI는 DirectX 12로 실행되는 것으로 알려진 게임에 대해 설치 시 이를 설정하므로 "
+                + "DirectX 12 실행 시 이를 설정한 뒤 다시 시작을 요청합니다. BONG DLSS5는 DirectX 12로 실행되는 것으로 알려진 게임에 대해 설치 시 이를 설정하므로 "
                 + "(렌더링 API 재정의를 따름) 첫 실행부터 프레임이 생성됩니다. 이 게임이 "
-                + "DirectX 12로 실행되는데 RHI가 설정하지 않았다면 여기서 설정하세요. DirectX 11로 실행하면 HSF가 스스로 해제합니다.");
+                + "DirectX 12로 실행되는데 BONG DLSS5가 설정하지 않았다면 여기서 설정하세요. DirectX 11로 실행하면 HSF가 스스로 해제합니다.");
             bool routeOn = HsfService.IsRouteSet(installPath);
             cog.AddCombo("실행 전 준비",
                 "켜짐: DirectX 12에서 다시 시작 없이 프레임 생성이 시작됩니다. HSF 결정: HSF가 첫 DirectX 12 실행 시 설정하고 한 번 다시 시작을 요청합니다.",
@@ -372,7 +372,7 @@ public partial class DetailPanelBuilder
 
         cog.AddSection("모션");
         cog.AddIntro("DLSS를 사용하는 DirectX 12 게임은 자체 모션 데이터를 HSF에 제공합니다. 그 외 모든 게임(DirectX 9, 11, Vulkan)은 "
-            + "ReShade 효과의 옵티컬 플로우가 필요하며, RHI는 HSF와 함께 iMMERSE LaunchPad를 설치합니다. LumeniteFX Kernel도 작동하며(include 폴더 포함), "
+            + "ReShade 효과의 옵티컬 플로우가 필요하며, BONG DLSS5는 HSF와 함께 iMMERSE LaunchPad를 설치합니다. LumeniteFX Kernel도 작동하며(include 폴더 포함), "
             + "셰이더에 있다면 HSF의 FLOW FROM 행에서 선택하세요.");
         if (rhiInstalled)
         {

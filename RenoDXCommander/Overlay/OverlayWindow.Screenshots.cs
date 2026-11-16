@@ -35,7 +35,7 @@ internal sealed partial class OverlayWindow
         {
             _shotBox.Children.Add(MakeCard("스크린샷", SmallText(
                 "이 게임의 스크린샷 폴더를 찾지 못했습니다. ReShade로 스크린샷을 찍거나(기본값 Print Screen), "
-              + "RHI의 설정 › ReShade › 스크린샷 폴더에서 폴더를 지정하세요.")));
+              + "BONG DLSS5의 설정 › ReShade › 스크린샷 폴더에서 폴더를 지정하세요.")));
             StopShotWatcher();
             return;
         }

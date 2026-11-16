@@ -30,7 +30,7 @@ public sealed partial class MainWindow
             var panel = new StackPanel { Spacing = 10 };
             panel.Children.Add(new TextBlock
             {
-                Text = "나만 볼 수 있습니다. 플레이 중에는 RHI 오버레이의 정보 및 링크 페이지에도 표시됩니다.",
+                Text = "나만 볼 수 있습니다. 플레이 중에는 BONG DLSS5 오버레이의 정보 및 링크 페이지에도 표시됩니다.",
                 TextWrapping = TextWrapping.Wrap,
             });
             panel.Children.Add(box);

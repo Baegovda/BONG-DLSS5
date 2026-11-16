@@ -290,7 +290,7 @@ public partial class DetailPanelBuilder
             TextTrimming = TextTrimming.CharacterEllipsis,
         };
         ToolTipService.SetToolTip(exeHeaderText,
-            "실행을 클릭할 때 RHI가 시작하는 프로그램입니다. 아래에서 지정하지 않으면 자동으로 감지됩니다.");
+            "실행을 클릭할 때 BONG DLSS5가 시작하는 프로그램입니다. 아래에서 지정하지 않으면 자동으로 감지됩니다.");
         launchExeHeaderPanel.Children.Add(exeHeaderText);
 
         // Async exe scan — updates the label without blocking the UI thread

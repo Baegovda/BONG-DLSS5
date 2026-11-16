@@ -28,7 +28,7 @@ public sealed partial class SetupWindow : Window
     {
         InitializeComponent();
 
-        Title = "RHI 설정";
+        Title = "BONG DLSS5 설정";
 
         // Size and position — scale by display DPI so window is correct at any Windows scaling setting
         var hwndForDpi = WindowNative.GetWindowHandle(this);
@@ -110,7 +110,7 @@ public sealed partial class SetupWindow : Window
         // ── Title ──
         root.Children.Add(new TextBlock
         {
-            Text = "RHI에 오신 것을 환영합니다",
+            Text = "BONG DLSS5에 오신 것을 환영합니다",
             FontSize = 22,
             FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
             Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
@@ -118,14 +118,14 @@ public sealed partial class SetupWindow : Window
 
         // ── Description ──
         const string description =
-            "RHI가 모든 게임의 ReShade를 자동으로 관리할 수 있습니다. 포함되는 내용은 다음과 같습니다:\n\n" +
+            "BONG DLSS5가 모든 게임의 ReShade를 자동으로 관리할 수 있습니다. 포함되는 내용은 다음과 같습니다:\n\n" +
             "  - 클릭 한 번으로 각 게임에 ReShade를 설치하고 업데이트합니다\n" +
             "  - 게임에 필요한 대로 게임별로 올바른 DLL 이름을 유지합니다\n" +
             "  - 셰이더 팩을 전역으로 관리합니다 - 한 번 설치하면 모든 게임에 자동으로 배포됩니다\n" +
             "  - 관리를 시작하기 전에 게임 폴더에 이미 있는 셰이더를 백업합니다\n" +
             "  - RenoDX, OptiScaler 또는 다른 구성 요소를 설치할 때 ReShade를 동기화합니다\n\n" +
             "특정 셰이더 모음, 직접 조정한 설정, 선호하는 버전 등 이미 사용자 지정 ReShade 구성이 있다면 " +
-            "\"직접 관리하겠습니다\"를 선택하세요. RHI가 ReShade를 전혀 건드리지 않습니다.";
+            "\"직접 관리하겠습니다\"를 선택하세요. BONG DLSS5가 ReShade를 전혀 건드리지 않습니다.";
 
         root.Children.Add(new TextBlock
         {

@@ -256,8 +256,8 @@ internal sealed partial class OverlayWindow
         if (time < TimeSpan.FromMinutes(1)) return null;
         var since = GameJournalStore.CountingSince();
         return (time, since is DateTime d
-            ? $"게임이 전면에 있는 동안 RHI가 집계, {d.ToLocalTime():d MMM yyyy}부터"
-            : "게임이 전면에 있는 동안 RHI가 집계");
+            ? $"게임이 전면에 있는 동안 BONG DLSS5가 집계, {d.ToLocalTime():d MMM yyyy}부터"
+            : "게임이 전면에 있는 동안 BONG DLSS5가 집계");
     }
 
     private void UpdateSessionText()
@@ -294,7 +294,7 @@ internal sealed partial class OverlayWindow
 
         var installed = rows.Count > 0
             ? MakeTable(rows)
-            : (UIElement)SmallText("RHI가 아직 이 게임에 아무것도 설치하지 않았습니다.");
+            : (UIElement)SmallText("BONG DLSS5가 아직 이 게임에 아무것도 설치하지 않았습니다.");
         var gameBody = new StackPanel { Spacing = 10 };
         gameBody.Children.Add(installed);
         if (MakeDlssSection(card) is { } dlss)

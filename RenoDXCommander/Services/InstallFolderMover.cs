@@ -98,8 +98,8 @@ public static class InstallFolderMover
         if (!Directory.Exists(plan.NewDir)) return $"새 폴더 '{plan.NewDir}'이(가) 존재하지 않음";
         if (IsWindowsApps(plan.NewDir)) return "새 폴더가 보호된 WindowsApps 폴더임";
         if (SamePath(plan.OldDir, plan.NewDir)) return "이전 폴더와 새 폴더가 같음";
-        if (!CanWrite(plan.NewDir)) return $"RHI가 '{plan.NewDir}'에 쓸 수 없음";
-        if (!CanWrite(plan.OldDir)) return $"RHI가 '{plan.OldDir}'에 쓸 수 없음";
+        if (!CanWrite(plan.NewDir)) return $"BONG DLSS5가 '{plan.NewDir}'에 쓸 수 없음";
+        if (!CanWrite(plan.OldDir)) return $"BONG DLSS5가 '{plan.OldDir}'에 쓸 수 없음";
 
         foreach (var path in FilesTouched(plan))
         {

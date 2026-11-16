@@ -49,7 +49,7 @@ public partial class DetailPanelBuilder
                  + "ReShade가 로드된 동안 시작되지 않으며, 모드 메뉴에 \"Waiting menu_factory_not_dxgi\"가 표시됩니다. "
                  + "ReShade가 DLL로 설치되었든 ASI로 설치되었든 마찬가지입니다.\n\n"
                  + "DLSS 멀티 프레임 생성은 정상적으로 작동합니다. ReShade와 함께 XeMFG를 사용하려면 OptiScaler(나이틀리, F5 또는 DLSS NR)를 설치하고 "
-                 + "OptiScaler 설정에서 FG Output을 XeFG로 설정하세요. 그러면 RHI가 모드를 OptiScaler 플러그인으로 설치합니다.",
+                 + "OptiScaler 설정에서 FG Output을 XeFG로 설정하세요. 그러면 BONG DLSS5가 모드를 OptiScaler 플러그인으로 설치합니다.",
             TextWrapping = TextWrapping.Wrap,
             FontSize = 13,
             LineHeight = 22,
@@ -397,7 +397,7 @@ public partial class DetailPanelBuilder
             VerticalAlignment = VerticalAlignment.Center,
             TextWrapping = TextWrapping.Wrap, // long name; wraps instead of clipping in the 120 px column
         };
-        ToolTipService.SetToolTip(label, "Universal MFG Unlocker(이전 RTX 40 MFG Unlock) — RTX 40 및 RTX 30 시리즈 GPU(RTX 20은 실험적)에서 2x를 넘는(최대 6x) DLSS 멀티 프레임 생성과, 모든 GPU에서 XeSS 프레임 생성(XeMFG)을 제공합니다. 단독 DLL이며 ASI Loader가 필요 없습니다. RHI는 XeMFG에 필요한 Intel XeSS 파일도 설치합니다.");
+        ToolTipService.SetToolTip(label, "Universal MFG Unlocker(이전 RTX 40 MFG Unlock) — RTX 40 및 RTX 30 시리즈 GPU(RTX 20은 실험적)에서 2x를 넘는(최대 6x) DLSS 멀티 프레임 생성과, 모든 GPU에서 XeSS 프레임 생성(XeMFG)을 제공합니다. 단독 DLL이며 ASI Loader가 필요 없습니다. BONG DLSS5는 XeMFG에 필요한 Intel XeSS 파일도 설치합니다.");
         Grid.SetColumn(label, 0);
         row.Children.Add(label);
 
@@ -591,7 +591,7 @@ public partial class DetailPanelBuilder
                     cog.AddIntro("제작자의 권장대로 OptiScaler가 모드를 플러그인으로 불러옵니다. 프레임 생성은 여기가 아니라 OptiScaler에서 선택합니다. "
                         + "OptiScaler ⚙를 열고 DLSS 멀티 프레임 생성은 FG Output을 DLSSG로, XeMFG는 XeFG로 설정하세요. "
                         + "OptiScaler 기본값(Auto)은 프레임 생성을 실행하지 않습니다.");
-                    cog.AddNote("DLSS 프리셋과 DLSS 5를 위해 모드 자체 메뉴도 OptiScaler 메뉴 옆에 계속 열립니다. OptiScaler를 제거하면 RHI가 모드를 게임 exe 옆으로 다시 옮깁니다.");
+                    cog.AddNote("DLSS 프리셋과 DLSS 5를 위해 모드 자체 메뉴도 OptiScaler 메뉴 옆에 계속 열립니다. OptiScaler를 제거하면 BONG DLSS5가 모드를 게임 exe 옆으로 다시 옮깁니다.");
                 }
 
                 if (isHsfMods || hasHsf)
@@ -611,7 +611,7 @@ public partial class DetailPanelBuilder
                     cog.AddIntro("OptiScaler를 통해 사용할 때 XeMFG는 OptiScaler의 FG Output을 XeFG로 설정한 것입니다. OptiScaler가 설치하는 XeSS 파일을 사용하므로 다른 것은 필요 없습니다.");
                 else
                     cog.AddIntro("이 모드는 모든 GPU에서 Intel XeSS 프레임 생성(2x~6x, 실험적)도 사용할 수 있습니다. 게임 내 메뉴에서 \"XeMFG standalone\"을 체크하고 게임을 다시 시작하세요. "
-                        + "모드 옆 RTXMFG-XeSS 폴더에 Intel의 libxess_fg.dll과 libxell.dll이 필요하며, RHI가 모드와 함께 설치합니다.");
+                        + "모드 옆 RTXMFG-XeSS 폴더에 Intel의 libxess_fg.dll과 libxell.dll이 필요하며, BONG DLSS5가 모드와 함께 설치합니다.");
                 if (isInstalled && !isPluginInstall && !isHsfMods && !hasHsf && !string.IsNullOrEmpty(installPath))
                 {
                     var xessDir = System.IO.Path.Combine(installPath, Rtx40MfgService.XessFolderName);

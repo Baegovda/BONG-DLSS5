@@ -131,7 +131,7 @@ public sealed partial class MainWindow
                     }),
                 null);
             cog.AddNote("대상 디스플레이와 Display Commander의 ReShade 옵션(전역 셰이더 경로, 스크린샷 경로)은 게임 내 메뉴에서 설정하세요. " +
-                        "RHI는 ReShade의 셰이더 및 스크린샷 폴더를 직접 관리합니다.");
+                        "BONG DLSS5는 ReShade의 셰이더 및 스크린샷 폴더를 직접 관리합니다.");
 
             // ── Files ─────────────────────────────────────────────────────────────
             cog.AddSection("파일");
@@ -143,7 +143,7 @@ public sealed partial class MainWindow
                 openIniBtn.IsEnabled = dcIniFile != null && File.Exists(dcIniFile);
                 cog.SetSuccess("DisplayCommander.ini를 게임 폴더에 복사했습니다. 설정을 보려면 이 대화 상자를 닫았다가 다시 여세요.");
                 CrashReporter.Log($"[MainWindow.DcCogButton_Click] Deployed DisplayCommander.ini for '{card.GameName}'");
-            }, "RHI의 DisplayCommander.ini 템플릿을 게임 폴더에 복사해 현재 파일을 대체합니다.");
+            }, "BONG DLSS5의 DisplayCommander.ini 템플릿을 게임 폴더에 복사해 현재 파일을 대체합니다.");
             cog.AddButtons(deployBtn, openIniBtn);
 
             // No default button: Enter in the FPS box must not close the dialog

@@ -99,7 +99,7 @@ public class InstallEventHandler
             var dialog = new ContentDialog
             {
                 Title = "게임 폴더를 찾을 수 없음",
-                Content = $"{card.GameName}이(가) RHI가 마지막으로 확인한 폴더에 더 이상 없습니다. 보통 게임이 업데이트되었거나 이동된 경우입니다 "
+                Content = $"{card.GameName}이(가) BONG DLSS5가 마지막으로 확인한 폴더에 더 이상 없습니다. 보통 게임이 업데이트되었거나 이동된 경우입니다 "
                         + "(Game Pass 게임은 업데이트할 때마다 새 폴더를 사용합니다).\n\n"
                         + "게임 목록을 새로 고쳐 찾은 후 다시 시도하세요.",
                 PrimaryButtonText = "새로 고침",

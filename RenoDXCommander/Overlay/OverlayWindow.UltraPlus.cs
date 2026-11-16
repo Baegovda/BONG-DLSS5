@@ -144,7 +144,7 @@ internal sealed partial class OverlayWindow
                 state = await Task.Run(() => UltraPlusFiles.Load(installPath)) ?? state;
                 notice = "변경 사항이 바로 반영되도록 Ultra+의 Automatically Apply Configuration을 켰습니다. Ultra+가 이를 인식하도록 게임에서 F12를 한 번 누르거나 게임을 다시 시작하세요.";
             }
-            else notice = "Ultra+의 Automatically Apply Configuration이 꺼져 있고 RHI가 켤 수 없었습니다. 게임에서 F12를 누르면 변경 사항이 적용됩니다.";
+            else notice = "Ultra+의 Automatically Apply Configuration이 꺼져 있고 BONG DLSS5가 켤 수 없었습니다. 게임에서 F12를 누르면 변경 사항이 적용됩니다.";
         }
 
         _up = state;
@@ -219,7 +219,7 @@ internal sealed partial class OverlayWindow
         header.Children.Add(titles);
         var back = new Button { Content = "전체 오버레이", VerticalAlignment = VerticalAlignment.Top };
         TabsTheme.Apply(back, TabsTheme.BlueButton, height: 36, fontSize: 13);
-        ToolTipService.SetToolTip(back, "전체 RHI 오버레이로 돌아가기 (Esc)");
+        ToolTipService.SetToolTip(back, "전체 BONG DLSS5 오버레이로 돌아가기 (Esc)");
         back.Click += (_, _) => ExitUltraPlus();
         Grid.SetColumn(back, 1);
         header.Children.Add(back);
@@ -736,7 +736,7 @@ internal sealed partial class OverlayWindow
                     if (!_upRows.TryGetValue(key, out var row)) continue;
                     row.State.Text = ok ? "Applied" : "Not applied";
                     row.State.Foreground = TabsTheme.B(ok ? "#7FE0A0" : "#FF9AA8");
-                    ToolTipService.SetToolTip(row.State, ok ? null : "RHI가 Ultra+ 설정 파일에 쓸 수 없습니다. 읽기 전용이거나 다른 프로그램에서 열려 있습니까?");
+                    ToolTipService.SetToolTip(row.State, ok ? null : "BONG DLSS5가 Ultra+ 설정 파일에 쓸 수 없습니다. 읽기 전용이거나 다른 프로그램에서 열려 있습니까?");
                     if (ok) ClearAppliedLater(row, seq);
                 }
                 if (status != null || undo != null || !ok)

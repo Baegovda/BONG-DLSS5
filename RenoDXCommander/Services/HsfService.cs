@@ -574,7 +574,7 @@ public class HsfService
             {
                 // Upstream changed the package layout: never record a version without the files
                 _crashReporter.Log($"[HsfService.Stage] {rel.AssetName} is missing expected files — not staged");
-                LastError = "이 HSF 릴리스는 RHI가 아직 알지 못하는 구조입니다.";
+                LastError = "이 HSF 릴리스는 BONG DLSS5가 아직 알지 못하는 구조입니다.";
                 Directory.Delete(temp, true);
                 return false;
             }

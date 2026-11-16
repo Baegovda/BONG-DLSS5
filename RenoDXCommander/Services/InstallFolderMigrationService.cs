@@ -47,7 +47,7 @@ public partial class InstallFolderMigrationService : IInstallFolderMigrationServ
         if (InstallFolderMover.SamePath(oldDir, newDir)) { outcome.NothingToMove = true; return outcome; }
         if (InstallFolderMover.IsWindowsApps(newDir) || InstallFolderMover.IsWindowsApps(oldDir))
         {
-            outcome.Reason = "RHI는 Game Pass / Microsoft Store (WindowsApps) 폴더의 파일을 변경할 수 없습니다.";
+            outcome.Reason = "BONG DLSS5는 Game Pass / Microsoft Store (WindowsApps) 폴더의 파일을 변경할 수 없습니다.";
             CrashReporter.Log($"[InstallFolderMigrationService.Migrate] '{request.GameName}' skipped — WindowsApps folder");
             return outcome;
         }
@@ -56,7 +56,7 @@ public partial class InstallFolderMigrationService : IInstallFolderMigrationServ
         try { built = BuildPlanCore(request); }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
-            outcome.Reason = $"RHI가 이전 폴더를 읽지 못했습니다 ({ex.Message}).";
+            outcome.Reason = $"BONG DLSS5가 이전 폴더를 읽지 못했습니다 ({ex.Message}).";
             CrashReporter.Log($"[InstallFolderMigrationService.Migrate] '{request.GameName}' inventory failed — {ex.Message}");
             return outcome;
         }

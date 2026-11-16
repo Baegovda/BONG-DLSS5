@@ -40,7 +40,7 @@ public partial class SettingsHandler
             head.Children.Add(new TextBlock { Text = "디스플레이 모드", Style = FindStyle("SettingsCardTitleStyle") });
             head.Children.Add(new TextBlock
             {
-                Text = "RHI가 게임에 적용하는 설정 묶음을 저장하고 게임 페이지에서 전환할 수 있습니다. 예를 들어 모니터용 하나, TV용 하나를 두거나 "
+                Text = "BONG DLSS5가 게임에 적용하는 설정 묶음을 저장하고 게임 페이지에서 전환할 수 있습니다. 예를 들어 모니터용 하나, TV용 하나를 두거나 "
                      + "여러 구성을 시험해 볼 때 사용하세요. 모드 자체가 디스플레이를 변경하지는 않습니다. 모드 값은 편집...에서 설정합니다 "
                      + "(최대 밝기, 프레임 제한, 단축키, DLSS 설정, DLDSR, 실행 시 HDR 및 해상도 등): 해당 모드로 전환한 모든 게임에 적용됩니다. "
                      + "특정 게임에만 다른 값을 쓰려면 모드 전환 옆의 ⚙로 사용자 지정 모드를 만드세요.",
@@ -50,7 +50,7 @@ public partial class SettingsHandler
             outer.Children.Add(head);
             outer.Children.Add(new TextBlock
             {
-                Text = "모드가 설정된 게임은 모드가 바꾸는 항목에 대해 자체 값을 유지하므로, RHI의 다른 곳에서 모든 게임에 적용하는 설정"
+                Text = "모드가 설정된 게임은 모드가 바꾸는 항목에 대해 자체 값을 유지하므로, BONG DLSS5의 다른 곳에서 모든 게임에 적용하는 설정"
                      + "(최대 밝기, 프레임 제한, 단축키)은 해당 게임을 건너뜁니다. 게임의 활성 모드를 다시 클릭하거나 꺼짐을 선택하면 모드가 꺼지고 "
                      + "전역 설정으로 돌아갑니다. 새 게임은 모드가 꺼진 상태로 시작합니다.",
                 Style = FindStyle("SettingsNoteStyle"),

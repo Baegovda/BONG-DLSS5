@@ -42,7 +42,7 @@ public partial class SettingsHandler
 
         // NXM handler status
         bool nxmRegistered = NxmProtocolHandler.IsRegistered();
-        _window.NxmStatusText.Text = nxmRegistered ? "RHI가 활성 nxm:// 처리기입니다" : "등록 안 됨";
+        _window.NxmStatusText.Text = nxmRegistered ? "BONG DLSS5가 활성 nxm:// 처리기입니다" : "등록 안 됨";
         _window.NxmStatusText.Foreground = UIFactory.Brush(
             nxmRegistered ? ResourceKeys.AccentGreenBrush : ResourceKeys.TextSecondaryBrush);
         _window.NxmRegisterBtn.Content = nxmRegistered ? "등록 해제" : "등록";
@@ -151,8 +151,8 @@ public partial class SettingsHandler
                     var result = await DialogService.ShowSafeAsync(new ContentDialog
                     {
                         Title = "NXM 프로토콜 처리기",
-                        Content = "다른 애플리케이션(예: Vortex 또는 MO2)이 이미 nxm:// 처리기로 등록되어 있습니다. RHI를 등록하면 대체됩니다. 계속하시겠습니까?",
-                        PrimaryButtonText = "RHI 등록",
+                        Content = "다른 애플리케이션(예: Vortex 또는 MO2)이 이미 nxm:// 처리기로 등록되어 있습니다. BONG DLSS5를 등록하면 대체됩니다. 계속하시겠습니까?",
+                        PrimaryButtonText = "BONG DLSS5 등록",
                         CloseButtonText = "취소",
                         XamlRoot = _window.Content.XamlRoot,
                         RequestedTheme = Microsoft.UI.Xaml.ElementTheme.Dark,

@@ -220,7 +220,7 @@ public static class DlssDefaultsDialog
         ToolTipService.SetToolTip(versionCombo,
             "Default: 게임 파일을 그대로 둡니다.\n"
             + "버전: 해당 버전으로 교체합니다.\n"
-            + "Custom: RHI의 Custom 폴더에서 사용자 파일을 복사합니다."
+            + "Custom: BONG DLSS5의 Custom 폴더에서 사용자 파일을 복사합니다."
             + (includeDriverOverride
                 ? "\nNVIDIA Override: DLL을 교체하는 대신 게임의 NVIDIA 프로필에서 드라이버 재정의를 켭니다."
                 : ""));

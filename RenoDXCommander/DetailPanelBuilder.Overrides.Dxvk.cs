@@ -120,7 +120,7 @@ public partial class DetailPanelBuilder
         resetFolderBtn.Click += (s, ev) => _window.ResetInstallFolder_Click(s, ev);
         ToolTipService.SetToolTip(resetFolderBtn, card.IsManuallyAdded
             ? "직접 추가한 게임이므로 되돌아갈 감지된 폴더가 없습니다. 설치 폴더 변경을 사용하세요."
-            : "변경한 경우, RHI가 감지한 설치 폴더로 되돌립니다.");
+            : "변경한 경우, BONG DLSS5가 감지한 설치 폴더로 되돌립니다.");
         Grid.SetColumn(resetFolderBtn, 2);
         mgmtRow.Children.Add(resetFolderBtn);
 
@@ -130,7 +130,7 @@ public partial class DetailPanelBuilder
 
         var removeGameBtn = new Button
         {
-            Content = "RHI에서 제거",
+            Content = "BONG DLSS5에서 제거",
             FontSize = 11,
             Height = 32,
             HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -143,8 +143,8 @@ public partial class DetailPanelBuilder
         };
         removeGameBtn.Click += (s, ev) => _window.RemoveManualGame_Click(s, ev);
         ToolTipService.SetToolTip(removeGameBtn, card.IsManuallyAdded
-            ? "RHI에서 이 게임을 제거합니다. 직접 추가한 게임이므로 다시 추가하면 복구됩니다."
-            : "RHI에서 이 게임을 영구적으로 제거합니다. 숨기기와 달리 RHI가 게임을 검색해도 다시 나타나지 않습니다. 설정 › 도구 및 유지 관리 › 제거된 게임에서 되돌릴 수 있습니다.");
+            ? "BONG DLSS5에서 이 게임을 제거합니다. 직접 추가한 게임이므로 다시 추가하면 복구됩니다."
+            : "BONG DLSS5에서 이 게임을 영구적으로 제거합니다. 숨기기와 달리 BONG DLSS5가 게임을 검색해도 다시 나타나지 않습니다. 설정 › 도구 및 유지 관리 › 제거된 게임에서 되돌릴 수 있습니다.");
         Grid.SetColumn(removeGameBtn, 4);
         mgmtRow.Children.Add(removeGameBtn);
 
@@ -219,11 +219,11 @@ public partial class DetailPanelBuilder
             tiles.Children.Add(TabsTheme.MakeTile("보고서 복사", "지원 요청용으로 이 게임의 구성을 복사합니다", false,
                 (s, ev) => CopyReport(), TabsTooltip(reportBtn)));
             if (!card.IsManuallyAdded)
-                tiles.Children.Add(TabsTheme.MakeTile("설치 폴더 초기화", "RHI가 감지한 폴더로 되돌립니다", false,
+                tiles.Children.Add(TabsTheme.MakeTile("설치 폴더 초기화", "BONG DLSS5가 감지한 폴더로 되돌립니다", false,
                     (s, ev) => _window.ResetInstallFolder_Click(resetFolderBtn, ev), TabsTooltip(resetFolderBtn)));
-            tiles.Children.Add(TabsTheme.MakeTile("RHI에서 제거", card.IsManuallyAdded
+            tiles.Children.Add(TabsTheme.MakeTile("BONG DLSS5에서 제거", card.IsManuallyAdded
                     ? "직접 추가한 이 게임을 제거합니다"
-                    : "RHI에서 이 게임을 영구적으로 제거합니다. 설정에서 되돌릴 수 있습니다", true,
+                    : "BONG DLSS5에서 이 게임을 영구적으로 제거합니다. 설정에서 되돌릴 수 있습니다", true,
                 (s, ev) => _window.RemoveManualGame_Click(removeGameBtn, ev), TabsTooltip(removeGameBtn)));
             mgmtBody.Children.Add(tiles);
             return;

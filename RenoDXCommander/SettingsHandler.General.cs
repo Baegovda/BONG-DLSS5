@@ -159,7 +159,7 @@ public partial class SettingsHandler
             var confirm = new ContentDialog
             {
                 Title = "셰이더 관리 방식을 변경할까요?",
-                Content = "RHI가 이 설정에 맞게 ReShade가 설치된 모든 게임의 셰이더 파일을 즉시 업데이트합니다.",
+                Content = "BONG DLSS5가 이 설정에 맞게 ReShade가 설치된 모든 게임의 셰이더 파일을 즉시 업데이트합니다.",
                 PrimaryButtonText = "변경",
                 CloseButtonText = "취소",
                 DefaultButton = ContentDialogButton.Close,
@@ -433,7 +433,7 @@ public partial class SettingsHandler
                 await DialogService.ShowSafeAsync(new ContentDialog
                 {
                     Title = "관리자 모드",
-                    Content = "이 시스템에서는 UAC가 꺼져 있어 RHI가 항상 관리자로 실행됩니다.",
+                    Content = "이 시스템에서는 UAC가 꺼져 있어 BONG DLSS5가 항상 관리자로 실행됩니다.",
                     CloseButtonText = "OK",
                     XamlRoot = _window.Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
@@ -457,8 +457,8 @@ public partial class SettingsHandler
                 {
                     Title = "관리자 모드",
                     Content = enable
-                        ? "관리자 모드가 켜졌습니다. 적용하려면 RHI를 다시 시작하세요."
-                        : "관리자 모드가 꺼졌습니다. 다음 시작 시 RHI가 일반 권한으로 실행됩니다.",
+                        ? "관리자 모드가 켜졌습니다. 적용하려면 BONG DLSS5를 다시 시작하세요."
+                        : "관리자 모드가 꺼졌습니다. 다음 시작 시 BONG DLSS5가 일반 권한으로 실행됩니다.",
                     CloseButtonText = "OK",
                     XamlRoot = _window.Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,

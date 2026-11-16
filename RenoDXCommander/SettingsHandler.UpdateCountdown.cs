@@ -74,9 +74,9 @@ public partial class SettingsHandler
                 Child = grid,
             };
             ToolTipService.SetToolTip(panel,
-                "RHI는 GitHub 토큰이 있으면 1시간마다, 없으면 4시간마다 확인합니다 (토큰이 없으면 GitHub 요청 허용량이 훨씬 적습니다). " +
-                "켜짐: 확인할 때마다 모드 데이터를 새로 고치고 모든 구성 요소와 RHI 자체의 업데이트를 확인합니다. " +
-                "최소: 확인할 때마다 모드 데이터와 DLSS 버전을 새로 고치고 RHI 자체를 확인합니다. 구성 요소 확인은 지금 확인, 새로 고침 또는 모두 업데이트를 할 때만 실행됩니다.");
+                "BONG DLSS5는 GitHub 토큰이 있으면 1시간마다, 없으면 4시간마다 확인합니다 (토큰이 없으면 GitHub 요청 허용량이 훨씬 적습니다). " +
+                "켜짐: 확인할 때마다 모드 데이터를 새로 고치고 모든 구성 요소와 BONG DLSS5 자체의 업데이트를 확인합니다. " +
+                "최소: 확인할 때마다 모드 데이터와 DLSS 버전을 새로 고치고 BONG DLSS5 자체를 확인합니다. 구성 요소 확인은 지금 확인, 새로 고침 또는 모두 업데이트를 할 때만 실행됩니다.");
 
             // Above the "RHI checks every hour..." note when it sits right before the button
             int index = column.Children.IndexOf(button);

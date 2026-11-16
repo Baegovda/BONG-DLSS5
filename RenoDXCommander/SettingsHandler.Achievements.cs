@@ -89,7 +89,7 @@ public partial class SettingsHandler
                 "Xbox",
                 "스포트라이트 레이아웃에서 실행 버튼 아래에 선택한 Xbox / Game Pass 게임의 도전 과제를 "
               + "달성 날짜, 희귀도, 게이머 점수와 함께 표시합니다.\n"
-              + "이 PC의 Xbox 앱 데이터에서 읽으므로 RHI에서 로그인할 필요가 없습니다. Xbox 앱은 게임의 도전 과제를 "
+              + "이 PC의 Xbox 앱 데이터에서 읽으므로 BONG DLSS5에서 로그인할 필요가 없습니다. Xbox 앱은 게임의 도전 과제를 "
               + "한 번 표시한 뒤에만 보관합니다. 게임에 아무것도 표시되지 않거나 새 달성이 누락되면 Xbox 앱에서 "
               + "해당 게임 페이지를 한 번 여세요.",
                 () => ViewModel.Settings.XboxAchievements,

@@ -37,7 +37,7 @@ internal sealed partial class DetailLayoutHost
             OffContent = "꺼짐",
             MinWidth = 0,
         };
-        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(toggle, "RHI 오버레이");
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(toggle, "BONG DLSS5 오버레이");
         toggle.Toggled += (s, e) =>
         {
             try
@@ -50,9 +50,9 @@ internal sealed partial class DetailLayoutHost
                 CrashReporter.Log($"[DetailLayoutHost.GameSettings] Overlay toggle for '{name}' failed — {ex.Message}");
             }
         };
-        string desc = "단축키나 컨트롤러로 이 게임 위에 RHI 오버레이를 엽니다. 꺼져 있으면 단축키가 게임으로 전달됩니다.";
+        string desc = "단축키나 컨트롤러로 이 게임 위에 BONG DLSS5 오버레이를 엽니다. 꺼져 있으면 단축키가 게임으로 전달됩니다.";
         if (!vm.Settings.RhiOverlayEnabled) desc += " 현재 설정에서 모든 게임의 오버레이가 꺼져 있습니다.";
-        AddGameSettingRow(rows, "RHI 오버레이", desc, toggle);
+        AddGameSettingRow(rows, "BONG DLSS5 오버레이", desc, toggle);
     }
 
     private void AddDisplayModeRow(StackPanel rows, GameCardViewModel card)

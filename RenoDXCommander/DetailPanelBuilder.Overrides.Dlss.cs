@@ -134,9 +134,9 @@ public partial class DetailPanelBuilder
         if (driverOverrideActive)
             ToolTipService.SetToolTip(versionCombo, "NVIDIA Override가 활성화되어 있습니다 — 드라이버가 이 게임에 자체 최신 DLL을 주입하고 있습니다. 다른 버전을 선택하면 재정의를 끄고 해당 버전을 배포합니다.");
         else if (onDriverOverrideToggled != null)
-            ToolTipService.SetToolTip(versionCombo, "게임 폴더에 복사할 DLL 버전을 선택합니다. Default는 게임의 원래 DLL을 복원합니다. Custom은 %LocalAppData%\\RHI\\Custom\\DLSS\\의 사용자 파일을 사용합니다. NVIDIA Override는 디스크의 파일 대신 드라이버가 자체 최신 버전을 주입하게 합니다 — NVIDIA App이나 Profile Inspector에서 DLSS Override를 켜는 것과 같습니다.");
+            ToolTipService.SetToolTip(versionCombo, "게임 폴더에 복사할 DLL 버전을 선택합니다. Default는 게임의 원래 DLL을 복원합니다. Custom은 %LocalAppData%\\BONG DLSS5\\Custom\\DLSS\\의 사용자 파일을 사용합니다. NVIDIA Override는 디스크의 파일 대신 드라이버가 자체 최신 버전을 주입하게 합니다 — NVIDIA App이나 Profile Inspector에서 DLSS Override를 켜는 것과 같습니다.");
         else
-            ToolTipService.SetToolTip(versionCombo, "게임 폴더에 복사할 DLL 버전을 선택합니다. Default는 게임의 원래 DLL을 복원합니다. Custom은 %LocalAppData%\\RHI\\Custom\\DLSS\\의 사용자 파일을 사용합니다.");
+            ToolTipService.SetToolTip(versionCombo, "게임 폴더에 복사할 DLL 버전을 선택합니다. Default는 게임의 원래 DLL을 복원합니다. Custom은 %LocalAppData%\\BONG DLSS5\\Custom\\DLSS\\의 사용자 파일을 사용합니다.");
 
         col.Children.Add(versionCombo);
 

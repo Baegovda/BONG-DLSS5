@@ -11,6 +11,9 @@
                 <ResourceDictionary Source="Themes/DarkTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <!-- BongHub type: Segoe UI Variable, Malgun Gothic for Hangul -->
+            <FontFamily x:Key="ContentControlThemeFontFamily">Segoe UI Variable Text, Segoe UI, Malgun Gothic</FontFamily>
+
             <!-- Buttons switch hover/press colours instantly: with Windows animation effects on, the
                  template's fade to the default near-transparent hover colour flashed bright (ButtonFade.cs) -->
             <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">

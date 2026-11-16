@@ -48,7 +48,7 @@ public partial class SettingsHandler
                 HorizontalAlignment = HorizontalAlignment.Left,
             };
             ToolTipService.SetToolTip(_nvAppLimitsButton,
-                "NVIDIA App은 NVIDIA가 승인한 게임에서만 DLSS 재정의를 허용하고, 다른 게임에서 RHI나 " +
+                "NVIDIA App은 NVIDIA가 승인한 게임에서만 DLSS 재정의를 허용하고, 다른 게임에서 BONG DLSS5나 " +
                 "NVIDIA Profile Inspector로 설정한 재정의를 되돌립니다. 이 기능은 NVIDIA App 설정 파일에서 해당 제한을 끄고 " +
                 "(백업 유지) NVIDIA 서비스를 다시 시작합니다. JPersson77의 nVAppAppApp 스크립트를 기반으로 합니다.");
             _nvAppLimitsButton.Click += NvAppLimitsButton_Click;
@@ -77,8 +77,8 @@ public partial class SettingsHandler
                 Title = "NVIDIA App 재정의 제한을 제거할까요?",
                 Content = new TextBlock
                 {
-                    Text = "RHI가 NVIDIA App 설정 파일을 변경하여 NVIDIA가 승인하지 않은 게임에서 DLSS 재정의를 되돌리지 않도록 합니다. 파일 백업은 유지됩니다.\n\n" +
-                           "그런 다음 RHI가 NVIDIA 서비스 두 개를 다시 시작합니다. Windows에서 관리자 권한을 요청하며, 화면이 1~2초 정도 검게 변할 수 있습니다.\n\n" +
+                    Text = "BONG DLSS5가 NVIDIA App 설정 파일을 변경하여 NVIDIA가 승인하지 않은 게임에서 DLSS 재정의를 되돌리지 않도록 합니다. 파일 백업은 유지됩니다.\n\n" +
+                           "그런 다음 BONG DLSS5가 NVIDIA 서비스 두 개를 다시 시작합니다. Windows에서 관리자 권한을 요청하며, 화면이 1~2초 정도 검게 변할 수 있습니다.\n\n" +
                            "먼저 실행 중인 게임을 모두 닫으세요. 드라이버 및 NVIDIA App 업데이트로 제한이 다시 적용될 수 있으므로 업데이트 후 다시 실행하세요.",
                     TextWrapping = TextWrapping.Wrap,
                     FontSize = 13,

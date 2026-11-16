@@ -246,7 +246,7 @@ public partial class MainViewModel
             if (ShowVulkanAdminRequiredDialog != null)
                 await ShowVulkanAdminRequiredDialog();
             else
-                card.RsActionMessage = "⚠ Vulkan 레이어를 설치하려면 관리자 권한이 필요합니다. RHI를 관리자 권한으로 다시 시작하세요.";
+                card.RsActionMessage = "⚠ Vulkan 레이어를 설치하려면 관리자 권한이 필요합니다. BONG DLSS5를 관리자 권한으로 다시 시작하세요.";
             return;
         }
 
@@ -334,7 +334,7 @@ public partial class MainViewModel
             if (ShowVulkanAdminRequiredDialog != null)
                 await ShowVulkanAdminRequiredDialog();
             else
-                card.RsActionMessage = "⚠ GAC 심볼릭 링크를 설치하려면 관리자 권한이 필요합니다. RHI를 관리자 권한으로 다시 시작하세요.";
+                card.RsActionMessage = "⚠ GAC 심볼릭 링크를 설치하려면 관리자 권한이 필요합니다. BONG DLSS5를 관리자 권한으로 다시 시작하세요.";
             return;
         }
 

@@ -163,7 +163,7 @@ public sealed partial class MainWindow
                 bool asiReverting = false;
                 asiCombo = cog.AddCombo("ReShade를 ASI로 로드",
                     $"켜짐으로 설정하면 ASI 로더(추가 기능의 ASI Loader 등)가 로드할 수 있도록 ReShade 이름을 {asiName}(으)로 바꿉니다. "
-                    + "RHI는 로더를 대신 설치하지 않습니다. 설치 및 업데이트 시 이름이 유지되며, 켜져 있는 동안 게임 재정의의 ReShade DLL 이름은 비활성화됩니다.",
+                    + "BONG DLSS5는 로더를 대신 설치하지 않습니다. 설치 및 업데이트 시 이름이 유지되며, 켜져 있는 동안 게임 재정의의 ReShade DLL 이름은 비활성화됩니다.",
                     new[] { "꺼짐", "켜짐" },
                     ViewModel.GetRsAsiMode(card.GameName, card.Source ?? "") ? 1 : 0,
                     i =>
@@ -208,15 +208,15 @@ public sealed partial class MainWindow
             var capturedKeepGameName = card.GameName;
             var capturedKeepSource = card.Source ?? "";
             cog.AddCombo("ReShade.ini 최신 상태 유지",
-                "아니요로 설정하면 ReShade 설치나 업데이트 시, 또는 모든 게임에 기록하는 설정 버튼을 사용할 때 RHI가 이 게임의 reshade.ini를 변경하지 않습니다.",
+                "아니요로 설정하면 ReShade 설치나 업데이트 시, 또는 모든 게임에 기록하는 설정 버튼을 사용할 때 BONG DLSS5가 이 게임의 reshade.ini를 변경하지 않습니다.",
                 new[] { "예", "아니요" },
                 ViewModel.GetKeepRsIniUpdated(capturedKeepGameName, capturedKeepSource) ? 0 : 1,
                 i =>
                 {
                     ViewModel.SetKeepRsIniUpdated(capturedKeepGameName, i == 0, capturedKeepSource);
                     cog.SetSuccess(i == 0
-                        ? "RHI가 이 게임의 reshade.ini를 최신 상태로 유지합니다."
-                        : "RHI가 이 게임의 reshade.ini를 변경하지 않습니다.");
+                        ? "BONG DLSS5가 이 게임의 reshade.ini를 최신 상태로 유지합니다."
+                        : "BONG DLSS5가 이 게임의 reshade.ini를 변경하지 않습니다.");
                 });
 
             // ── Files ─────────────────────────────────────────────────────────────
@@ -248,14 +248,14 @@ public sealed partial class MainWindow
                 openIniBtn.IsEnabled = File.Exists(reshadeIniPath);
                 cog.SetSuccess("ReShade.ini를 배포했습니다.");
                 _crashReporter.Log($"[RsCogButton_Click] Deployed ReShade.ini for '{card.GameName}'");
-            }, "RHI의 ReShade.ini 템플릿을 이 게임의 reshade.ini에 병합합니다. 템플릿 값이 기존 값을 대체하며 다른 설정은 유지됩니다.");
+            }, "BONG DLSS5의 ReShade.ini 템플릿을 이 게임의 reshade.ini에 병합합니다. 템플릿 값이 기존 값을 대체하며 다른 설정은 유지됩니다.");
 
             var deployPresetBtn = cog.MakeButton("ReShadePreset.ini 배포", CogButtonKind.Primary, () =>
             {
                 AuxInstallService.CopyRsPresetIniIfPresent(card.InstallPath);
                 cog.SetSuccess("ReShadePreset.ini를 배포했습니다.");
                 _crashReporter.Log($"[RsCogButton_Click] Deployed ReShadePreset.ini for '{card.GameName}'");
-            }, rsPresetExists ? "RHI 구성 폴더의 ReShadePreset.ini를 게임 폴더에 복사합니다." : "RHI 구성 폴더에 ReShadePreset.ini가 없습니다");
+            }, rsPresetExists ? "BONG DLSS5 구성 폴더의 ReShadePreset.ini를 게임 폴더에 복사합니다." : "BONG DLSS5 구성 폴더에 ReShadePreset.ini가 없습니다");
             deployPresetBtn.IsEnabled = rsPresetExists;
 
             var openLogBtn = cog.MakeOpenFileButton("ReShade.log 열기", reshadeLogPath);

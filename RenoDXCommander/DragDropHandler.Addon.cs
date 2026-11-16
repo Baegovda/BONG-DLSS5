@@ -669,7 +669,7 @@ public partial class DragDropHandler
         var name = await OsCustomBuildDialogs.AskNameAsync(_window.Content.XamlRoot, "사용자 지정 OptiScaler 빌드를 추가할까요?",
             OsCustomBuildService.SuggestName(sourceUrl ?? archivePath),
             intro: $"{archiveName}에 OptiScaler 빌드가 들어 있습니다. 사용자 지정 OptiScaler 빌드에 추가할까요? "
-                 + "추가하면 게임의 OptiScaler 설정에서 선택할 수 있습니다. RHI는 사용자 지정 빌드를 업데이트하지 않습니다. 신뢰할 수 있는 사람의 빌드만 추가하세요.");
+                 + "추가하면 게임의 OptiScaler 설정에서 선택할 수 있습니다. BONG DLSS5는 사용자 지정 빌드를 업데이트하지 않습니다. 신뢰할 수 있는 사람의 빌드만 추가하세요.");
         if (name == null) return false;
         _window.ShowStatusBarMessage($"사용자 지정 OptiScaler 빌드 {name} 추가 중...", TimeSpan.FromSeconds(30));
         var result = await Task.Run(() => OsCustomBuildService.ImportAsync(archivePath, name, null, null, _window.LifetimeToken,

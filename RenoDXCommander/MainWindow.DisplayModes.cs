@@ -499,7 +499,7 @@ public sealed partial class MainWindow
                 else
                 {
                     string note = reason != null ? $"현재 사용할 수 없음: {reason}"
-                        : item.AtLaunch ? "변경 안 함 (RHI에서 게임을 실행할 때 사용)"
+                        : item.AtLaunch ? "변경 안 함 (BONG DLSS5에서 게임을 실행할 때 사용)"
                         : inGame.TryGetValue(item.Key, out var now) && now != null ? $"변경 안 함 (현재 {item.Format(now)})"
                         : "변경 안 함";
                     right = new TextBlock

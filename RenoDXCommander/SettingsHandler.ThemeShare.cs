@@ -54,7 +54,7 @@ public partial class SettingsHandler
         var panel = new StackPanel { Spacing = 8, Width = 420 };
         panel.Children.Add(new TextBlock
         {
-            Text = "테마 코드를 붙여넣으세요 (RHI-THEME:로 시작). 사용자 지정 색상이 대체됩니다.",
+            Text = "테마 코드를 붙여넣으세요 (BONG-THEME:로 시작). 사용자 지정 색상이 대체됩니다.",
             TextWrapping = TextWrapping.Wrap,
             FontSize = 12,
         });
@@ -75,7 +75,7 @@ public partial class SettingsHandler
         {
             if (!ThemePalette.TryParseShareCode(box.Text, out var palette))
             {
-                note.Text = "테마 코드가 아닙니다. RHI-THEME:부터 마지막 색상까지 코드 전체를 복사하세요.";
+                note.Text = "테마 코드가 아닙니다. BONG-THEME:부터 마지막 색상까지 코드 전체를 복사하세요.";
                 note.Foreground = UIFactory.Brush(ResourceKeys.AccentRedBrush);
                 note.Visibility = Visibility.Visible;
                 return;

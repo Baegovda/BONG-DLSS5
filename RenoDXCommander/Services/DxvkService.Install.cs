@@ -49,7 +49,7 @@ public partial class DxvkService
                 {
                     CrashReporter.Log("[DxvkService.InstallAsync] Staging still not ready — aborting");
                     progress?.Report((AntivirusGuard.IsBlocked(AntivirusComponentName)
-                        ? "DXVK를 다운로드할 수 없습니다: 백신이 파일을 제거했습니다. %LocalAppData%\\RHI를 예외에 추가하고 다시 시도하세요."
+                        ? "DXVK를 다운로드할 수 없습니다: 백신이 파일을 제거했습니다. %LocalAppData%\\BONG DLSS5를 예외에 추가하고 다시 시도하세요."
                         : "DXVK 스테이징을 사용할 수 없습니다", 0));
                     return;
                 }
@@ -80,8 +80,8 @@ public partial class DxvkService
             var sampleDll = Path.Combine(StagingDir, archFolder, dllNames[0]);
             if (!File.Exists(sampleDll))
             {
-                var msg = $"RHI 다운로드 폴더에 DXVK의 {archFolder}\\{dllNames[0]} 파일이 없습니다. "
-                        + "백신이 제거했다면 %LocalAppData%\\RHI를 예외에 추가하고 DXVK를 다시 설치하세요.";
+                var msg = $"BONG DLSS5 다운로드 폴더에 DXVK의 {archFolder}\\{dllNames[0]} 파일이 없습니다. "
+                        + "백신이 제거했다면 %LocalAppData%\\BONG DLSS5를 예외에 추가하고 DXVK를 다시 설치하세요.";
                 CrashReporter.Log($"[DxvkService.InstallAsync] {msg}");
                 progress?.Report((msg, 0));
                 return;
@@ -625,7 +625,7 @@ public partial class DxvkService
                 {
                     CrashReporter.Log("[DxvkService.UpdateAsync] Staging not ready after download — aborting");
                     progress?.Report((AntivirusGuard.IsBlocked(AntivirusComponentName)
-                        ? "DXVK를 다운로드할 수 없습니다: 백신이 파일을 제거했습니다. %LocalAppData%\\RHI를 예외에 추가하고 다시 시도하세요."
+                        ? "DXVK를 다운로드할 수 없습니다: 백신이 파일을 제거했습니다. %LocalAppData%\\BONG DLSS5를 예외에 추가하고 다시 시도하세요."
                         : "DXVK 스테이징을 사용할 수 없습니다", 0));
                     return;
                 }

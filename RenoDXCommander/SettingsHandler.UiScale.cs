@@ -40,9 +40,9 @@ public partial class SettingsHandler
                     combo.Style = comboStyle;
                 foreach (var p in MainWindow.UiScaleOptions) combo.Items.Add(p == 100 ? "100% (보통)" : $"{p}%");
                 ToolTipService.SetToolTip(combo,
-                    "Windows 배율을 바꾸지 않고 RHI 창을 작게 또는 크게 만듭니다. " +
+                    "Windows 배율을 바꾸지 않고 BONG DLSS5 창을 작게 또는 크게 만듭니다. " +
                     "TV나 200% 이상으로 설정된 고DPI 화면에서 유용합니다. " +
-                    "RHI 어디서든 Ctrl을 누른 채 마우스 휠을 돌려도 됩니다. " +
+                    "BONG DLSS5 어디서든 Ctrl을 누른 채 마우스 휠을 돌려도 됩니다. " +
                     "팝업, 드롭다운 목록, 툴팁은 Windows 크기를 유지합니다.");
                 Grid.SetColumn(combo, 1);
                 row.Children.Add(combo);

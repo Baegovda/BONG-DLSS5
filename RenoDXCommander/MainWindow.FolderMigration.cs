@@ -107,7 +107,7 @@ public sealed partial class MainWindow
             {
                 Title = "모드가 이전 폴더에 남습니다",
                 Content = MakeMoveDialogText(
-                    "새 폴더는 RHI가 쓸 수 없는 Game Pass / Microsoft Store (WindowsApps) 폴더이므로, "
+                    "새 폴더는 BONG DLSS5가 쓸 수 없는 Game Pass / Microsoft Store (WindowsApps) 폴더이므로, "
                     + $"{card.GameName}에 설치된 모드는 이전 폴더에 남습니다:", oldFolder),
                 CloseButtonText = "확인",
                 XamlRoot = xamlRoot,
@@ -119,8 +119,8 @@ public sealed partial class MainWindow
         {
             Title = "이 게임에 설치된 모드를 새 폴더로 옮길까요?",
             Content = MakeMoveDialogText(
-                $"{card.GameName}의 이전 폴더에 RHI가 설치한 모드가 있습니다. 설정 및 프리셋과 함께 "
-                + "새 폴더로 옮길까요? 게임 자체 파일은 RHI가 이전 폴더에 되돌려 놓습니다.",
+                $"{card.GameName}의 이전 폴더에 BONG DLSS5가 설치한 모드가 있습니다. 설정 및 프리셋과 함께 "
+                + "새 폴더로 옮길까요? 게임 자체 파일은 BONG DLSS5가 이전 폴더에 되돌려 놓습니다.",
                 $"원래 위치: {oldFolder}\n새 위치: {newFolder}"),
             PrimaryButtonText = "옮기기",
             CloseButtonText = "그대로 두기",
@@ -148,7 +148,7 @@ public sealed partial class MainWindow
         {
             Title = "모드를 옮기지 못함",
             Content = MakeMoveDialogText(
-                $"RHI가 {card.GameName}의 모드를 옮기지 못했습니다: {outcome.Reason ?? "알 수 없는 오류"}",
+                $"BONG DLSS5가 {card.GameName}의 모드를 옮기지 못했습니다: {outcome.Reason ?? "알 수 없는 오류"}",
                 "아무것도 변경되지 않았으므로 모드는 여전히 이전 폴더에 있습니다. 설치 폴더 초기화 또는 설치 폴더 변경 버튼으로 다시 시도하세요."),
             CloseButtonText = "확인",
             XamlRoot = xamlRoot,

@@ -1174,7 +1174,7 @@ public static partial class ShaderPopupHelper
                 Margin   = new Thickness(0, 2, 0, 0),
                 HorizontalAlignment = HorizontalAlignment.Stretch,
             };
-            ToolTipService.SetToolTip(importBtn, "RHI에서 내보낸 .zip 압축 파일에서 셰이더 프로필을 가져옵니다.");
+            ToolTipService.SetToolTip(importBtn, "BONG DLSS5에서 내보낸 .zip 압축 파일에서 셰이더 프로필을 가져옵니다.");
 
             var importStatusLabel = new TextBlock
             {
@@ -1216,7 +1216,7 @@ public static partial class ShaderPopupHelper
 
                     if (result == null)
                     {
-                        importStatusLabel.Text       = "잘못된 압축 파일 — RHI 셰이더 프로필이 아닙니다.";
+                        importStatusLabel.Text       = "잘못된 압축 파일 — BONG DLSS5 셰이더 프로필이 아닙니다.";
                         importStatusLabel.Foreground = Brush(ResourceKeys.AccentRedBrush);
                         importStatusLabel.Visibility = Visibility.Visible;
                     }
