@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace RenoDXCommander;
 
-/// <summary>Helpers for the unofficial Korean-translated build of RHI.</summary>
+/// <summary>Helpers for the BONG DLSS5, the unofficial Korean-translated build of RHI.</summary>
 internal static class KoreanBuild
 {
     /// <summary>

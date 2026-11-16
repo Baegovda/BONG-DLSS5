@@ -205,7 +205,7 @@ public sealed partial class MainWindow
             },
         });
         var names = new StackPanel { VerticalAlignment = VerticalAlignment.Center };
-        names.Children.Add(new TextBlock { Text = "RHI", FontSize = 16, FontWeight = Microsoft.UI.Text.FontWeights.Bold, CharacterSpacing = 20, Foreground = TabsTheme.B(TabsTheme.TextPrimary) });
+        names.Children.Add(new TextBlock { Text = "BONG DLSS5", FontSize = 16, FontWeight = Microsoft.UI.Text.FontWeights.Bold, CharacterSpacing = 20, Foreground = TabsTheme.B(TabsTheme.TextPrimary) });
         names.Children.Add(new TextBlock { Text = "간편한 PC 게이밍", FontSize = 11, Foreground = TabsTheme.B(TabsTheme.TextMuted) });
         brand.Children.Add(names);
         // The brand takes you back to your games (from Settings)

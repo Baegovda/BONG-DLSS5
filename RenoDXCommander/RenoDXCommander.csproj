@@ -20,7 +20,8 @@
     <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <AssemblyName>RHI</AssemblyName>
-    <AssemblyTitle>RHI</AssemblyTitle>
+    <AssemblyTitle>BONG DLSS5</AssemblyTitle>
+    <Product>BONG DLSS5</Product>
     <AssemblyVersion>2.9.3.0</AssemblyVersion>
     <FileVersion>2.9.3.0</FileVersion>
   </PropertyGroup>

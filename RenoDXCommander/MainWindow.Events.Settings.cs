@@ -28,7 +28,7 @@ public sealed partial class MainWindow
             {
                 var dlg = new ContentDialog
                 {
-                    Title = "RHI가 최신 상태입니다",
+                    Title = "BONG DLSS5가 최신 상태입니다",
                     Content = $"v{Services.CrashReporter.AppVersion} 실행 중 — 사용 가능한 업데이트가 없습니다.",
                     CloseButtonText = "확인",
                     XamlRoot = Content.XamlRoot,
