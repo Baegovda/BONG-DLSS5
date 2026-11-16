@@ -363,6 +363,7 @@ public partial class SettingsHandler
     /// change the height of content above the target section.</summary>
     private void OnSettingsPagePopulated()
     {
+        _window.DispatcherQueue?.TryEnqueue(DispatcherQueuePriority.Low, () => Services.PlainTips.Attach(_window.SettingsPanel)); // BONG DLSS5
         _window.DispatcherQueue?.TryEnqueue(DispatcherQueuePriority.Low, () =>
         {
             try

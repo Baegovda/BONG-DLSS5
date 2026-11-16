@@ -35,7 +35,9 @@ public partial class SettingsViewModel : ObservableObject
     /// <summary>RHI's own interface size in percent (on top of Windows scaling). 100 = normal.</summary>
     [ObservableProperty] private int _uiScale = 100;
     /// <summary>Colour theme id (ThemePresets: "Default", "OledBlack", …, or "Custom").</summary>
-    [ObservableProperty] private string _colorTheme = "Default";
+    [ObservableProperty] private string _colorTheme = "BongHub"; // BONG DLSS5 default look
+    /// <summary>BONG DLSS5: open on the simple one-click home screen instead of the detailed game page.</summary>
+    [ObservableProperty] private bool _easyHome = true;
     /// <summary>Colours picked for the Custom theme ("Background=#RRGGBB;Panel=…"). Empty = not set yet.</summary>
     [ObservableProperty] private string _customThemeColors = "";
     [ObservableProperty] private bool _osDlssInputs = true;
@@ -465,6 +467,9 @@ public partial class SettingsViewModel : ObservableObject
         if (s.TryGetValue("PatchNotesFontSize", out var pnfVal) && double.TryParse(pnfVal, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var pnf) && pnf > 0) PatchNotesFontSize = pnf;
         if (s.TryGetValue("PatchNotesNavHidden", out var pnhVal)) PatchNotesNavHidden = pnhVal == "true";
         if (s.TryGetValue("ColorTheme", out var ctVal) && !string.IsNullOrWhiteSpace(ctVal)) ColorTheme = ctVal;
+        // BONG DLSS5: switch to the BongHub look once, even when an earlier theme was saved; later choices stick.
+        if (!s.ContainsKey("BongHubThemeSet")) ColorTheme = "BongHub";
+        if (s.TryGetValue("BongEasyHome", out var behVal)) EasyHome = behVal != "false"; // default true
         if (s.TryGetValue("CustomThemeColors", out var cthVal)) CustomThemeColors = cthVal ?? "";
         if (s.TryGetValue("TopBarScale", out var tbsVal) && int.TryParse(tbsVal, out var tbs)) TopBarScale = Math.Clamp(tbs, 50, 200);
         if (s.TryGetValue("GameListScale", out var glsVal) && int.TryParse(glsVal, out var gls)) GameListScale = Math.Clamp(gls, 50, 200);
@@ -659,6 +664,8 @@ public partial class SettingsViewModel : ObservableObject
         s["PatchNotesNavHidden"] = PatchNotesNavHidden ? "true" : "false";
         s["SpotlightCoverScale"] = SpotlightCoverScale.ToString("0.###", System.Globalization.CultureInfo.InvariantCulture);
         s["ColorTheme"] = ColorTheme;
+        s["BongHubThemeSet"] = "true";
+        s["BongEasyHome"] = EasyHome ? "true" : "false";
         s["CustomThemeColors"] = CustomThemeColors;
         s["TopBarScale"] = TopBarScale.ToString(System.Globalization.CultureInfo.InvariantCulture);
         s["GameListScale"] = GameListScale.ToString(System.Globalization.CultureInfo.InvariantCulture);

@@ -412,6 +412,7 @@ public partial class DetailPanelBuilder
         // Populate component rows
         UpdateDetailComponentRows(card);
         Layout.RefreshHeader(); // Tabs: mockup header copies the header filled above
+        _window.SchedulePlainTips(); // BONG DLSS5: easy-words tooltips
         __sw.Stop();
         if (__sw.ElapsedMilliseconds > 30)
             CrashReporter.Log($"[PopulateDetailPanel] SLOW: '{card.GameName}' took {__sw.ElapsedMilliseconds}ms");
@@ -572,8 +573,8 @@ public partial class DetailPanelBuilder
     internal static string HdrToggleTooltip(bool active, string source)
     {
         return active
-            ? $"Windows HDR: 켜짐 ({source}).\nRHI에서 게임을 실행하면 Windows HDR이 켜지고, 게임을 닫으면 다시 꺼집니다.\n클릭하면 이 게임에서 끕니다."
-            : $"Windows HDR: 꺼짐 ({source}).\n클릭하면 RHI에서 이 게임을 실행할 때 Windows HDR을 켭니다 (게임을 닫으면 다시 끕니다).";
+            ? $"Windows HDR: 켜짐 ({source}).\nBONG DLSS5에서 게임을 실행하면 Windows HDR이 켜지고, 게임을 닫으면 다시 꺼집니다.\n클릭하면 이 게임에서 끕니다."
+            : $"Windows HDR: 꺼짐 ({source}).\n클릭하면 BONG DLSS5에서 이 게임을 실행할 때 Windows HDR을 켭니다 (게임을 닫으면 다시 끕니다).";
     }
 
     /// <summary>RES button tooltip that states the current setting for this game.</summary>
@@ -583,8 +584,8 @@ public partial class DetailPanelBuilder
     internal static string ResToggleTooltip(bool active, string source)
     {
         return active
-            ? $"해상도 변경: 켜짐 ({source}).\nRHI에서 게임을 실행하면 디스플레이가 목표 해상도로 전환되고, 게임을 닫으면 원래대로 돌아갑니다.\n클릭하면 이 게임에서 끕니다."
-            : $"해상도 변경: 꺼짐 ({source}).\n클릭하면 RHI에서 이 게임을 실행할 때 목표 해상도로 전환합니다 (게임을 닫으면 원래대로 돌아갑니다).";
+            ? $"해상도 변경: 켜짐 ({source}).\nBONG DLSS5에서 게임을 실행하면 디스플레이가 목표 해상도로 전환되고, 게임을 닫으면 원래대로 돌아갑니다.\n클릭하면 이 게임에서 끕니다."
+            : $"해상도 변경: 꺼짐 ({source}).\n클릭하면 BONG DLSS5에서 이 게임을 실행할 때 목표 해상도로 전환합니다 (게임을 닫으면 원래대로 돌아갑니다).";
     }
 
     /// <summary>Tooltip for the arrow + title of every collapsible detail section header.</summary>

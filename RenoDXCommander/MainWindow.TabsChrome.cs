@@ -57,6 +57,7 @@ public sealed partial class MainWindow
         ApplyTabsChromeCore();
         ApplySpotlightChrome();
         ApplyChromeSizes(); // top bar / game list sizes (the list ones don't apply in Spotlight)
+        SetUpEasyHome(); // BONG DLSS5 one-click home (built once)
         UpdateControllerTimer(); // controller support is Spotlight only
     }
 
@@ -277,6 +278,7 @@ public sealed partial class MainWindow
         right.Children.Add(_checkedText);
         right.Children.Add(refresh);
         right.Children.Add(_updateAllHost);
+        right.Children.Add(MakeEasyHomeToggle()); // BONG DLSS5: simple home <-> full page
         right.Children.Add(_layoutSwitchHost);
         right.Children.Add(help);
         right.Children.Add(settings);
@@ -384,7 +386,7 @@ public sealed partial class MainWindow
         menu.Items.Add(new MenuFlyoutSeparator());
         Add("RenoDX 위키", (s, e) => LinkRenoDxWiki_Click(s, e));
         Add("Luma 위키", (s, e) => LinkLumaWiki_Click(s, e));
-        Add("RHI GitHub", (s, e) => LinkRhiGithub_Click(s, e));
+        Add("BONG DLSS5 GitHub", (s, e) => LinkRhiGithub_Click(s, e));
         Add("ReLimiter GitHub", (s, e) => LinkReLimiterGithub_Click(s, e));
         menu.Items.Add(new MenuFlyoutSeparator());
         Add("패치 노트", (s, e) => PatchNotesLink_Click(s, e));

@@ -69,12 +69,7 @@ public partial class DetailPanelBuilder
         // GITC Uplift replaces the DLSS5 Feeder default where all of Uplift works (64-bit DX11 / DX12 /
         // Vulkan games without DLSS). DLSS games keep ShortFuse / the DX11 Bridge; 32-bit and OpenGL keep Feeder.
         bool upliftApplicable = !is32Bit && (isDx11 || isDx12 || isVulkan);
-        string effectiveMethod = storedMethod ?? (
-            is32Bit                                          ? NrMethodFeeder :
-            card.GraphicsApi == GraphicsApiType.OpenGL       ? NrMethodFeeder :
-            !hasDlss                                         ? (upliftApplicable ? NrMethodUplift : NrMethodFeeder) :
-            (isDx11 || isVulkan)                             ? NrMethodDlss5ToolBridge :
-                                                               NrMethodShortFuse);
+        string effectiveMethod = storedMethod ?? RecommendedNrMethod(card);
 
         // ── Build method combo items (show all, disable inapplicable) ─────────
         var methodItems = new[]
@@ -1425,119 +1420,7 @@ public partial class DetailPanelBuilder
 
             try
             {
-                // Pre-seed PerGameShaderSelection before installing ReShade so the
-                // SyncGameFolder call inside InstallReShadeAsync deploys shaders correctly
-                // instead of wiping them (it reads ShaderModeOverride at call time).
-                if (selKey == NrMethodFeeder)
-                {
-                    var preGameKey = Models.GameKey.From(card.GameName, card.Source ?? "").ToKey();
-                    var preCurrent = _gameNameService.PerGameShaderSelection.TryGetValue(preGameKey, out var preSel)
-                        ? preSel.ToList() : new List<string>();
-                    if (!preCurrent.Contains("DLSS5Feeder", StringComparer.OrdinalIgnoreCase))
-                        preCurrent.Add("DLSS5Feeder");
-                    if (!preCurrent.Contains("LumeniteFX", StringComparer.OrdinalIgnoreCase))
-                        preCurrent.Add("LumeniteFX");
-                    _gameNameService.PerGameShaderSelection[preGameKey] = preCurrent;
-                    _window.ViewModel.SetPerGameShaderMode(card.GameName, "Select", card.Source ?? "");
-                    card.ShaderModeOverride = "Select";
-                }
-
-                // Ensure ReShade is installed first — all NR methods require it
-                if (!card.IsRsInstalled)
-                {
-                    _window.DispatcherQueue?.TryEnqueue(() => installBtn.Content = "ReShade 설치 중...");
-
-                    // For DX9 Feeder: dgVoodoo2 will own d3d9.dll, so ReShade must be dxgi.dll.
-                    // Call InstallReShadeInternalAsync directly with the forced filename instead of
-                    // going through InstallReShadeCommand which uses auto-detection (returns d3d9.dll for DX9).
-                    bool feederDx9 = selKey == NrMethodFeeder
-                        && card.GraphicsApi == GraphicsApiType.DirectX9;
-                    if (feederDx9)
-                        await _window.ViewModel.InstallReShadeInternalAsync(card, "dxgi.dll").ConfigureAwait(false);
-                    else
-                        await _window.ViewModel.InstallReShadeCommand.ExecuteAsync(card).ConfigureAwait(false);
-
-                    // Wait for card to reflect installed state
-                    await Task.Delay(500).ConfigureAwait(false);
-                }
-                else if (selKey == NrMethodFeeder
-                    && (card.DetectedApis.Contains(GraphicsApiType.DirectX9)
-                        || (card.DetectedApis.Count == 0 && card.GraphicsApi == GraphicsApiType.DirectX9))
-                    && card.RsRecord?.InstalledAs?.Equals("d3d9.dll", StringComparison.OrdinalIgnoreCase) == true)
-                {
-                    // ReShade already installed as d3d9.dll (wrong for dgVoodoo) — reinstall as dxgi.dll
-                    _window.DispatcherQueue?.TryEnqueue(() => installBtn.Content = "ReShade 파일 이름 수정 중...");
-                    await _window.ViewModel.InstallReShadeInternalAsync(card, "dxgi.dll").ConfigureAwait(false);
-                    await Task.Delay(300).ConfigureAwait(false);
-                }
-
-                switch (selKey)
-                {
-                    case NrMethodDlss5Tool:
-                        await InstallDlss5ToolAsync(card, installBtn, addonVersionCombo, nrVersionCombo, rdx5Svc, dlssSvc, addonSvc);
-                        break;
-
-                    case NrMethodDlss5ToolBridge:
-                        await InstallDlss5ToolAsync(card, installBtn, addonVersionCombo, nrVersionCombo, rdx5Svc, dlssSvc, addonSvc);
-                        await InstallBridgeAddonAsync(card, installBtn, addonSvc, packVersionCombo);
-                        // Append bridge file to the Dlss5Tool component record
-                        {
-                            var bFiles = Models.RhiInstallManifest.GetComponentFiles(installPath, "Dlss5Tool").ToList();
-                            if (!bFiles.Contains(BridgeDeployFile, StringComparer.OrdinalIgnoreCase))
-                                bFiles.Add(BridgeDeployFile);
-                            Models.RhiInstallManifest.SetComponent(installPath, "Dlss5Tool", bFiles);
-                        }
-                        break;
-
-                    case NrMethodShortFuse:
-                        await InstallShortFuseAsync(card, installBtn, addonVersionCombo, nrVersionCombo, rdx5Svc, dlssSvc);
-                        break;
-
-                    case NrMethodFeeder:
-                        await InstallFeederAddonAsync(card, installBtn, addonSvc, dlssSvc, nrVersionCombo, addonVersionCombo, packVersionCombo);
-                        break;
-
-                    case NrMethodUplift:
-                        await InstallUpliftAsync(card, installBtn, addonVersionCombo, nrVersionCombo, dlssSvc, upliftSvc);
-                        break;
-                }
-
-                // If Cost Scaler preference is On, deploy it now (NR DLL is freshly placed).
-                // Not for GITC Uplift: its NR DLL isn't beside the game exe, where the Cost Scaler works.
-                if (selKey != NrMethodUplift && _window.ViewModel.GetNrCostScalerEnabled(gameName, store))
-                {
-                    var csSvc = App.Services.GetRequiredService<DlssNrCostScalerService>();
-                    if (csSvc.IsStagingReady)
-                        csSvc.Install(installPath);
-                }
-
-                // Persist chosen method
-                _window.ViewModel.SetNrMethodOverride(gameName, selKey, store);
-
-                // Record the active NR method in rhi_install.txt for cross-component reference
-                // (e.g. OptiScaler uninstall uses this to know nvngx_dlssnr.dll is NR-owned)
-                Models.RhiInstallManifest.SetNrMethod(installPath, selKey);
-
-                // Remove conflicting global addons — DLSS5 Tool and ShortFuse both deploy NR addons
-                // that conflict with the NR section. Remove them from the global set so they don't
-                // get re-deployed on every refresh.
-                var globalAddons = _window.ViewModel.Settings.EnabledGlobalAddons;
-                var conflicting  = new[] { "DLSS5 Tool", "ShortFuse DLSS Tool" };
-                bool removedAny  = false;
-                foreach (var c in conflicting)
-                    if (globalAddons.RemoveAll(a => a.Equals(c, StringComparison.OrdinalIgnoreCase)) > 0)
-                        removedAny = true;
-                if (removedAny)
-                {
-                    _window.ViewModel.SaveSettingsPublic();
-                    CrashReporter.Log($"[NeuralRendering.Install] Removed conflicting global addons (DLSS5 Tool / ShortFuse) for '{gameName}'");
-                }
-
-                // Also remove from per-game selection if the game uses one
-                RemoveNrConflictingAddonsFromPerGameSelection(gameName, store, conflicting);
-
-                // Re-deploy addons for this game so stale NR addon files are removed immediately
-                _window.ViewModel.DeployAddonsForCard(gameName);
+                await RunNrInstallCoreAsync(card, selKey, installBtn, addonVersionCombo, nrVersionCombo, packVersionCombo);
             }
             catch (Exception ex)
             {
@@ -1873,7 +1756,7 @@ public partial class DetailPanelBuilder
             bool launchpadPref = _window.ViewModel.GetUpliftLaunchpad(gameName, card.HasDlssUpscaler, store);
             const string launchpadTip =
                 "ReShade 효과인 iMMERSE Launchpad (Marty McFly 제작)의 모션 벡터를 GITC Uplift에 제공합니다. " +
-                "RHI가 Launchpad를 설치하고 Uplift 효과보다 위에서 켭니다.\n\n" +
+                "BONG DLSS5가 Launchpad를 설치하고 Uplift 효과보다 위에서 켭니다.\n\n" +
                 "자체 모션 벡터가 없는 DLSS 미지원 게임에서는 기본적으로 켜집니다. " +
                 "DLSS가 있는 게임은 게임의 모션 벡터를 사용하며, 결과가 이상해 보이면 이 옵션을 켜세요. " +
                 "Launchpad는 성능을 다소 소모합니다.";

@@ -130,6 +130,7 @@ internal sealed partial class DetailLayoutHost
     /// <summary>A section's collapsed-header summary changed (some are filled in later, in the background).</summary>
     internal void SummaryChanged()
     {
+        _window.SchedulePlainTips(); // BONG DLSS5: easy-words tooltips on the newly built section
         if (IsSpotlight) { RefreshTuneTiles(); return; }
         if (_overview?.Visibility == Visibility.Visible) RefreshGlance();
     }
