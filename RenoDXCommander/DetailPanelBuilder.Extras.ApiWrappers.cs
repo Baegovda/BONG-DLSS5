@@ -51,7 +51,7 @@ public partial class DetailPanelBuilder
         // Col 1 — status
         var statusBlock = new TextBlock
         {
-            Text = card.DxvkStatusText,
+            Text = KoreanBuild.Tr(card.DxvkStatusText),
             FontSize = 12,
             Foreground = UIFactory.GetBrush(card.DxvkStatusColor),
             VerticalAlignment = VerticalAlignment.Center,
@@ -113,7 +113,7 @@ public partial class DetailPanelBuilder
             Opacity = isDisabled ? 0.35 : 1.0,
             IsHitTestVisible = !isDisabled,
         };
-        installBtn.Content = card.DxvkActionLabel;
+        installBtn.Content = KoreanBuild.Tr(card.DxvkActionLabel);
         installBtn.Click += (s, e) => _window.InstallDxvkButton_Click(s, e);
         Grid.SetColumn(installBtn, 3);
         row.Children.Add(installBtn);
@@ -267,7 +267,7 @@ public partial class DetailPanelBuilder
         {
             if (string.IsNullOrEmpty(installPath) || manifest?.DgVoodooVersions == null) return;
             installBtn.IsEnabled = false;
-            installBtn.Content   = "Installing...";
+            installBtn.Content   = KoreanBuild.Tr("Installing...");
             try
             {
                 // Pick version: prefer stored per-game override, then latest from manifest
@@ -330,14 +330,14 @@ public partial class DetailPanelBuilder
                 }
                 else
                 {
-                    installBtn.Content = "❌ Deploy failed";
+                    installBtn.Content = KoreanBuild.Tr("❌ Deploy failed");
                     installBtn.IsEnabled = true;
                 }
             }
             catch (Exception ex)
             {
                 CrashReporter.Log($"[BuildDgVoodooRow] Install failed for '{gameName}' — {ex.Message}");
-                installBtn.Content   = "❌ Failed";
+                installBtn.Content   = KoreanBuild.Tr("❌ Failed");
                 installBtn.IsEnabled = true;
             }
         };

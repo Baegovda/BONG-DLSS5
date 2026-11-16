@@ -286,7 +286,7 @@ public partial class DetailPanelBuilder
         // Col 1 — status
         var statusBlock = new TextBlock
         {
-            Text = card.OsStatusText,
+            Text = KoreanBuild.Tr(card.OsStatusText),
             FontSize = 12,
             Foreground = UIFactory.GetBrush(card.OsStatusColor),
             VerticalAlignment = VerticalAlignment.Center,

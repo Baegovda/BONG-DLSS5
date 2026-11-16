@@ -247,12 +247,18 @@ internal sealed partial class DetailLayoutHost
     /// don't start with an action verb (warnings such as "RE Framework required") are kept whole.
     /// </summary>
     internal static string ShortAction(string text)
+        => KoreanBuild.Tr(ShortActionEn(KoreanBuild.En(text)));
+
+    /// <summary>ShortAction on the English label (Korean build: comparisons stay in English).</summary>
+    internal static string ShortActionEn(string text)
     {
         int i = 0;
         while (i < text.Length && !char.IsLetterOrDigit(text[i])) i++;
         var t = i < text.Length ? text[i..].Trim() : text.Trim();
         var first = t.Split(' ', 2)[0];
-        return ActionVerbs.Any(v => string.Equals(v, first, StringComparison.OrdinalIgnoreCase)) ? first : t;
+        if (ActionVerbs.Any(v => string.Equals(v, first, StringComparison.OrdinalIgnoreCase))) return first;
+        // Labels written in Korean put the verb last ("ReShade 재설치")
+        return KoreanBuild.KoreanActionWord(t) ?? t;
     }
 
     // ── Card descriptions ─────────────────────────────────────────────────────

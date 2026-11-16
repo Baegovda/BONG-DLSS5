@@ -193,7 +193,7 @@ public partial class DetailPanelBuilder
             catch (Exception ex)
             {
                 CrashReporter.Log($"[BuildMfgAdaUnlockRow] Install failed — {ex.Message}");
-                _window.DispatcherQueue?.TryEnqueue(() => { installBtn.IsEnabled = true; installBtn.Content = btnLabel; });
+                _window.DispatcherQueue?.TryEnqueue(() => { installBtn.IsEnabled = true; installBtn.Content = KoreanBuild.Tr(btnLabel); });
             }
         };
         Grid.SetColumn(installBtn, 3);

@@ -38,6 +38,7 @@ public partial class DetailPanelBuilder
     /// </summary>
     private static object WithInfoArrow(string label, bool hasInfo, bool isUpdate, Button? btn = null)
     {
+        label = KoreanBuild.Tr(label);
         if (!hasInfo || isUpdate)
         {
             // Reset to default centered alignment when no arrow
@@ -79,7 +80,8 @@ public partial class DetailPanelBuilder
     private static void SetComponentStatusTooltip(TextBlock status, bool installed, bool update, string? clickTarget)
     {
         string? tip;
-        if (status.Text.StartsWith("Installing", StringComparison.Ordinal))
+        var statusEn = KoreanBuild.En(status.Text);
+        if (statusEn.StartsWith("Installing", StringComparison.Ordinal) || status.Text.StartsWith("설치 중", StringComparison.Ordinal))
             tip = null;
         else if (update)
             tip = clickTarget != null
@@ -89,7 +91,7 @@ public partial class DetailPanelBuilder
             tip = clickTarget != null
                 ? $"설치된 버전. 클릭하면 {clickTarget}을(를) 엽니다."
                 : "설치된 버전.";
-        else if (status.Text == "Ready")
+        else if (statusEn == "Ready")
             tip = "설치 안 됨.";
         else
             tip = null;
@@ -149,7 +151,7 @@ public partial class DetailPanelBuilder
         _window.DetailRefRow.Visibility = card.RefRowVisibility;
         if (card.RefRowVisibility == Visibility.Visible)
         {
-            _window.DetailRefStatus.Text = card.RefStatusText;
+            _window.DetailRefStatus.Text = KoreanBuild.Tr(card.RefStatusText);
             _window.DetailRefStatus.Foreground = UIFactory.GetBrush(card.RefStatusColor);
             _window.DetailRefStatus.TextDecorations = card.IsRefInstalled
                 ? Windows.UI.Text.TextDecorations.Underline
@@ -217,7 +219,7 @@ public partial class DetailPanelBuilder
             else
             {
                 // Standard DX ReShade install path
-                _window.DetailRsStatus.Text = card.RsStatusText;
+                _window.DetailRsStatus.Text = KoreanBuild.Tr(card.RsStatusText);
                 _window.DetailRsStatus.Foreground = UIFactory.GetBrush(card.RsStatusColor);
                 _window.DetailRsStatus.TextDecorations = card.IsRsInstalled
                     ? Windows.UI.Text.TextDecorations.Underline
@@ -272,7 +274,7 @@ public partial class DetailPanelBuilder
             _window.DetailUlLabel.TextDecorations = ulStrike;
             _window.DetailUlLabel.Opacity = ulGreyed ? 0.35 : 1.0;
 
-            _window.DetailUlStatus.Text = card.UlStatusText;
+            _window.DetailUlStatus.Text = KoreanBuild.Tr(card.UlStatusText);
             _window.DetailUlStatus.Foreground = UIFactory.GetBrush(card.UlStatusColor);
             _window.DetailUlStatus.TextDecorations = card.IsUlInstalled
                 ? Windows.UI.Text.TextDecorations.Underline
@@ -288,7 +290,7 @@ public partial class DetailPanelBuilder
             var ulLabel = WithInfoArrow(card.UlActionLabel, HasRealInfoContent(card, AddonType.ReLimiter), card.UlStatus == GameStatus.UpdateAvailable, _window.DetailUlInstallBtn);
             if (card.IsDcInstalled || card.UseNormalReShade)
             {
-                _window.DetailUlInstallBtn.Content = new TextBlock { Text = card.UlActionLabel, TextDecorations = Windows.UI.Text.TextDecorations.Strikethrough, HorizontalAlignment = HorizontalAlignment.Center };
+                _window.DetailUlInstallBtn.Content = new TextBlock { Text = KoreanBuild.Tr(card.UlActionLabel), TextDecorations = Windows.UI.Text.TextDecorations.Strikethrough, HorizontalAlignment = HorizontalAlignment.Center };
                 _window.DetailUlInstallBtn.HorizontalContentAlignment = HorizontalAlignment.Center;
             }
             else
@@ -327,7 +329,7 @@ public partial class DetailPanelBuilder
             _window.DetailDcLabel.TextDecorations = dcStrike;
             _window.DetailDcLabel.Opacity = dcGreyed ? 0.35 : 1.0;
 
-            _window.DetailDcStatus.Text = card.DcStatusText;
+            _window.DetailDcStatus.Text = KoreanBuild.Tr(card.DcStatusText);
             _window.DetailDcStatus.Foreground = UIFactory.GetBrush(card.DcStatusColor);
             _window.DetailDcStatus.TextDecorations = card.IsDcInstalled
                 ? Windows.UI.Text.TextDecorations.Underline
@@ -341,7 +343,7 @@ public partial class DetailPanelBuilder
             var dcLabel = WithInfoArrow(card.DcActionLabel, HasRealInfoContent(card, AddonType.DisplayCommander), card.DcStatus == GameStatus.UpdateAvailable, _window.DetailDcInstallBtn);
             if (card.IsUlInstalled || card.UseNormalReShade)
             {
-                _window.DetailDcInstallBtn.Content = new TextBlock { Text = card.DcActionLabel, TextDecorations = Windows.UI.Text.TextDecorations.Strikethrough, HorizontalAlignment = HorizontalAlignment.Center };
+                _window.DetailDcInstallBtn.Content = new TextBlock { Text = KoreanBuild.Tr(card.DcActionLabel), TextDecorations = Windows.UI.Text.TextDecorations.Strikethrough, HorizontalAlignment = HorizontalAlignment.Center };
                 _window.DetailDcInstallBtn.HorizontalContentAlignment = HorizontalAlignment.Center;
             }
             else
@@ -375,7 +377,7 @@ public partial class DetailPanelBuilder
         if (card.DofFixRowVisibility == Visibility.Visible)
         {
             bool dofGreyed = !card.IsRsInstalled && !card.ExcludeFromUpdateAllReShade;
-            _window.DetailDofFixStatus.Text = card.DofFixStatusText;
+            _window.DetailDofFixStatus.Text = KoreanBuild.Tr(card.DofFixStatusText);
             _window.DetailDofFixStatus.Foreground = UIFactory.GetBrush(card.DofFixStatusColor);
             _window.DetailDofFixStatus.TextDecorations = card.IsDofFixInstalled
                 ? Windows.UI.Text.TextDecorations.Underline
@@ -440,7 +442,7 @@ public partial class DetailPanelBuilder
                     card.IsRdxInstalled ? "모드 페이지" : null);
                 var extLabel = WithInfoArrow(card.ExternalDisplayLabel, HasRealInfoContent(card, AddonType.RenoDX), card.Status == GameStatus.UpdateAvailable, _window.DetailRdxInstallBtn);
                 _window.DetailRdxInstallBtn.Content = card.UseNormalReShade
-                    ? (object)new TextBlock { Text = card.ExternalDisplayLabel, TextDecorations = Windows.UI.Text.TextDecorations.Strikethrough }
+                    ? (object)new TextBlock { Text = KoreanBuild.Tr(card.ExternalDisplayLabel), TextDecorations = Windows.UI.Text.TextDecorations.Strikethrough }
                     : extLabel;
                 _window.DetailRdxInstallBtn.IsEnabled = card.UseNormalReShade ? false : true;
                 var isNexusUpdate = card.Status == GameStatus.UpdateAvailable;
@@ -467,7 +469,7 @@ public partial class DetailPanelBuilder
                 bool rdxModInstalled = card.Status is GameStatus.Installed or GameStatus.UpdateAvailable;
                 _window.DetailRdxLabel.Text = !rdxModInstalled && card.HdrToggleName is { } hdrName ? hdrName : "RenoDX HDR";
 
-                _window.DetailRdxStatus.Text = card.RdxStatusText;
+                _window.DetailRdxStatus.Text = KoreanBuild.Tr(card.RdxStatusText);
                 _window.DetailRdxStatus.Foreground = UIFactory.GetBrush(card.RdxStatusColor);
                 _window.DetailRdxStatus.TextDecorations = card.UseNormalReShade
                     ? Windows.UI.Text.TextDecorations.Strikethrough
@@ -480,7 +482,7 @@ public partial class DetailPanelBuilder
                     card.IsRdxInstalled ? "모드 페이지" : null);
                 var rdxLabel = WithInfoArrow(card.InstallActionLabel, HasRealInfoContent(card, AddonType.RenoDX), card.Status == GameStatus.UpdateAvailable, _window.DetailRdxInstallBtn);
                 _window.DetailRdxInstallBtn.Content = card.UseNormalReShade
-                    ? (object)new TextBlock { Text = card.InstallActionLabel, TextDecorations = Windows.UI.Text.TextDecorations.Strikethrough }
+                    ? (object)new TextBlock { Text = KoreanBuild.Tr(card.InstallActionLabel), TextDecorations = Windows.UI.Text.TextDecorations.Strikethrough }
                     : rdxLabel;
                 _window.DetailRdxInstallBtn.IsEnabled = card.UseNormalReShade ? false : card.CanInstall;
                 _window.DetailRdxInstallBtn.Background = UIFactory.GetBrush(card.InstallBtnBackground);
@@ -505,7 +507,7 @@ public partial class DetailPanelBuilder
         if (hasLumaRow)
         {
             _window.DetailLumaRow.Visibility = Visibility.Visible;
-            _window.DetailLumaStatus.Text = card.LumaStatusText;
+            _window.DetailLumaStatus.Text = KoreanBuild.Tr(card.LumaStatusText);
             _window.DetailLumaStatus.Foreground = UIFactory.GetBrush(card.LumaStatusColor);
             _window.DetailLumaStatus.TextDecorations = card.IsLumaInstalled
                 ? Windows.UI.Text.TextDecorations.Underline

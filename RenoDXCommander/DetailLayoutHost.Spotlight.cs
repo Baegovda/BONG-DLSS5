@@ -531,14 +531,14 @@ internal sealed partial class DetailLayoutHost
             }
             var r = installed ?? visible[0];
             _name.Text = Name(r);
-            var status = (r.Status.Text ?? "").Replace("\r", "").Replace('\n', ' ').Trim();
+            var status = KoreanBuild.En((r.Status.Text ?? "").Trim()).Replace("\r", "").Replace('\n', ' ').Trim();
             var tone = TabsTheme.ToneOf(r.Status.Foreground);
             bool notInstalled = status.Length == 0 || status == "—"
                 || string.Equals(status, "Ready", StringComparison.OrdinalIgnoreCase);
             _status.Text = notInstalled ? "설치 안 됨"
-                : tone != TabsTheme.Tone.Purple ? status
+                : tone != TabsTheme.Tone.Purple ? KoreanBuild.Tr(status)
                 : status.StartsWith("Update", StringComparison.OrdinalIgnoreCase) ? "업데이트 있음"
-                : $"업데이트 있음 · {status}";
+                : $"업데이트 있음 · {KoreanBuild.Tr(status)}";
             _dot.Fill = TabsTheme.B(notInstalled ? "#3A4458" : tone switch
             {
                 TabsTheme.Tone.Purple => "#B898E8",

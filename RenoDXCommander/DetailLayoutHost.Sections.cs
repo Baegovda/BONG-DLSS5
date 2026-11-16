@@ -158,7 +158,8 @@ internal sealed partial class DetailLayoutHost
         if (Col(1) is TextBlock statusText && !string.IsNullOrWhiteSpace(statusText.Text))
         {
             bool unavailable = false;
-            if (string.Equals(statusText.Text.Trim(), "Ready", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(KoreanBuild.En(statusText.Text.Trim()), "Ready", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(KoreanBuild.En(statusText.Text).Trim(), "Ready", StringComparison.OrdinalIgnoreCase))
             {
                 unavailable = blockedReason != null;
                 statusText.Text = unavailable ? "사용 불가" : "설치 안 됨";
@@ -203,7 +204,8 @@ internal sealed partial class DetailLayoutHost
     /// <summary>True for a normal button label ("Install", "↺ Reinstall X", "Installing…").</summary>
     private static bool IsActionText(string text)
     {
-        var first = ShortAction(text).Split(' ', 2)[0].TrimEnd('…', '.');
+        if (KoreanBuild.KoreanActionWord(text) != null) return true;
+        var first = ShortActionEn(KoreanBuild.En(text)).Split(' ', 2)[0].TrimEnd('…', '.');
         if (first.Length == 0) return true;
         return ActionVerbs.Any(v => first.Equals(v, StringComparison.OrdinalIgnoreCase)
                                  || first.Equals(v.TrimEnd('e') + "ing", StringComparison.OrdinalIgnoreCase))
@@ -213,14 +215,14 @@ internal sealed partial class DetailLayoutHost
     /// <summary>"Installed via OptiScaler" → a short sentence saying why the button is off.</summary>
     private static string BlockedSentence(string reason)
     {
-        var r = reason.Trim().TrimEnd('.');
+        var r = KoreanBuild.En(reason.Trim()).TrimEnd('.');
         if (r.EndsWith("via OptiScaler", StringComparison.OrdinalIgnoreCase))
             return "필요 없음: OptiScaler가 이미 이 게임에 제공하고 있습니다.";
         if (r.EndsWith(" required", StringComparison.OrdinalIgnoreCase))
             return $"먼저 {r[..^" required".Length]}을(를) 설치해야 합니다.";
         if (r.EndsWith(" installed", StringComparison.OrdinalIgnoreCase))
             return $"{r[..^" installed".Length]}이(가) 설치된 동안에는 사용할 수 없습니다.";
-        return r + ".";
+        return KoreanBuild.Tr(r) + ".";
     }
 
     private static string FirstSentence(string text)

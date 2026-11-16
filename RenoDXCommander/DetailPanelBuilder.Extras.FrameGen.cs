@@ -171,7 +171,7 @@ public partial class DetailPanelBuilder
         {
             installBtn.IsEnabled = false;
             installBtn.Opacity   = 0.35;
-            installBtn.Content   = "Uninstall MFG Unlock first";
+            installBtn.Content   = KoreanBuild.Tr("Uninstall MFG Unlock first");
             ToolTipService.SetToolTip(installBtn, "MFG Unlock(애드온)이 설치되어 있어 충돌합니다. 먼저 애드온 선택기에서 제거하세요.");
         }
         else
@@ -194,7 +194,7 @@ public partial class DetailPanelBuilder
             if (chosen == null) return;
 
             installBtn.IsEnabled = false;
-            installBtn.Content   = "Installing...";
+            installBtn.Content   = KoreanBuild.Tr("Installing...");
             try
             {
                 // Only one proxy may be in the folder: if reinstalling under a different name,
@@ -217,14 +217,14 @@ public partial class DetailPanelBuilder
                 }
                 else
                 {
-                    installBtn.Content   = "Download failed — try again";
+                    installBtn.Content   = KoreanBuild.Tr("Download failed — try again");
                     installBtn.IsEnabled = true;
                 }
             }
             catch (Exception ex)
             {
                 CrashReporter.Log($"[BuildDlssg2030Row] Install failed — {ex.Message}");
-                installBtn.Content   = "Install failed";
+                installBtn.Content   = KoreanBuild.Tr("Install failed");
                 installBtn.IsEnabled = true;
             }
         };
@@ -465,7 +465,7 @@ public partial class DetailPanelBuilder
         {
             installBtn.IsEnabled = false;
             installBtn.Opacity   = 0.35;
-            installBtn.Content   = "Uninstall MFG Unlock first";
+            installBtn.Content   = KoreanBuild.Tr("Uninstall MFG Unlock first");
             ToolTipService.SetToolTip(installBtn, "MFG Unlock(애드온)이 이미 설치되어 있어 Universal MFG Unlocker와 충돌합니다. 먼저 애드온 선택기에서 제거하세요.");
         }
         else
@@ -499,7 +499,7 @@ public partial class DetailPanelBuilder
             if ((liveInstalled && Rtx40MfgService.IsHsfModsInstall(liveDllName)) || (hasHsf && card.Is32Bit))
             {
                 installBtn.IsEnabled = false;
-                installBtn.Content   = "Installing...";
+                installBtn.Content   = KoreanBuild.Tr("Installing...");
                 var hsfError = await vm.InstallMfgForHsfAsync(card, null);
                 if (hsfError != null) CrashReporter.Log($"[BuildRtx40MfgRow] HSF mods reinstall failed — {hsfError}");
                 RequestExtrasRebuild(card);
@@ -523,7 +523,7 @@ public partial class DetailPanelBuilder
             }
 
             installBtn.IsEnabled = false;
-            installBtn.Content   = "Installing...";
+            installBtn.Content   = KoreanBuild.Tr("Installing...");
             try
             {
                 // Proxy → plugin: move it so the old proxy name is remembered for when OptiScaler is removed
@@ -556,14 +556,14 @@ public partial class DetailPanelBuilder
                 }
                 else
                 {
-                    installBtn.Content   = "Download failed — try again";
+                    installBtn.Content   = KoreanBuild.Tr("Download failed — try again");
                     installBtn.IsEnabled = true;
                 }
             }
             catch (Exception ex)
             {
                 CrashReporter.Log($"[BuildRtx40MfgRow] Install failed — {ex.Message}");
-                installBtn.Content   = "Install failed";
+                installBtn.Content   = KoreanBuild.Tr("Install failed");
                 installBtn.IsEnabled = true;
             }
         };

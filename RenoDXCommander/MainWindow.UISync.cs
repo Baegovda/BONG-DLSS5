@@ -101,7 +101,7 @@ public sealed partial class MainWindow
                     break;
                 case nameof(ViewModel.StatusText):
                 case nameof(ViewModel.SubStatusText):
-                    LoadingTitle.Text    = ViewModel.StatusText;
+                    LoadingTitle.Text    = KoreanBuild.Status(ViewModel.StatusText);
                     LoadingSubtitle.Text = ViewModel.SubStatusText;
                     RefreshStatusBar();
                     break;

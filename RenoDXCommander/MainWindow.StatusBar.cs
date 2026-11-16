@@ -65,7 +65,7 @@ public sealed partial class MainWindow
 
         var vm = ViewModel;
         if (vm.IsLoading)
-            return vm.StatusText + (string.IsNullOrEmpty(vm.SubStatusText) ? "" : $"  —  {vm.SubStatusText}");
+            return KoreanBuild.Status(vm.StatusText) + (string.IsNullOrEmpty(vm.SubStatusText) ? "" : $"  —  {vm.SubStatusText}");
 
         var activity = vm.CurrentActivityText;
         if (!string.IsNullOrEmpty(activity)) return activity;
@@ -73,7 +73,7 @@ public sealed partial class MainWindow
         // Problems stay visible until the next successful scan
         if (vm.StatusText.Contains("offline mode", StringComparison.OrdinalIgnoreCase)
             || vm.StatusText.StartsWith("Error", StringComparison.OrdinalIgnoreCase))
-            return vm.StatusText + (string.IsNullOrEmpty(vm.SubStatusText) ? "" : $"  —  {vm.SubStatusText}");
+            return KoreanBuild.Status(vm.StatusText) + (string.IsNullOrEmpty(vm.SubStatusText) ? "" : $"  —  {vm.SubStatusText}");
 
         return FormatIdleStatus(vm.Settings.BackgroundUpdateChecks, vm.Settings.LastUpdateCheckUtc,
             vm.NextUpdateCheckUtc, nowUtc);

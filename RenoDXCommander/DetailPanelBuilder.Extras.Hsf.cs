@@ -110,7 +110,7 @@ public partial class DetailPanelBuilder
         {
             installBtn.IsEnabled = false;
             installBtn.Opacity   = 0.35;
-            installBtn.Content   = b.Short;
+            installBtn.Content   = KoreanBuild.Tr(b.Short);
             // Disabled buttons show no tooltip: the label carries the reason too
             ToolTipService.SetToolTip(label, $"{HsfTooltip}\n\n{b.Long}");
         }
@@ -133,7 +133,7 @@ public partial class DetailPanelBuilder
                 if (mfg.Cancelled) return;
 
                 installBtn.IsEnabled = false;
-                installBtn.Content   = "Installing...";
+                installBtn.Content   = KoreanBuild.Tr("Installing...");
                 // Reinstall keeps the game's LaunchPad choice; a new install starts with it on
                 bool launchpad = !HsfService.IsRhiInstalled(installPath) || HsfService.ReadMarker(installPath).LaunchpadOn;
                 var error = await _window.ViewModel.InstallHsfAsync(card, launchpad);
@@ -148,7 +148,7 @@ public partial class DetailPanelBuilder
                     RequestExtrasRebuild(card);
                     return;
                 }
-                installBtn.Content   = "Install failed";
+                installBtn.Content   = KoreanBuild.Tr("Install failed");
                 installBtn.IsEnabled = true;
                 statusBlock.Text = "Failed";
                 statusBlock.Foreground = UIFactory.Brush(ResourceKeys.AccentRedBrush);
@@ -158,7 +158,7 @@ public partial class DetailPanelBuilder
             catch (Exception ex)
             {
                 CrashReporter.Log($"[BuildHsfRow] Install failed — {ex.Message}");
-                installBtn.Content   = "Install failed";
+                installBtn.Content   = KoreanBuild.Tr("Install failed");
                 installBtn.IsEnabled = true;
             }
         };
