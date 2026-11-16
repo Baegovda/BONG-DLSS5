@@ -33,7 +33,7 @@ internal static class DisplayModeEditor
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or InvalidOperationException)
             {
                 CrashReporter.Log($"[DisplayModeEditor] {item.Key} save failed — {ex.Message}");
-                report($"Couldn't save {item.Label}: {ex.Message}", true);
+                report($"{item.Label}을(를) 저장하지 못했습니다: {ex.Message}", true);
             }
         }
 
@@ -68,10 +68,10 @@ internal static class DisplayModeEditor
             {
                 bool reshade = item.Kind == DisplayModeValueKind.ReShadeKey;
                 string Shown() => current == null ? "" : item.Format(current);
-                var box = CogDialog.MakeTextBox(Shown(), unsetLabel + " - click, then press a key");
+                var box = CogDialog.MakeTextBox(Shown(), unsetLabel + " - 클릭한 후 키를 누르세요");
                 box.IsReadOnly = true;
-                box.GotFocus += (_, _) => box.PlaceholderText = "Press a key...";
-                box.LostFocus += (_, _) => { box.PlaceholderText = unsetLabel + " - click, then press a key"; box.Text = Shown(); };
+                box.GotFocus += (_, _) => box.PlaceholderText = "키를 누르세요...";
+                box.LostFocus += (_, _) => { box.PlaceholderText = unsetLabel + " - 클릭한 후 키를 누르세요"; box.Text = Shown(); };
                 box.KeyDown += async (_, ev) =>
                 {
                     var key = ev.Key;
@@ -92,7 +92,7 @@ internal static class DisplayModeEditor
                     box.Text = Shown();
                 };
                 Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(box, item.Label);
-                var clear = CogDialog.StyledButton("Clear", CogButtonKind.Secondary, compact: true);
+                var clear = CogDialog.StyledButton("지우기", CogButtonKind.Secondary, compact: true);
                 ToolTipService.SetToolTip(clear, unsetLabel);
                 clear.Click += async (_, _) => { await Save(null); box.Text = Shown(); };
                 return CogDialog.Inline(box, clear);
@@ -103,13 +103,13 @@ internal static class DisplayModeEditor
                 string placeholder = item.Kind switch
                 {
                     DisplayModeValueKind.Number or DisplayModeValueKind.Decimal =>
-                        unsetLabel + (item.AllowZero ? $" ({item.Min:0}-{item.Max:0}, 0 = off)" : $" ({item.Min:0}-{item.Max:0})"),
+                        unsetLabel + (item.AllowZero ? $" ({item.Min:0}-{item.Max:0}, 0 = 꺼짐)" : $" ({item.Min:0}-{item.Max:0})"),
                     _ => unsetLabel,
                 };
                 var box = CogDialog.MakeTextBox(current ?? "", placeholder);
                 Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(box, item.Label);
-                var setBtn = CogDialog.StyledButton("Set", CogButtonKind.Secondary, compact: true);
-                var clear = CogDialog.StyledButton("Clear", CogButtonKind.Secondary, compact: true);
+                var setBtn = CogDialog.StyledButton("설정", CogButtonKind.Secondary, compact: true);
+                var clear = CogDialog.StyledButton("지우기", CogButtonKind.Secondary, compact: true);
                 ToolTipService.SetToolTip(clear, unsetLabel);
 
                 async Task SetFromBox()
@@ -118,7 +118,7 @@ internal static class DisplayModeEditor
                     if (item.Kind == DisplayModeValueKind.Text)
                     {
                         // Launch arguments may be empty on purpose (no arguments in this mode)
-                        if (text.Trim().Length == 0 && item.Key != DisplayModeItemKeys.LaunchArgs) { report($"Enter a value for {item.Label}, or press Clear.", true); return; }
+                        if (text.Trim().Length == 0 && item.Key != DisplayModeItemKeys.LaunchArgs) { report($"{item.Label} 값을 입력하거나 지우기를 누르세요.", true); return; }
                         await Save(text.Trim());
                         return;
                     }
@@ -126,8 +126,8 @@ internal static class DisplayModeEditor
                     if (norm == null)
                     {
                         report(item.AllowZero
-                            ? $"Enter a number from {item.Min:0} to {item.Max:0} (0 = off)."
-                            : $"Enter a number from {item.Min:0} to {item.Max:0}.", true);
+                            ? $"{item.Min:0}~{item.Max:0} 사이의 숫자를 입력하세요(0 = 꺼짐)."
+                            : $"{item.Min:0}~{item.Max:0} 사이의 숫자를 입력하세요.", true);
                         return;
                     }
                     box.Text = norm;

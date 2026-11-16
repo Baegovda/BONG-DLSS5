@@ -51,7 +51,7 @@ public static class UpdateInclusionHelper
             });
             summaryTb.Inlines.Add(new Microsoft.UI.Xaml.Documents.Run
             {
-                Text = isOn ? "On" : "Off",
+                Text = isOn ? "켜짐" : "꺼짐",
                 Foreground = UIFactory.Brush(isOn ? ResourceKeys.AccentGreenBrush : ResourceKeys.AccentRedBrush),
             });
             if (i < items.Count - 1)
@@ -87,12 +87,12 @@ public static class UpdateInclusionHelper
 
         RefreshSummary(summaryText, viewModel, gameName, isREEngineGame, isDxvkEnabled, store);
         ToolTipService.SetToolTip(summaryText,
-            "Components Update All updates for this game. Components switched off in Settings show Off for every game.\n"
+            "이 게임에서 모두 업데이트가 업데이트하는 구성 요소입니다. 설정에서 끈 구성 요소는 모든 게임에서 꺼짐으로 표시됩니다.\n"
             + "RS = ReShade, RDX = RenoDX, RL = ReLimiter, DC = Display Commander, OS = OptiScaler, REF = RE Framework.");
 
         var button = new Button
         {
-            Content = "Choose components...",
+            Content = "구성 요소 선택...",
             Background = UIFactory.Brush(ResourceKeys.AccentBlueBgBrush),
             Foreground = UIFactory.Brush(ResourceKeys.AccentBlueBrush),
             BorderBrush = UIFactory.Brush(ResourceKeys.AccentBlueBorderBrush),
@@ -126,7 +126,7 @@ public static class UpdateInclusionHelper
                 : null;
 
             var checkPanel = new StackPanel { Spacing = 0 };
-            checkPanel.Children.Add(new TextBlock { Text = "Include this game in Update All for:", FontSize = 12, Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush), Margin = new Thickness(0, 0, 0, 8) });
+            checkPanel.Children.Add(new TextBlock { Text = "모두 업데이트에 이 게임을 포함할 구성 요소:", FontSize = 12, Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush), Margin = new Thickness(0, 0, 0, 8) });
             checkPanel.Children.Add(rsCheck);
             checkPanel.Children.Add(rdxCheck);
             checkPanel.Children.Add(ulCheck);
@@ -137,10 +137,10 @@ public static class UpdateInclusionHelper
 
             var dialog = new ContentDialog
             {
-                Title = "Update Inclusion",
+                Title = "업데이트 포함",
                 Content = checkPanel,
-                PrimaryButtonText = "Save",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "저장",
+                CloseButtonText = "취소",
                 XamlRoot = effectiveRoot,
                 RequestedTheme = ElementTheme.Dark,
             };

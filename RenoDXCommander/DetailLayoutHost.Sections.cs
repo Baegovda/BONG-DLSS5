@@ -70,7 +70,7 @@ internal sealed partial class DetailLayoutHost
         body.Children.Clear();
         body.Spacing = 20;
 
-        string title = "Loaders and upscalers";
+        string title = "로더 및 업스케일러";
         var list = new StackPanel();
         var rows = new List<Border>();
 
@@ -158,10 +158,11 @@ internal sealed partial class DetailLayoutHost
         if (Col(1) is TextBlock statusText && !string.IsNullOrWhiteSpace(statusText.Text))
         {
             bool unavailable = false;
-            if (string.Equals(statusText.Text.Trim(), "Ready", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(KoreanBuild.En(statusText.Text.Trim()), "Ready", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(KoreanBuild.En(statusText.Text).Trim(), "Ready", StringComparison.OrdinalIgnoreCase))
             {
                 unavailable = blockedReason != null;
-                statusText.Text = unavailable ? "Unavailable" : "Not installed";
+                statusText.Text = unavailable ? "사용 불가" : "설치 안 됨";
             }
             Put(MakeStatusPill(statusText, unavailable), 1, HorizontalAlignment.Right);
         }
@@ -183,7 +184,7 @@ internal sealed partial class DetailLayoutHost
             {
                 StyleMainButton(mb);
                 mb.HorizontalAlignment = HorizontalAlignment.Stretch;
-                if (blockedReason != null) mb.Content = "Install";
+                if (blockedReason != null) mb.Content = "설치";
             }
             Put(main, 2);
         }
@@ -203,7 +204,8 @@ internal sealed partial class DetailLayoutHost
     /// <summary>True for a normal button label ("Install", "↺ Reinstall X", "Installing…").</summary>
     private static bool IsActionText(string text)
     {
-        var first = ShortAction(text).Split(' ', 2)[0].TrimEnd('…', '.');
+        if (KoreanBuild.KoreanActionWord(text) != null) return true;
+        var first = ShortActionEn(KoreanBuild.En(text)).Split(' ', 2)[0].TrimEnd('…', '.');
         if (first.Length == 0) return true;
         return ActionVerbs.Any(v => first.Equals(v, StringComparison.OrdinalIgnoreCase)
                                  || first.Equals(v.TrimEnd('e') + "ing", StringComparison.OrdinalIgnoreCase))
@@ -213,14 +215,14 @@ internal sealed partial class DetailLayoutHost
     /// <summary>"Installed via OptiScaler" → a short sentence saying why the button is off.</summary>
     private static string BlockedSentence(string reason)
     {
-        var r = reason.Trim().TrimEnd('.');
+        var r = KoreanBuild.En(reason.Trim()).TrimEnd('.');
         if (r.EndsWith("via OptiScaler", StringComparison.OrdinalIgnoreCase))
-            return "Not needed: OptiScaler already provides this for the game.";
+            return "필요 없음: OptiScaler가 이미 이 게임에 제공하고 있습니다.";
         if (r.EndsWith(" required", StringComparison.OrdinalIgnoreCase))
-            return $"Needs {r[..^" required".Length]} installed first.";
+            return $"먼저 {r[..^" required".Length]}을(를) 설치해야 합니다.";
         if (r.EndsWith(" installed", StringComparison.OrdinalIgnoreCase))
-            return $"Can't be used while {r[..^" installed".Length]} is installed.";
-        return r + ".";
+            return $"{r[..^" installed".Length]}이(가) 설치된 동안에는 사용할 수 없습니다.";
+        return KoreanBuild.Tr(r) + ".";
     }
 
     private static string FirstSentence(string text)
@@ -425,7 +427,7 @@ internal sealed partial class DetailLayoutHost
         if (!string.IsNullOrEmpty(driverVersion))
         {
             version = new TextBlock { FontSize = 12, Foreground = TabsTheme.B(TabsTheme.TextSecondary), VerticalAlignment = VerticalAlignment.Center };
-            version.Inlines.Add(new Run { Text = "Driver " });
+            version.Inlines.Add(new Run { Text = "드라이버 " });
             version.Inlines.Add(new Run { Text = driverVersion, Foreground = TabsTheme.B(TabsTheme.Value) });
         }
 
@@ -458,14 +460,14 @@ internal sealed partial class DetailLayoutHost
         }
         if (foot.Children.Count > 0) content.Children.Add(foot);
 
-        return TabsTheme.TitledCard("Driver Settings", content, version);
+        return TabsTheme.TitledCard("드라이버 설정", content, version);
     }
 
     /// <summary>Classic's column titles, with "Other" named after what it holds.</summary>
     private static string DriverGroupTitle(string group) => group switch
     {
-        _ when group.Equals("VSync", StringComparison.OrdinalIgnoreCase) => "VSync and latency",
-        _ when group.Equals("Other", StringComparison.OrdinalIgnoreCase) => "Power, G-Sync and FPS",
+        _ when group.Equals("VSync", StringComparison.OrdinalIgnoreCase) => "VSync 및 지연 시간",
+        _ when group.Equals("Other", StringComparison.OrdinalIgnoreCase) => "전원, G-Sync 및 FPS",
         _ => group,
     };
 
@@ -488,7 +490,7 @@ internal sealed partial class DetailLayoutHost
             if (!items.Any(i => i.Visibility == Visibility.Visible && i is not StackPanel { Children.Count: 0 }))
                 plain.Children.Add(new TextBlock
                 {
-                    Text = "No DLSS or Streamline files found in this game.",
+                    Text = "이 게임에서 DLSS 또는 Streamline 파일을 찾을 수 없습니다.",
                     FontSize = 13,
                     Foreground = TabsTheme.B(TabsTheme.TextSecondary),
                 });
@@ -534,7 +536,7 @@ internal sealed partial class DetailLayoutHost
                 // The heading names the component, so the first (version) dropdown is just "Version";
                 // an unlabelled button under the others (Multi Frame Gen, Deploy DLL) stays unlabelled
                 string label = f.Label == null || (first && GenericLabels.Contains(f.Label))
-                    ? (first ? "Version" : "")
+                    ? (first ? "버전" : "")
                     : f.Label;
                 // An unlabelled button keeps a blank label row, so it lines up with the dropdowns
                 // beside it (Multi Frame Gen next to Render Scale)
@@ -602,11 +604,11 @@ internal sealed partial class DetailLayoutHost
             var top = Split(rows[0]);
             var middle = Split(rows[1]);
             var bottom = Split(rows[2]);
-            DropHeading(top.Right, "DLL naming overrides");
-            cards.Children.Add(Card("Names and matching", top.Left));
+            DropHeading(top.Right, "DLL 이름 재정의");
+            cards.Children.Add(Card("이름 및 매칭", top.Left));
             cards.Children.Add(Card("ReShade", middle.Left, bottom.Left));
-            cards.Children.Add(Card("DLL names", top.Right));
-            cards.Children.Add(Card("Updates and launch", middle.Right, bottom.Right));
+            cards.Children.Add(Card("DLL 이름", top.Right));
+            cards.Children.Add(Card("업데이트 및 실행", middle.Right, bottom.Right));
         }
         else
         {
@@ -635,11 +637,11 @@ internal sealed partial class DetailLayoutHost
 
     private static string NrMethodDescription(string name) => name switch
     {
-        "ShortFuse DLSS Tool"      => "For most games with native DLSS (DX9, DX11, DX12, Vulkan).",
-        "DLSS5 Tool"               => "For DX12 games with native DLSS.",
-        "DLSS5 Tool + DX11 Bridge" => "For DX11 and Vulkan games with native DLSS.",
-        "DLSS5 Feeder"             => "For games without DLSS, including OpenGL, DX9 and 32-bit games.",
-        "GITC Uplift"              => "For any game, no DLSS needed. Easy to set up in the ReShade menu and light on performance.",
+        "ShortFuse DLSS Tool"      => "네이티브 DLSS를 지원하는 대부분의 게임용 (DX9, DX11, DX12, Vulkan).",
+        "DLSS5 Tool"               => "네이티브 DLSS를 지원하는 DX12 게임용.",
+        "DLSS5 Tool + DX11 Bridge" => "네이티브 DLSS를 지원하는 DX11 및 Vulkan 게임용.",
+        "DLSS5 Feeder"             => "OpenGL, DX9, 32비트 게임을 포함한 DLSS 미지원 게임용.",
+        "GITC Uplift"              => "DLSS 없이 모든 게임에서 사용 가능. ReShade 메뉴에서 쉽게 설정할 수 있으며 성능 부담이 적습니다.",
         _                          => "",
     };
 
@@ -727,7 +729,7 @@ internal sealed partial class DetailLayoutHost
                     TextWrapping = TextWrapping.Wrap,
                     Foreground = TabsTheme.B(TabsTheme.TextSecondary),
                 };
-                var pick = new Button { HorizontalAlignment = HorizontalAlignment.Stretch, Content = selected ? "Selected" : "Select" };
+                var pick = new Button { HorizontalAlignment = HorizontalAlignment.Stretch, Content = selected ? "선택됨" : "선택" };
                 TabsTheme.Apply(pick, selected ? TabsTheme.GreenButton : TabsTheme.BlueButton, height: 36);
                 pick.IsEnabled = opt.IsEnabled && !selected;
                 pick.Click += (s, e) => method.SelectedIndex = idx;
@@ -751,7 +753,7 @@ internal sealed partial class DetailLayoutHost
             }
             outer.Children.Add(methods);
         }
-        outer.Children.Add(TabsTheme.TitledCard("Setup", setup));
+        outer.Children.Add(TabsTheme.TitledCard("구성", setup));
         body.Children.Add(outer);
     }
 

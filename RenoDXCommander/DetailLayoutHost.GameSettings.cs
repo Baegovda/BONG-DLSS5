@@ -17,7 +17,7 @@ internal sealed partial class DetailLayoutHost
     {
         if (_window.ViewModel.SelectedGame is not { } card) return null;
         var root = new StackPanel { Spacing = 14 };
-        root.Children.Add(MutedText("Settings from the Settings page that apply to this game only."));
+        root.Children.Add(MutedText("설정 페이지의 설정 중 이 게임에만 적용되는 항목입니다."));
 
         var rows = new StackPanel { Spacing = 16 };
         AddOverlayRow(rows, card);
@@ -33,11 +33,11 @@ internal sealed partial class DetailLayoutHost
         var toggle = new ToggleSwitch
         {
             IsOn = !vm.IsOverlayDisabled(name, store),
-            OnContent = "On",
-            OffContent = "Off",
+            OnContent = "켜짐",
+            OffContent = "꺼짐",
             MinWidth = 0,
         };
-        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(toggle, "RHI overlay");
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(toggle, "BONG DLSS5 오버레이");
         toggle.Toggled += (s, e) =>
         {
             try
@@ -50,26 +50,26 @@ internal sealed partial class DetailLayoutHost
                 CrashReporter.Log($"[DetailLayoutHost.GameSettings] Overlay toggle for '{name}' failed — {ex.Message}");
             }
         };
-        string desc = "Open the RHI overlay over this game with its hotkey or the controller. When off, the hotkey goes to the game.";
-        if (!vm.Settings.RhiOverlayEnabled) desc += " The overlay is currently off for all games in Settings.";
-        AddGameSettingRow(rows, "RHI overlay", desc, toggle);
+        string desc = "단축키나 컨트롤러로 이 게임 위에 BONG DLSS5 오버레이를 엽니다. 꺼져 있으면 단축키가 게임으로 전달됩니다.";
+        if (!vm.Settings.RhiOverlayEnabled) desc += " 현재 설정에서 모든 게임의 오버레이가 꺼져 있습니다.";
+        AddGameSettingRow(rows, "BONG DLSS5 오버레이", desc, toggle);
     }
 
     private void AddDisplayModeRow(StackPanel rows, GameCardViewModel card)
     {
         var vm = _window.ViewModel;
-        var btn = new Button { Content = "Choose...", Padding = new Thickness(14, 0, 14, 0) };
+        var btn = new Button { Content = "선택...", Padding = new Thickness(14, 0, 14, 0) };
         TabsTheme.Apply(btn, TabsTheme.BlueButton, height: 34, fontSize: 12);
-        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(btn, "Display mode settings");
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(btn, "디스플레이 모드 설정");
         btn.Click += async (s, e) =>
         {
             try { await _window.ShowDisplayModeGameDialogAsync(card); }
             catch (Exception ex) when (ex is InvalidOperationException) { CrashReporter.Log($"[DetailLayoutHost.GameSettings] Display modes — {ex.Message}"); }
         };
         string desc = vm.DisplayModesOn
-            ? $"What this game swaps between display modes (now {vm.ActiveDisplayModeName(card)}), and its values per mode."
-            : "What this game swaps between display modes, and its values per mode. Display modes are off in Settings › Display.";
-        AddGameSettingRow(rows, "Display modes", desc, btn);
+            ? $"이 게임이 디스플레이 모드 간에 전환하는 항목(현재 {vm.ActiveDisplayModeName(card)})과 모드별 값입니다."
+            : "이 게임이 디스플레이 모드 간에 전환하는 항목과 모드별 값입니다. 설정 › 디스플레이에서 디스플레이 모드가 꺼져 있습니다.";
+        AddGameSettingRow(rows, "디스플레이 모드", desc, btn);
     }
 
     /// <summary>One setting: label and a one-line description on the left, the control on the right.</summary>

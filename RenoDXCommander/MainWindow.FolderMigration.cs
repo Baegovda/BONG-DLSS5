@@ -105,11 +105,11 @@ public sealed partial class MainWindow
         {
             await DialogService.ShowSafeAsync(new ContentDialog
             {
-                Title = "Mods stay in the old folder",
+                Title = "모드가 이전 폴더에 남습니다",
                 Content = MakeMoveDialogText(
-                    "The new folder is a Game Pass / Microsoft Store (WindowsApps) folder, which RHI can't write to, "
-                    + $"so the mods installed for {card.GameName} stay in the old folder:", oldFolder),
-                CloseButtonText = "OK",
+                    "새 폴더는 BONG DLSS5가 쓸 수 없는 Game Pass / Microsoft Store (WindowsApps) 폴더이므로, "
+                    + $"{card.GameName}에 설치된 모드는 이전 폴더에 남습니다:", oldFolder),
+                CloseButtonText = "확인",
                 XamlRoot = xamlRoot,
             });
             return;
@@ -117,13 +117,13 @@ public sealed partial class MainWindow
 
         var dialog = new ContentDialog
         {
-            Title = "Move this game's installed mods to the new folder?",
+            Title = "이 게임에 설치된 모드를 새 폴더로 옮길까요?",
             Content = MakeMoveDialogText(
-                $"{card.GameName} has mods installed by RHI in the old folder. Move them, with their settings and presets, "
-                + "to the new folder? RHI puts the game's own files back in the old folder.",
-                $"From: {oldFolder}\nTo: {newFolder}"),
-            PrimaryButtonText = "Move",
-            CloseButtonText = "Leave them",
+                $"{card.GameName}의 이전 폴더에 BONG DLSS5가 설치한 모드가 있습니다. 설정 및 프리셋과 함께 "
+                + "새 폴더로 옮길까요? 게임 자체 파일은 BONG DLSS5가 이전 폴더에 되돌려 놓습니다.",
+                $"원래 위치: {oldFolder}\n새 위치: {newFolder}"),
+            PrimaryButtonText = "옮기기",
+            CloseButtonText = "그대로 두기",
             DefaultButton = ContentDialogButton.Primary,
             XamlRoot = xamlRoot,
         };
@@ -139,18 +139,18 @@ public sealed partial class MainWindow
         {
             ViewModel.ApplyFolderMigrationToCard(card, oldFolder, newFolder);
             RefreshShownGameAfterFolderChange(card);
-            ShowStatusBarMessage($"Moved {card.GameName}'s mods to the new folder", TimeSpan.FromSeconds(8));
+            ShowStatusBarMessage($"{card.GameName}의 모드를 새 폴더로 옮겼습니다", TimeSpan.FromSeconds(8));
             return;
         }
         if (outcome.NothingToMove) return;
 
         await DialogService.ShowSafeAsync(new ContentDialog
         {
-            Title = "Mods not moved",
+            Title = "모드를 옮기지 못함",
             Content = MakeMoveDialogText(
-                $"RHI couldn't move the mods for {card.GameName}: {outcome.Reason ?? "unknown error"}",
-                "Nothing was changed, so they're still in the old folder. Try again with the Reset install folder or Change install folder buttons."),
-            CloseButtonText = "OK",
+                $"BONG DLSS5가 {card.GameName}의 모드를 옮기지 못했습니다: {outcome.Reason ?? "알 수 없는 오류"}",
+                "아무것도 변경되지 않았으므로 모드는 여전히 이전 폴더에 있습니다. 설치 폴더 초기화 또는 설치 폴더 변경 버튼으로 다시 시도하세요."),
+            CloseButtonText = "확인",
             XamlRoot = xamlRoot,
         });
     }

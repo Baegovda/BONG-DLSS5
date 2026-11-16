@@ -599,25 +599,25 @@ public sealed partial class MainWindow
         string name = game.GameName;
         if (game.IsRunning)
         {
-            ShowPadToast($"{name} is already running");
+            ShowPadToast($"{name}이(가) 이미 실행 중입니다");
             return;
         }
         long now = Environment.TickCount64;
         if (string.Equals(_padLaunchedGame, name, StringComparison.OrdinalIgnoreCase) && now - _padLaunchedAt < PadRelaunchGuardMs)
         {
-            ShowPadToast($"Already launching {name}…");
+            ShowPadToast($"{name}을(를) 이미 실행하는 중…");
             return;
         }
         if (layout.LaunchButton is not { IsEnabled: true, IsLoaded: true })
         {
-            ShowPadToast($"{name} can't be launched from here");
+            ShowPadToast($"{name}은(는) 여기서 실행할 수 없습니다");
             return;
         }
         _padLaunchedGame = name;
         _padLaunchedAt = now;
         _padReturnToCover = true;
         CrashReporter.Log($"[MainWindow.PadLaunch] '{name}'");
-        ShowPadToast($"Launching {name}…", 5000);
+        ShowPadToast($"{name} 실행 중…", 5000);
         layout.PadLaunch();
     }
 
@@ -652,7 +652,7 @@ public sealed partial class MainWindow
         var next = cycle[(current + 1) % cycle.Length];
         CrashReporter.Log($"[MainWindow.CycleMainFilter] {next}");
         Filter_Click(MainFilterButton(next), new RoutedEventArgs());
-        AfterListSwitch(next == "Detected" ? "All games" : next, focused);
+        AfterListSwitch(next == "Detected" ? "모든 게임" : next, focused);
     }
 
     /// <summary>Right stick click: the next collection; after the last one back to All games.</summary>
@@ -674,14 +674,14 @@ public sealed partial class MainWindow
         {
             CrashReporter.Log("[MainWindow.CycleCollection] back to All games");
             Filter_Click(MainFilterButton("Detected"), new RoutedEventArgs());
-            AfterListSwitch("All games", focused);
+            AfterListSwitch("모든 게임", focused);
         }
     }
 
     private void AfterListSwitch(string label, DependencyObject? focused)
     {
         int shown = ViewModel.DisplayedGames.Count;
-        ShowPadToast($"{label} · {shown} {(shown == 1 ? "game" : "games")}", 2500);
+        ShowPadToast($"{label} · 게임 {shown}개", 2500);
         // The shelf now shows another list: keep focus on its selected cover
         bool inShelf = focused != null && _shelf != null && IsWithin(focused, _shelf);
         if (inShelf) AfterLayout(FocusShelf);

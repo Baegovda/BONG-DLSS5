@@ -40,24 +40,24 @@ public partial class SettingsHandler
             var outer = new StackPanel { Spacing = 10 };
             card.Child = outer;
             var head = new StackPanel { Spacing = 3 };
-            head.Children.Add(new TextBlock { Text = "Colour theme", Style = FindStyle("SettingsCardTitleStyle") });
+            head.Children.Add(new TextBlock { Text = "색상 테마", Style = FindStyle("SettingsCardTitleStyle") });
             head.Children.Add(new TextBlock
             {
-                Text = "Changes RHI's colours. Pick a theme, or Custom to choose your own colours. Changes show straight away.",
+                Text = "BONG DLSS5의 색상을 변경합니다. 테마를 고르거나 사용자 지정을 선택해 직접 색상을 정하세요. 변경 사항은 바로 적용됩니다.",
                 Style = FindStyle("SettingsCardDescStyle"),
                 TextWrapping = TextWrapping.Wrap,
             });
             outer.Children.Add(head);
 
             // Theme row
-            var row = MakeThemeRow("Theme", out var themeCell);
+            var row = MakeThemeRow("테마", out var themeCell);
             var combo = new ComboBox { Style = FindStyle("SettingsComboStyle") };
             foreach (var p in ThemePresets.All) combo.Items.Add(p.Label);
-            combo.Items.Add("Custom");
+            combo.Items.Add("사용자 지정");
             ToolTipService.SetToolTip(combo,
-                "OLED Black uses a true black background. High Contrast makes text and borders stronger. " +
-                "Colour-blind Friendly uses status colours that stay apart with red-green colour blindness " +
-                "(blue = installed, pink = update, yellow = warning, orange = error).");
+                "OLED Black은 완전한 검은색 배경을 사용합니다. High Contrast는 텍스트와 테두리를 더 진하게 합니다. " +
+                "Colour-blind Friendly는 적록 색각 이상에서도 구분되는 상태 색상을 사용합니다 " +
+                "(파란색 = 설치됨, 분홍색 = 업데이트, 노란색 = 경고, 주황색 = 오류).");
             themeCell.Child = combo;
             outer.Children.Add(row);
             _themeCombo = combo;
@@ -78,8 +78,8 @@ public partial class SettingsHandler
             cols.Children.Add(divider);
             cols.Children.Add(right);
 
-            left.Children.Add(new TextBlock { Text = "Look", Style = FindStyle("SettingsHeadStyle") });
-            right.Children.Add(new TextBlock { Text = "Status colours", Style = FindStyle("SettingsHeadStyle") });
+            left.Children.Add(new TextBlock { Text = "모양", Style = FindStyle("SettingsHeadStyle") });
+            right.Children.Add(new TextBlock { Text = "상태 색상", Style = FindStyle("SettingsHeadStyle") });
             foreach (var (key, label) in ThemePalette.CustomKeys)
             {
                 bool status = key is "Installed" or "Update" or "Warning" or "Error";
@@ -89,7 +89,7 @@ public partial class SettingsHandler
 
             _themeContrastNote = new TextBlock
             {
-                Text = "Text may be hard to read on this background. Pick a lighter text colour or a darker background.",
+                Text = "이 배경에서는 텍스트가 잘 보이지 않을 수 있습니다. 더 밝은 텍스트 색이나 더 어두운 배경을 선택하세요.",
                 Style = FindStyle("SettingsNoteStyle"),
                 Foreground = UIFactory.Brush(ResourceKeys.AccentAmberBrush),
                 TextWrapping = TextWrapping.Wrap,
@@ -98,13 +98,13 @@ public partial class SettingsHandler
             _themeCustomPanel.Children.Add(_themeContrastNote);
 
             var buttons = new Controls.WrapPanel { HorizontalSpacing = 8, VerticalSpacing = 8 };
-            buttons.Children.Add(MakeThemeButton("Start from a theme...", "Replaces your custom colours with a built-in theme's colours.",
+            buttons.Children.Add(MakeThemeButton("테마에서 시작...", "사용자 지정 색상을 기본 제공 테마의 색상으로 바꿉니다.",
                 (btn) => ShowStartFromMenu(btn)));
-            buttons.Children.Add(MakeThemeButton("Reset to default", "Sets your custom colours back to RHI's default colours.",
+            buttons.Children.Add(MakeThemeButton("기본값으로 초기화", "사용자 지정 색상을 BONG DLSS5 기본 색상으로 되돌립니다.",
                 _ => SetCustom(ThemePalette.Default, save: true)));
-            buttons.Children.Add(MakeThemeButton("Share theme", "Copies a code for your colours. Anyone can paste it into Import theme to use them.",
+            buttons.Children.Add(MakeThemeButton("테마 공유", "색상 코드를 복사합니다. 누구나 테마 가져오기에 붙여 넣어 사용할 수 있습니다.",
                 (btn) => ShowShareThemeFlyout(btn)));
-            buttons.Children.Add(MakeThemeButton("Import theme...", "Paste a theme code someone shared to use their colours. Replaces your custom colours.",
+            buttons.Children.Add(MakeThemeButton("테마 가져오기...", "다른 사람이 공유한 테마 코드를 붙여 넣어 그 색상을 사용합니다. 사용자 지정 색상이 바뀝니다.",
                 (btn) => ShowImportThemeFlyout(btn)));
             _themeCustomPanel.Children.Add(buttons);
             outer.Children.Add(_themeCustomPanel);
@@ -152,7 +152,7 @@ public partial class SettingsHandler
             HorizontalAlignment = HorizontalAlignment.Stretch,
             HorizontalContentAlignment = HorizontalAlignment.Left,
         };
-        ToolTipService.SetToolTip(btn, $"Pick the {label.ToLowerInvariant()} colour.");
+        ToolTipService.SetToolTip(btn, $"{label.ToLowerInvariant()} 색상을 선택합니다.");
 
         var picker = new ColorPicker
         {

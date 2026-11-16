@@ -73,11 +73,11 @@ public partial class GameCardViewModel
     /// </summary>
     public string? DxvkToggleTooltip =>
         IsDxvkToggleEnabled ? null
-        : IsDxvkBlacklisted ? "DXVK is blocked for this game due to anti-cheat software."
+        : IsDxvkBlacklisted ? "안티치트 소프트웨어 때문에 이 게임에서는 DXVK가 차단되었습니다."
         : GraphicsApi == GraphicsApiType.Unknown && !HasDxvkApiOverride
-            ? "DXVK cannot be enabled because the game's DirectX version could not be determined."
+            ? "게임의 DirectX 버전을 확인할 수 없어 DXVK를 사용할 수 없습니다."
         : GraphicsApi is GraphicsApiType.DirectX12 or GraphicsApiType.Vulkan or GraphicsApiType.OpenGL
-            ? $"DXVK does not support {GraphicsApi}. It only translates DirectX 8/9/10/11 to Vulkan."
+            ? $"DXVK는 {GraphicsApi}을(를) 지원하지 않습니다. DirectX 8/9/10/11만 Vulkan으로 변환합니다."
         : null;
 
     // ── DXVK computed properties ──────────────────────────────────────────────────

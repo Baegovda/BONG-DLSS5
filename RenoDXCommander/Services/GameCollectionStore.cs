@@ -63,13 +63,13 @@ public sealed class GameCollectionStore
     private string? ValidateLocked(string? name, string? renaming, out string clean)
     {
         clean = (name ?? "").Trim();
-        if (clean.Length == 0) return "Enter a name for the collection.";
-        if (clean.Length > MaxNameLength) return $"Collection names can be up to {MaxNameLength} characters.";
-        if (clean.Any(char.IsControl)) return "Collection names can't contain control characters.";
-        if (ReservedNames.Contains(clean)) return $"\"{clean}\" is the name of a built-in filter. Pick another name.";
+        if (clean.Length == 0) return "컬렉션 이름을 입력하세요.";
+        if (clean.Length > MaxNameLength) return $"컬렉션 이름은 최대 {MaxNameLength}자까지 가능합니다.";
+        if (clean.Any(char.IsControl)) return "컬렉션 이름에는 제어 문자를 사용할 수 없습니다.";
+        if (ReservedNames.Contains(clean)) return $"\"{clean}\"은(는) 기본 제공 필터 이름입니다. 다른 이름을 선택하세요.";
         var existing = FindLocked(clean);
         if (existing != null && (renaming == null || !existing.Name.Equals(renaming, StringComparison.OrdinalIgnoreCase)))
-            return $"You already have a collection called \"{existing.Name}\".";
+            return $"\"{existing.Name}\" 컬렉션이 이미 있습니다.";
         return null;
     }
 
@@ -92,7 +92,7 @@ public sealed class GameCollectionStore
         {
             renamed = "";
             var c = FindLocked(oldName);
-            if (c == null) return "That collection no longer exists.";
+            if (c == null) return "해당 컬렉션이 더 이상 존재하지 않습니다.";
             var error = ValidateLocked(newName, c.Name, out renamed);
             if (error != null) return error;
             bool wasActive = _activeName != null && _activeName.Equals(c.Name, StringComparison.OrdinalIgnoreCase);

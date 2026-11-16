@@ -16,8 +16,8 @@ public partial class MainViewModel
     /// </summary>
     public async Task<string?> EnsureAnrFgForPresetAsync(GameCardViewModel card)
     {
-        if (string.IsNullOrEmpty(card.InstallPath)) return "This game has no install folder.";
-        if (!card.IsOsInstalled) return "Install OptiScaler (Nightly) first.";
+        if (string.IsNullOrEmpty(card.InstallPath)) return "이 게임에는 설치 폴더가 없습니다.";
+        if (!card.IsOsInstalled) return "먼저 OptiScaler (나이틀리)를 설치하세요.";
 
         var installPath = card.InstallPath;
         var record = _auxInstaller.FindRecord(card.GameName, installPath, OptiScalerService.AddonType);
@@ -27,7 +27,7 @@ public partial class MainViewModel
         if (!supported)
         {
             _crashReporter.Log($"[MainViewModel.EnsureAnrFgForPreset] '{card.GameName}': OptiScaler {variant} ({record?.InstalledAs ?? "no record"}) can't load custom frame generation providers");
-            return $"This OptiScaler version ({OsVariants.Label(variant)}) can't load ANR FG yet. Set Version to Nightly, or a build based on a recent Nightly, then apply the preset again.";
+            return $"이 OptiScaler 버전({OsVariants.Label(variant)})은 아직 ANR FG를 불러올 수 없습니다. 버전을 나이틀리 또는 최근 나이틀리 기반 빌드로 설정한 후 프리셋을 다시 적용하세요.";
         }
 
         var anr = App.Services.GetRequiredService<AnrFgService>();
@@ -36,7 +36,7 @@ public partial class MainViewModel
             var error = await Task.Run(async () =>
             {
                 if (!await anr.EnsureStagingAsync().ConfigureAwait(false))
-                    return "Couldn't download ANR FG. Try again later.";
+                    return "ANR FG를 다운로드하지 못했습니다. 나중에 다시 시도하세요.";
                 return anr.Install(installPath);
             });
             if (error == null)
@@ -46,7 +46,7 @@ public partial class MainViewModel
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or System.Net.Http.HttpRequestException)
         {
             _crashReporter.Log($"[MainViewModel.EnsureAnrFgForPreset] '{card.GameName}' — {ex.Message}");
-            return $"Couldn't install ANR FG: {ex.Message}";
+            return $"ANR FG를 설치하지 못했습니다: {ex.Message}";
         }
     }
 }

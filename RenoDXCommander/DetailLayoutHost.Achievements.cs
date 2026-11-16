@@ -254,7 +254,7 @@ internal sealed partial class DetailLayoutHost
 
         // "You've unlocked 13/66 (19%)" + bar
         var count = new TextBlock { FontSize = 12, Foreground = TabsTheme.B(TabsTheme.TextControl), TextTrimming = TextTrimming.CharacterEllipsis };
-        count.Inlines.Add(new Microsoft.UI.Xaml.Documents.Run { Text = $"You've unlocked {set.Unlocked}/{set.Total} " });
+        count.Inlines.Add(new Microsoft.UI.Xaml.Documents.Run { Text = $"달성: {set.Unlocked}/{set.Total} " });
         count.Inlines.Add(new Microsoft.UI.Xaml.Documents.Run { Text = $"({set.PercentDone}%)", Foreground = TabsTheme.B(TabsTheme.TextMuted) });
         body.Children.Add(count);
         body.Children.Add(MakeProgressBar(set, 6));
@@ -264,7 +264,7 @@ internal sealed partial class DetailLayoutHost
         {
             body.Children.Add(new TextBlock
             {
-                Text = "No achievements unlocked yet",
+                Text = "아직 달성한 도전 과제가 없습니다",
                 FontSize = 12,
                 Foreground = TabsTheme.B(TabsTheme.TextMuted),
             });
@@ -349,7 +349,7 @@ internal sealed partial class DetailLayoutHost
         bool hadFocus = _achStrip?.FocusState is FocusState.Keyboard;
         _achStrip = TabsTheme.WrapTile(card, () => OpenPanel(AchievementsKey));
         Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(_achStrip,
-            $"Achievements: {set.Unlocked} of {set.Total} unlocked");
+            $"도전 과제: {set.Total}개 중 {set.Unlocked}개 달성");
         if (hadFocus)
         {
             var strip = _achStrip;
@@ -427,9 +427,9 @@ internal sealed partial class DetailLayoutHost
     {
         if (_achSet == null) return null;
         var root = new StackPanel { Spacing = 14 };
-        _achSearch = new TextBox { PlaceholderText = "Search achievements" };
+        _achSearch = new TextBox { PlaceholderText = "도전 과제 검색" };
         TabsTheme.StyleInput(_achSearch);
-        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(_achSearch, "Search achievements");
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(_achSearch, "도전 과제 검색");
         _achSearch.TextChanged += (s, e) => RenderPanel(keepScroll: false);
         _achList = new StackPanel { Spacing = 6 };
         _achSummary = new Border(); // filled by RenderPanel
@@ -456,12 +456,12 @@ internal sealed partial class DetailLayoutHost
     private Button MakeHiddenAchToggle(Grid row)
     {
         bool on = ShowHiddenAch;
-        var b = new Button { Content = "Show hidden", Padding = new Thickness(14, 0, 14, 0), VerticalAlignment = VerticalAlignment.Stretch };
+        var b = new Button { Content = "숨김 표시", Padding = new Thickness(14, 0, 14, 0), VerticalAlignment = VerticalAlignment.Stretch };
         TabsTheme.Apply(b, ToggleLook(on), height: double.NaN, fontSize: 12);
         ToolTipService.SetToolTip(b, on
-            ? "Hidden achievements show their name and description. Click to hide them again."
-            : "Show the name and description of hidden achievements (may spoil the story).");
-        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(b, on ? "Show hidden achievements: on" : "Show hidden achievements: off");
+            ? "숨겨진 도전 과제의 이름과 설명이 표시됩니다. 다시 숨기려면 클릭하세요."
+            : "숨겨진 도전 과제의 이름과 설명을 표시합니다 (스토리 스포일러가 있을 수 있음).");
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(b, on ? "숨겨진 도전 과제 표시: 켜짐" : "숨겨진 도전 과제 표시: 꺼짐");
         b.Click += (s, e) =>
         {
             _window.ViewModel.Settings.ShowHiddenAchievements = !on;
@@ -489,7 +489,7 @@ internal sealed partial class DetailLayoutHost
         {
             if (query.Length == 0) return true;
             bool masked = a.IsMasked(showHidden);
-            return (masked ? "Hidden achievement" : a.Name).Contains(query, StringComparison.OrdinalIgnoreCase)
+            return (masked ? "숨겨진 도전 과제" : a.Name).Contains(query, StringComparison.OrdinalIgnoreCase)
                 || (!masked && a.Description.Contains(query, StringComparison.OrdinalIgnoreCase));
         }
         var unlocked = set.Items.Where(a => a.Unlocked && Matches(a)).ToList();
@@ -499,16 +499,16 @@ internal sealed partial class DetailLayoutHost
         var rows = new List<Func<FrameworkElement>>();
         if (unlocked.Count > 0)
         {
-            rows.Add(() => ListHeading($"Unlocked ({unlocked.Count})"));
+            rows.Add(() => ListHeading($"달성 ({unlocked.Count})"));
             rows.AddRange(unlocked.Select(a => (Func<FrameworkElement>)(() => MakeAchRow(set, a))));
         }
         if (locked.Count > 0)
         {
-            rows.Add(() => ListHeading($"Locked ({locked.Count})"));
+            rows.Add(() => ListHeading($"미달성 ({locked.Count})"));
             rows.AddRange(locked.Select(a => (Func<FrameworkElement>)(() => MakeAchRow(set, a))));
         }
         if (rows.Count == 0)
-            rows.Add(() => new TextBlock { Text = "No achievements match your search.", FontSize = 13, Foreground = TabsTheme.B(TabsTheme.TextMuted) });
+            rows.Add(() => new TextBlock { Text = "검색과 일치하는 도전 과제가 없습니다.", FontSize = 13, Foreground = TabsTheme.B(TabsTheme.TextMuted) });
 
         int seq = ++_achListSeq;
         _achList.Children.Clear();
@@ -533,7 +533,7 @@ internal sealed partial class DetailLayoutHost
         top.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
         top.Children.Add(new TextBlock
         {
-            Text = $"{set.Unlocked} of {set.Total} achievements earned",
+            Text = $"도전 과제 {set.Total}개 중 {set.Unlocked}개 달성",
             FontSize = 14,
             FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
             Foreground = TabsTheme.B(TabsTheme.TextPrimary),
@@ -553,14 +553,14 @@ internal sealed partial class DetailLayoutHost
         if (set.HasGamerscore)
             body.Children.Add(new TextBlock
             {
-                Text = $"{set.GamerscoreEarned:N0} of {set.GamerscoreTotal:N0} Gamerscore",
+                Text = $"Gamerscore {set.GamerscoreTotal:N0} 중 {set.GamerscoreEarned:N0}",
                 FontSize = 12,
                 Foreground = TabsTheme.B(TabsTheme.TextSecondary),
             });
         if (set.Store == AchievementStore.Xbox)
             body.Children.Add(new TextBlock
             {
-                Text = "From the Xbox app on this PC. Open the game in the Xbox app to bring this list up to date.",
+                Text = "이 PC의 Xbox 앱에서 가져온 정보입니다. 목록을 최신 상태로 만들려면 Xbox 앱에서 게임을 여세요.",
                 FontSize = 11,
                 TextWrapping = TextWrapping.Wrap,
                 Foreground = TabsTheme.B(TabsTheme.TextMuted),
@@ -569,8 +569,8 @@ internal sealed partial class DetailLayoutHost
             body.Children.Add(new TextBlock
             {
                 Text = set.Store == AchievementStore.Xbox
-                    ? "Rarity isn't in the Xbox app's data for this game."
-                    : "Rarity isn't available right now (Steam's global stats couldn't be reached).",
+                    ? "Xbox 앱 데이터에 이 게임의 희귀도 정보가 없습니다."
+                    : "지금은 희귀도를 확인할 수 없습니다 (Steam 전체 통계에 연결할 수 없음).",
                 FontSize = 11,
                 TextWrapping = TextWrapping.Wrap,
                 Foreground = TabsTheme.B(TabsTheme.TextMuted),
@@ -595,13 +595,13 @@ internal sealed partial class DetailLayoutHost
         var text = new StackPanel { Spacing = 2, VerticalAlignment = VerticalAlignment.Center };
         text.Children.Add(new TextBlock
         {
-            Text = masked ? "Hidden achievement" : a.Name,
+            Text = masked ? "숨겨진 도전 과제" : a.Name,
             FontSize = 14,
             FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
             TextWrapping = TextWrapping.Wrap,
             Foreground = TabsTheme.B(a.Unlocked ? TabsTheme.TextPrimary : TabsTheme.TextSecondary),
         });
-        var desc = masked ? "Details are shown once you unlock it." : a.Description;
+        var desc = masked ? "달성하면 세부 정보가 표시됩니다." : a.Description;
         if (desc.Length > 0)
             text.Children.Add(new TextBlock
             {
@@ -613,9 +613,9 @@ internal sealed partial class DetailLayoutHost
         // "45% done · 50 Gamerscore · 12.3% of players have this achievement"
         var c = System.Globalization.CultureInfo.CurrentCulture;
         var facts = new List<string>();
-        if (a.ProgressPercent is int done && !masked) facts.Add($"{done}% done");
+        if (a.ProgressPercent is int done && !masked) facts.Add($"{done}% 진행");
         if (a.Gamerscore is int g) facts.Add($"{g} Gamerscore");
-        if (a.Percent is double p) facts.Add($"{p.ToString("0.0", c)}% of players have this achievement");
+        if (a.Percent is double p) facts.Add($"플레이어의 {p.ToString("0.0", c)}%가 달성");
         if (facts.Count > 0)
             text.Children.Add(new TextBlock
             {
@@ -636,7 +636,7 @@ internal sealed partial class DetailLayoutHost
         {
             var when = new TextBlock
             {
-                Text = a.UnlockedUtc is DateTime t ? "Unlocked " + FormatUnlock(t) : "Unlocked",
+                Text = a.UnlockedUtc is DateTime t ? "달성 " + FormatUnlock(t) : "달성",
                 FontSize = 12,
                 Foreground = TabsTheme.B(TabsTheme.TextSecondary),
                 VerticalAlignment = VerticalAlignment.Center,

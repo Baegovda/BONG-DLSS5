@@ -24,22 +24,22 @@ public sealed partial class MainWindow
                 TextWrapping = TextWrapping.Wrap,
                 Width = 520,
                 Height = 260,
-                PlaceholderText = "Codes, routes, settings to remember…",
+                PlaceholderText = "기억할 코드, 경로, 설정…",
             };
             ScrollViewer.SetVerticalScrollBarVisibility(box, ScrollBarVisibility.Auto);
             var panel = new StackPanel { Spacing = 10 };
             panel.Children.Add(new TextBlock
             {
-                Text = "Only you see these. They're also on the RHI overlay's Info and links page while you play.",
+                Text = "나만 볼 수 있습니다. 플레이 중에는 BONG DLSS5 오버레이의 정보 및 링크 페이지에도 표시됩니다.",
                 TextWrapping = TextWrapping.Wrap,
             });
             panel.Children.Add(box);
             var dialog = new ContentDialog
             {
-                Title = $"Notes for {card.GameName}",
+                Title = $"{card.GameName} 메모",
                 Content = panel,
-                PrimaryButtonText = "Save",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "저장",
+                CloseButtonText = "취소",
                 DefaultButton = ContentDialogButton.None, // Enter makes a new line
                 XamlRoot = xamlRoot,
                 RequestedTheme = ElementTheme.Dark,

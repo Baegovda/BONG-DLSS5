@@ -30,18 +30,18 @@ public sealed partial class MainWindow
 
             var dialog = new ContentDialog
             {
-                Title = "Full Refresh",
-                Content = "This will clear all caches and re-scan everything from scratch:\n\n" +
-                          "• Re-detects all games from every storefront\n" +
-                          "• Re-scans DLSS/Streamline DLL paths\n" +
-                          "• Re-detects graphics APIs and engine types\n" +
-                          "• Rebuilds shader and addon deployment state\n\n" +
-                          "Try a normal Refresh first — it handles most issues without the full rescan, and fully rescans the selected game (DLSS added or removed, for example). " +
-                          "Use Full Refresh as a last resort if games are missing, paths have changed, DLSS has been added to a game, or the DLSS section is missing from a game card.\n\n" +
-                          "The next couple of restarts may take a few seconds longer while caches are rebuilt.\n\n" +
-                          "Do not close RHI while the refresh is in progress — closing early will result in a missing library and the scan will need to be repeated.",
-                PrimaryButtonText = "Continue",
-                CloseButtonText = "Cancel",
+                Title = "전체 새로 고침",
+                Content = "모든 캐시를 지우고 처음부터 모두 다시 검색합니다:\n\n" +
+                          "• 모든 스토어에서 모든 게임을 다시 감지\n" +
+                          "• DLSS/Streamline DLL 경로 다시 검색\n" +
+                          "• 그래픽 API 및 엔진 유형 다시 감지\n" +
+                          "• 셰이더 및 애드온 배포 상태 다시 구성\n\n" +
+                          "먼저 일반 새로 고침을 시도하세요 — 전체 재검색 없이 대부분의 문제를 해결하며, 선택한 게임은 완전히 다시 검색합니다 (예: DLSS 추가 또는 제거). " +
+                          "게임이 누락되었거나, 경로가 바뀌었거나, 게임에 DLSS가 추가되었거나, 게임 카드에 DLSS 섹션이 없을 때 최후의 수단으로 전체 새로 고침을 사용하세요.\n\n" +
+                          "캐시를 다시 만드는 동안 다음 몇 번의 재시작은 몇 초 더 걸릴 수 있습니다.\n\n" +
+                          "새로 고침이 진행되는 동안 BONG DLSS5를 닫지 마세요 — 일찍 닫으면 라이브러리가 누락되어 검색을 다시 해야 합니다.",
+                PrimaryButtonText = "계속",
+                CloseButtonText = "취소",
                 DefaultButton = ContentDialogButton.Close,
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme  = ElementTheme.Dark,
@@ -68,14 +68,14 @@ public sealed partial class MainWindow
             var progressPanel = new StackPanel { Spacing = 8 };
             var progressRow = new StackPanel { Orientation = Microsoft.UI.Xaml.Controls.Orientation.Horizontal, Spacing = 12 };
             var progressRing = new ProgressRing { IsActive = true, Width = 20, Height = 20 };
-            var progressText = new TextBlock { Text = "Fetching manifest...", FontSize = 13, Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush) };
+            var progressText = new TextBlock { Text = "매니페스트 가져오는 중...", FontSize = 13, Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush) };
             progressRow.Children.Add(progressRing);
             progressRow.Children.Add(progressText);
             progressPanel.Children.Add(progressRow);
 
             var progressDialog = new ContentDialog
             {
-                Title = "Checking for updates...",
+                Title = "업데이트 확인 중...",
                 Content = progressPanel,
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
@@ -94,12 +94,12 @@ public sealed partial class MainWindow
                 // instead of showing "Checking components..." with nothing happening.
                 if (ViewModel.IsLibraryOperationRunning)
                 {
-                    progressText.Text = "Waiting for RHI's game scan to finish...";
+                    progressText.Text = "BONG DLSS5의 게임 검색이 끝나기를 기다리는 중...";
                     _crashReporter.Log("[MainWindow.CheckForUpdatesButton_Click] A scan is running — waiting for it to finish");
                 }
-                else progressText.Text = "Checking components...";
+                else progressText.Text = "구성 요소 확인 중...";
                 await ViewModel.RefreshAsync(() =>
-                    DispatcherQueue?.TryEnqueue(() => progressText.Text = "Checking components..."));
+                    DispatcherQueue?.TryEnqueue(() => progressText.Text = "구성 요소 확인 중..."));
 
                 // A manual check restarts the 4-hour background countdown (shown on the Settings page)
                 ViewModel.RestartPeriodicUpdateCheckTimer();
@@ -108,7 +108,7 @@ public sealed partial class MainWindow
                 ViewModel.TriggerAutoUpdate();
 
                 // Check app update
-                DispatcherQueue?.TryEnqueue(() => progressText.Text = "Checking app version...");
+                DispatcherQueue?.TryEnqueue(() => progressText.Text = "앱 버전 확인 중...");
                 // The update prompt needs the same modal slot; close progress first.
                 await progressSession.DisposeAsync();
                 await _dialogService.CheckForAppUpdateAsync();
@@ -167,11 +167,11 @@ public sealed partial class MainWindow
             // Only for Unreal Engine games that have a Luma mod
             if (card.LumaMod == null)
             {
-                cog.AddEmpty("There's no Luma mod for this game, so there's nothing to set here.");
+                cog.AddEmpty("이 게임용 Luma 모드가 없으므로 여기서 설정할 내용이 없습니다.");
             }
             else if (card.EngineHint?.Contains("Unreal") != true)
             {
-                cog.AddEmpty("Luma's settings are for Unreal Engine games. This game has nothing to set here.");
+                cog.AddEmpty("Luma 설정은 Unreal Engine 게임용입니다. 이 게임은 여기서 설정할 내용이 없습니다.");
             }
             else
             {
@@ -180,10 +180,10 @@ public sealed partial class MainWindow
                 // ── HDR on First Boot ──────────────────────────────────────────────
                 var currentHdr = AuxInstallService.GetLumaReshadeIniValue(card.InstallPath, "EnableHDR");
                 // Default = key absent or never set by RHI; Off = "0"; On = "1"
-                cog.AddCombo("HDR on First Boot",
-                    "Sets EnableHDR and DisplayMode in the [Luma] section of reshade.ini. " +
-                    "Default leaves both to Luma; Off sets them to 0; On sets them to 1.",
-                    new[] { "Default", "Off", "On" },
+                cog.AddCombo("첫 실행 시 HDR",
+                    "reshade.ini의 [Luma] 섹션에서 EnableHDR 및 DisplayMode를 설정합니다. " +
+                    "기본값은 둘 다 Luma에 맡기고, 꺼짐은 0으로, 켜짐은 1로 설정합니다.",
+                    new[] { "기본값", "꺼짐", "켜짐" },
                     currentHdr == null ? 0 : currentHdr == "0" ? 1 : 2,
                     i =>
                     {
@@ -191,23 +191,23 @@ public sealed partial class MainWindow
                         {
                             AuxInstallService.RemoveLumaReshadeIniValue(card.InstallPath, "EnableHDR");
                             AuxInstallService.RemoveLumaReshadeIniValue(card.InstallPath, "DisplayMode");
-                            cog.SetSuccess("HDR reset to Luma default.");
+                            cog.SetSuccess("HDR을 Luma 기본값으로 초기화했습니다.");
                         }
                         else
                         {
                             bool hdrOn = i == 2;
                             AuxInstallService.SetLumaReshadeIniValue(card.InstallPath, "EnableHDR", hdrOn ? "1" : "0");
                             AuxInstallService.SetLumaReshadeIniValue(card.InstallPath, "DisplayMode", hdrOn ? "1" : "0");
-                            cog.SetSuccess(hdrOn ? "HDR turned on in reshade.ini." : "HDR turned off in reshade.ini.");
+                            cog.SetSuccess(hdrOn ? "reshade.ini에서 HDR을 켰습니다." : "reshade.ini에서 HDR을 껐습니다.");
                         }
                         CrashReporter.Log($"[MainWindow.LumaCogButton_Click] HDR on First Boot = {i} for '{card.GameName}'");
                     });
 
                 // ── TAA Settings ───────────────────────────────────────────────────
-                cog.AddCombo("TAA Settings",
-                    "On writes r.DefaultFeature.AntiAliasing=2 and r.PostProcessAAQuality=4 to Engine.ini, " +
-                    "forcing high-quality TAA for Luma HDR compatibility. Off removes them.",
-                    new[] { "Off", "On" },
+                cog.AddCombo("TAA 설정",
+                    "켜짐은 Engine.ini에 r.DefaultFeature.AntiAliasing=2 및 r.PostProcessAAQuality=4를 기록하여 " +
+                    "Luma HDR 호환을 위해 고품질 TAA를 강제합니다. 꺼짐은 이를 제거합니다.",
+                    new[] { "꺼짐", "켜짐" },
                     ViewModel.IsLumaTaaEnabled(card.GameName) ? 1 : 0,
                     i =>
                     {
@@ -221,7 +221,7 @@ public sealed partial class MainWindow
                             AuxInstallService.ApplyEngineIniCustomKeys(
                                 card.InstallPath, taaKeys, card.EngineIniProjectOverride, card.GameName, card.Source);
                             ViewModel.SetLumaTaaEnabled(card.GameName, true);
-                            cog.SetSuccess("TAA settings written to Engine.ini.");
+                            cog.SetSuccess("TAA 설정을 Engine.ini에 기록했습니다.");
                         }
                         else
                         {
@@ -230,7 +230,7 @@ public sealed partial class MainWindow
                                 taaKeys.Select(k => k.Key),
                                 card.EngineIniProjectOverride, card.GameName, card.Source);
                             ViewModel.SetLumaTaaEnabled(card.GameName, false);
-                            cog.SetSuccess("TAA settings removed from Engine.ini.");
+                            cog.SetSuccess("Engine.ini에서 TAA 설정을 제거했습니다.");
                         }
                         CrashReporter.Log($"[MainWindow.LumaCogButton_Click] TAA Settings = {(i == 1 ? "On" : "Off")} for '{card.GameName}'");
                     });
@@ -267,7 +267,7 @@ public sealed partial class MainWindow
     private void LinkRhiGithub_Click(object sender, RoutedEventArgs e)
     {
         _ = Windows.System.Launcher.LaunchUriAsync(
-            new Uri("https://github.com/RankFTW/RHI"));
+            new Uri("https://github.com/Baegovda/BONG-DLSS5"));
     }
 
     private void LinkReLimiterGithub_Click(object sender, RoutedEventArgs e)
@@ -282,7 +282,7 @@ public sealed partial class MainWindow
     private static string DonationLinkLabel(string url) =>
         url.Contains("ko-fi.com", StringComparison.OrdinalIgnoreCase) ? "Ko-fi"
         : url.Contains("patreon.com", StringComparison.OrdinalIgnoreCase) ? "Patreon"
-        : "Donate";
+        : "후원";
 
     private async void DonateButton_Click(object sender, RoutedEventArgs e)
     {
@@ -306,9 +306,9 @@ public sealed partial class MainWindow
             {
                 await DialogService.ShowSafeAsync(new ContentDialog
                 {
-                    Title = "Support the Mod Authors",
-                    Content = "No donation links available.",
-                    CloseButtonText = "Close",
+                    Title = "모드 제작자 후원",
+                    Content = "사용 가능한 후원 링크가 없습니다.",
+                    CloseButtonText = "닫기",
                     XamlRoot = Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 });
@@ -327,13 +327,13 @@ public sealed partial class MainWindow
             };
             warnText.Inlines.Add(new Microsoft.UI.Xaml.Documents.Run
             {
-                Text = "Early access to RenoDX mods: ",
+                Text = "RenoDX 모드 얼리 액세스: ",
                 FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                 Foreground = TabsTheme.B(TabsTheme.AmberPill.Fg),
             });
             warnText.Inlines.Add(new Microsoft.UI.Xaml.Documents.Run
             {
-                Text = "link your Discord account to Ko-fi before donating. Donations made without linking first can't be credited afterwards.",
+                Text = "후원하기 전에 Discord 계정을 Ko-fi에 연결하세요. 먼저 연결하지 않고 한 후원은 나중에 인정되지 않습니다.",
             });
             panel.Children.Add(new Border
             {
@@ -418,10 +418,10 @@ public sealed partial class MainWindow
 
             var dialog = new ContentDialog
             {
-                Title = CogDialog.MakeDialogTitle("Support the Mod Authors",
-                    "The people who make the mods RHI manages. If you enjoy their work, consider supporting them."),
+                Title = CogDialog.MakeDialogTitle("모드 제작자 후원",
+                    "BONG DLSS5가 관리하는 모드를 만드는 사람들입니다. 작업이 마음에 드신다면 후원을 고려해 주세요."),
                 Content = scroll,
-                CloseButtonText = "Close",
+                CloseButtonText = "닫기",
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -521,7 +521,7 @@ public sealed partial class MainWindow
                 if (requiresVulkan)
                     ViewModel.DeployShadersForCard(gameName);
 
-                card.RsActionMessage = "✅ reshade.ini merged into game folder.";
+                card.RsActionMessage = "✅ reshade.ini를 게임 폴더에 병합했습니다.";
             }
             catch (Exception ex)
             {
@@ -544,7 +544,7 @@ public sealed partial class MainWindow
             {
                 var installPath = card.InstallPath;
                 await Task.Run(() => AuxInstallService.CopyUlIni(installPath));
-                card.UlActionMessage = "✅ relimiter.ini copied to game folder.";
+                card.UlActionMessage = "✅ relimiter.ini를 게임 폴더에 복사했습니다.";
             }
             catch (Exception ex)
             {
@@ -567,7 +567,7 @@ public sealed partial class MainWindow
             {
                 var installPath = card.InstallPath;
                 await Task.Run(() => AuxInstallService.CopyDcIni(installPath));
-                card.DcActionMessage = "✅ DisplayCommander.ini copied to game folder.";
+                card.DcActionMessage = "✅ DisplayCommander.ini를 게임 폴더에 복사했습니다.";
                 card.FadeMessage(m => card.DcActionMessage = m, card.DcActionMessage);
             }
             catch (Exception ex)
@@ -592,7 +592,7 @@ public sealed partial class MainWindow
                 var sourceIni = Services.OptiScalerService.OsIniPath;
                 if (!File.Exists(sourceIni))
                 {
-                    card.OsActionMessage = "❌ No OptiScaler.ini found in INIs folder.";
+                    card.OsActionMessage = "❌ INIs 폴더에 OptiScaler.ini가 없습니다.";
                     return;
                 }
                 var installPath = card.InstallPath;
@@ -602,7 +602,7 @@ public sealed partial class MainWindow
                     File.Copy(sourceIni, destIni, overwrite: true);
                     Services.OptiScalerService.EnforceLoadReshade(destIni);
                 });
-                card.OsActionMessage = "✅ OptiScaler.ini copied to game folder.";
+                card.OsActionMessage = "✅ OptiScaler.ini를 게임 폴더에 복사했습니다.";
                 card.FadeMessage(m => card.OsActionMessage = m, card.OsActionMessage);
             }
             catch (Exception ex)
@@ -675,7 +675,7 @@ public sealed partial class MainWindow
         // ── Open Folder ──
         var openFolderItem = new MenuFlyoutItem
         {
-            Text = "Open Folder",
+            Text = "폴더 열기",
             Tag = card,
         };
         openFolderItem.Click += CardOpenFolder_Click;
@@ -684,7 +684,7 @@ public sealed partial class MainWindow
         // ── Favourite ──
         var favItem = new MenuFlyoutItem
         {
-            Text = card.IsFavourite ? "Unfavourite" : "Favourite",
+            Text = card.IsFavourite ? "즐겨찾기 해제" : "즐겨찾기",
             Tag  = card,
         };
         favItem.Click += (s, ev) => ViewModel.ToggleFavouriteCommand.Execute(card);
@@ -693,7 +693,7 @@ public sealed partial class MainWindow
         // ── Hide / Show ──
         var hideItem = new MenuFlyoutItem
         {
-            Text = card.IsHidden ? "Show" : "Hide",
+            Text = card.IsHidden ? "표시" : "숨기기",
             Tag = card,
         };
         hideItem.Click += (s, ev) => ViewModel.ToggleHideGameCommand.Execute(card);
@@ -707,7 +707,7 @@ public sealed partial class MainWindow
             menu.Items.Add(displayModeMenu);
 
         // ── Game notes (also on the RHI overlay's Info and links page) ──
-        var gameNotesItem = new MenuFlyoutItem { Text = "Game notes…", Tag = card };
+        var gameNotesItem = new MenuFlyoutItem { Text = "게임 참고 사항…", Tag = card };
         gameNotesItem.Click += async (s, ev) => await EditGameNotesAsync(card);
         menu.Items.Add(gameNotesItem);
 
@@ -722,7 +722,7 @@ public sealed partial class MainWindow
         {
             var discussionItem = new MenuFlyoutItem
             {
-                Text = "Discussion / Instructions",
+                Text = "토론 / 안내",
                 Tag = card,
             };
             discussionItem.Click += async (s, ev) =>
@@ -738,7 +738,7 @@ public sealed partial class MainWindow
         {
             var notesItem = new MenuFlyoutItem
             {
-                Text = "View Notes",
+                Text = "참고 사항 보기",
                 Tag = card,
             };
             notesItem.Click += async (s, ev) =>
@@ -755,7 +755,7 @@ public sealed partial class MainWindow
         menu.Items.Add(new MenuFlyoutSeparator());
         var shortcutItem = new MenuFlyoutItem
         {
-            Text = "Create Desktop Shortcut",
+            Text = "바탕 화면 바로 가기 만들기",
             Tag  = card,
         };
         shortcutItem.Click += async (s, ev) => await CreateDesktopShortcutAsync(card);
@@ -774,8 +774,8 @@ public sealed partial class MainWindow
                 card.GameName, card, _gameNameService, ViewModel.Manifest, http, pcgw);
 
             var msg = lnkPath != null
-                ? $"Shortcut created on Desktop for {card.GameName}"
-                : $"Failed to create shortcut for {card.GameName}";
+                ? $"바탕 화면에 {card.GameName} 바로 가기를 만들었습니다"
+                : $"{card.GameName} 바로 가기를 만들지 못했습니다";
             ShowStatusBarMessage(msg, TimeSpan.FromSeconds(8));
         }
         catch (Exception ex)
@@ -1007,7 +1007,7 @@ public sealed partial class MainWindow
             var currentQuery = SearchBox.Text?.Trim() ?? "";
             if (string.IsNullOrEmpty(currentQuery)) return;
 
-            var nameBox = new TextBox { PlaceholderText = "Filter name", Text = currentQuery, Width = 350 };
+            var nameBox = new TextBox { PlaceholderText = "필터 이름", Text = currentQuery, Width = 350 };
             var errorText = new TextBlock
             {
                 Text = "",
@@ -1019,7 +1019,7 @@ public sealed partial class MainWindow
 
             var dialog = new ContentDialog
             {
-                Title = "Save Custom Filter",
+                Title = "사용자 지정 필터 저장",
                 Content = new StackPanel
                 {
                     Spacing = 8,
@@ -1027,7 +1027,7 @@ public sealed partial class MainWindow
                     {
                         new TextBlock
                         {
-                            Text = $"Save the current search \"{currentQuery}\" as a custom filter:",
+                            Text = $"현재 검색 \"{currentQuery}\"을(를) 사용자 지정 필터로 저장:",
                             TextWrapping = TextWrapping.Wrap,
                             Foreground = Brush(ResourceKeys.TextSecondaryBrush),
                         },
@@ -1035,8 +1035,8 @@ public sealed partial class MainWindow
                         errorText,
                     }
                 },
-                PrimaryButtonText = "Save",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "저장",
+                CloseButtonText = "취소",
                 XamlRoot = Content.XamlRoot,
                 Background = Brush(ResourceKeys.SurfaceToolbarBrush),
                 RequestedTheme = ElementTheme.Dark,
@@ -1048,14 +1048,14 @@ public sealed partial class MainWindow
                 var name = nameBox.Text?.Trim() ?? "";
                 if (string.IsNullOrEmpty(name))
                 {
-                    errorText.Text = "Please enter a filter name.";
+                    errorText.Text = "필터 이름을 입력하세요.";
                     errorText.Visibility = Visibility.Visible;
                     args.Cancel = true;
                     return;
                 }
                 if (ViewModel.Filter.CustomFilterNameExists(name))
                 {
-                    errorText.Text = $"A filter named \"{name}\" already exists.";
+                    errorText.Text = $"\"{name}\" 필터가 이미 있습니다.";
                     errorText.Visibility = Visibility.Visible;
                     args.Cancel = true;
                     return;
@@ -1111,12 +1111,12 @@ public sealed partial class MainWindow
 
             chip.Click += CustomFilterChip_Click;
             ToolTipService.SetToolTip(chip, string.IsNullOrWhiteSpace(filter.Query)
-                ? "Saved filter.\nRight-click to delete."
-                : $"Saved filter: \"{filter.Query}\"\nRight-click to delete.");
+                ? "저장된 필터.\n삭제하려면 마우스 오른쪽 버튼을 클릭하세요."
+                : $"저장된 필터: \"{filter.Query}\"\n삭제하려면 마우스 오른쪽 버튼을 클릭하세요.");
 
             // Right-click context menu with "Delete" option (Req 5.1–5.5)
             var flyout = new MenuFlyout();
-            var deleteItem = new MenuFlyoutItem { Text = "Delete" };
+            var deleteItem = new MenuFlyoutItem { Text = "삭제" };
             deleteItem.Click += (s, args) =>
             {
                 ViewModel.Filter.RemoveCustomFilter(chipName);
@@ -1192,10 +1192,10 @@ public sealed partial class MainWindow
                     var ofn = new NativeInterop.OpenFileName();
                     ofn.structSize = System.Runtime.InteropServices.Marshal.SizeOf(ofn);
                     ofn.hwndOwner = hwnd;
-                    ofn.filter = "Executables (*.exe)\0*.exe\0All Files (*.*)\0*.*\0";
+                    ofn.filter = "실행 파일 (*.exe)\0*.exe\0모든 파일 (*.*)\0*.*\0";
                     ofn.file = new string(new char[260]);
                     ofn.maxFile = ofn.file.Length;
-                    ofn.title = "Select Game Executable";
+                    ofn.title = "게임 실행 파일 선택";
                     ofn.flags = 0x00080000 | 0x00001000; // OFN_EXPLORER | OFN_FILEMUSTEXIST
 
                     return NativeInterop.GetOpenFileName(ref ofn) ? ofn.file.TrimEnd('\0') : null;
@@ -1222,19 +1222,19 @@ public sealed partial class MainWindow
             nameBox.SelectAll();
             var nameDialog = new ContentDialog
             {
-                Title           = "Name This Game",
+                Title           = "게임 이름 지정",
                 Content         = new StackPanel
                 {
                     Spacing = 10,
                     Children =
                     {
-                        new TextBlock { Text = $"Selected: {filePath}", TextWrapping = TextWrapping.Wrap, Foreground = Brush(ResourceKeys.TextSecondaryBrush), FontSize = 11 },
-                        new TextBlock { Text = "Enter the game name:", TextWrapping = TextWrapping.Wrap, Foreground = Brush(ResourceKeys.TextSecondaryBrush) },
+                        new TextBlock { Text = $"선택됨: {filePath}", TextWrapping = TextWrapping.Wrap, Foreground = Brush(ResourceKeys.TextSecondaryBrush), FontSize = 11 },
+                        new TextBlock { Text = "게임 이름을 입력하세요:", TextWrapping = TextWrapping.Wrap, Foreground = Brush(ResourceKeys.TextSecondaryBrush) },
                         nameBox
                     }
                 },
-                PrimaryButtonText   = "Add Game",
-                CloseButtonText     = "Cancel",
+                PrimaryButtonText   = "게임 추가",
+                CloseButtonText     = "취소",
                 XamlRoot            = Content.XamlRoot,
                 Background          = Brush(ResourceKeys.SurfaceToolbarBrush),
                 RequestedTheme      = ElementTheme.Dark,
@@ -1302,17 +1302,17 @@ public sealed partial class MainWindow
             {
                 var warningDialog = new ContentDialog
                 {
-                    Title = "⚠ ReShade Addons",
+                    Title = "⚠ ReShade 애드온",
                     Content = new TextBlock
                     {
-                        Text = "ReShade addons are advanced features intended for experienced users who understand what they are.\n\n" +
-                               "Addons can modify game rendering behaviour and may cause instability. " +
-                               "Only proceed if you are comfortable managing ReShade addons.",
+                        Text = "ReShade 애드온은 그 기능을 이해하는 숙련된 사용자를 위한 고급 기능입니다.\n\n" +
+                               "애드온은 게임 렌더링 동작을 변경할 수 있으며 불안정을 일으킬 수 있습니다. " +
+                               "ReShade 애드온 관리에 익숙한 경우에만 진행하세요.",
                         TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
                         MaxWidth = 450,
                     },
-                    PrimaryButtonText = "Continue",
-                    CloseButtonText = "Cancel",
+                    PrimaryButtonText = "계속",
+                    CloseButtonText = "취소",
                     XamlRoot = Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 };

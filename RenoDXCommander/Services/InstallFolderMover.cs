@@ -94,17 +94,17 @@ public static class InstallFolderMover
     /// </summary>
     public static string? Preflight(FolderMovePlan plan)
     {
-        if (!Directory.Exists(plan.OldDir)) return $"old folder '{plan.OldDir}' no longer exists";
-        if (!Directory.Exists(plan.NewDir)) return $"new folder '{plan.NewDir}' doesn't exist";
-        if (IsWindowsApps(plan.NewDir)) return "the new folder is a protected WindowsApps folder";
-        if (SamePath(plan.OldDir, plan.NewDir)) return "the old and new folders are the same";
-        if (!CanWrite(plan.NewDir)) return $"RHI can't write to '{plan.NewDir}'";
-        if (!CanWrite(plan.OldDir)) return $"RHI can't write to '{plan.OldDir}'";
+        if (!Directory.Exists(plan.OldDir)) return $"이전 폴더 '{plan.OldDir}'이(가) 더 이상 존재하지 않음";
+        if (!Directory.Exists(plan.NewDir)) return $"새 폴더 '{plan.NewDir}'이(가) 존재하지 않음";
+        if (IsWindowsApps(plan.NewDir)) return "새 폴더가 보호된 WindowsApps 폴더임";
+        if (SamePath(plan.OldDir, plan.NewDir)) return "이전 폴더와 새 폴더가 같음";
+        if (!CanWrite(plan.NewDir)) return $"BONG DLSS5가 '{plan.NewDir}'에 쓸 수 없음";
+        if (!CanWrite(plan.OldDir)) return $"BONG DLSS5가 '{plan.OldDir}'에 쓸 수 없음";
 
         foreach (var path in FilesTouched(plan))
         {
             var err = TryOpenExclusive(path);
-            if (err != null) return $"'{path}' is in use or locked ({err})";
+            if (err != null) return $"'{path}'이(가) 사용 중이거나 잠겨 있음 ({err})";
         }
         return null;
     }
@@ -220,7 +220,7 @@ public static class InstallFolderMover
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or ArgumentException or NotSupportedException)
         {
-            result.AbortReason = $"move failed part-way and was undone — {ex.Message}";
+            result.AbortReason = $"이동 도중 실패하여 되돌렸음 — {ex.Message}";
             CrashReporter.Log($"{Tag} Failed moving '{plan.OldDir}' → '{plan.NewDir}' — {ex.Message}; undoing");
             journal.Rollback();
             result.Moved.Clear(); result.Restored.Clear(); result.Removed.Clear(); result.GroupsTouched.Clear();

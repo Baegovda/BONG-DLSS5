@@ -104,7 +104,7 @@ public static class OsPresetService
         new()
         {
             Id = "RealDlssFg", Name = "Real DLSS FG",
-            Description = "NVIDIA's own DLSS frame generation through OptiScaler, with Reflex forced on. For RTX 40 and 50 cards.",
+            Description = "OptiScaler를 통한 NVIDIA 자체 DLSS 프레임 생성으로, Reflex가 강제로 켜집니다. RTX 40 및 50 시리즈용.",
             FgEnabled = "true", FgInput = "upscaler", FgOutput = "dlssg", FgNvngxReplacement = "None",
             DeployStreamline = true, DeployDlssEnabler = true, StreamlineVersion = "latest",
             HudFix = "true", ForceReflex = "2", UseGamesReflexMarkers = "false",
@@ -112,7 +112,7 @@ public static class OsPresetService
         new()
         {
             Id = "DlssEnablerFg", Name = "DLSS Enabler FG",
-            Description = "DLSS frame generation through DLSS Enabler, for cards without DLSS frame generation.",
+            Description = "DLSS 프레임 생성을 지원하지 않는 카드를 위해 DLSS Enabler를 통해 DLSS 프레임 생성을 사용합니다.",
             FgEnabled = "true", FgInput = "upscaler", FgOutput = "dlssg", FgNvngxReplacement = "Arturs",
             DeployStreamline = true, DeployDlssEnabler = true, StreamlineVersion = "latest",
             HudFix = "true", ForceReflex = "0", UseGamesReflexMarkers = "true",
@@ -120,7 +120,7 @@ public static class OsPresetService
         new()
         {
             Id = "UmfgXefg", Name = "UMFG XeFG",
-            Description = "XeSS frame generation beyond 2x with Universal MFG Unlocker, which is installed if it's missing.",
+            Description = "Universal MFG Unlocker로 2배를 넘는 XeSS 프레임 생성을 사용합니다. 없으면 자동으로 설치됩니다.",
             FgEnabled = "true", FgInput = "upscaler", FgOutput = "xefg",
             DeployStreamline = true, DeployDlssEnabler = true, StreamlineVersion = "latest",
             HudFix = "true", ForceReflex = "0", UseGamesReflexMarkers = "true",
@@ -136,8 +136,8 @@ public static class OsPresetService
     };
 
     private const string AnrFgDescription =
-        "Apex Neural Rendering frame generation (beta) in place of the game's DLSS frame generation. "
-        + "Needs OptiScaler Nightly (or a build based on a recent Nightly) and a game with DLSS frame generation; turn on DLSS frame generation in the game.";
+        "게임의 DLSS 프레임 생성 대신 Apex Neural Rendering 프레임 생성(베타)을 사용합니다. "
+        + "OptiScaler Nightly(또는 최신 Nightly 기반 빌드)와 DLSS 프레임 생성을 지원하는 게임이 필요하며, 게임에서 DLSS 프레임 생성을 켜야 합니다.";
 
     /// <summary>The ready-made presets: fetched, else cached, else built-in.</summary>
     public static IReadOnlyList<OsPreset> ManifestPresets

@@ -33,9 +33,9 @@ public partial class DragDropHandler
         {
             var errDialog = new ContentDialog
             {
-                Title = "7-Zip Not Found",
-                Content = "Cannot extract archive — 7-Zip was not found. Please reinstall RDXC.",
-                CloseButtonText = "OK",
+                Title = "7-Zip을 찾을 수 없음",
+                Content = "압축을 풀 수 없습니다 — 7-Zip을 찾을 수 없습니다. RDXC를 재설치하세요.",
+                CloseButtonText = "확인",
                 XamlRoot = _window.Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -93,9 +93,9 @@ public partial class DragDropHandler
                 _crashReporter.Log($"[DragDropHandler.ProcessDroppedArchive] 7z exit code {proc.ExitCode}");
                 var failDialog = new ContentDialog
                 {
-                    Title = "Archive Extraction Failed",
-                    Content = $"Failed to extract '{archiveName}'. The file may be corrupt or in an unsupported format.",
-                    CloseButtonText = "OK",
+                    Title = "압축 풀기 실패",
+                    Content = $"'{archiveName}'의 압축을 풀지 못했습니다. 파일이 손상되었거나 지원되지 않는 형식일 수 있습니다.",
+                    CloseButtonText = "확인",
                     XamlRoot = _window.Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 };
@@ -124,9 +124,9 @@ public partial class DragDropHandler
                 _crashReporter.Log($"[DragDropHandler.ProcessDroppedArchive] No addon files found in '{archiveName}'");
                 var noAddonDialog = new ContentDialog
                 {
-                    Title = "No Addon Found",
-                    Content = $"No .addon64, .addon32, or .addon files were found inside '{archiveName}'.",
-                    CloseButtonText = "OK",
+                    Title = "애드온을 찾을 수 없음",
+                    Content = $"'{archiveName}' 안에서 .addon64, .addon32, .addon 파일을 찾을 수 없습니다.",
+                    CloseButtonText = "확인",
                     XamlRoot = _window.Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 };
@@ -148,7 +148,7 @@ public partial class DragDropHandler
                 var combo = new ComboBox
                 {
                     HorizontalAlignment = HorizontalAlignment.Stretch,
-                    PlaceholderText = "Select addon to install...",
+                    PlaceholderText = "설치할 애드온 선택...",
                 };
                 foreach (var af in addonFiles)
                     combo.Items.Add(new ComboBoxItem { Content = Path.GetFileName(af), Tag = af });
@@ -156,10 +156,10 @@ public partial class DragDropHandler
 
                 var pickDialog = new ContentDialog
                 {
-                    Title = $"Multiple Addons in '{archiveName}'",
+                    Title = $"'{archiveName}'에 애드온이 여러 개 있음",
                     Content = combo,
-                    PrimaryButtonText = "Install",
-                    CloseButtonText = "Cancel",
+                    PrimaryButtonText = "설치",
+                    CloseButtonText = "취소",
                     XamlRoot = _window.Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 };
@@ -192,18 +192,18 @@ public partial class DragDropHandler
                     };
                     var lumaPickDialog = new ContentDialog
                     {
-                        Title = "🌙 Install Luma Addon",
+                        Title = "🌙 Luma 애드온 설치",
                         Content = new StackPanel
                         {
                             Spacing = 8,
                             Children =
                             {
-                                new TextBlock { Text = $"Install {archiveName} to:", TextWrapping = TextWrapping.Wrap, FontSize = 12 },
+                                new TextBlock { Text = $"{archiveName} 설치 위치:", TextWrapping = TextWrapping.Wrap, FontSize = 12 },
                                 lumaCombo,
                             }
                         },
-                        PrimaryButtonText = "Install",
-                        CloseButtonText = "Cancel",
+                        PrimaryButtonText = "설치",
+                        CloseButtonText = "취소",
                         XamlRoot = _window.Content.XamlRoot,
                         RequestedTheme = ElementTheme.Dark,
                     };
@@ -249,9 +249,9 @@ public partial class DragDropHandler
         {
             var noGamesDialog = new ContentDialog
             {
-                Title = "No Games Available",
-                Content = "No games are currently detected. Add a game first.",
-                CloseButtonText = "OK",
+                Title = "사용 가능한 게임 없음",
+                Content = "현재 감지된 게임이 없습니다. 먼저 게임을 추가하세요.",
+                CloseButtonText = "확인",
                 XamlRoot = _window.Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -263,7 +263,7 @@ public partial class DragDropHandler
         var combo = new ComboBox
         {
             HorizontalAlignment = HorizontalAlignment.Stretch,
-            PlaceholderText = "Select a game...",
+            PlaceholderText = "게임 선택...",
         };
 
         // Sort alphabetically and populate
@@ -317,7 +317,7 @@ public partial class DragDropHandler
         var panel = new StackPanel { Spacing = 12 };
         panel.Children.Add(new TextBlock
         {
-            Text = $"Install {addonFileName} to a game folder.",
+            Text = $"{addonFileName}을(를) 게임 폴더에 설치합니다.",
             TextWrapping = TextWrapping.Wrap,
             FontSize = 13,
             Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
@@ -326,10 +326,10 @@ public partial class DragDropHandler
 
         var pickDialog = new ContentDialog
         {
-            Title = isLumaAddon ? "🌙 Install Luma Addon" : "📦 Install RenoDX Addon",
+            Title = isLumaAddon ? "🌙 Luma 애드온 설치" : "📦 RenoDX 애드온 설치",
             Content = panel,
-            PrimaryButtonText = "Next",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = "다음",
+            CloseButtonText = "취소",
             XamlRoot = _window.Content.XamlRoot,
             RequestedTheme = ElementTheme.Dark,
         };
@@ -341,9 +341,9 @@ public partial class DragDropHandler
         {
             var noSelection = new ContentDialog
             {
-                Title = "No Game Selected",
-                Content = "Please select a game to install the addon to.",
-                CloseButtonText = "OK",
+                Title = "선택된 게임 없음",
+                Content = "애드온을 설치할 게임을 선택하세요.",
+                CloseButtonText = "확인",
                 XamlRoot = _window.Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -384,26 +384,26 @@ public partial class DragDropHandler
         catch (Exception ex) { _crashReporter.Log($"[DragDropHandler.ProcessDroppedAddon] Failed to check existing addons in '{installPath}' — {ex.Message}"); }
 
         // Confirmation dialog
-        var warningText = $"Are you sure you want to install {addonFileName} for {gameName}?";
+        var warningText = $"{gameName}에 {addonFileName}을(를) 설치하시겠습니까?";
         if (!string.IsNullOrEmpty(existingAddon))
-            warningText += $"\n\nThis will replace the existing addon: {existingAddon}";
-        warningText += $"\n\nInstall path: {installPath}";
+            warningText += $"\n\n기존 애드온을 대체합니다: {existingAddon}";
+        warningText += $"\n\n설치 경로: {installPath}";
 
         // Control Ultimate Edition — inject mod-specific warning into the confirm dialog
-        string confirmTitle = "⚠ Confirm Addon Install";
+        string confirmTitle = "⚠ 애드온 설치 확인";
         if (ControlUePostInstallService.IsControlAddon(addonFileName))
         {
-            confirmTitle = "⚠ Control UE — Not an HDR Mod";
-            warningText = "This is NOT an HDR mod.\n\n"
-                + "It fixes RT noise using Ray Reconstruction. Two strategies (pick one):\n"
-                + "• Turn off the in-game RT denoiser — use DLSS SR preset M or L\n"
-                + "• Use Ray Reconstruction with extra inputs from the game's shaders\n\n"
-                + "Installing will also:\n"
-                + "• Upgrade DLSS and deploy nvngx_dlssd.dll\n"
-                + "• Set renderer.ini HDR preset to the correct value\n"
-                + "• Clear the DLSS SR preset in the NVIDIA driver profile\n\n"
-                + "These changes are not reverted on uninstall.\n\n"
-                + $"Install path: {installPath}";
+            confirmTitle = "⚠ Control UE — HDR 모드 아님";
+            warningText = "이것은 HDR 모드가 아닙니다.\n\n"
+                + "레이 재구성을 사용해 RT 노이즈를 수정합니다. 두 가지 방법(하나 선택):\n"
+                + "• 게임 내 RT 디노이저 끄기 — DLSS SR 프리셋 M 또는 L 사용\n"
+                + "• 게임 셰이더의 추가 입력과 함께 레이 재구성 사용\n\n"
+                + "설치 시 다음 작업도 수행합니다:\n"
+                + "• DLSS 업그레이드 및 nvngx_dlssd.dll 배포\n"
+                + "• renderer.ini HDR 프리셋을 올바른 값으로 설정\n"
+                + "• NVIDIA 드라이버 프로필의 DLSS SR 프리셋 지우기\n\n"
+                + "이 변경 사항은 제거 시 되돌려지지 않습니다.\n\n"
+                + $"설치 경로: {installPath}";
         }
 
         var confirmDialog = new ContentDialog
@@ -415,8 +415,8 @@ public partial class DragDropHandler
                 TextWrapping = TextWrapping.Wrap,
                 FontSize = 13,
             },
-            PrimaryButtonText = "Install",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = "설치",
+            CloseButtonText = "취소",
             XamlRoot = _window.Content.XamlRoot,
             RequestedTheme = ElementTheme.Dark,
         };
@@ -633,9 +633,9 @@ public partial class DragDropHandler
 
             var successDialog = new ContentDialog
             {
-                Title = "✅ Addon Installed",
-                Content = $"{addonFileName} has been installed for {gameName}.",
-                CloseButtonText = "OK",
+                Title = "✅ 애드온 설치됨",
+                Content = $"{gameName}에 {addonFileName}을(를) 설치했습니다.",
+                CloseButtonText = "확인",
                 XamlRoot = _window.Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -646,9 +646,9 @@ public partial class DragDropHandler
             _crashReporter.Log($"[DragDropHandler.ProcessDroppedAddon] Install failed — {ex.Message}");
             var errDialog = new ContentDialog
             {
-                Title = "❌ Install Failed",
-                Content = $"Failed to install addon: {ex.Message}",
-                CloseButtonText = "OK",
+                Title = "❌ 설치 실패",
+                Content = $"애드온을 설치하지 못했습니다: {ex.Message}",
+                CloseButtonText = "확인",
                 XamlRoot = _window.Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -666,29 +666,29 @@ public partial class DragDropHandler
     /// </summary>
     private async Task<bool> OfferCustomOptiScalerBuildAsync(string archivePath, string archiveName, string? sourceUrl)
     {
-        var name = await OsCustomBuildDialogs.AskNameAsync(_window.Content.XamlRoot, "Add custom OptiScaler build?",
+        var name = await OsCustomBuildDialogs.AskNameAsync(_window.Content.XamlRoot, "사용자 지정 OptiScaler 빌드를 추가할까요?",
             OsCustomBuildService.SuggestName(sourceUrl ?? archivePath),
-            intro: $"{archiveName} contains an OptiScaler build. Add it to your custom OptiScaler builds? "
-                 + "You can then pick it in a game's OptiScaler settings. RHI never updates custom builds. Only add builds from people you trust.");
+            intro: $"{archiveName}에 OptiScaler 빌드가 들어 있습니다. 사용자 지정 OptiScaler 빌드에 추가할까요? "
+                 + "추가하면 게임의 OptiScaler 설정에서 선택할 수 있습니다. BONG DLSS5는 사용자 지정 빌드를 업데이트하지 않습니다. 신뢰할 수 있는 사람의 빌드만 추가하세요.");
         if (name == null) return false;
-        _window.ShowStatusBarMessage($"Adding custom OptiScaler build {name}...", TimeSpan.FromSeconds(30));
+        _window.ShowStatusBarMessage($"사용자 지정 OptiScaler 빌드 {name} 추가 중...", TimeSpan.FromSeconds(30));
         var result = await Task.Run(() => OsCustomBuildService.ImportAsync(archivePath, name, null, null, _window.LifetimeToken,
             originLabel: sourceUrl != null ? new Uri(sourceUrl).GetLeftPart(UriPartial.Path) : archiveName));
         var done = new ContentDialog
         {
-            Title = result.Build != null ? "Custom OptiScaler build added" : "Couldn't add it",
+            Title = result.Build != null ? "사용자 지정 OptiScaler 빌드 추가됨" : "추가할 수 없음",
             Content = new TextBlock
             {
                 Text = result.Build != null
-                    ? $"Added {result.Build.Label}. Pick it in a game's OptiScaler settings (Version), or as the Default version in Settings › Components."
+                    ? $"{result.Build.Label}을(를) 추가했습니다. 게임의 OptiScaler 설정(버전)에서 선택하거나, 설정 › 구성 요소에서 기본 버전으로 지정하세요."
                       + (result.Note != null ? Environment.NewLine + Environment.NewLine + result.Note : "")
-                    : result.Error ?? "Something went wrong.",
+                    : result.Error ?? "문제가 발생했습니다.",
                 TextWrapping = TextWrapping.Wrap,
             },
-            CloseButtonText = "OK",
+            CloseButtonText = "확인",
             XamlRoot = _window.Content.XamlRoot,
         };
-        _window.ShowStatusBarMessage(result.Build != null ? $"Added custom OptiScaler build {result.Build.Name}" : "Couldn't add the OptiScaler build", TimeSpan.FromSeconds(6));
+        _window.ShowStatusBarMessage(result.Build != null ? $"사용자 지정 OptiScaler 빌드 {result.Build.Name}을(를) 추가했습니다" : "OptiScaler 빌드를 추가할 수 없습니다", TimeSpan.FromSeconds(6));
         await DialogService.ShowSafeAsync(done);
         return result.Build != null;
     }
@@ -703,9 +703,9 @@ public partial class DragDropHandler
             _crashReporter.Log($"[DragDropHandler.ProcessDroppedUrl] Invalid URL: {url}");
             var errDialog = new ContentDialog
             {
-                Title = "❌ Invalid URL",
-                Content = "The dropped URL could not be parsed. Please check the link and try again.",
-                CloseButtonText = "OK",
+                Title = "❌ 잘못된 URL",
+                Content = "끌어다 놓은 URL을 해석할 수 없습니다. 링크를 확인하고 다시 시도하세요.",
+                CloseButtonText = "확인",
                 XamlRoot = _window.Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -720,9 +720,9 @@ public partial class DragDropHandler
             _crashReporter.Log($"[DragDropHandler.ProcessDroppedUrl] Could not extract filename from URL: {url}");
             var errDialog = new ContentDialog
             {
-                Title = "❌ Invalid URL",
-                Content = "Could not determine a filename from the dropped URL.",
-                CloseButtonText = "OK",
+                Title = "❌ 잘못된 URL",
+                Content = "끌어다 놓은 URL에서 파일 이름을 확인할 수 없습니다.",
+                CloseButtonText = "확인",
                 XamlRoot = _window.Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -764,18 +764,18 @@ public partial class DragDropHandler
                         };
                         var pickerDialog = new ContentDialog
                         {
-                            Title = "Install Luma Mod",
+                            Title = "Luma 모드 설치",
                             Content = new StackPanel
                             {
                                 Spacing = 8,
                                 Children =
                                 {
-                                    new TextBlock { Text = $"Luma mod detected: {filename}\n\nSelect game to install to:", TextWrapping = TextWrapping.Wrap, FontSize = 12 },
+                                    new TextBlock { Text = $"Luma 모드 감지됨: {filename}\n\n설치할 게임 선택:", TextWrapping = TextWrapping.Wrap, FontSize = 12 },
                                     combo,
                                 }
                             },
-                            PrimaryButtonText = "Install",
-                            CloseButtonText = "Cancel",
+                            PrimaryButtonText = "설치",
+                            CloseButtonText = "취소",
                             XamlRoot = _window.Content.XamlRoot,
                             RequestedTheme = ElementTheme.Dark,
                         };
@@ -812,9 +812,9 @@ public partial class DragDropHandler
             _crashReporter.Log($"[DragDropHandler.ProcessDroppedUrl] Unsupported extension '{ext}' for file '{filename}' from URL: {url}");
             var errDialog = new ContentDialog
             {
-                Title = "❌ Unsupported File Type",
-                Content = $"Only .addon64 and .addon32 files are supported.\n\nThe URL points to: {filename}",
-                CloseButtonText = "OK",
+                Title = "❌ 지원되지 않는 파일 형식",
+                Content = $".addon64 및 .addon32 파일만 지원됩니다.\n\nURL 대상: {filename}",
+                CloseButtonText = "확인",
                 XamlRoot = _window.Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -832,7 +832,7 @@ public partial class DragDropHandler
         // ── Step 4: Show progress dialog and download ─────────────────────────────
         var progressText = new TextBlock
         {
-            Text = $"Downloading {filename}...",
+            Text = $"{filename} 다운로드 중...",
             TextWrapping = TextWrapping.Wrap,
             Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
             FontSize = 13,
@@ -847,7 +847,7 @@ public partial class DragDropHandler
         };
         var progressDialog = new ContentDialog
         {
-            Title = "⬇ Downloading Addon",
+            Title = "⬇ 애드온 다운로드 중",
             Content = new StackPanel
             {
                 Spacing = 12,
@@ -876,9 +876,9 @@ public partial class DragDropHandler
                     await progressSession.DisposeAsync();
                     var errDialog = new ContentDialog
                     {
-                        Title = "❌ Download Failed",
-                        Content = $"The server returned HTTP {(int)response.StatusCode}.\n\nURL: {url}",
-                        CloseButtonText = "OK",
+                        Title = "❌ 다운로드 실패",
+                        Content = $"서버가 HTTP {(int)response.StatusCode}을(를) 반환했습니다.\n\nURL: {url}",
+                        CloseButtonText = "확인",
                         XamlRoot = _window.Content.XamlRoot,
                         RequestedTheme = ElementTheme.Dark,
                     };
@@ -910,14 +910,14 @@ public partial class DragDropHandler
                             _window.DispatcherQueue.TryEnqueue(() =>
                             {
                                 progressBar.Value = pct;
-                                progressText.Text = $"Downloading {filename}... {downloaded / 1024} KB ({pct:F0}%)";
+                                progressText.Text = $"{filename} 다운로드 중... {downloaded / 1024} KB ({pct:F0}%)";
                             });
                         }
                         else
                         {
                             _window.DispatcherQueue.TryEnqueue(() =>
                             {
-                                progressText.Text = $"Downloading {filename}... {downloaded / 1024} KB";
+                                progressText.Text = $"{filename} 다운로드 중... {downloaded / 1024} KB";
                             });
                         }
                     }
@@ -931,9 +931,9 @@ public partial class DragDropHandler
                 await progressSession.DisposeAsync();
                 var errDialog = new ContentDialog
                 {
-                    Title = "❌ Download Failed",
-                    Content = $"A network error occurred while downloading the addon.\n\n{ex.Message}",
-                    CloseButtonText = "OK",
+                    Title = "❌ 다운로드 실패",
+                    Content = $"애드온을 다운로드하는 중 네트워크 오류가 발생했습니다.\n\n{ex.Message}",
+                    CloseButtonText = "확인",
                     XamlRoot = _window.Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 };
@@ -946,9 +946,9 @@ public partial class DragDropHandler
                 await progressSession.DisposeAsync();
                 var errDialog = new ContentDialog
                 {
-                    Title = "❌ Download Timed Out",
-                    Content = "The download timed out. Please check your connection and try again.",
-                    CloseButtonText = "OK",
+                    Title = "❌ 다운로드 시간 초과",
+                    Content = "다운로드 시간이 초과되었습니다. 연결을 확인하고 다시 시도하세요.",
+                    CloseButtonText = "확인",
                     XamlRoot = _window.Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 };
@@ -969,9 +969,9 @@ public partial class DragDropHandler
                 await progressSession.DisposeAsync();
                 var errDialog = new ContentDialog
                 {
-                    Title = "❌ Invalid Addon File",
-                    Content = "The downloaded file is not a valid addon binary. The server may have returned an error page.",
-                    CloseButtonText = "OK",
+                    Title = "❌ 잘못된 애드온 파일",
+                    Content = "다운로드한 파일이 올바른 애드온 바이너리가 아닙니다. 서버가 오류 페이지를 반환했을 수 있습니다.",
+                    CloseButtonText = "확인",
                     XamlRoot = _window.Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 };

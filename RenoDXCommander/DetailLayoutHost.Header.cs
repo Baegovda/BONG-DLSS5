@@ -66,15 +66,15 @@ internal sealed partial class DetailLayoutHost
         // Screenshots (Spotlight only): opens the game's screenshots in the side panel
         _hShots = new Button { Width = 36, Padding = new Thickness(0), Content = TabsTheme.Icon("", 16) }; // photo
         TabsTheme.Apply(_hShots, TabsTheme.IconButton with { Fg = TabsTheme.TextSecondary }, height: 36);
-        ToolTipService.SetToolTip(_hShots, "Screenshots");
-        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(_hShots, "Screenshots");
+        ToolTipService.SetToolTip(_hShots, "스크린샷");
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(_hShots, "스크린샷");
         _hShots.Click += (s, e) => OpenPanel(ScreenshotsKey);
 
         // Game settings (Spotlight only): per-game versions of Settings-page options, in the side panel
         _hGameSettings = new Button { Width = 36, Padding = new Thickness(0), Content = TabsTheme.Icon("", 16) }; // cog
         TabsTheme.Apply(_hGameSettings, TabsTheme.IconButton with { Fg = TabsTheme.TextSecondary }, height: 36);
-        ToolTipService.SetToolTip(_hGameSettings, "Game settings");
-        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(_hGameSettings, "Game settings");
+        ToolTipService.SetToolTip(_hGameSettings, "게임 설정");
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(_hGameSettings, "게임 설정");
         _hGameSettings.Click += (s, e) => OpenPanel(GameSettingsKey);
 
         var titleRow = new WrapPanel { HorizontalSpacing = 12, VerticalSpacing = 8 };
@@ -94,8 +94,8 @@ internal sealed partial class DetailLayoutHost
             TextWrapping = TextWrapping.WrapWholeWords,
             VerticalAlignment = VerticalAlignment.Center,
         };
-        var openFolder = MakeLink("Open folder", e => w.HeaderOpenFolder(e), 12, folderIcon: true);
-        _hConfig = MakeLink("Config folder", e => w.HeaderOpenConfig(e), 12, folderIcon: true);
+        var openFolder = MakeLink("폴더 열기", e => w.HeaderOpenFolder(e), 12, folderIcon: true);
+        _hConfig = MakeLink("설정 폴더", e => w.HeaderOpenConfig(e), 12, folderIcon: true);
         var pathRow = new WrapPanel { HorizontalSpacing = 8, VerticalSpacing = 4 };
         pathRow.Children.Add(_hPath);
         pathRow.Children.Add(openFolder);
@@ -110,7 +110,7 @@ internal sealed partial class DetailLayoutHost
         left.Children.Add(_hLinks);
 
         // ── Right: Launch split button, HDR / Resolution toggles ─────────────
-        _hLaunchText = new TextBlock { Text = "Launch", FontSize = 16, FontWeight = Microsoft.UI.Text.FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+        _hLaunchText = new TextBlock { Text = "실행", FontSize = 16, FontWeight = Microsoft.UI.Text.FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
         var launchContent = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 10, HorizontalAlignment = HorizontalAlignment.Center };
         launchContent.Children.Add(TabsTheme.Icon("", 15)); // play
         launchContent.Children.Add(_hLaunchText);
@@ -122,13 +122,13 @@ internal sealed partial class DetailLayoutHost
         launch.BorderThickness = new Thickness(0, 0, 1, 0); // divider before the chevron
         launch.Click += (s, e) => { w.HeaderLaunch(e); RefreshHeaderSoon(); };
         _hLaunchBtn = launch;
-        ToolTipService.SetToolTip(launch, "Launch the game");
+        ToolTipService.SetToolTip(launch, "게임 실행");
 
         var more = new Button { Width = 44, Padding = new Thickness(0), Content = TabsTheme.Icon("", 13) }; // chevron down
         TabsTheme.Apply(more, new TabsTheme.Look("#1A5231", "#2F7A4A", "#CFF5DC", "#205E3A", false), height: 48);
         more.CornerRadius = new CornerRadius(0);
         more.BorderThickness = new Thickness(0);
-        ToolTipService.SetToolTip(more, "Launch options");
+        ToolTipService.SetToolTip(more, "실행 옵션");
         more.Click += (s, e) => ShowLaunchMenu(more);
 
         var split = new Grid();
@@ -150,8 +150,8 @@ internal sealed partial class DetailLayoutHost
         _hToggles = new Grid { ColumnSpacing = 8 };
         _hToggles.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         _hToggles.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-        _hHdr = MakeToggle("HDR on launch", false, e => w.HeaderToggleHdr(e));
-        _hRes = MakeToggle("Resolution switch", false, e => w.HeaderToggleRes(e));
+        _hHdr = MakeToggle("실행 시 HDR", false, e => w.HeaderToggleHdr(e));
+        _hRes = MakeToggle("해상도 전환", false, e => w.HeaderToggleRes(e));
         _hToggles.Children.Add(_hHdr);
         Grid.SetColumn(_hRes, 1);
         _hToggles.Children.Add(_hRes);
@@ -230,12 +230,12 @@ internal sealed partial class DetailLayoutHost
         if (exe == null && _window.ViewModel.Manifest?.LaunchExeOverrides?.TryGetValue(card.GameName, out var m) == true) exe = m;
         var exeItem = new MenuFlyoutItem
         {
-            Text = "Executable: " + (string.IsNullOrWhiteSpace(exe) ? "auto-detect" : System.IO.Path.GetFileName(exe)),
+            Text = "실행 파일: " + (string.IsNullOrWhiteSpace(exe) ? "자동 감지" : System.IO.Path.GetFileName(exe)),
         };
         exeItem.Click += (s, e) => SelectTab("GameOverrides");
-        var argsItem = new MenuFlyoutItem { Text = "Launch arguments..." };
+        var argsItem = new MenuFlyoutItem { Text = "실행 인수..." };
         argsItem.Click += (s, e) => SelectTab("GameOverrides");
-        var shortcutItem = new MenuFlyoutItem { Text = "Create desktop shortcut" };
+        var shortcutItem = new MenuFlyoutItem { Text = "바탕 화면 바로 가기 만들기" };
         shortcutItem.Click += async (s, e) =>
         {
             try { await _window.HeaderCreateShortcutAsync(card); }
@@ -284,7 +284,7 @@ internal sealed partial class DetailLayoutHost
             _hFavIcon!.Glyph = fav ? "" : "";
             TabsTheme.Apply(_hFav, FavLook(fav), height: 36);
         }
-        ToolTipService.SetToolTip(_hFav, fav ? "Favourite. Click to remove it from Favourites." : "Add this game to Favourites");
+        ToolTipService.SetToolTip(_hFav, fav ? "즐겨찾기입니다. 클릭하면 즐겨찾기에서 제거됩니다." : "이 게임을 즐겨찾기에 추가");
 
         _hHide!.Content = w.HeaderHideText.Text;
         ToolTipService.SetToolTip(_hHide, ToolTipService.GetToolTip(w.HeaderHideButton) as string);
@@ -296,7 +296,7 @@ internal sealed partial class DetailLayoutHost
             var chip = MakeChip(w.HeaderSourceText.Text, accent: false);
             if (w.HeaderSourceBadge.Tag is int appId)
             {
-                TabsTheme.SetHandTip(chip, "Open the Steam Community page");
+                TabsTheme.SetHandTip(chip, "Steam 커뮤니티 페이지 열기");
                 MakeClickable(chip, () => _ = Windows.System.Launcher.LaunchUriAsync(new Uri($"https://steamcommunity.com/app/{appId}")));
             }
             _hChips.Children.Add(chip);
@@ -310,7 +310,7 @@ internal sealed partial class DetailLayoutHost
         if (w.HeaderApiBadges.Visibility == Visibility.Visible)
             foreach (var badge in w.HeaderApiBadges.Children)
                 if (FirstText(badge) is { } api) _hChips.Children.Add(MakeChip(api, accent: false));
-        if (card != null) _hChips.Children.Add(MakeChip(card.Is32Bit ? "32-bit" : "64-bit", accent: false));
+        if (card != null) _hChips.Children.Add(MakeChip(card.Is32Bit ? "32비트" : "64비트", accent: false));
         if (w.HeaderAuthorBadges.Visibility == Visibility.Visible)
             foreach (var badge in w.HeaderAuthorBadges.Children)
                 if (FirstText(badge) is { } author)
@@ -342,17 +342,17 @@ internal sealed partial class DetailLayoutHost
         }
         Link(w.HeaderNexusButton, "Nexus Mods", e => w.HeaderNexus(e));
         Link(w.HeaderPcgwButton, "PCGamingWiki", e => w.HeaderPcgw(e));
-        Link(w.HeaderUwButton, "Ultrawide fix", e => w.HeaderUwFix(e));
+        Link(w.HeaderUwButton, "울트라와이드 수정", e => w.HeaderUwFix(e));
         Link(w.HeaderUltraPlusButton, "Ultra+", e => w.HeaderUltraPlus(e));
         _hLinks.Visibility = _hLinks.Children.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
-        _hLaunchText!.Text = card?.IsRunning == true ? "Running" : "Launch";
+        _hLaunchText!.Text = card?.IsRunning == true ? "실행 중" : "실행";
 
         // HDR / Resolution: on when the Classic toggle shows its purple "on" colour
         bool hdrOn = TabsTheme.ToneOf(w.HeaderHdrText.Foreground) == TabsTheme.Tone.Purple;
         bool resOn = TabsTheme.ToneOf(w.HeaderResText.Foreground) == TabsTheme.Tone.Purple;
-        if (hdrOn != _hHdrOn || _hHdr!.Tag == null) { _hHdrOn = hdrOn; _hHdr = ReplaceToggle(_hHdr!, 0, "HDR on launch", hdrOn, e => w.HeaderToggleHdr(e)); }
-        if (resOn != _hResOn || _hRes!.Tag == null) { _hResOn = resOn; _hRes = ReplaceToggle(_hRes!, 1, "Resolution switch", resOn, e => w.HeaderToggleRes(e)); }
+        if (hdrOn != _hHdrOn || _hHdr!.Tag == null) { _hHdrOn = hdrOn; _hHdr = ReplaceToggle(_hHdr!, 0, "실행 시 HDR", hdrOn, e => w.HeaderToggleHdr(e)); }
+        if (resOn != _hResOn || _hRes!.Tag == null) { _hResOn = resOn; _hRes = ReplaceToggle(_hRes!, 1, "해상도 전환", resOn, e => w.HeaderToggleRes(e)); }
         ToolTipService.SetToolTip(_hHdr, ToolTipService.GetToolTip(w.HeaderHdrButton) as string);
         ToolTipService.SetToolTip(_hRes, ToolTipService.GetToolTip(w.HeaderResButton) as string);
         // Either can be hidden in Settings › Display: the other takes the whole row, neither = no row

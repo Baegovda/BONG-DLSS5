@@ -283,7 +283,7 @@ public class RtxEncoreService
         }
 
         Directory.CreateDirectory(_stagingDir);
-        progress?.Report(("Downloading RTX Encore...", 10));
+        progress?.Report(("RTX Encore 다운로드 중...", 10));
 
         var (version, downloadUrl) = await FetchLatestReleaseInfoAsync().ConfigureAwait(false);
         if (string.IsNullOrEmpty(version) || string.IsNullOrEmpty(downloadUrl))
@@ -292,7 +292,7 @@ public class RtxEncoreService
             return;
         }
 
-        progress?.Report(("Downloading RTX Encore...", 30));
+        progress?.Report(("RTX Encore 다운로드 중...", 30));
 
         try
         {
@@ -353,7 +353,7 @@ public class RtxEncoreService
             _crashReporter.Log($"[RtxEncoreService.EnsureStaging] Download failed — {ex.Message}");
         }
 
-        progress?.Report(("RTX Encore ready", 100));
+        progress?.Report(("RTX Encore 준비됨", 100));
     }
 
     // ── Install ───────────────────────────────────────────────────────────────

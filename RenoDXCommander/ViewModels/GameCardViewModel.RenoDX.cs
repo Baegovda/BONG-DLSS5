@@ -14,13 +14,13 @@ public partial class GameCardViewModel
         get
         {
             if (IsInstalling) return "Installing...";
-            if (IsRtxHdrEnabled) return "Configure RTX HDR";
-            if (IsAutoHdrEnabled) return "Configure Auto HDR";
+            if (IsRtxHdrEnabled) return "RTX HDR 구성";
+            if (IsAutoHdrEnabled) return "Auto HDR 구성";
             if (!IsRsInstalled && !ExcludeFromUpdateAllReShade && Mod?.SnapshotUrl != null && !IsExternalOnly)
                 return "⚠  ReShade required";
             // No mod available and nothing manually installed
             if (Mod?.SnapshotUrl == null && !IsExternalOnly && string.IsNullOrEmpty(InstalledAddonFileName))
-                return "No RenoDX mod available";
+                return "사용 가능한 RenoDX 모드 없음";
             var name = UseUeExtended ? "UE-Extended" : "RenoDX";
             return Status == GameStatus.UpdateAvailable ? $"⬆  Update {name}"
                  : Status == GameStatus.Installed       ? $"↺  Reinstall {name}"
@@ -44,7 +44,7 @@ public partial class GameCardViewModel
     public string InstallBtnBorderBrush => Status == GameStatus.UpdateAvailable ? "#3A2860" : "#2A4468";
 
     // UE-Extended toggle label and styling
-    public string UeExtendedLabel      => UseUeExtended ? "⚡ UE Extended" : "⚡ Standard UE";
+    public string UeExtendedLabel      => UseUeExtended ? "⚡ UE Extended" : "⚡ 표준 UE";
     public string UeExtendedBackground => UseUeExtended ? "#201838" : "#1E242C";
     public string UeExtendedForeground => UseUeExtended ? "#B898E8" : "#6B7A8E";
     public string UeExtendedBorderBrush => UseUeExtended ? "#3A2860" : "#283240";
@@ -106,7 +106,7 @@ public partial class GameCardViewModel
     public string RdxStatusText => IsInstalling ? "Installing…"
         : Status == GameStatus.UpdateAvailable ? (RdxInstalledVersion ?? "Update")
         : Status == GameStatus.Installed       ? (RdxInstalledVersion ?? "Installed")
-        : HdrToggleName != null                ? $"{HdrToggleName} on"
+        : HdrToggleName != null                ? $"{HdrToggleName} 켜짐"
         : Mod?.SnapshotUrl != null             ? "Ready" : "—";
     public string RdxStatusColor => IsInstalling ? "#D4A856"
         : Status == GameStatus.UpdateAvailable ? "#B898E8"

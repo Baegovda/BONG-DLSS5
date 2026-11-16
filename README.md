@@ -1,3 +1,16 @@
+# BONG DLSS5 (RHI 한글판)
+
+**BONG DLSS5**는 [RankFTW/RHI](https://github.com/RankFTW/RHI) 2.9.4를 기반으로 한 **비공식 한국어 빌드**입니다.
+
+- 화면의 UI 문구 전체를 한국어로 번역했습니다.
+- 앱 자동 업데이트는 꺼져 있습니다(공식 영어판으로 덮어써지지 않도록).
+- 실행 파일 이름(`RHI.exe`)과 설정 폴더(`%LOCALAPPDATA%\RHI`)는 원본과 같아서 기존 설정을 그대로 씁니다.
+- 원본과 같은 GPL-3.0 라이선스를 따릅니다. 원본 제작자: RankFTW.
+
+설치: [Releases](../../releases)에서 `RHI.exe`를 받아 원본 RHI 설치 폴더(`C:\Program Files\RHI`)의 `RHI.exe`를 교체하세요. 원본 RHI가 먼저 설치되어 있어야 합니다(.NET 8, Windows App Runtime 2.5 필요).
+
+---
+
 # RHI — ReShade HDR Installer
 
 **HDR mods, ReShade, DLSS and NVIDIA driver settings for your whole PC game library, from one window.**

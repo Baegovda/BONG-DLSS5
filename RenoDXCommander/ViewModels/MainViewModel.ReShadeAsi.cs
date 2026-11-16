@@ -96,7 +96,7 @@ public partial class MainViewModel
             {
                 AuxInstallService.BackupForeignDll(dest); // only moves recognised game/foreign DLLs aside
                 if (File.Exists(dest))
-                    return $"{target} already exists in the game folder. Remove it or choose another DLL name, then try again.";
+                    return $"게임 폴더에 {target}이(가) 이미 있습니다. 삭제하거나 다른 DLL 이름을 선택한 후 다시 시도하세요.";
             }
             File.Move(src, dest);
             AuxInstallService.RestoreForeignDll(src);
@@ -108,7 +108,7 @@ public partial class MainViewModel
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
             CrashReporter.Log($"[MainViewModel.RenameInstalledReShade] Failed '{current}' → '{target}' — {ex.Message}");
-            return $"Couldn't rename ReShade: {ex.Message}";
+            return $"ReShade 이름을 바꾸지 못했습니다: {ex.Message}";
         }
     }
 }

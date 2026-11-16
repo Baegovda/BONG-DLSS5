@@ -18,7 +18,7 @@ public sealed partial class MainWindow
     /// <summary>The user slot last picked in the dropdown, kept while the app runs (the cog reopens after Apply).</summary>
     private static int _osSelectedSlot = -1;
 
-    private const string OsPresetHint = "Start from a preset, then fine-tune the settings below. Hover a preset for what it does.";
+    private const string OsPresetHint = "프리셋으로 시작한 후 아래 설정을 세부 조정하세요. 프리셋에 마우스를 올리면 설명이 표시됩니다.";
 
     private FrameworkElement BuildOsPresetsPanel(OsCogContext ctx)
     {
@@ -47,7 +47,7 @@ public sealed partial class MainWindow
 
         panel.Children.Add(new TextBlock
         {
-            Text = "Presets",
+            Text = "프리셋",
             FontSize = 14,
             FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
             Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
@@ -62,7 +62,7 @@ public sealed partial class MainWindow
         var active = manifestPresets.FirstOrDefault(p => IsOsPresetActive(card, p));
 
         var description = MakeOsPresetCaption(active != null
-            ? $"In use: {active.Name}. {active.Description}".TrimEnd()
+            ? $"사용 중: {active.Name}. {active.Description}".TrimEnd()
             : OsPresetHint);
         string restingDescription = description.Text;
 
@@ -71,8 +71,8 @@ public sealed partial class MainWindow
         {
             var p = preset;
             bool isActive = ReferenceEquals(p, active);
-            var pill = MakeOsPresetPill(p.Name ?? "Preset", isActive);
-            ToolTipService.SetToolTip(pill, string.IsNullOrEmpty(p.Description) ? $"Apply {p.Name} to this game" : p.Description);
+            var pill = MakeOsPresetPill(p.Name ?? "프리셋", isActive);
+            ToolTipService.SetToolTip(pill, string.IsNullOrEmpty(p.Description) ? $"이 게임에 {p.Name} 적용" : p.Description);
             pill.PointerEntered += (_, _) => { if (!string.IsNullOrEmpty(p.Description)) description.Text = $"{p.Name}: {p.Description}"; };
             pill.PointerExited  += (_, _) => description.Text = restingDescription;
             pill.Click += async (_, _) =>
@@ -103,23 +103,23 @@ public sealed partial class MainWindow
                         }
                     }
                     foreach (var b in pills.Children.OfType<Button>()) b.IsEnabled = false;
-                    ShowStatus($"Applying {p.Name}...", true);
+                    ShowStatus($"{p.Name} 적용 중...", true);
                     ApplyOsPreset(card, p);
                     if (p.InstallUniversalMfg == true)
                     {
-                        ShowStatus($"Applying {p.Name}: installing Universal MFG Unlocker...", true);
+                        ShowStatus($"{p.Name} 적용 중: Universal MFG Unlocker 설치 중...", true);
                         var error = await ViewModel.EnsureUniversalMfgForPresetAsync(card);
                         RefreshExtrasIfSelected(card);
                         if (error != null)
                         {
-                            ShowStatus($"{p.Name} settings applied, but: {error}", false);
+                            ShowStatus($"{p.Name} 설정을 적용했지만 문제가 있습니다: {error}", false);
                             foreach (var b in pills.Children.OfType<Button>()) b.IsEnabled = true;
                             return;
                         }
                     }
                     if (p.InstallAnrFg == true)
                     {
-                        ShowStatus($"Applying {p.Name}: downloading and installing ANR FG...", true);
+                        ShowStatus($"{p.Name} 적용 중: ANR FG 다운로드 및 설치 중...", true);
                         string? error;
                         if (cogHidden)
                         {
@@ -127,13 +127,13 @@ public sealed partial class MainWindow
                             // then open the cog again
                             var progress = new ContentDialog
                             {
-                                Title = "Installing ANR FG",
+                                Title = "ANR FG 설치 중",
                                 Content = new StackPanel
                                 {
                                     Spacing = 12,
                                     Children =
                                     {
-                                        new TextBlock { Text = $"Applying {p.Name}: downloading and installing ANR FG...", TextWrapping = TextWrapping.Wrap },
+                                        new TextBlock { Text = $"{p.Name} 적용 중: ANR FG 다운로드 및 설치 중...", TextWrapping = TextWrapping.Wrap },
                                         new ProgressBar { IsIndeterminate = true, Height = 6 },
                                     },
                                 },
@@ -145,9 +145,9 @@ public sealed partial class MainWindow
                             if (error != null)
                                 await DialogService.ShowSafeAsync(new ContentDialog
                                 {
-                                    Title = "ANR FG wasn't installed",
-                                    Content = new TextBlock { Text = $"{p.Name} settings applied, but: {error}", TextWrapping = TextWrapping.Wrap },
-                                    CloseButtonText = "OK",
+                                    Title = "ANR FG가 설치되지 않음",
+                                    Content = new TextBlock { Text = $"{p.Name} 설정을 적용했지만 문제가 있습니다: {error}", TextWrapping = TextWrapping.Wrap },
+                                    CloseButtonText = "확인",
                                     XamlRoot = xamlRoot,
                                     RequestedTheme = ElementTheme.Dark,
                                 });
@@ -158,7 +158,7 @@ public sealed partial class MainWindow
                         error = await ViewModel.EnsureAnrFgForPresetAsync(card);
                         if (error != null)
                         {
-                            ShowStatus($"{p.Name} settings applied, but: {error}", false);
+                            ShowStatus($"{p.Name} 설정을 적용했지만 문제가 있습니다: {error}", false);
                             foreach (var b in pills.Children.OfType<Button>()) b.IsEnabled = true;
                             return;
                         }
@@ -169,20 +169,20 @@ public sealed partial class MainWindow
                 catch (Exception ex)
                 {
                     CrashReporter.Log($"[OsPreset.ApplyManifest] '{p.Name}' — {ex.Message}");
-                    ShowStatus($"Couldn't apply {p.Name}: {ex.Message}", false);
+                    ShowStatus($"{p.Name}을(를) 적용하지 못했습니다: {ex.Message}", false);
                     foreach (var b in pills.Children.OfType<Button>()) b.IsEnabled = true;
                 }
             };
             pills.Children.Add(pill);
         }
-        panel.Children.Add(MakeOsPresetLabel("Recommended"));
+        panel.Children.Add(MakeOsPresetLabel("권장"));
         panel.Children.Add(pills);
         panel.Children.Add(description);
 
         panel.Children.Add(new Border { Height = 1, Background = UIFactory.GetBrush(OsPresetPanelBorder) });
 
         // ── User slots ──────────────────────────────────────────────────────
-        panel.Children.Add(MakeOsPresetLabel("Your presets (shared by all games)"));
+        panel.Children.Add(MakeOsPresetLabel("내 프리셋 (모든 게임에서 공유)"));
         panel.Children.Add(BuildOsUserSlotsRow(ctx, ShowStatus));
         panel.Children.Add(status);
         return border;
@@ -192,20 +192,20 @@ public sealed partial class MainWindow
     {
         var slots = OsPresetService.Load();
         static string SlotLabel(OsPreset? p, int i) =>
-            p == null ? $"Slot {i + 1} (empty)" : string.IsNullOrWhiteSpace(p.Name) ? $"Slot {i + 1}" : p.Name!;
+            p == null ? $"슬롯 {i + 1} (비어 있음)" : string.IsNullOrWhiteSpace(p.Name) ? $"슬롯 {i + 1}" : p.Name!;
 
         if (_osSelectedSlot < 0 || _osSelectedSlot > 3)
             _osSelectedSlot = Math.Max(0, Array.FindIndex(slots, s => s != null));
 
         var combo = CogDialog.MakeCombo(Enumerable.Range(0, 4).Select(i => SlotLabel(slots[i], i)).ToList(), _osSelectedSlot);
         combo.HorizontalAlignment = HorizontalAlignment.Stretch;
-        ToolTipService.SetToolTip(combo, "Your own presets. Pick a slot, then Apply it to this game or save the current settings into it.");
+        ToolTipService.SetToolTip(combo, "내 프리셋입니다. 슬롯을 선택한 후 이 게임에 적용하거나 현재 설정을 저장하세요.");
 
-        var applyBtn = CogDialog.StyledButton("Apply", CogButtonKind.Primary, compact: true);
-        var saveBtn  = CogDialog.StyledButton("Save current", CogButtonKind.Secondary, compact: true);
+        var applyBtn = CogDialog.StyledButton("적용", CogButtonKind.Primary, compact: true);
+        var saveBtn  = CogDialog.StyledButton("현재 설정 저장", CogButtonKind.Secondary, compact: true);
         var moreBtn  = CogDialog.StyledButton("...", CogButtonKind.Secondary, compact: true);
-        ToolTipService.SetToolTip(moreBtn, "Rename or clear this slot");
-        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(moreBtn, "Rename or clear this slot");
+        ToolTipService.SetToolTip(moreBtn, "이 슬롯 이름 바꾸기 또는 비우기");
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(moreBtn, "이 슬롯 이름 바꾸기 또는 비우기");
 
         void Refresh()
         {
@@ -213,11 +213,11 @@ public sealed partial class MainWindow
             bool has = slots[i] != null;
             applyBtn.IsEnabled = has;
             applyBtn.Opacity = has ? 1.0 : CogDialog.DisabledOpacity;
-            saveBtn.Content = has ? "Overwrite" : "Save current";
-            ToolTipService.SetToolTip(applyBtn, has ? "Apply this preset to this game" : "This slot is empty. Save the current settings into it first.");
+            saveBtn.Content = has ? "덮어쓰기" : "현재 설정 저장";
+            ToolTipService.SetToolTip(applyBtn, has ? "이 게임에 이 프리셋 적용" : "빈 슬롯입니다. 먼저 현재 설정을 저장하세요.");
             ToolTipService.SetToolTip(saveBtn, has
-                ? "Replace this slot with the current settings (keeps its name)"
-                : "Save the current settings into this slot");
+                ? "이 슬롯을 현재 설정으로 교체 (이름 유지)"
+                : "현재 설정을 이 슬롯에 저장");
         }
         void RelabelSelected()
         {
@@ -242,7 +242,7 @@ public sealed partial class MainWindow
             catch (Exception ex)
             {
                 CrashReporter.Log($"[OsPreset.Apply] Slot {i + 1} — {ex.Message}");
-                showStatus($"Couldn't apply the preset: {ex.Message}", false);
+                showStatus($"프리셋을 적용하지 못했습니다: {ex.Message}", false);
                 return;
             }
             ReopenOsCog(ctx);
@@ -258,20 +258,20 @@ public sealed partial class MainWindow
                 OsPresetService.Save(slots);
                 RelabelSelected();
                 Refresh();
-                showStatus($"Saved the current settings to {SlotLabel(slots[i], i)}.", true);
+                showStatus($"현재 설정을 {SlotLabel(slots[i], i)}에 저장했습니다.", true);
             }
             catch (Exception ex)
             {
                 CrashReporter.Log($"[OsPreset.Save] Slot {i + 1} — {ex.Message}");
-                showStatus($"Couldn't save the preset: {ex.Message}", false);
+                showStatus($"프리셋을 저장하지 못했습니다: {ex.Message}", false);
             }
         };
 
         // "..." flyout: rename + clear
-        var nameBox = CogDialog.MakeTextBox("", "Preset name");
+        var nameBox = CogDialog.MakeTextBox("", "프리셋 이름");
         nameBox.MinWidth = 200;
-        var renameBtn = CogDialog.StyledButton("Rename", CogButtonKind.Primary, compact: true);
-        var clearBtn  = CogDialog.StyledButton("Clear slot", CogButtonKind.Danger, compact: true);
+        var renameBtn = CogDialog.StyledButton("이름 바꾸기", CogButtonKind.Primary, compact: true);
+        var clearBtn  = CogDialog.StyledButton("슬롯 비우기", CogButtonKind.Danger, compact: true);
         var flyoutPanel = new StackPanel { Spacing = 8 };
         flyoutPanel.Children.Add(CogDialog.Inline(nameBox, renameBtn));
         flyoutPanel.Children.Add(clearBtn);
@@ -309,7 +309,7 @@ public sealed partial class MainWindow
             RelabelSelected();
             Refresh();
             flyout.Hide();
-            showStatus($"Cleared slot {i + 1}.", true);
+            showStatus($"슬롯 {i + 1}을(를) 비웠습니다.", true);
         };
 
         Refresh();

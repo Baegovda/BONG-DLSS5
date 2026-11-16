@@ -199,9 +199,31 @@
     <SolidColorBrush x:Key="LaunchButtonFgBrush" Color="#FF6AE87A"/>
     <SolidColorBrush x:Key="LaunchButtonBorderBrush" Color="#FF2A5A30"/>
 
+    <!-- BongHub design tokens: floating glass cards (white alpha over the page, brighter top edge = lit glass)
+         and the blue-to-purple accent gradient. Alpha-only, so they sit on top of every colour theme. -->
+    <LinearGradientBrush x:Key="GlassCardFillBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#2CFFFFFF" Offset="0"/>
+        <GradientStop Color="#16FFFFFF" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GlassCardStrokeBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#44FFFFFF" Offset="0"/>
+        <GradientStop Color="#14FFFFFF" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AccentGradientBrush" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Color="#FF4C8AFE" Offset="0"/>
+        <GradientStop Color="#FFA98BFF" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AccentGradientHoverBrush" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Color="#FF6A9EFF" Offset="0"/>
+        <GradientStop Color="#FFB9A0FF" Offset="1"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="OnAccentTextBrush" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="ControlFillBrush" Color="#26FFFFFF"/>
+    <SolidColorBrush x:Key="ControlFillHoverBrush" Color="#38FFFFFF"/>
+
     <Style x:Key="SettingsCardStyle" TargetType="Border">
-        <Setter Property="Background" Value="{StaticResource SurfaceRaisedBrush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource BorderDefaultBrush}"/>
+        <Setter Property="Background" Value="{StaticResource GlassCardFillBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GlassCardStrokeBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="CornerRadius" Value="10"/>
         <Setter Property="Padding" Value="20,16"/>
@@ -282,9 +304,9 @@
         <Setter Property="controls:ButtonFade.Disabled" Value="True"/>
     </Style>
     <Style x:Key="SettingsPrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource SettingsButtonStyle}">
-        <Setter Property="Background" Value="{StaticResource AccentBlueBgBrush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource AccentBlueBorderBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource SettingsButtonBlueBrush}"/>
+        <Setter Property="Background" Value="{StaticResource AccentGradientBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GlassCardStrokeBrush}"/>
+        <Setter Property="Foreground" Value="White"/>
     </Style>
     <Style x:Key="SettingsDangerButtonStyle" TargetType="Button" BasedOn="{StaticResource SettingsButtonStyle}">
         <Setter Property="Background" Value="{StaticResource AccentRedBgBrush}"/>
@@ -312,7 +334,7 @@
          Layout constants
          ═══════════════════════════════════════════════════════════════════════ -->
     <x:Double x:Key="CardItemWidth">496</x:Double>
-    <CornerRadius x:Key="CardRadius">14</CornerRadius>
+    <CornerRadius x:Key="CardRadius">12</CornerRadius>
     <CornerRadius x:Key="ButtonRadius">8</CornerRadius>
     <CornerRadius x:Key="ChipRadius">8</CornerRadius>
     <CornerRadius x:Key="BadgeRadius">6</CornerRadius>

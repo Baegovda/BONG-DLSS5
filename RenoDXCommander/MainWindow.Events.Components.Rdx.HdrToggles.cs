@@ -12,7 +12,7 @@ namespace RenoDXCommander;
 
 public sealed partial class MainWindow
 {
-    private static List<string> RdxOffOn() => new() { "Off", "On" };
+    private static List<string> RdxOffOn() => new() { "꺼짐", "켜짐" };
 
     /// <summary>Adds the RTX HDR and Auto HDR sections to the RenoDX cog dialog.</summary>
     private async Task AddRdxHdrToggleSectionsAsync(CogDialog cog, GameCardViewModel card)
@@ -43,9 +43,9 @@ public sealed partial class MainWindow
         else gameNameService.RtxHdrGames.Remove(card.GameName);
         card.IsRtxHdrEnabled = isRtxHdrEnabled;
 
-        rtxHdrCombo = cog.AddCombo("Enable RTX HDR",
-            "NVIDIA RTX HDR for this game, set in its driver profile. Turning it on uninstalls RenoDX and turns off Auto HDR. " +
-            "Needs the NVIDIA App with Overlay and Game Filters enabled.",
+        rtxHdrCombo = cog.AddCombo("RTX HDR 사용",
+            "이 게임의 드라이버 프로필에 설정되는 NVIDIA RTX HDR입니다. 켜면 RenoDX가 제거되고 Auto HDR이 꺼집니다. " +
+            "NVIDIA App에서 오버레이와 게임 필터가 켜져 있어야 합니다.",
             RdxOffOn(), isRtxHdrEnabled ? 1 : 0, idx =>
         {
             bool enable = idx == 1;
@@ -150,9 +150,9 @@ public sealed partial class MainWindow
         card.IsAutoHdrEnabled = isAutoHdrEnabled;
         card.AutoHdrStrength  = autoHdrStrength;
 
-        autoHdrCombo = cog.AddCombo("Enable Auto HDR",
-            "Forces Windows 11 Auto HDR for this game through the registry, even when the global Auto HDR setting is off. " +
-            "Turning it on uninstalls RenoDX and turns off RTX HDR.",
+        autoHdrCombo = cog.AddCombo("Auto HDR 사용",
+            "전역 Auto HDR 설정이 꺼져 있어도 레지스트리를 통해 이 게임에 Windows 11 Auto HDR을 강제로 적용합니다. " +
+            "켜면 RenoDX가 제거되고 RTX HDR이 꺼집니다.",
             RdxOffOn(), isAutoHdrEnabled ? 1 : 0, idx =>
         {
             bool enableAh = idx == 1;

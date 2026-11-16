@@ -36,22 +36,22 @@ public partial class SettingsHandler
             row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star), MaxWidth = 210 });
             row.Children.Add(new TextBlock
             {
-                Text = "Controller support",
+                Text = "컨트롤러 지원",
                 Style = FindStyle("SettingsLabelStyle"),
                 VerticalAlignment = VerticalAlignment.Center,
             });
 
             var combo = new ComboBox { Style = FindStyle("SettingsComboStyle") };
-            combo.Items.Add(new ComboBoxItem { Content = "Off" });
-            combo.Items.Add(new ComboBoxItem { Content = "On" });
+            combo.Items.Add(new ComboBoxItem { Content = "꺼짐" });
+            combo.Items.Add(new ComboBoxItem { Content = "켜짐" });
             combo.SelectedIndex = ViewModel.Settings.ControllerSupport ? 1 : 0;
             ToolTipService.SetToolTip(combo,
-                "Use an Xbox or PlayStation controller in the Spotlight layout, only while RHI is the active window.\n"
-              + "D-pad or left stick: move   A: select   B: back   Y: Launch   X: game menu\n"
-              + "LB / RB: previous / next game (in the side panel and Settings: section)\n"
-              + "LT / RT: 10 games back / on (hold to keep going)   View: Filters   Menu: Settings\n"
-              + "Right stick: scroll   Click left stick: All / Installed / Favourites   Click right stick: back to the game's cover\n"
-              + "PlayStation controllers (DualShock 4, DualSense, DualSense Edge) work directly over USB or Bluetooth.");
+                "Spotlight 레이아웃에서 Xbox 또는 PlayStation 컨트롤러를 사용합니다 (BONG DLSS5가 활성 창일 때만).\n"
+              + "방향 패드 또는 왼쪽 스틱: 이동   A: 선택   B: 뒤로   Y: 실행   X: 게임 메뉴\n"
+              + "LB / RB: 이전 / 다음 게임 (사이드 패널 및 설정에서는 섹션)\n"
+              + "LT / RT: 10개 게임 뒤로 / 앞으로 (길게 누르면 계속)   보기: 필터   메뉴: 설정\n"
+              + "오른쪽 스틱: 스크롤   왼쪽 스틱 클릭: 전체 / 설치됨 / 즐겨찾기   오른쪽 스틱 클릭: 게임 커버로 돌아가기\n"
+              + "PlayStation 컨트롤러(DualShock 4, DualSense, DualSense Edge)는 USB 또는 Bluetooth로 바로 작동합니다.");
             combo.SelectionChanged += (s, e) =>
             {
                 if (combo.SelectedIndex < 0) return;

@@ -28,7 +28,7 @@ public partial class DetailPanelBuilder
         var shadersAddonsLeftColumn = new StackPanel { Spacing = 6 };
         shadersAddonsLeftColumn.Children.Add(new TextBlock
         {
-            Text = "Shaders and Addons",
+            Text = "셰이더 및 애드온",
             FontSize = 12,
             Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
             Margin = new Thickness(0, 0, 0, 4),
@@ -43,7 +43,7 @@ public partial class DetailPanelBuilder
 
         var shaderLabel = new TextBlock
         {
-            Text = "Shaders",
+            Text = "셰이더",
             FontSize = 11,
             Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
         };
@@ -66,7 +66,7 @@ public partial class DetailPanelBuilder
             IsEnabled = !card.UseNormalReShade,
         };
         ToolTipService.SetToolTip(addonModeCombo,
-            "Global = use global addon set. Select = pick per-game addons. Off = no addons for this game.");
+            "Global = 전역 애드온 세트 사용. Select = 게임별 애드온 선택. Off = 이 게임에 애드온 사용 안 함.");
 
         // Allow re-opening the Select picker when already on Select
         addonModeCombo.DropDownClosed += (s, ev) =>
@@ -106,14 +106,14 @@ public partial class DetailPanelBuilder
                 {
                     var infoDlg = new ContentDialog
                     {
-                        Title = "Select Addons",
+                        Title = "애드온 선택",
                         Content = new TextBlock
                         {
-                            Text = "Addon service is not yet wired. Complete Task 9.1 to enable addon selection.",
+                            Text = "애드온 서비스가 아직 연결되지 않았습니다. 애드온 선택을 사용하려면 Task 9.1을 완료하세요.",
                             FontSize = 13,
                             Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
                         },
-                        CloseButtonText = "OK",
+                        CloseButtonText = "확인",
                         XamlRoot = _window.Content.XamlRoot,
                         Background = UIFactory.Brush(ResourceKeys.SurfaceOverlayBrush),
                         RequestedTheme = ElementTheme.Dark,
@@ -165,7 +165,7 @@ public partial class DetailPanelBuilder
 
         var addonLabel = new TextBlock
         {
-            Text = "Addons",
+            Text = "애드온",
             FontSize = 11,
             Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
         };
@@ -173,7 +173,7 @@ public partial class DetailPanelBuilder
         // doesn't show tooltips on disabled controls, so the reason goes on the label.
         if (card.UseNormalReShade)
             ToolTipService.SetToolTip(addonLabel,
-                "Addons need the addon build of ReShade. Change the ReShade channel to enable this.");
+                "애드온을 사용하려면 애드온 빌드의 ReShade가 필요합니다. 사용하려면 ReShade 채널을 변경하세요.");
         Grid.SetRow(addonLabel, 0); Grid.SetColumn(addonLabel, 1);
         shaderAddonGrid.Children.Add(addonLabel);
         Grid.SetRow(addonModeCombo, 1); Grid.SetColumn(addonModeCombo, 1);
@@ -184,7 +184,7 @@ public partial class DetailPanelBuilder
         // "Select ReShade Preset" button
         var presetBtn = new Button
         {
-            Content = "Select ReShade Preset",
+            Content = "ReShade 프리셋 선택",
             FontSize = 12,
             Height = 32,
             HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -196,7 +196,7 @@ public partial class DetailPanelBuilder
             Margin = new Thickness(0, 8, 0, 0),
         };
         ToolTipService.SetToolTip(presetBtn,
-            "Pick .ini preset files to copy to this game's folder. Place presets in the reshade-presets folder.");
+            "이 게임 폴더에 복사할 .ini 프리셋 파일을 고르세요. 프리셋은 reshade-presets 폴더에 넣으세요.");
         presetBtn.Click += async (s, ev) =>
         {
             var selected = await PresetPopupHelper.ShowAsync(_window.Content.XamlRoot);
@@ -213,9 +213,9 @@ public partial class DetailPanelBuilder
                     {
                         var shaderDialog = new ContentDialog
                         {
-                            Title = "🔧 Install Shaders?",
-                            Content = "Also install the required shaders and textures?",
-                            PrimaryButtonText = "Yes",
+                            Title = "🔧 셰이더를 설치할까요?",
+                            Content = "필요한 셰이더와 텍스처도 함께 설치할까요?",
+                            PrimaryButtonText = "예",
                             CloseButtonText = "No",
                             XamlRoot = _window.Content.XamlRoot,
                             RequestedTheme = ElementTheme.Dark,
@@ -279,8 +279,8 @@ public partial class DetailPanelBuilder
                 : null); // exe scan deferred — label updates asynchronously
 
         var headerText = string.IsNullOrEmpty(effectiveExe)
-            ? "Launch executable"
-            : $"Launch executable  —  {effectiveExe}";
+            ? "실행 파일"
+            : $"실행 파일  —  {effectiveExe}";
         var exeHeaderText = new TextBlock
         {
             Text = headerText,
@@ -290,7 +290,7 @@ public partial class DetailPanelBuilder
             TextTrimming = TextTrimming.CharacterEllipsis,
         };
         ToolTipService.SetToolTip(exeHeaderText,
-            "The program RHI starts when you click Launch. Detected automatically unless you set one below.");
+            "실행을 클릭할 때 BONG DLSS5가 시작하는 프로그램입니다. 아래에서 지정하지 않으면 자동으로 감지됩니다.");
         launchExeHeaderPanel.Children.Add(exeHeaderText);
 
         // Async exe scan — updates the label without blocking the UI thread
@@ -313,7 +313,7 @@ public partial class DetailPanelBuilder
                     _window.DispatcherQueue?.TryEnqueue(() =>
                     {
                         if (_window.ViewModel.SelectedGame == card)
-                            exeHeaderText.Text = $"Launch executable  —  {scannedExe}";
+                            exeHeaderText.Text = $"실행 파일  —  {scannedExe}";
                     });
             });
         }
@@ -330,12 +330,12 @@ public partial class DetailPanelBuilder
         var launchExeBox = new TextBox
         {
             Text = currentLaunchExe,
-            PlaceholderText = "Auto-detect (or paste path)",
+            PlaceholderText = "자동 감지 (또는 경로 붙여 넣기)",
             FontSize = 11,
             HorizontalAlignment = HorizontalAlignment.Stretch,
         };
         ToolTipService.SetToolTip(launchExeBox,
-            "Override the executable used when launching this game. Leave blank for auto-detection (largest exe in install folder).");
+            "이 게임을 실행할 때 사용할 실행 파일을 재정의합니다. 비워 두면 자동 감지합니다(설치 폴더에서 가장 큰 exe).");
         launchExeBox.LostFocus += (s, ev) =>
         {
             var newPath = launchExeBox.Text.Trim();
@@ -351,13 +351,13 @@ public partial class DetailPanelBuilder
         var launchArgsBox = new TextBox
         {
             Text = currentLaunchArgs,
-            PlaceholderText = "Launch arguments",
+            PlaceholderText = "실행 인수",
             FontSize = 11,
             HorizontalAlignment = HorizontalAlignment.Stretch,
         };
-        var argsTooltip = "Command-line arguments passed to the game on launch. Saves on focus lost.";
+        var argsTooltip = "실행 시 게임에 전달되는 명령줄 인수입니다. 포커스를 잃으면 저장됩니다.";
         if (card.Source.Equals("Epic", StringComparison.OrdinalIgnoreCase))
-            argsTooltip += "\n\nNote: Setting arguments disables Epic protocol launch. EOS-protected games may fail to launch with arguments.";
+            argsTooltip += "\n\n참고: 인수를 설정하면 Epic 프로토콜 실행이 비활성화됩니다. EOS로 보호되는 게임은 인수와 함께 실행하지 못할 수 있습니다.";
         ToolTipService.SetToolTip(launchArgsBox, argsTooltip);
         launchArgsBox.LostFocus += (s, ev) =>
         {
@@ -385,7 +385,7 @@ public partial class DetailPanelBuilder
         launchBtnRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         var browseLaunchBtn = new Button
         {
-            Content = "Browse",
+            Content = "찾아보기",
             FontSize = 12,
             Height = 32,
             HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -403,10 +403,10 @@ public partial class DetailPanelBuilder
                 var ofn = new NativeInterop.OpenFileName();
                 ofn.structSize = System.Runtime.InteropServices.Marshal.SizeOf(ofn);
                 ofn.hwndOwner = hwnd;
-                ofn.filter = "Executables (*.exe)\0*.exe\0All Files (*.*)\0*.*\0";
+                ofn.filter = "실행 파일 (*.exe)\0*.exe\0모든 파일 (*.*)\0*.*\0";
                 ofn.file = new string(new char[260]);
                 ofn.maxFile = ofn.file.Length;
-                ofn.title = "Select Game Executable";
+                ofn.title = "게임 실행 파일 선택";
                 var browseDir = card.InstallPath is { Length: > 0 } bp && System.IO.Directory.Exists(bp) ? bp
                               : card.DetectedGame?.InstallPath is { Length: > 0 } dp && System.IO.Directory.Exists(dp) ? dp
                               : Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
@@ -422,12 +422,12 @@ public partial class DetailPanelBuilder
             }
         };
         Grid.SetColumn(browseLaunchBtn, 0);
-        ToolTipService.SetToolTip(browseLaunchBtn, "Browse for a game executable to use as the launch target.");
+        ToolTipService.SetToolTip(browseLaunchBtn, "실행 대상으로 사용할 게임 실행 파일을 찾습니다.");
         launchBtnRow.Children.Add(browseLaunchBtn);
 
         var resetLaunchBtn = new Button
         {
-            Content = "Reset launch options",
+            Content = "실행 옵션 초기화",
             FontSize = 12,
             Height = 32,
             HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -442,7 +442,7 @@ public partial class DetailPanelBuilder
             _window.ViewModel.SaveSettingsPublic();
         };
         Grid.SetColumn(resetLaunchBtn, 1);
-        ToolTipService.SetToolTip(resetLaunchBtn, "Clear the launch executable and launch arguments for this game. The executable goes back to auto-detection.");
+        ToolTipService.SetToolTip(resetLaunchBtn, "이 게임의 실행 파일과 실행 인수를 지웁니다. 실행 파일은 자동 감지로 돌아갑니다.");
         launchBtnRow.Children.Add(resetLaunchBtn);
         Grid.SetRow(launchBtnRow, 2);
         shadersAddonsRightColumn.Children.Add(launchBtnRow);
@@ -454,7 +454,7 @@ public partial class DetailPanelBuilder
 
         var resetOverridesBtn = new Button
         {
-            Content = "Reset Overrides",
+            Content = "재정의 초기화",
             FontSize = 12,
             Height = 32,
             HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -464,7 +464,7 @@ public partial class DetailPanelBuilder
             BorderThickness = new Thickness(1),
             CornerRadius = new CornerRadius(8),
         };
-        ToolTipService.SetToolTip(resetOverridesBtn, "Reset all per-game overrides back to defaults (DLL names, channels, shaders, addons, launch settings, update inclusion).");
+        ToolTipService.SetToolTip(resetOverridesBtn, "게임별 재정의를 모두 기본값으로 초기화합니다(DLL 이름, 채널, 셰이더, 애드온, 실행 설정, 업데이트 포함).");
         ctx.ResetOverridesBtn = resetOverridesBtn;
         Action resetAction = () =>
         {

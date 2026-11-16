@@ -131,10 +131,10 @@ public static partial class ShaderPopupHelper
     private static void SetExpanded(Button b, bool open)
     {
         int n = b.Tag is int c ? c : 0;
-        b.Content = open ? "Hide shaders" : n == 1 ? "Show 1 shader" : $"Show {n} shaders";
+        b.Content = open ? "셰이더 숨기기" : $"셰이더 {n}개 표시";
     }
 
     /// <summary>Category heading text with how many of its packs are selected.</summary>
     private static string HeadingText(string category, int selected, int total)
-        => selected > 0 ? $"{category}   {selected} of {total} selected" : category;
+        => selected > 0 ? $"{category}   {total}개 중 {selected}개 선택됨" : category;
 }

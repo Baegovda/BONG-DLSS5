@@ -50,7 +50,7 @@ public sealed partial class MainWindow
                     Foreground = UIFactory.Brush(ResourceKeys.AccentBlueBrush),
                 };
                 ToolTipService.SetToolTip(_customGamesNotice,
-                    "RHI found games in your custom game folders (Settings › Tools & Maintenance) that aren't in your list yet. Click to choose which to add.");
+                    "BONG DLSS5가 사용자 지정 게임 폴더(설정 › 도구 및 유지 관리)에서 아직 목록에 없는 게임을 찾았습니다. 클릭하여 추가할 게임을 선택하세요.");
                 _customGamesNotice.Click += async (s, e) =>
                 {
                     try { await ShowCustomGamesReviewAsync(); }
@@ -59,8 +59,8 @@ public sealed partial class MainWindow
                 host.Children.Insert(0, _customGamesNotice);
             }
             _customGamesNotice.Content = n == 1
-                ? "1 new game found in your custom folders · Review"
-                : $"{n} new games found in your custom folders · Review";
+                ? "사용자 지정 폴더에서 새 게임 1개 발견 · 검토"
+                : $"사용자 지정 폴더에서 새 게임 {n}개 발견 · 검토";
             _customGamesNotice.Visibility = n > 0 && !_customGamesNoticeDismissed ? Visibility.Visible : Visibility.Collapsed;
         }
         catch (Exception ex)
@@ -85,15 +85,15 @@ public sealed partial class MainWindow
             foreach (var c in candidates)
             {
                 var check = new CheckBox { IsChecked = true, MinWidth = 0, VerticalAlignment = VerticalAlignment.Center };
-                ToolTipService.SetToolTip(check, "Include this game");
-                var nameBox = new TextBox { Text = c.SuggestedName, FontSize = 13, PlaceholderText = "Game name" };
-                ToolTipService.SetToolTip(nameBox, "The name shown in RHI. Use the game's real title so RHI can find its mods.");
+                ToolTipService.SetToolTip(check, "이 게임 포함");
+                var nameBox = new TextBox { Text = c.SuggestedName, FontSize = 13, PlaceholderText = "게임 이름" };
+                ToolTipService.SetToolTip(nameBox, "BONG DLSS5에 표시되는 이름입니다. BONG DLSS5가 모드를 찾을 수 있도록 게임의 실제 제목을 사용하세요.");
                 var exeCombo = new ComboBox { HorizontalAlignment = HorizontalAlignment.Stretch, FontSize = 12 };
                 foreach (var exe in c.Exes)
                     exeCombo.Items.Add($"{exe.RelativePath}  ({FormatExeSize(exe.SizeBytes)})");
                 exeCombo.SelectedIndex = 0;
                 ToolTipService.SetToolTip(exeCombo,
-                    "The exe RHI launches and installs next to. The best match is picked; change it if it's a launcher or the wrong version.");
+                    "BONG DLSS5가 실행하고 옆에 설치할 exe입니다. 가장 적합한 항목이 선택되며, 런처이거나 잘못된 버전이면 변경하세요.");
 
                 var head = new Grid { ColumnSpacing = 8 };
                 head.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
@@ -118,13 +118,13 @@ public sealed partial class MainWindow
                 if (c.IsAmbiguous)
                     body.Children.Add(new TextBlock
                     {
-                        Text = "Check the exe: more than one looks like the game.",
+                        Text = "exe를 확인하세요: 게임으로 보이는 파일이 여러 개입니다.",
                         FontSize = 11, Margin = new Thickness(40, 0, 0, 0), TextWrapping = TextWrapping.Wrap,
                         Foreground = UIFactory.Brush(ResourceKeys.AccentAmberBrush),
                     });
                 body.Children.Add(new TextBlock
                 {
-                    Text = $"Engine: {EngineLabel(c.Engine)}  ·  {c.FolderPath}",
+                    Text = $"엔진: {EngineLabel(c.Engine)}  ·  {c.FolderPath}",
                     FontSize = 11, Margin = new Thickness(40, 0, 0, 0), TextWrapping = TextWrapping.Wrap,
                     IsTextSelectionEnabled = true,
                     Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush),
@@ -144,8 +144,8 @@ public sealed partial class MainWindow
             var content = new StackPanel { Spacing = 10 };
             content.Children.Add(new TextBlock
             {
-                Text = "These folders in your custom game folders look like games that aren't in your list. "
-                     + "Check the name and exe, then add the ones you want. Ignored games aren't offered again.",
+                Text = "사용자 지정 게임 폴더의 이 폴더들은 목록에 없는 게임으로 보입니다. "
+                     + "이름과 exe를 확인한 다음 원하는 게임을 추가하세요. 무시한 게임은 다시 제안되지 않습니다.",
                 TextWrapping = TextWrapping.Wrap, FontSize = 12,
                 Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
             });
@@ -159,11 +159,11 @@ public sealed partial class MainWindow
 
             var dialog = new ContentDialog
             {
-                Title = candidates.Count == 1 ? "New game in your custom folders" : $"{candidates.Count} new games in your custom folders",
+                Title = candidates.Count == 1 ? "사용자 지정 폴더의 새 게임" : $"사용자 지정 폴더의 새 게임 {candidates.Count}개",
                 Content = content,
-                PrimaryButtonText = "Add selected",
-                SecondaryButtonText = "Ignore selected",
-                CloseButtonText = "Not now",
+                PrimaryButtonText = "선택 항목 추가",
+                SecondaryButtonText = "선택 항목 무시",
+                CloseButtonText = "나중에",
                 DefaultButton = ContentDialogButton.Primary,
                 XamlRoot = root,
                 Background = UIFactory.Brush(ResourceKeys.SurfaceToolbarBrush),
@@ -178,7 +178,7 @@ public sealed partial class MainWindow
             {
                 ViewModel.IgnoreCustomGames(picked.Select(r => r.C).ToList());
                 if (picked.Count > 0)
-                    ShowStatusBarMessage(picked.Count == 1 ? "1 game ignored" : $"{picked.Count} games ignored", TimeSpan.FromSeconds(6));
+                    ShowStatusBarMessage(picked.Count == 1 ? "게임 1개 무시됨" : $"게임 {picked.Count}개 무시됨", TimeSpan.FromSeconds(6));
                 return 0;
             }
             if (result != ContentDialogResult.Primary)
@@ -209,20 +209,20 @@ public sealed partial class MainWindow
             }
             CrashReporter.Log($"[MainWindow.ShowCustomGamesReviewAsync] Added {added} of {picked.Count}; {errors.Count} error(s)");
             if (added > 0)
-                ShowStatusBarMessage(added == 1 ? "1 game added from your custom folders" : $"{added} games added from your custom folders", TimeSpan.FromSeconds(8));
+                ShowStatusBarMessage(added == 1 ? "사용자 지정 폴더에서 게임 1개 추가됨" : $"사용자 지정 폴더에서 게임 {added}개 추가됨", TimeSpan.FromSeconds(8));
             UpdateCustomGamesNotice();
 
             if (errors.Count > 0 && !IsShuttingDown && Content?.XamlRoot is { } root2)
             {
                 await DialogService.ShowSafeAsync(new ContentDialog
                 {
-                    Title = added > 0 ? "Some games weren't added" : "Games not added",
+                    Title = added > 0 ? "일부 게임이 추가되지 않음" : "게임이 추가되지 않음",
                     Content = new ScrollViewer
                     {
                         MaxHeight = 360,
                         Content = new TextBlock { Text = string.Join("\n", errors), TextWrapping = TextWrapping.Wrap, FontSize = 13, IsTextSelectionEnabled = true },
                     },
-                    CloseButtonText = "OK",
+                    CloseButtonText = "확인",
                     XamlRoot = root2,
                     Background = UIFactory.Brush(ResourceKeys.SurfaceToolbarBrush),
                     RequestedTheme = ElementTheme.Dark,
@@ -239,10 +239,10 @@ public sealed partial class MainWindow
     private static string EngineLabel(EngineType e) => e switch
     {
         EngineType.Unreal       => "Unreal Engine",
-        EngineType.UnrealLegacy => "Unreal Engine (Legacy)",
+        EngineType.UnrealLegacy => "Unreal Engine (레거시)",
         EngineType.Unity        => "Unity",
         EngineType.REEngine     => "RE Engine",
-        _                       => "Unknown",
+        _                       => "알 수 없음",
     };
 
     private static string FormatExeSize(long bytes)

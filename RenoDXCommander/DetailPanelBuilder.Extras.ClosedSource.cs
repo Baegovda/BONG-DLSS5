@@ -35,10 +35,10 @@ public partial class DetailPanelBuilder
             LineHeight = 20,
             Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
         });
-        Para($"{modName} is closed source: {author} publishes only the finished DLL, not its code, so nobody outside can check what it does.");
-        var line = $"RHI downloads it unchanged from {author}'s GitHub releases. Only install it if you're OK with that. ";
+        Para($"{modName}은(는) 비공개 소스입니다. {author}은(는) 코드 없이 완성된 DLL만 배포하므로, 외부에서는 무엇을 하는지 확인할 수 없습니다.");
+        var line = $"BONG DLSS5는 {author}의 GitHub 릴리스에서 변경 없이 다운로드합니다. 이에 동의하는 경우에만 설치하세요. ";
         if (githubUrl == null)
-            Para(line + "The Info button on its row opens its GitHub page.");
+            Para(line + "해당 행의 정보 버튼을 누르면 GitHub 페이지가 열립니다.");
         else
         {
             var tb = new TextBlock
@@ -48,22 +48,22 @@ public partial class DetailPanelBuilder
                 LineHeight = 20,
                 Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
             };
-            tb.Inlines.Add(new Run { Text = line + "Its GitHub page: " });
+            tb.Inlines.Add(new Run { Text = line + "GitHub 페이지: " });
             var link = new Hyperlink { NavigateUri = new Uri(githubUrl), Foreground = UIFactory.Brush(ResourceKeys.AccentBlueBrush) };
             link.Inlines.Add(new Run { Text = githubUrl.Replace("https://", "") });
             tb.Inlines.Add(link);
             tb.Inlines.Add(new Run { Text = "." });
             content.Children.Add(tb);
         }
-        var dontShow = new CheckBox { Content = "Don't show this again", FontSize = 12, Margin = new Thickness(0, 4, 0, 0) };
+        var dontShow = new CheckBox { Content = "다시 표시 안 함", FontSize = 12, Margin = new Thickness(0, 4, 0, 0) };
         content.Children.Add(dontShow);
 
         var dialog = new ContentDialog
         {
-            Title = $"{modName} is closed source",
+            Title = $"{modName}은(는) 비공개 소스입니다",
             Content = content,
-            PrimaryButtonText = "Install",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = "설치",
+            CloseButtonText = "취소",
             DefaultButton = ContentDialogButton.Primary,
             XamlRoot = xamlRoot,
             RequestedTheme = ElementTheme.Dark,

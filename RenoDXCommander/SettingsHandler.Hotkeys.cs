@@ -265,9 +265,9 @@ public partial class SettingsHandler
 
             var dialog = new ContentDialog
             {
-                Title = "ReLimiter Settings",
-                Content = $"Updated {updatedCount} relimiter.ini file{(updatedCount == 1 ? "" : "s")}.",
-                CloseButtonText = "OK",
+                Title = "ReLimiter 설정",
+                Content = $"relimiter.ini 파일 {updatedCount}개를 업데이트했습니다.",
+                CloseButtonText = "확인",
                 XamlRoot = _window.Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };

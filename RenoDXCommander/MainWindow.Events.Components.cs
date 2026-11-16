@@ -65,13 +65,13 @@ public sealed partial class MainWindow
 
             // ── Hotkeys ───────────────────────────────────────────────────────────
             // Capture box + Apply per key: a key press only fills the box, Apply writes it.
-            cog.AddSection("Hotkeys");
+            cog.AddSection("단축키");
             var hotkeyString = currentHotkey;
             var screenshotHotkeyString = currentScreenshotHotkey;
 
             TextBox MakeHotkeyBox(Func<string> getValue, Action<string> setValue)
             {
-                var box = CogDialog.MakeTextBox(HotkeyManager.FormatHotkeyDisplay(getValue()), "Click then press a key...");
+                var box = CogDialog.MakeTextBox(HotkeyManager.FormatHotkeyDisplay(getValue()), "클릭한 후 키를 누르세요...");
                 box.IsReadOnly = true;
                 box.GotFocus += (s, ev) => box.Text = "Press a key...";
                 box.KeyDown += (s, ev) =>
@@ -113,58 +113,58 @@ public sealed partial class MainWindow
                 });
                 if (error != null)
                 {
-                    cog.SetError($"Couldn't set the {keyLabel.ToLowerInvariant()}: {error}");
+                    cog.SetError($"{keyLabel}을(를) 설정할 수 없습니다: {error}");
                     _crashReporter.Log($"[RsCogButton_Click] Failed to apply {keyLabel.ToLowerInvariant()} for '{card.GameName}' — {error}");
                     return;
                 }
                 if (count == 0)
                 {
-                    cog.SetStatus("No reshade.ini in the game folder, so nothing was changed.");
+                    cog.SetStatus("게임 폴더에 reshade.ini가 없어 아무것도 변경되지 않았습니다.");
                     return;
                 }
-                cog.SetSuccess($"{keyLabel} set to {HotkeyManager.FormatHotkeyDisplay(hotkey)} in {count} ini file(s).");
+                cog.SetSuccess($"ini 파일 {count}개에서 {keyLabel}을(를) {HotkeyManager.FormatHotkeyDisplay(hotkey)}(으)로 설정했습니다.");
                 _crashReporter.Log($"[RsCogButton_Click] Applied {keyLabel.ToLowerInvariant()} '{hotkey}' to {count} ini file(s) for '{card.GameName}'");
             }
 
             var hotkeyBox = MakeHotkeyBox(() => hotkeyString, v => hotkeyString = v);
-            var applyKeyBtn = CogDialog.StyledButton("Apply", CogButtonKind.Secondary, compact: true);
+            var applyKeyBtn = CogDialog.StyledButton("적용", CogButtonKind.Secondary, compact: true);
             applyKeyBtn.Click += async (s, ev) =>
             {
-                try { await ApplyHotkeyAsync("Overlay key", hotkeyString, AuxInstallService.ApplyOverlayHotkey); }
+                try { await ApplyHotkeyAsync("오버레이 키", hotkeyString, AuxInstallService.ApplyOverlayHotkey); }
                 catch (Exception ex)
                 {
-                    cog.SetError($"Couldn't set the overlay key: {ex.Message}");
+                    cog.SetError($"오버레이 키를 설정할 수 없습니다: {ex.Message}");
                     _crashReporter.Log($"[RsCogButton_Click] Overlay key apply failed — {ex}");
                 }
             };
-            cog.AddRow("Overlay Key", CogDialog.Inline(hotkeyBox, applyKeyBtn),
-                "Opens the ReShade overlay in game. Click the box, press a key, then Apply. Saved to every reshade*.ini in the game folder.");
+            cog.AddRow("오버레이 키", CogDialog.Inline(hotkeyBox, applyKeyBtn),
+                "게임에서 ReShade 오버레이를 엽니다. 상자를 클릭하고 키를 누른 다음 적용을 누르세요. 게임 폴더의 모든 reshade*.ini에 저장됩니다.");
 
             var screenshotHotkeyBox = MakeHotkeyBox(() => screenshotHotkeyString, v => screenshotHotkeyString = v);
-            var applyScreenshotKeyBtn = CogDialog.StyledButton("Apply", CogButtonKind.Secondary, compact: true);
+            var applyScreenshotKeyBtn = CogDialog.StyledButton("적용", CogButtonKind.Secondary, compact: true);
             applyScreenshotKeyBtn.Click += async (s, ev) =>
             {
-                try { await ApplyHotkeyAsync("Screenshot key", screenshotHotkeyString, AuxInstallService.ApplyScreenshotHotkey); }
+                try { await ApplyHotkeyAsync("스크린샷 키", screenshotHotkeyString, AuxInstallService.ApplyScreenshotHotkey); }
                 catch (Exception ex)
                 {
-                    cog.SetError($"Couldn't set the screenshot key: {ex.Message}");
+                    cog.SetError($"스크린샷 키를 설정할 수 없습니다: {ex.Message}");
                     _crashReporter.Log($"[RsCogButton_Click] Screenshot key apply failed — {ex}");
                 }
             };
-            cog.AddRow("Screenshot Key", CogDialog.Inline(screenshotHotkeyBox, applyScreenshotKeyBtn),
-                "Takes a ReShade screenshot. Click the box, press a key (Backspace for none), then Apply. Saved to every reshade*.ini in the game folder.");
+            cog.AddRow("스크린샷 키", CogDialog.Inline(screenshotHotkeyBox, applyScreenshotKeyBtn),
+                "ReShade 스크린샷을 찍습니다. 상자를 클릭하고 키를 누른 다음(없음은 Backspace) 적용을 누르세요. 게임 폴더의 모든 reshade*.ini에 저장됩니다.");
 
             // ── Load ReShade as ASI (not for Vulkan: ReShade is a global layer there) ──
             if (!card.RequiresVulkanInstall)
             {
-                cog.AddSection("Loading");
+                cog.AddSection("로드");
                 var asiName = AuxInstallService.RsAsiName(card.Is32Bit);
                 ComboBox? asiCombo = null;
                 bool asiReverting = false;
-                asiCombo = cog.AddCombo("Load ReShade as ASI",
-                    $"On renames ReShade to {asiName} so an ASI loader (such as ASI Loader in Extras) loads it. "
-                    + "RHI doesn't install a loader for you. Installs and updates keep the name, and ReShade's DLL name in Game Overrides is greyed out while this is on.",
-                    new[] { "Off", "On" },
+                asiCombo = cog.AddCombo("ReShade를 ASI로 로드",
+                    $"켜짐으로 설정하면 ASI 로더(추가 기능의 ASI Loader 등)가 로드할 수 있도록 ReShade 이름을 {asiName}(으)로 바꿉니다. "
+                    + "BONG DLSS5는 로더를 대신 설치하지 않습니다. 설치 및 업데이트 시 이름이 유지되며, 켜져 있는 동안 게임 재정의의 ReShade DLL 이름은 비활성화됩니다.",
+                    new[] { "꺼짐", "켜짐" },
                     ViewModel.GetRsAsiMode(card.GameName, card.Source ?? "") ? 1 : 0,
                     i =>
                     {
@@ -188,8 +188,8 @@ public sealed partial class MainWindow
                                 }
                                 bool installed = card.RsRecord != null;
                                 cog.SetSuccess(turnOn
-                                    ? (installed ? $"ReShade is now {asiName}. Make sure an ASI loader is installed in this game." : $"ReShade will be installed as {asiName}.")
-                                    : (installed ? $"ReShade is back to {card.RsInstalledFile}." : "ReShade will be installed under its normal DLL name."));
+                                    ? (installed ? $"ReShade가 이제 {asiName}입니다. 이 게임에 ASI 로더가 설치되어 있는지 확인하세요." : $"ReShade가 {asiName}(으)로 설치됩니다.")
+                                    : (installed ? $"ReShade가 {card.RsInstalledFile}(으)로 되돌아갔습니다." : "ReShade가 일반 DLL 이름으로 설치됩니다."));
                                 card.NotifyAll();
                                 _detailPanelBuilder?.UpdateDetailComponentRows(card);
                                 _detailPanelBuilder?.BuildOverridesPanel(card); // greys/ungreys the ReShade DLL name dropdown
@@ -197,7 +197,7 @@ public sealed partial class MainWindow
                             catch (Exception ex)
                             {
                                 _crashReporter.Log($"[RsCogButton_Click] ASI mode change failed — {ex}");
-                                cog.SetError($"Couldn't change Load ReShade as ASI: {ex.Message}");
+                                cog.SetError($"ReShade를 ASI로 로드 설정을 변경할 수 없습니다: {ex.Message}");
                             }
                         }
                     });
@@ -207,23 +207,23 @@ public sealed partial class MainWindow
             cog.AddSection("ReShade.ini");
             var capturedKeepGameName = card.GameName;
             var capturedKeepSource = card.Source ?? "";
-            cog.AddCombo("Keep ReShade.ini Updated",
-                "No stops RHI from changing this game's reshade.ini when ReShade is installed or updated, or when you use the Settings buttons that write to all games.",
-                new[] { "Yes", "No" },
+            cog.AddCombo("ReShade.ini 최신 상태 유지",
+                "아니요로 설정하면 ReShade 설치나 업데이트 시, 또는 모든 게임에 기록하는 설정 버튼을 사용할 때 BONG DLSS5가 이 게임의 reshade.ini를 변경하지 않습니다.",
+                new[] { "예", "아니요" },
                 ViewModel.GetKeepRsIniUpdated(capturedKeepGameName, capturedKeepSource) ? 0 : 1,
                 i =>
                 {
                     ViewModel.SetKeepRsIniUpdated(capturedKeepGameName, i == 0, capturedKeepSource);
                     cog.SetSuccess(i == 0
-                        ? "RHI will keep this game's reshade.ini updated."
-                        : "RHI will leave this game's reshade.ini alone.");
+                        ? "BONG DLSS5가 이 게임의 reshade.ini를 최신 상태로 유지합니다."
+                        : "BONG DLSS5가 이 게임의 reshade.ini를 변경하지 않습니다.");
                 });
 
             // ── Files ─────────────────────────────────────────────────────────────
-            cog.AddSection("Files");
-            var openIniBtn = cog.MakeOpenFileButton("Open ReShade.ini", reshadeIniPath);
+            cog.AddSection("파일");
+            var openIniBtn = cog.MakeOpenFileButton("ReShade.ini 열기", reshadeIniPath);
 
-            var deployIniBtn = cog.MakeButton("Deploy ReShade.ini", CogButtonKind.Primary, () =>
+            var deployIniBtn = cog.MakeButton("ReShade.ini 배포", CogButtonKind.Primary, () =>
             {
                 var screenshotPath = BuildScreenshotSavePath(card.GameName);
                 var overlayHotkey = ViewModel.Settings.OverlayHotkey;
@@ -246,27 +246,27 @@ public sealed partial class MainWindow
                     AuxInstallService.ApplyRenodxIniOverrides(card.InstallPath, cogIniOvr, forceOverwrite: true);
 
                 openIniBtn.IsEnabled = File.Exists(reshadeIniPath);
-                cog.SetSuccess("ReShade.ini deployed.");
+                cog.SetSuccess("ReShade.ini를 배포했습니다.");
                 _crashReporter.Log($"[RsCogButton_Click] Deployed ReShade.ini for '{card.GameName}'");
-            }, "Merges RHI's ReShade.ini template into this game's reshade.ini. Template values replace existing ones; other settings are kept.");
+            }, "BONG DLSS5의 ReShade.ini 템플릿을 이 게임의 reshade.ini에 병합합니다. 템플릿 값이 기존 값을 대체하며 다른 설정은 유지됩니다.");
 
-            var deployPresetBtn = cog.MakeButton("Deploy ReShadePreset.ini", CogButtonKind.Primary, () =>
+            var deployPresetBtn = cog.MakeButton("ReShadePreset.ini 배포", CogButtonKind.Primary, () =>
             {
                 AuxInstallService.CopyRsPresetIniIfPresent(card.InstallPath);
-                cog.SetSuccess("ReShadePreset.ini deployed.");
+                cog.SetSuccess("ReShadePreset.ini를 배포했습니다.");
                 _crashReporter.Log($"[RsCogButton_Click] Deployed ReShadePreset.ini for '{card.GameName}'");
-            }, rsPresetExists ? "Copies ReShadePreset.ini from RHI's config folder into the game folder." : "No ReShadePreset.ini found in RHI config folder");
+            }, rsPresetExists ? "BONG DLSS5 구성 폴더의 ReShadePreset.ini를 게임 폴더에 복사합니다." : "BONG DLSS5 구성 폴더에 ReShadePreset.ini가 없습니다");
             deployPresetBtn.IsEnabled = rsPresetExists;
 
-            var openLogBtn = cog.MakeOpenFileButton("Open ReShade.log", reshadeLogPath);
+            var openLogBtn = cog.MakeOpenFileButton("ReShade.log 열기", reshadeLogPath);
 
             // Copied as a file (not text) so Discord shows "ReShade.log"
-            var copyLogBtn = cog.MakeButton("Copy ReShade.log", CogButtonKind.Secondary, async () =>
+            var copyLogBtn = cog.MakeButton("ReShade.log 복사", CogButtonKind.Secondary, async () =>
             {
-                if (!File.Exists(reshadeLogPath)) { cog.SetError("ReShade.log wasn't found."); return; }
+                if (!File.Exists(reshadeLogPath)) { cog.SetError("ReShade.log를 찾을 수 없습니다."); return; }
                 await CopyFileToClipboardAsFileAsync(reshadeLogPath);
-                cog.SetSuccess("Copied ReShade.log to the clipboard. Paste it into Discord to attach it.");
-            }, "Copies ReShade.log to the clipboard as a file.");
+                cog.SetSuccess("ReShade.log를 클립보드에 복사했습니다. Discord에 붙여 넣어 첨부하세요.");
+            }, "ReShade.log를 파일로 클립보드에 복사합니다.");
             copyLogBtn.IsEnabled = reshadeLogExists;
 
             cog.AddButtons(deployIniBtn, deployPresetBtn, openIniBtn, openLogBtn, copyLogBtn);
@@ -293,31 +293,31 @@ public sealed partial class MainWindow
             bool storageExists = Directory.Exists(storageDir);
 
             var cog = new CogDialog("RE Framework", Content.XamlRoot);
-            cog.AddSection("Files");
-            cog.AddIntro("The _storage_ folder in the game folder holds data saved by RE Framework and its scripts. Deleting it clears that data.");
-            var foundNote = cog.AddNote(storageExists ? $"Found: {storageDir}" : "No _storage_ folder in the game folder.");
+            cog.AddSection("파일");
+            cog.AddIntro("게임 폴더의 _storage_ 폴더에는 RE Framework와 스크립트가 저장한 데이터가 있습니다. 삭제하면 해당 데이터가 지워집니다.");
+            var foundNote = cog.AddNote(storageExists ? $"찾음: {storageDir}" : "게임 폴더에 _storage_ 폴더가 없습니다.");
 
-            const string deleteText = "Delete _storage_ folder";
+            const string deleteText = "_storage_ 폴더 삭제";
             Button? deleteStorageBtn = null;
             deleteStorageBtn = cog.MakeButton(deleteText, CogButtonKind.Danger, async () =>
             {
                 var btn = deleteStorageBtn!;
                 btn.IsEnabled = false;
-                btn.Content = "Deleting...";
+                btn.Content = "삭제 중...";
                 try
                 {
                     await Task.Run(() => Directory.Delete(storageDir, recursive: true));
                     btn.Content = deleteText;
                     btn.Opacity = CogDialog.DisabledOpacity;
-                    foundNote.Text = "No _storage_ folder in the game folder.";
-                    cog.SetSuccess("_storage_ folder deleted.");
+                    foundNote.Text = "게임 폴더에 _storage_ 폴더가 없습니다.";
+                    cog.SetSuccess("_storage_ 폴더를 삭제했습니다.");
                     CrashReporter.Log($"[RefCogButton_Click] Deleted _storage_ folder: '{storageDir}'");
                 }
                 catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
                 {
                     btn.IsEnabled = true;
                     btn.Content = deleteText;
-                    cog.SetError($"Couldn't delete the _storage_ folder: {ex.Message}");
+                    cog.SetError($"_storage_ 폴더를 삭제할 수 없습니다: {ex.Message}");
                     CrashReporter.Log($"[RefCogButton_Click] Failed to delete _storage_ folder: {ex.Message}");
                 }
             });

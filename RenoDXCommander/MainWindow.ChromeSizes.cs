@@ -47,7 +47,7 @@ public sealed partial class MainWindow
                         Margin = new Thickness(0, 0, 0, -4), // straddles the edge
                     };
                     Grid.SetRow(_topBarGrip, Grid.GetRow(_xamlTopBar));
-                    ToolTipService.SetToolTip(_topBarGrip, "Drag to resize the top bar. Double-click to reset.");
+                    ToolTipService.SetToolTip(_topBarGrip, "끌어서 상단 바 크기를 조절합니다. 두 번 클릭하면 초기화됩니다.");
                     HookTopBarGrip(_topBarGrip);
                     root.Children.Add(_topBarGrip);
                 }
@@ -68,7 +68,7 @@ public sealed partial class MainWindow
                 };
                 Grid.SetColumn(_listWidthGrip, 0);
                 Grid.SetRowSpan(_listWidthGrip, 2); // Spotlight adds a second row
-                ToolTipService.SetToolTip(_listWidthGrip, "Drag to resize the game list. Double-click to reset.");
+                ToolTipService.SetToolTip(_listWidthGrip, "끌어서 게임 목록 크기를 조절합니다. 두 번 클릭하면 초기화됩니다.");
                 HookListGrip(_listWidthGrip);
                 GameViewPanel.Children.Add(_listWidthGrip);
                 GameViewPanel.SizeChanged += (s, e) =>

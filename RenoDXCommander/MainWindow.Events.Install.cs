@@ -23,7 +23,7 @@ public sealed partial class MainWindow
             // Build the progress dialog
             var statusText = new TextBlock
             {
-                Text = "Preparing...",
+                Text = "준비 중...",
                 FontSize = 12,
                 Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
                 TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
@@ -41,7 +41,7 @@ public sealed partial class MainWindow
 
             var dialog = new ContentDialog
             {
-                Title = "Updating All Components",
+                Title = "모든 구성 요소 업데이트 중",
                 Content = panel,
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
@@ -54,39 +54,39 @@ public sealed partial class MainWindow
             {
                 if (!ViewModel.Settings.GlobalSkipRsUpdates)
                 {
-                    statusText.Text = "Updating ReShade...";
+                    statusText.Text = "ReShade 업데이트 중...";
                     await ViewModel.UpdateAllReShadeAsync();
                 }
                 if (!ViewModel.Settings.GlobalSkipRdxUpdates)
                 {
-                    statusText.Text = "Updating RenoDX...";
+                    statusText.Text = "RenoDX 업데이트 중...";
                     await ViewModel.UpdateAllRenoDxAsync();
                 }
                 if (!ViewModel.Settings.GlobalSkipUlUpdates)
                 {
-                    statusText.Text = "Updating ReLimiter...";
+                    statusText.Text = "ReLimiter 업데이트 중...";
                     await ViewModel.UpdateAllUlAsync();
                 }
                 if (!ViewModel.Settings.GlobalSkipDcUpdates)
                 {
-                    statusText.Text = "Updating Display Commander...";
+                    statusText.Text = "Display Commander 업데이트 중...";
                     await ViewModel.UpdateAllDcAsync();
                 }
                 if (!ViewModel.Settings.GlobalSkipOsUpdates)
                 {
-                    statusText.Text = "Updating OptiScaler...";
+                    statusText.Text = "OptiScaler 업데이트 중...";
                     await ViewModel.UpdateAllOsAsync();
                 }
                 if (!ViewModel.Settings.GlobalSkipRefUpdates)
                 {
-                    statusText.Text = "Updating RE Framework...";
+                    statusText.Text = "RE Framework 업데이트 중...";
                     await ViewModel.UpdateAllRefAsync();
                 }
-                statusText.Text = "Updating DXVK...";
+                statusText.Text = "DXVK 업데이트 중...";
                 await ViewModel.UpdateAllDxvkAsync();
-                statusText.Text = "Updating Luma...";
+                statusText.Text = "Luma 업데이트 중...";
                 await ViewModel.UpdateAllLumaAsync();
-                statusText.Text = "Updating DOF Fix...";
+                statusText.Text = "DOF Fix 업데이트 중...";
                 await ViewModel.UpdateAllDofFixAsync();
             }
             catch (Exception ex)
@@ -165,14 +165,14 @@ public sealed partial class MainWindow
             if (sender is not FrameworkElement { Tag: GameCardViewModel card }) return;
 
             // Build DXVK info content with game-specific notes from manifest
-            var content = "DXVK translates DirectX 8/9/10/11 API calls into Vulkan.\n\n"
-                + "Benefits:\n"
-                + "• Enables ReShade compute shaders on older DX games\n"
-                + "• May improve performance and reduce shader stutter\n"
-                + "• Enables HDR output via dxvk.conf\n"
-                + "• Borderless fullscreen recommended over exclusive fullscreen\n\n"
-                + "⚠ Anti-cheat games may ban players using DXVK.\n"
-                + "⚠ Game overlays (Steam, NVIDIA, RTSS) may conflict.";
+            var content = "DXVK는 DirectX 8/9/10/11 API 호출을 Vulkan으로 변환합니다.\n\n"
+                + "장점:\n"
+                + "• 오래된 DX 게임에서 ReShade 컴퓨트 셰이더 사용 가능\n"
+                + "• 성능 향상 및 셰이더 끊김 감소 가능\n"
+                + "• dxvk.conf를 통한 HDR 출력 가능\n"
+                + "• 전용 전체 화면보다 테두리 없는 전체 화면 권장\n\n"
+                + "⚠ 안티치트 게임에서는 DXVK 사용 시 차단될 수 있습니다.\n"
+                + "⚠ 게임 오버레이(Steam, NVIDIA, RTSS)와 충돌할 수 있습니다.";
 
             // Append game-specific notes from manifest
             var manifest = ViewModel.Manifest;
@@ -180,12 +180,12 @@ public sealed partial class MainWindow
                 && manifest.DxvkGameNotes.TryGetValue(card.GameName, out var noteEntry)
                 && !string.IsNullOrWhiteSpace(noteEntry.Notes))
             {
-                content += $"\n\n── Game Notes ──\n{noteEntry.Notes}";
+                content += $"\n\n── 게임 참고 사항 ──\n{noteEntry.Notes}";
             }
 
             var dialog = new ContentDialog
             {
-                Title = "ℹ DXVK Info",
+                Title = "ℹ DXVK 정보",
                 Content = new TextBlock
                 {
                     Text = content,
@@ -193,7 +193,7 @@ public sealed partial class MainWindow
                     FontSize = 13,
                     Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
                 },
-                CloseButtonText = "OK",
+                CloseButtonText = "확인",
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -296,7 +296,7 @@ public sealed partial class MainWindow
             if (card.DofFixIsInstalling || string.IsNullOrEmpty(card.InstallPath)) return;
 
             card.DofFixIsInstalling = true;
-            card.DofFixActionMessage = "Installing DOF Fix...";
+            card.DofFixActionMessage = "DOF Fix 설치 중...";
             card.DofFixProgress = 0;
             try
             {
@@ -310,13 +310,13 @@ public sealed partial class MainWindow
                 {
                     card.DofFixInstalledVersion = _dofFixService.StagedVersion;
                     card.DofFixStatus = Models.GameStatus.Installed;
-                    card.DofFixActionMessage = "✅ DOF Fix installed!";
+                    card.DofFixActionMessage = "✅ DOF Fix 설치됨!";
                     card.NotifyAll();
                     card.FadeMessage(m => card.DofFixActionMessage = m, card.DofFixActionMessage);
                 }
                 else
                 {
-                    card.DofFixActionMessage = "❌ Install failed";
+                    card.DofFixActionMessage = "❌ 설치 실패";
                 }
             }
             catch (Exception ex)
@@ -344,13 +344,13 @@ public sealed partial class MainWindow
         {
             card.DofFixStatus = Models.GameStatus.NotInstalled;
             card.DofFixInstalledVersion = null;
-            card.DofFixActionMessage = "✖ DOF Fix removed.";
+            card.DofFixActionMessage = "✖ DOF Fix 제거됨.";
             card.NotifyAll();
             card.FadeMessage(m => card.DofFixActionMessage = m, card.DofFixActionMessage);
         }
         else
         {
-            card.DofFixActionMessage = "❌ Uninstall failed";
+            card.DofFixActionMessage = "❌ 제거 실패";
         }
     }
 
@@ -369,18 +369,18 @@ public sealed partial class MainWindow
 
             var dialog = new ContentDialog
             {
-                Title = "UE DOF Fix — Release Notes",
+                Title = "UE DOF Fix — 릴리스 노트",
                 Content = new ScrollViewer
                 {
                     Content = new TextBlock
                     {
-                        Text = notes ?? "No release notes available.",
+                        Text = notes ?? "릴리스 노트가 없습니다.",
                         TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
                         IsTextSelectionEnabled = true,
                     },
                     MaxHeight = 400,
                 },
-                CloseButtonText = "OK",
+                CloseButtonText = "확인",
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -529,14 +529,14 @@ public sealed partial class MainWindow
             {
                 var dontShowCheck = new CheckBox
                 {
-                    Content = "Don't show this again",
+                    Content = "다시 표시 안 함",
                     FontSize = 12,
                     Margin = new Thickness(0, 8, 0, 0),
                 };
                 var panel = new StackPanel { Spacing = 8 };
                 panel.Children.Add(new TextBlock
                 {
-                    Text = "This toggles the engine version to Unreal Engine 5.0–5.6, making this game eligible for the DOF Fix addon.\n\nUse this when RHI cannot detect the UE version automatically (e.g. Game Pass games).",
+                    Text = "엔진 버전을 Unreal Engine 5.0–5.6으로 전환하여 이 게임에서 DOF Fix 애드온을 사용할 수 있게 합니다.\n\nBONG DLSS5가 UE 버전을 자동으로 감지할 수 없을 때 사용하세요 (예: Game Pass 게임).",
                     TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
                     FontSize = 12,
                 });
@@ -544,10 +544,10 @@ public sealed partial class MainWindow
 
                 var dialog = new ContentDialog
                 {
-                    Title = "Engine Version Override",
+                    Title = "엔진 버전 재정의",
                     Content = panel,
-                    PrimaryButtonText = "Continue",
-                    CloseButtonText = "Cancel",
+                    PrimaryButtonText = "계속",
+                    CloseButtonText = "취소",
                     XamlRoot = Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 };
@@ -755,7 +755,7 @@ public sealed partial class MainWindow
             async Task EnsureEpicLauncherAsync()
             {
                 if (!isEpicGame || await Task.Run(EpicLauncherHelper.IsRunning)) return;
-                ShowStatusBarMessage("Starting Epic Games Launcher before launching the game...", TimeSpan.FromSeconds(30));
+                ShowStatusBarMessage("게임을 실행하기 전에 Epic Games Launcher를 시작하는 중...", TimeSpan.FromSeconds(30));
                 await EpicLauncherHelper.EnsureRunningAsync(LifetimeToken);
             }
 
@@ -980,8 +980,8 @@ public sealed partial class MainWindow
 
             {
                 string undoNote = card.IsManuallyAdded
-                    ? "You added this game yourself. To get it back, add it again."
-                    : "It won't come back when RHI scans your games. To undo, use Settings › Tools & Maintenance › Removed games.";
+                    ? "직접 추가한 게임입니다. 되돌리려면 다시 추가하세요."
+                    : "BONG DLSS5가 게임을 검색해도 다시 나타나지 않습니다. 되돌리려면 설정 › 도구 및 유지 관리 › 제거된 게임을 사용하세요.";
                 // Build a list of installed components to show in the dialog
                 var installed = new List<string>();
                 if (card.RsRecord != null || card.RsStatus == Models.GameStatus.Installed) installed.Add("ReShade");
@@ -1002,7 +1002,7 @@ public sealed partial class MainWindow
                     var panel = new StackPanel { Spacing = 8 };
                     panel.Children.Add(new TextBlock
                     {
-                        Text = $"Remove {card.GameName} from RHI?",
+                        Text = $"BONG DLSS5에서 {card.GameName}을(를) 제거하시겠습니까?",
                         FontSize = 13,
                         FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                         Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
@@ -1016,7 +1016,7 @@ public sealed partial class MainWindow
                     });
                     panel.Children.Add(new TextBlock
                     {
-                        Text = $"Installed: {componentList}. If you don't uninstall them, they stay in the game folder and RHI stops updating them.",
+                        Text = $"설치됨: {componentList}. 제거하지 않으면 게임 폴더에 남으며 BONG DLSS5가 더 이상 업데이트하지 않습니다.",
                         TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
                         FontSize = 12,
                         Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
@@ -1024,7 +1024,7 @@ public sealed partial class MainWindow
 
                     var uninstallCheck = new CheckBox
                     {
-                        Content = "Also uninstall all RHI-managed components from game folder",
+                        Content = "게임 폴더에서 BONG DLSS5가 관리하는 모든 구성 요소도 제거",
                         FontSize = 12,
                         IsChecked = false,
                     };
@@ -1032,10 +1032,10 @@ public sealed partial class MainWindow
 
                     var dialog = new ContentDialog
                     {
-                        Title = "Remove Game",
+                        Title = "게임 제거",
                         Content = panel,
-                        PrimaryButtonText = "Remove",
-                        CloseButtonText = "Cancel",
+                        PrimaryButtonText = "제거",
+                        CloseButtonText = "취소",
                         XamlRoot = Content.XamlRoot,
                         RequestedTheme = ElementTheme.Dark,
                     };
@@ -1048,15 +1048,15 @@ public sealed partial class MainWindow
                     // No components installed — simple confirm
                     var dialog = new ContentDialog
                     {
-                        Title = "Remove Game",
+                        Title = "게임 제거",
                         Content = new TextBlock
                         {
-                            Text = $"Remove {card.GameName} from RHI?\n\n{undoNote}",
+                            Text = $"BONG DLSS5에서 {card.GameName}을(를) 제거하시겠습니까?\n\n{undoNote}",
                             FontSize = 12,
                             TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
                         },
-                        PrimaryButtonText = "Remove",
-                        CloseButtonText = "Cancel",
+                        PrimaryButtonText = "제거",
+                        CloseButtonText = "취소",
                         XamlRoot = Content.XamlRoot,
                         RequestedTheme = ElementTheme.Dark,
                     };
@@ -1123,14 +1123,14 @@ public sealed partial class MainWindow
         var progressPanel = new StackPanel { Spacing = 8 };
         var progressRow = new StackPanel { Orientation = Microsoft.UI.Xaml.Controls.Orientation.Horizontal, Spacing = 12 };
         var progressRing = new ProgressRing { IsActive = true, Width = 20, Height = 20 };
-        var progressText = new TextBlock { Text = "Clearing caches...", FontSize = 13, Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush) };
+        var progressText = new TextBlock { Text = "캐시 지우는 중...", FontSize = 13, Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush) };
         progressRow.Children.Add(progressRing);
         progressRow.Children.Add(progressText);
         progressPanel.Children.Add(progressRow);
 
         var progressDialog = new ContentDialog
         {
-            Title = "Full Refresh",
+            Title = "전체 새로 고침",
             Content = progressPanel,
             XamlRoot = Content.XamlRoot,
             RequestedTheme = ElementTheme.Dark,

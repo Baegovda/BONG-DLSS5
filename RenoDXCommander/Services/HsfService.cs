@@ -200,10 +200,10 @@ public class HsfService
         static bool On(string? v) => v != null && v != "0";
         var drive = Dlssg20_30Service.ReadIniValue(ini, "HSF", "InGameDlssg");
         var bring = Dlssg20_30Service.ReadIniValue(ini, "HSF", "SlBringIn");
-        if (drive == "0" || bring == "0") return "D3D12 routes switched off in HSF.ini";
-        if (On(drive)) return "In game: the game's own Streamline";
-        if (On(bring)) return "In game: HSF's own Streamline";
-        return "Picked by HSF (DirectX 9 / 11 / Vulkan games, or not decided yet)";
+        if (drive == "0" || bring == "0") return "HSF.ini에서 D3D12 경로가 꺼져 있음";
+        if (On(drive)) return "게임 내: 게임 자체 Streamline";
+        if (On(bring)) return "게임 내: HSF 자체 Streamline";
+        return "HSF가 선택 (DirectX 9 / 11 / Vulkan 게임 또는 아직 결정되지 않음)";
     }
 
     /// <summary>The ⚙ dialog's "HSF decides" choice (HSF_streamline\rhi-hsf-route.txt; leaves with the folder).</summary>
@@ -433,7 +433,7 @@ public class HsfService
             var json = await _etagCache.GetWithETagAsync(_http, ReleasesApiUrl).ConfigureAwait(false);
             if (json == null)
             {
-                LastError = "Couldn't read HSF's releases from GitHub. Check your connection, or add a GitHub token (Settings › Accounts) if you've hit GitHub's hourly limit.";
+                LastError = "GitHub에서 HSF 릴리스를 읽을 수 없습니다. 연결을 확인하거나, GitHub 시간당 제한에 도달했다면 GitHub 토큰을 추가하세요 (설정 › 계정).";
                 _crashReporter.Log("[HsfService.FetchNewest] Release list request failed (offline or rate-limited)");
                 return null;
             }
@@ -550,7 +550,7 @@ public class HsfService
             var bytes = await DownloadAsync(rel).ConfigureAwait(false);
             if (bytes == null)
             {
-                LastError = "Couldn't download HSF. Check your connection and try again.";
+                LastError = "HSF를 다운로드할 수 없습니다. 연결을 확인하고 다시 시도하세요.";
                 return false;
             }
 
@@ -574,7 +574,7 @@ public class HsfService
             {
                 // Upstream changed the package layout: never record a version without the files
                 _crashReporter.Log($"[HsfService.Stage] {rel.AssetName} is missing expected files — not staged");
-                LastError = "This HSF release has a layout RHI doesn't know yet.";
+                LastError = "이 HSF 릴리스는 BONG DLSS5가 아직 알지 못하는 구조입니다.";
                 Directory.Delete(temp, true);
                 return false;
             }
@@ -594,7 +594,7 @@ public class HsfService
             _crashReporter.Log($"[HsfService.Stage] {rel.Version} failed — {ex.Message}");
             if (AntivirusGuard.IsVirusError(ex))
                 AntivirusGuard.Report(DisplayName, rel.Version, Path.Combine(StagingDir, StreamlineFolder, HelperExe));
-            LastError = $"Couldn't unpack HSF: {ex.Message}";
+            LastError = $"HSF 압축을 풀 수 없습니다: {ex.Message}";
             return false;
         }
         finally

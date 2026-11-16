@@ -38,7 +38,7 @@ public partial class DxvkService
     {
         try
         {
-            progress?.Report(("Preparing DXVK install...", 5));
+            progress?.Report(("DXVK 설치 준비 중...", 5));
 
             // ── 1. Ensure staging is ready ───────────────────────────────
             if (!IsStagingReady)
@@ -49,8 +49,8 @@ public partial class DxvkService
                 {
                     CrashReporter.Log("[DxvkService.InstallAsync] Staging still not ready — aborting");
                     progress?.Report((AntivirusGuard.IsBlocked(AntivirusComponentName)
-                        ? "DXVK couldn't be downloaded: your antivirus removed its files. Add an exclusion for %LocalAppData%\\RHI and try again."
-                        : "DXVK staging not available", 0));
+                        ? "DXVK를 다운로드할 수 없습니다: 백신이 파일을 제거했습니다. %LocalAppData%\\BONG DLSS5를 예외에 추가하고 다시 시도하세요."
+                        : "DXVK 스테이징을 사용할 수 없습니다", 0));
                     return;
                 }
             }
@@ -62,7 +62,7 @@ public partial class DxvkService
             // ── 3. Validate deployment path ──────────────────────────────
             if (!IsValidDeploymentPath(card.InstallPath))
             {
-                var msg = $"Cannot deploy DXVK to '{card.InstallPath}' — path is under a protected system directory.";
+                var msg = $"'{card.InstallPath}'에 DXVK를 배포할 수 없습니다 — 보호된 시스템 폴더 아래에 있는 경로입니다.";
                 CrashReporter.Log($"[DxvkService.InstallAsync] {msg}");
                 progress?.Report((msg, 0));
                 return;
@@ -70,7 +70,7 @@ public partial class DxvkService
 
             if (!Directory.Exists(card.InstallPath))
             {
-                var msg = $"Game directory does not exist: '{card.InstallPath}'";
+                var msg = $"게임 폴더가 존재하지 않습니다: '{card.InstallPath}'";
                 CrashReporter.Log($"[DxvkService.InstallAsync] {msg}");
                 progress?.Report((msg, 0));
                 return;
@@ -80,14 +80,14 @@ public partial class DxvkService
             var sampleDll = Path.Combine(StagingDir, archFolder, dllNames[0]);
             if (!File.Exists(sampleDll))
             {
-                var msg = $"DXVK's {archFolder}\\{dllNames[0]} is missing from RHI's download folder. "
-                        + "If your antivirus removed it, add an exclusion for %LocalAppData%\\RHI and install DXVK again.";
+                var msg = $"BONG DLSS5 다운로드 폴더에 DXVK의 {archFolder}\\{dllNames[0]} 파일이 없습니다. "
+                        + "백신이 제거했다면 %LocalAppData%\\BONG DLSS5를 예외에 추가하고 DXVK를 다시 설치하세요.";
                 CrashReporter.Log($"[DxvkService.InstallAsync] {msg}");
                 progress?.Report((msg, 0));
                 return;
             }
 
-            progress?.Report(("Resolving deployment paths...", 15));
+            progress?.Report(("배포 경로 확인 중...", 15));
 
             // ── DX8/DX9 Direct Mode ─────────────────────────────────────
             // All variants deploy DXVK as d3d9.dll directly for DX8/DX9 games.
@@ -97,13 +97,13 @@ public partial class DxvkService
 
             if (isDx9DirectMode)
             {
-                progress?.Report(("Deploying DXVK as d3d9.dll...", 35));
+                progress?.Report(("DXVK를 d3d9.dll로 배포 중...", 35));
 
                 var srcDll = Path.Combine(StagingDir, archFolder, "d3d9.dll");
                 if (!File.Exists(srcDll))
                 {
                     CrashReporter.Log($"[DxvkService.InstallAsync] Direct DX9: staged d3d9.dll not found at '{srcDll}'");
-                    progress?.Report(("DXVK d3d9.dll not found in staging", 0));
+                    progress?.Report(("스테이징에서 DXVK d3d9.dll을 찾을 수 없음", 0));
                     return;
                 }
 
@@ -128,12 +128,12 @@ public partial class DxvkService
                 }
 
                 // Step 3: Deploy DXVK as d3d9.dll
-                progress?.Report(("Deploying DXVK as d3d9.dll...", 50));
+                progress?.Report(("DXVK를 d3d9.dll로 배포 중...", 50));
                 CopyFileWithLockHandling(srcDll, localReshade, "d3d9.dll", card.GameName);
                 CrashReporter.Log($"[DxvkService.InstallAsync] Direct DX9: deployed DXVK as d3d9.dll (variant={_selectedVariant})");
 
                 // Step 4: Deploy dxvk.conf
-                progress?.Report(("Configuring dxvk.conf...", 60));
+                progress?.Report(("dxvk.conf 구성 중...", 60));
                 var dx9ConfPath = Path.Combine(card.InstallPath, "dxvk.conf");
                 bool dx9DeployedConf = false;
                 try
@@ -151,7 +151,7 @@ public partial class DxvkService
                 }
 
                 // Step 5: Deploy Vulkan reshade.ini + footprint (no [PROXY] section)
-                progress?.Report(("Configuring Vulkan ReShade...", 70));
+                progress?.Report(("Vulkan ReShade 구성 중...", 70));
                 AuxInstallService.MergeRsVulkanIni(card.InstallPath, card.GameName, screenshotSavePath, overlayHotkey, screenshotHotkey);
                 VulkanFootprintService.Create(card.InstallPath);
                 CrashReporter.Log("[DxvkService.InstallAsync] Direct DX9: deployed Vulkan reshade.ini + footprint");
@@ -159,7 +159,7 @@ public partial class DxvkService
                 // Step 5b: Lilium HDR only — set NVIDIA profile settings for HDR present mode
                 if (_selectedVariant == DxvkVariant.LiliumHdr)
                 {
-                    progress?.Report(("Setting NVIDIA profile...", 78));
+                    progress?.Report(("NVIDIA 프로필 설정 중...", 78));
                     try
                     {
                         var presetSvc = App.Services.GetRequiredService<DlssPresetService>();
@@ -173,7 +173,7 @@ public partial class DxvkService
                 }
 
                 // Step 6: Save tracking record
-                progress?.Report(("Saving install record...", 85));
+                progress?.Report(("설치 기록 저장 중...", 85));
                 var dx9Record = new DxvkInstalledRecord
                 {
                     GameName = card.GameName,
@@ -213,7 +213,7 @@ public partial class DxvkService
                 card.RefreshBackupState(); // populate VulkanRsIniExists so panel shows correctly
                 card.NotifyAll();
 
-                progress?.Report(("DXVK installed!", 100));
+                progress?.Report(("DXVK 설치됨!", 100));
                 CrashReporter.Log($"[DxvkService.InstallAsync] Direct DX9 install complete for {card.GameName} (variant={_selectedVariant})");
                 return;
             }
@@ -230,10 +230,10 @@ public partial class DxvkService
             // - DXVK also needs to deploy dxgi.dll for DX10/DX11 games
             // - If we deploy DXVK's dxgi.dll first, then the ReShade uninstall
             //   deletes it thinking it's removing the old ReShade DLL
-            progress?.Report(("Switching ReShade mode...", 25));
+            progress?.Report(("ReShade 모드 전환 중...", 25));
             await SwitchReShadeForDxvkAsync(card, dxvkEnabled: true, screenshotSavePath, overlayHotkey, screenshotHotkey);
 
-            progress?.Report(("Deploying DXVK DLLs...", 35));
+            progress?.Report(("DXVK DLL 배포 중...", 35));
 
             var backedUpFiles = new List<string>();
 
@@ -265,7 +265,7 @@ public partial class DxvkService
                 }
             }
 
-            progress?.Report(("Configuring dxvk.conf...", 65));
+            progress?.Report(("dxvk.conf 구성 중...", 65));
 
             // ── 9. Deploy default dxvk.conf if none exists ───────────────
             var confPath = Path.Combine(card.InstallPath, "dxvk.conf");
@@ -301,7 +301,7 @@ public partial class DxvkService
                 CrashReporter.Log($"[DxvkService.InstallAsync] Failed to deploy dxvk.conf — {ex.Message}");
             }
 
-            progress?.Report(("Saving install record...", 80));
+            progress?.Report(("설치 기록 저장 중...", 80));
 
             // ── 10. Create and persist DxvkInstalledRecord ───────────────
             var record = new DxvkInstalledRecord
@@ -356,12 +356,12 @@ public partial class DxvkService
             }
             card.NotifyAll();
 
-            progress?.Report(("DXVK installed!", 100));
+            progress?.Report(("DXVK 설치됨!", 100));
             CrashReporter.Log($"[DxvkService.InstallAsync] Install complete for {card.GameName}");
         }
         catch (IOException ioEx) when (IsFileLockedException(ioEx))
         {
-            var msg = $"File is in use — close {card.GameName} and retry.";
+            var msg = $"파일이 사용 중입니다 — {card.GameName}을(를) 종료하고 다시 시도하세요.";
             CrashReporter.Log($"[DxvkService.InstallAsync] {msg} — {ioEx.Message}");
             progress?.Report(($"❌ {msg}", 0));
         }
@@ -370,7 +370,7 @@ public partial class DxvkService
             CrashReporter.Log($"[DxvkService.InstallAsync] {card.GameName} — {ex.Message}");
             CrashReporter.WriteCrashReport("DxvkService.InstallAsync", ex,
                 note: $"Game: {card.GameName}, Path: {card.InstallPath}");
-            progress?.Report(($"❌ Install failed: {ex.Message}", 0));
+            progress?.Report(($"❌ 설치 실패: {ex.Message}", 0));
         }
     }
 
@@ -609,7 +609,7 @@ public partial class DxvkService
     {
         try
         {
-            progress?.Report(("Preparing DXVK update...", 5));
+            progress?.Report(("DXVK 업데이트 준비 중...", 5));
 
             // ── 1. Re-stage latest DXVK if needed ────────────────────────
             if (HasUpdate)
@@ -625,8 +625,8 @@ public partial class DxvkService
                 {
                     CrashReporter.Log("[DxvkService.UpdateAsync] Staging not ready after download — aborting");
                     progress?.Report((AntivirusGuard.IsBlocked(AntivirusComponentName)
-                        ? "DXVK couldn't be downloaded: your antivirus removed its files. Add an exclusion for %LocalAppData%\\RHI and try again."
-                        : "DXVK staging not available", 0));
+                        ? "DXVK를 다운로드할 수 없습니다: 백신이 파일을 제거했습니다. %LocalAppData%\\BONG DLSS5를 예외에 추가하고 다시 시도하세요."
+                        : "DXVK 스테이징을 사용할 수 없습니다", 0));
                     return;
                 }
             }
@@ -639,7 +639,7 @@ public partial class DxvkService
                 return;
             }
 
-            progress?.Report(("Updating DXVK DLLs...", 30));
+            progress?.Report(("DXVK DLL 업데이트 중...", 30));
 
             // ── 2. Determine arch folder for staging ─────────────────────
             // For direct DX9 mode (any variant), card.GraphicsApi is Vulkan (runtime override) — use the
@@ -678,7 +678,7 @@ public partial class DxvkService
                 }
             }
 
-            progress?.Report(("Saving updated record...", 80));
+            progress?.Report(("업데이트된 기록 저장 중...", 80));
 
             // ── 5. Rewrite dxvk.conf for direct DX9 installs ────────────
             if (isDx9DirectInstall)
@@ -713,12 +713,12 @@ public partial class DxvkService
             card.DxvkRecord = existingRecord;
             HasUpdate = false;
 
-            progress?.Report(("DXVK updated!", 100));
+            progress?.Report(("DXVK 업데이트됨!", 100));
             CrashReporter.Log($"[DxvkService.UpdateAsync] Update complete for {card.GameName}");
         }
         catch (IOException ioEx) when (IsFileLockedException(ioEx))
         {
-            var msg = $"File is in use — close {card.GameName} and retry.";
+            var msg = $"파일이 사용 중입니다 — {card.GameName}을(를) 종료하고 다시 시도하세요.";
             CrashReporter.Log($"[DxvkService.UpdateAsync] {msg} — {ioEx.Message}");
             progress?.Report(($"❌ {msg}", 0));
         }
@@ -727,7 +727,7 @@ public partial class DxvkService
             CrashReporter.Log($"[DxvkService.UpdateAsync] {card.GameName} — {ex.Message}");
             CrashReporter.WriteCrashReport("DxvkService.UpdateAsync", ex,
                 note: $"Game: {card.GameName}, Path: {card.InstallPath}");
-            progress?.Report(($"❌ Update failed: {ex.Message}", 0));
+            progress?.Report(($"❌ 업데이트 실패: {ex.Message}", 0));
         }
     }
 
@@ -741,7 +741,7 @@ public partial class DxvkService
             if (string.IsNullOrEmpty(card.InstallPath) || !Directory.Exists(card.InstallPath))
             {
                 CrashReporter.Log($"[DxvkService.CopyConfToGame] Invalid install path for '{card.GameName}'");
-                return "The game folder wasn't found.";
+                return "게임 폴더를 찾을 수 없습니다.";
             }
 
             var destPath = Path.Combine(card.InstallPath, "dxvk.conf");

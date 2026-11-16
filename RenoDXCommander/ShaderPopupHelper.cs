@@ -27,23 +27,23 @@ public static partial class ShaderPopupHelper
         PopupContext context)
     {
         var packs = shaderPackService.AvailablePacks;
-        var primaryButtonText = context == PopupContext.Global ? "Deploy" : "Confirm";
+        var primaryButtonText = context == PopupContext.Global ? "배포" : "확인";
 
         // Handle empty packs state
         if (packs.Count == 0)
         {
             var emptyDlg = new ContentDialog
             {
-                Title             = "Select Shader Packs",
+                Title             = "셰이더 팩 선택",
                 Content           = new TextBlock
                 {
-                    Text       = "No shader packs available.",
+                    Text       = "사용 가능한 셰이더 팩이 없습니다.",
                     FontSize   = 13,
                     Foreground = Brush(ResourceKeys.TextPrimaryBrush),
                 },
                 PrimaryButtonText      = primaryButtonText,
                 IsPrimaryButtonEnabled = false,
-                CloseButtonText        = "Cancel",
+                CloseButtonText        = "취소",
                 XamlRoot               = xamlRoot,
                 Background             = Brush(ResourceKeys.SurfaceOverlayBrush),
                 RequestedTheme         = ElementTheme.Dark,
@@ -102,14 +102,14 @@ public static partial class ShaderPopupHelper
         bool allExpanded = false;
         var expandAllBtn = new Button
         {
-            Content             = "Expand All",
+            Content             = "모두 펼치기",
             FontSize            = 12,
             Padding             = new Thickness(8, 4, 8, 4),
             HorizontalAlignment = HorizontalAlignment.Left,
         };
         var deselectAllBtn = new Button
         {
-            Content             = "Deselect All",
+            Content             = "모두 선택 해제",
             FontSize            = 12,
             Padding             = new Thickness(8, 4, 8, 4),
             HorizontalAlignment = HorizontalAlignment.Left,
@@ -124,7 +124,7 @@ public static partial class ShaderPopupHelper
                 if (expandButtons.TryGetValue(pid, out var eb))
                     SetExpanded(eb, allExpanded);
             }
-            expandAllBtn.Content = allExpanded ? "Collapse All" : "Expand All";
+            expandAllBtn.Content = allExpanded ? "모두 접기" : "모두 펼치기";
         };
         deselectAllBtn.Click += (s, ev) =>
         {
@@ -143,7 +143,7 @@ public static partial class ShaderPopupHelper
                         SetExpanded(eb, false);
                 }
                 allExpanded = false;
-                expandAllBtn.Content = "Expand All";
+                expandAllBtn.Content = "모두 펼치기";
             }
             finally { profileLoading = false; }
         };
@@ -159,7 +159,7 @@ public static partial class ShaderPopupHelper
         // ── Search box (right of Deselect All) ───────────────────────────────
         var searchBox = new TextBox
         {
-            PlaceholderText = "Search packs or shaders...",
+            PlaceholderText = "팩 또는 셰이더 검색...",
             FontSize        = 12,
             MinWidth        = 220,
             Background      = Brush(ResourceKeys.SurfaceInputBrush),
@@ -213,7 +213,7 @@ public static partial class ShaderPopupHelper
             // ── "Custom Shaders" plain section header (no checkbox, no expand) ──
             panel.Children.Add(new TextBlock
             {
-                Text       = "Custom Shaders",
+                Text       = "사용자 지정 셰이더",
                 FontSize   = 14,
                 FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                 Foreground = Brush(ResourceKeys.TextPrimaryBrush),
@@ -297,7 +297,7 @@ public static partial class ShaderPopupHelper
                 };
 
                 var folderExpandBtn = MakeExpandButton(folderFileCbList.Count);
-                ToolTipService.SetToolTip(folderExpandBtn, "Show or hide the shader files in this folder.");
+                ToolTipService.SetToolTip(folderExpandBtn, "이 폴더의 셰이더 파일을 표시하거나 숨깁니다.");
                 var capturedFolderSubPanel = folderSubPanel;
                 var capturedExpandBtn = folderExpandBtn;
                 folderExpandBtn.Click += (s, ev) =>
@@ -309,7 +309,7 @@ public static partial class ShaderPopupHelper
                 expandButtons[folderId] = folderExpandBtn;
 
                 var folderInnerPanel = new StackPanel { Spacing = 3 };
-                folderInnerPanel.Children.Add(MakeCardTitle(folderName, "Your files", good: true));
+                folderInnerPanel.Children.Add(MakeCardTitle(folderName, "내 파일", good: true));
                 folderInnerPanel.Children.Add(folderExpandBtn);
                 folderPackCb.Content = folderInnerPanel;
 
@@ -371,9 +371,9 @@ public static partial class ShaderPopupHelper
 
             var headerText = group.Key switch
             {
-                ShaderPackService.PackCategory.Essential   => "Essential",
-                ShaderPackService.PackCategory.Recommended => "Recommended",
-                _                                          => "Extra",
+                ShaderPackService.PackCategory.Essential   => "필수",
+                ShaderPackService.PackCategory.Recommended => "권장",
+                _                                          => "추가",
             };
 
             var headerTextBlock = new TextBlock
@@ -452,7 +452,7 @@ public static partial class ShaderPopupHelper
 
                 // Card content: name + status, description, what it also selects, then the shader list link
                 var innerPanel = new StackPanel { Spacing = 3 };
-                innerPanel.Children.Add(MakeCardTitle(displayName, isCached ? "Downloaded" : "Downloads on deploy", good: isCached));
+                innerPanel.Children.Add(MakeCardTitle(displayName, isCached ? "다운로드됨" : "배포 시 다운로드", good: isCached));
                 if (!string.IsNullOrEmpty(description))
                     innerPanel.Children.Add(MakeCardDescription(description));
                 var requiredNames = shaderPackService.GetRequiredPacks(id)
@@ -461,7 +461,7 @@ public static partial class ShaderPopupHelper
                 if (requiredNames.Count > 0)
                     innerPanel.Children.Add(new TextBlock
                     {
-                        Text         = "Also selects " + string.Join(", ", requiredNames),
+                        Text         = "함께 선택됨: " + string.Join(", ", requiredNames),
                         FontSize     = 11,
                         TextWrapping = TextWrapping.Wrap,
                         Foreground   = Brush(ResourceKeys.TextSecondaryBrush),
@@ -471,7 +471,7 @@ public static partial class ShaderPopupHelper
                 if (isCached && fileCbList.Count > 0)
                 {
                     var expandBtn = MakeExpandButton(fileCbList.Count);
-                    ToolTipService.SetToolTip(expandBtn, "Show or hide the shader files in this pack.");
+                    ToolTipService.SetToolTip(expandBtn, "이 팩의 셰이더 파일을 표시하거나 숨깁니다.");
                     expandButtons[id] = expandBtn;
                     innerPanel.Children.Add(expandBtn);
 
@@ -580,8 +580,8 @@ public static partial class ShaderPopupHelper
                 header.Text = HeadingText(category, on, ids.Count);
             }
             int total = checkBoxes.Count(c => c.Box.IsChecked != false);
-            selectionSummary.Text = total == 0 ? "Nothing selected yet. Tick the packs you want."
-                : total == 1 ? "1 selected" : $"{total} selected";
+            selectionSummary.Text = total == 0 ? "아직 선택한 항목이 없습니다. 원하는 팩을 체크하세요."
+                : total == 1 ? "1개 선택됨" : $"{total}개 선택됨";
         }
         foreach (var (_, box) in checkBoxes)
         {
@@ -693,7 +693,7 @@ public static partial class ShaderPopupHelper
         // Header
         profilePanel.Children.Add(new TextBlock
         {
-            Text       = "Profiles",
+            Text       = "프로필",
             FontSize   = 13,
             FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
             Foreground = Brush(ResourceKeys.TextPrimaryBrush),
@@ -713,7 +713,7 @@ public static partial class ShaderPopupHelper
         // Inline rename TextBox for new profile (hidden until "New" is clicked)
         var newProfileBox = new TextBox
         {
-            PlaceholderText = "Profile name",
+            PlaceholderText = "프로필 이름",
             FontSize        = 12,
             Margin          = new Thickness(0, 2, 0, 2),
             Visibility      = Visibility.Collapsed,
@@ -869,7 +869,7 @@ public static partial class ShaderPopupHelper
                     HorizontalContentAlignment = HorizontalAlignment.Left,
                     MinWidth            = 0,
                 };
-                ToolTipService.SetToolTip(nameBtn, "Load this profile's shader selection.");
+                ToolTipService.SetToolTip(nameBtn, "이 프로필의 셰이더 선택을 불러옵니다.");
                 int nameBtnWidth = context == PopupContext.Global ? 120 : 170;
 
                 nameBtn.Click += (s, ev) =>
@@ -893,7 +893,7 @@ public static partial class ShaderPopupHelper
                         VerticalAlignment = VerticalAlignment.Center,
                         Opacity           = 0.6,
                     };
-                    ToolTipService.SetToolTip(editBtn, "Rename profile.");
+                    ToolTipService.SetToolTip(editBtn, "프로필 이름 바꾸기");
                     editBtn.Click += (s, ev) =>
                     {
                         // Replace name button with inline TextBox in the row
@@ -950,7 +950,7 @@ public static partial class ShaderPopupHelper
                     // Inline confirm (this list lives inside a ContentDialog, so no second dialog):
                     // first click arms the button, a second click deletes. Moving the pointer away
                     // or leaving the button disarms it, so doing nothing means Cancel.
-                    const string delTip = "Delete this profile.";
+                    const string delTip = "이 프로필을 삭제합니다.";
                     bool delArmed = false;
                     ToolTipService.SetToolTip(delBtn, delTip);
                     void DisarmDelete()
@@ -968,9 +968,9 @@ public static partial class ShaderPopupHelper
                         if (!delArmed)
                         {
                             delArmed = true;
-                            delBtn.Content    = "Delete?";
+                            delBtn.Content    = "삭제?";
                             delBtn.Foreground = Brush(ResourceKeys.AccentRedBrush);
-                            ToolTipService.SetToolTip(delBtn, "Click again to delete this profile.");
+                            ToolTipService.SetToolTip(delBtn, "한 번 더 클릭하면 이 프로필이 삭제됩니다.");
                             return;
                         }
                         CrashReporter.Log($"[ShaderPopupHelper.ShowAsync] Deleted profile '{profiles[capturedIdx].Name}'");
@@ -998,7 +998,7 @@ public static partial class ShaderPopupHelper
             // Save button
             var saveBtn = new Button
             {
-                Content  = "Save",
+                Content  = "저장",
                 FontSize = 12,
                 Padding  = new Thickness(8, 4, 8, 4),
                 Margin   = new Thickness(0, 6, 0, 2),
@@ -1037,10 +1037,10 @@ public static partial class ShaderPopupHelper
                 rebuildProfileList!();
             };
             profilePanel.Children.Add(saveBtn);
-            ToolTipService.SetToolTip(saveBtn, "Save the current shader selection into the highlighted profile. If no profile is selected, a new one is created automatically.");
+            ToolTipService.SetToolTip(saveBtn, "현재 셰이더 선택을 강조 표시된 프로필에 저장합니다. 선택된 프로필이 없으면 새 프로필이 자동으로 만들어집니다.");
             var newBtn = new Button
             {
-                Content  = "New",
+                Content  = "새로 만들기",
                 FontSize = 12,
                 Padding  = new Thickness(8, 4, 8, 4),
                 Margin   = new Thickness(0, 2, 0, 2),
@@ -1058,7 +1058,7 @@ public static partial class ShaderPopupHelper
                 newProfileBox.SelectAll();
             };
             profilePanel.Children.Add(newBtn);
-            ToolTipService.SetToolTip(newBtn, "Create a new profile from the current shader selection. You'll be prompted to enter a name.");
+            ToolTipService.SetToolTip(newBtn, "현재 셰이더 선택으로 새 프로필을 만듭니다. 이름을 입력하라는 메시지가 표시됩니다.");
             profilePanel.Children.Add(newProfileBox);
 
             // Confirm new profile on Enter or focus lost
@@ -1105,7 +1105,7 @@ public static partial class ShaderPopupHelper
             // Export button
             var exportBtn = new Button
             {
-                Content  = "Export",
+                Content  = "내보내기",
                 FontSize = 12,
                 Padding  = new Thickness(8, 4, 8, 4),
                 HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -1132,7 +1132,7 @@ public static partial class ShaderPopupHelper
                     var zipPath = ShaderProfileService.BuildExportZip(packIds, exclDict, shaderPackService,
                         activeProfileIdx >= 0 && activeProfileIdx < profiles.Count
                             ? profiles[activeProfileIdx]
-                            : new ShaderProfile { Name = "Exported Profile", SelectedPacks = packIds, FileExclusions = exclDict.ToDictionary(k => k.Key, k => k.Value.ToList()) });
+                            : new ShaderProfile { Name = "내보낸 프로필", SelectedPacks = packIds, FileExclusions = exclDict.ToDictionary(k => k.Key, k => k.Value.ToList()) });
                     var storageFile = await Windows.Storage.StorageFile.GetFileFromPathAsync(zipPath);
                     var dp = new Windows.ApplicationModel.DataTransfer.DataPackage();
                     dp.SetStorageItems(new[] { storageFile });
@@ -1140,7 +1140,7 @@ public static partial class ShaderPopupHelper
 
                     CrashReporter.Log($"[ShaderPopupHelper.ShowAsync] Exported shaders zip to clipboard: {zipPath}");
 
-                    exportStatusLabel.Text       = "Copied to clipboard";
+                    exportStatusLabel.Text       = "클립보드에 복사됨";
                     exportStatusLabel.Visibility = Visibility.Visible;
 
                     // Clear after 3 seconds
@@ -1162,19 +1162,19 @@ public static partial class ShaderPopupHelper
                 }
             };
             profilePanel.Children.Add(exportBtn);
-            ToolTipService.SetToolTip(exportBtn, "Zip the currently selected shader files and copy the archive to your clipboard. Paste directly into Discord to share.");
+            ToolTipService.SetToolTip(exportBtn, "현재 선택한 셰이더 파일을 압축하여 클립보드에 복사합니다. Discord에 바로 붙여 넣어 공유하세요.");
             profilePanel.Children.Add(exportStatusLabel);
 
             // Import button
             var importBtn = new Button
             {
-                Content  = "Import",
+                Content  = "가져오기",
                 FontSize = 12,
                 Padding  = new Thickness(8, 4, 8, 4),
                 Margin   = new Thickness(0, 2, 0, 0),
                 HorizontalAlignment = HorizontalAlignment.Stretch,
             };
-            ToolTipService.SetToolTip(importBtn, "Import a shader profile from a .zip archive exported by RHI.");
+            ToolTipService.SetToolTip(importBtn, "BONG DLSS5에서 내보낸 .zip 압축 파일에서 셰이더 프로필을 가져옵니다.");
 
             var importStatusLabel = new TextBlock
             {
@@ -1198,17 +1198,17 @@ public static partial class ShaderPopupHelper
                         var ofn = new NativeInterop.OpenFileName();
                         ofn.structSize = System.Runtime.InteropServices.Marshal.SizeOf(ofn);
                         ofn.hwndOwner  = hwnd;
-                        ofn.filter     = "ZIP Archives (*.zip)\0*.zip\0All Files (*.*)\0*.*\0";
+                        ofn.filter     = "ZIP 압축 파일 (*.zip)\0*.zip\0모든 파일 (*.*)\0*.*\0";
                         ofn.file       = new string(new char[260]);
                         ofn.maxFile    = ofn.file.Length;
-                        ofn.title      = "Import Shader Profile";
+                        ofn.title      = "셰이더 프로필 가져오기";
                         ofn.flags      = 0x00080000 | 0x00001000; // OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST
                         return NativeInterop.GetOpenFileName(ref ofn) ? ofn.file.TrimEnd('\0') : null;
                     });
                     if (string.IsNullOrEmpty(zipPath)) return;
 
                     importBtn.IsEnabled = false;
-                    importStatusLabel.Text       = "Importing...";
+                    importStatusLabel.Text       = "가져오는 중...";
                     importStatusLabel.Foreground = Brush(ResourceKeys.AccentGreenBrush);
                     importStatusLabel.Visibility = Visibility.Visible;
 
@@ -1216,7 +1216,7 @@ public static partial class ShaderPopupHelper
 
                     if (result == null)
                     {
-                        importStatusLabel.Text       = "Invalid archive — not an RHI shader profile.";
+                        importStatusLabel.Text       = "잘못된 압축 파일 — BONG DLSS5 셰이더 프로필이 아닙니다.";
                         importStatusLabel.Foreground = Brush(ResourceKeys.AccentRedBrush);
                         importStatusLabel.Visibility = Visibility.Visible;
                     }
@@ -1238,8 +1238,8 @@ public static partial class ShaderPopupHelper
                         ApplyProfileToPanel(importedProfile);
 
                         var msg = extractedPackIds.Count > 0
-                            ? $"Imported — {extractedPackIds.Count} pack(s) extracted from archive."
-                            : "Imported.";
+                            ? $"가져옴 — 압축 파일에서 팩 {extractedPackIds.Count}개를 추출했습니다."
+                            : "가져왔습니다.";
                         importStatusLabel.Text       = msg;
                         importStatusLabel.Foreground = Brush(ResourceKeys.AccentGreenBrush);
                         importStatusLabel.Visibility = Visibility.Visible;
@@ -1270,12 +1270,12 @@ public static partial class ShaderPopupHelper
             profilePanel.Children.Add(new Border { Height = 1, Background = Brush(ResourceKeys.BorderDefaultBrush), Margin = new Thickness(0, 10, 0, 10) });
             var openCustomBtn = new Button
             {
-                Content             = "Open Custom Folder",
+                Content             = "사용자 지정 폴더 열기",
                 FontSize            = 12,
                 Padding             = new Thickness(8, 4, 8, 4),
                 HorizontalAlignment = HorizontalAlignment.Stretch,
             };
-            ToolTipService.SetToolTip(openCustomBtn, "Open your Custom shader folder — place .fx files in Shaders\\ and textures in Textures\\ to add them to the picker above.");
+            ToolTipService.SetToolTip(openCustomBtn, "사용자 지정 셰이더 폴더를 엽니다 — .fx 파일은 Shaders\\에, 텍스처는 Textures\\에 넣으면 위 선택기에 추가됩니다.");
             openCustomBtn.Click += async (s, ev) =>
             {
                 try
@@ -1318,10 +1318,10 @@ public static partial class ShaderPopupHelper
 
         var dlg = new ContentDialog
         {
-            Title             = "Select Shader Packs",
+            Title             = "셰이더 팩 선택",
             Content           = contentGrid,
             PrimaryButtonText = primaryButtonText,
-            CloseButtonText   = "Cancel",
+            CloseButtonText   = "취소",
             XamlRoot          = xamlRoot,
             Background        = Brush(ResourceKeys.SurfaceOverlayBrush),
             RequestedTheme    = ElementTheme.Dark,

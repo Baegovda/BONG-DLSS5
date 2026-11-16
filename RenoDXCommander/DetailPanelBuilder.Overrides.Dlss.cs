@@ -35,12 +35,12 @@ public partial class DetailPanelBuilder
         if (!isPresent)
             ToolTipService.SetToolTip(columnLabel,
                 installedVersion?.StartsWith("1.") == true
-                    ? "DLSS / Streamline 1.x can't be swapped to 2.x or newer."
-                    : "This game doesn't include this DLL.");
+                    ? "DLSS / Streamline 1.x는 2.x 이상으로 교체할 수 없습니다."
+                    : "이 게임에는 이 DLL이 없습니다.");
         col.Children.Add(columnLabel);
 
         // Version ComboBox
-        var versionLabel = new TextBlock { Text = "Version", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) };
+        var versionLabel = new TextBlock { Text = "버전", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) };
         col.Children.Add(versionLabel);
 
         // Build items list with (Default) marker on the game's original/default version
@@ -132,11 +132,11 @@ public partial class DetailPanelBuilder
         };
 
         if (driverOverrideActive)
-            ToolTipService.SetToolTip(versionCombo, "NVIDIA Override is active — the driver is injecting its own latest DLL for this game. Select any other version to disable the override and deploy that version instead.");
+            ToolTipService.SetToolTip(versionCombo, "NVIDIA Override가 활성화되어 있습니다 — 드라이버가 이 게임에 자체 최신 DLL을 주입하고 있습니다. 다른 버전을 선택하면 재정의를 끄고 해당 버전을 배포합니다.");
         else if (onDriverOverrideToggled != null)
-            ToolTipService.SetToolTip(versionCombo, "Selects which DLL version is copied into the game folder. Default restores the original game DLL. Custom uses your own file from %LocalAppData%\\RHI\\Custom\\DLSS\\. NVIDIA Override lets the driver inject its own latest version instead of a file on disk — equivalent to enabling DLSS Override in NVIDIA App or Profile Inspector.");
+            ToolTipService.SetToolTip(versionCombo, "게임 폴더에 복사할 DLL 버전을 선택합니다. Default는 게임의 원래 DLL을 복원합니다. Custom은 %LocalAppData%\\BONG DLSS5\\Custom\\DLSS\\의 사용자 파일을 사용합니다. NVIDIA Override는 디스크의 파일 대신 드라이버가 자체 최신 버전을 주입하게 합니다 — NVIDIA App이나 Profile Inspector에서 DLSS Override를 켜는 것과 같습니다.");
         else
-            ToolTipService.SetToolTip(versionCombo, "Selects which DLL version is copied into the game folder. Default restores the original game DLL. Custom uses your own file from %LocalAppData%\\RHI\\Custom\\DLSS\\.");
+            ToolTipService.SetToolTip(versionCombo, "게임 폴더에 복사할 DLL 버전을 선택합니다. Default는 게임의 원래 DLL을 복원합니다. Custom은 %LocalAppData%\\BONG DLSS5\\Custom\\DLSS\\의 사용자 파일을 사용합니다.");
 
         col.Children.Add(versionCombo);
 
@@ -189,7 +189,7 @@ public partial class DetailPanelBuilder
         // Preset ComboBox (only for SR, RR, FG)
         if (presets != null && isPresent)
         {
-            col.Children.Add(new TextBlock { Text = "Preset", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) });
+            col.Children.Add(new TextBlock { Text = "프리셋", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) });
 
             var presetItems = presets.Select(p => p.Name).ToList();
             int presetIdx = 0;
@@ -211,9 +211,9 @@ public partial class DetailPanelBuilder
             // Add tooltip explaining presets
             string presetTooltip = label switch
             {
-                "DLSS Super Resolution" => "Override the DLSS upscaling model. J/K use the 1st-gen transformer (DLSS 4.0). L/M use the 2nd-gen transformer (DLSS 4.5) with better temporal stability. NVIDIA Recommended uses NVIDIA's per-resolution preset selection.",
-                "Ray Reconstruction" => "Override the Ray Reconstruction denoising model. Higher presets are newer model iterations. NVIDIA Recommended uses NVIDIA's per-resolution preset selection.",
-                "Frame Generation" => "Override the Frame Generation interpolation model. Higher presets are newer model iterations. NVIDIA Recommended uses NVIDIA's per-resolution preset selection.",
+                "DLSS Super Resolution" => "DLSS 업스케일링 모델을 재정의합니다. J/K는 1세대 트랜스포머(DLSS 4.0)를 사용합니다. L/M은 시간적 안정성이 더 좋은 2세대 트랜스포머(DLSS 4.5)를 사용합니다. NVIDIA Recommended는 NVIDIA의 해상도별 프리셋 선택을 사용합니다.",
+                "Ray Reconstruction" => "레이 재구성 노이즈 제거 모델을 재정의합니다. 높은 프리셋일수록 최신 모델입니다. NVIDIA Recommended는 NVIDIA의 해상도별 프리셋 선택을 사용합니다.",
+                "Frame Generation" => "프레임 생성 보간 모델을 재정의합니다. 높은 프리셋일수록 최신 모델입니다. NVIDIA Recommended는 NVIDIA의 해상도별 프리셋 선택을 사용합니다.",
                 _ => ""
             };
             if (!string.IsNullOrEmpty(presetTooltip))
@@ -234,7 +234,7 @@ public partial class DetailPanelBuilder
         // Render Scale ComboBox (only for SR and RR)
         if (onRenderScaleSelected != null && isPresent)
         {
-            col.Children.Add(new TextBlock { Text = "Render Scale", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) });
+            col.Children.Add(new TextBlock { Text = "렌더 배율", FontSize = 10, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), Margin = new Thickness(0, 2, 0, 0) });
             var rsOptions = DlssPresetService.RenderScaleOptions;
             var rsItems = rsOptions.Select(o => o.Name).ToList();
 
@@ -252,7 +252,7 @@ public partial class DetailPanelBuilder
 
             // If Custom is selected, show the percentage in the item text
             if (rsIdx == rsItems.Count - 1 && currentRenderScale > 0)
-                rsItems[^1] = $"Custom ({currentRenderScale}%)";
+                rsItems[^1] = $"사용자 지정 ({currentRenderScale}%)";
 
             var rsCombo = new ComboBox
             {
@@ -264,7 +264,7 @@ public partial class DetailPanelBuilder
                 MaxDropDownHeight = 300,
             };
             ToolTipService.SetToolTip(rsCombo,
-                "Override the DLSS render resolution scale. Off = game controls the scale.\nNamed presets set a fixed percentage. Custom lets you enter any value from 33-100%.");
+                "DLSS 렌더 해상도 배율을 재정의합니다. Off = 게임이 배율을 제어합니다.\n이름 있는 프리셋은 고정 비율을 설정합니다. Custom은 33-100% 사이의 값을 직접 입력할 수 있습니다.");
 
             bool rsInit = true;
             rsCombo.SelectionChanged += (s, ev) =>
@@ -287,7 +287,7 @@ public partial class DetailPanelBuilder
                         MaxLength = 3,
                     };
                     ToolTipService.SetToolTip(inputBox,
-                        "Render scale as a percentage of output resolution (33 to 100). Enter to apply, Esc to cancel.");
+                        "출력 해상도 대비 렌더 배율(33~100%). Enter로 적용, Esc로 취소.");
                     inputBox.KeyDown += (ks, ke) =>
                     {
                         if (ke.Key == Windows.System.VirtualKey.Enter)
@@ -359,9 +359,9 @@ public partial class DetailPanelBuilder
         if (xamlRoot == null) return;
         await DialogService.ShowSafeAsync(new ContentDialog
         {
-            Title = "Couldn't change DLSS files",
+            Title = "DLSS 파일을 변경할 수 없습니다",
             Content = new TextBlock { Text = message, TextWrapping = TextWrapping.Wrap },
-            CloseButtonText = "OK",
+            CloseButtonText = "확인",
             XamlRoot = xamlRoot,
         });
     }

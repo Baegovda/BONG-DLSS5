@@ -39,17 +39,17 @@ public sealed partial class MainWindow
         }
 
         var iniPath = string.IsNullOrEmpty(card.InstallPath) ? null : Path.Combine(card.InstallPath, OptiScalerService.IniFileName);
-        var openBtn = ctx.Cog.MakeOpenFileButton("Open OptiScaler.ini", iniPath);
+        var openBtn = ctx.Cog.MakeOpenFileButton("OptiScaler.ini 열기", iniPath);
 
         // Replacing resets most settings, so it asks first (a flyout: a second dialog can't open over the cog)
-        var replaceBtn = CogDialog.StyledButton("Replace with a fresh copy...", CogButtonKind.Secondary);
+        var replaceBtn = CogDialog.StyledButton("새 사본으로 교체...", CogButtonKind.Secondary);
         ToolTipService.SetToolTip(replaceBtn,
-            "Replaces this game's OptiScaler.ini with a fresh copy of RHI's template. Use it if the game has no OptiScaler.ini yet or you want to start over.");
-        var confirmBtn = CogDialog.StyledButton("Replace", CogButtonKind.Danger, compact: true);
+            "이 게임의 OptiScaler.ini를 BONG DLSS5 템플릿의 새 사본으로 교체합니다. 게임에 아직 OptiScaler.ini가 없거나 처음부터 다시 시작하려는 경우 사용하세요.");
+        var confirmBtn = CogDialog.StyledButton("교체", CogButtonKind.Danger, compact: true);
         var confirmPanel = new StackPanel { Spacing = 8, MaxWidth = 300 };
         confirmPanel.Children.Add(new TextBlock
         {
-            Text = "Replace this game's OptiScaler.ini with a fresh copy? Most settings above are reset.",
+            Text = "이 게임의 OptiScaler.ini를 새 사본으로 교체할까요? 위의 설정 대부분이 초기화됩니다.",
             TextWrapping = TextWrapping.Wrap,
             FontSize = 12,
         });
@@ -72,11 +72,11 @@ public sealed partial class MainWindow
 
         var profile = ViewModel.GetOsIniProfile(card.GameName, ctx.Store);
         footer.Children.Add(MakeOsFooterNote(OsIniLibrary.Exists(profile)
-            ? $"This game uses your saved ini \"{profile}\". A fresh copy resets most settings and goes back to RHI's template."
-            : "A fresh copy resets most settings."));
+            ? $"이 게임은 저장된 ini \"{profile}\"을(를) 사용합니다. 새 사본을 사용하면 대부분의 설정이 초기화되고 BONG DLSS5 템플릿으로 돌아갑니다."
+            : "새 사본을 사용하면 대부분의 설정이 초기화됩니다."));
 
         var tip = MakeOsFooterNote(
-            "Crashing with ReShade and OptiScaler both installed? Rename ReShade (for example to d3d12.dll) in Game Overrides › DLL naming.");
+            "ReShade와 OptiScaler를 함께 설치했을 때 충돌하나요? 게임 재정의 › DLL 이름 지정에서 ReShade 이름을 바꾸세요 (예: d3d12.dll).");
         tip.FontSize = 12;
         tip.Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush);
         footer.Children.Add(tip);
@@ -120,13 +120,13 @@ public sealed partial class MainWindow
             ViewModel.SetOsIniProfile(card.GameName, null, store); // back on RHI's template
             int kept = OsIniEditor.ApplySaved(card.InstallPath, ViewModel.GetOsIniEdits(card.GameName, store));
             showStatus(kept > 0
-                ? $"OptiScaler.ini copied to the game folder. Your {kept} saved edit(s) from All Settings were applied again."
-                : "OptiScaler.ini copied to the game folder.", true);
+                ? $"OptiScaler.ini를 게임 폴더에 복사했습니다. 모든 설정에서 저장한 편집 {kept}개를 다시 적용했습니다."
+                : "OptiScaler.ini를 게임 폴더에 복사했습니다.", true);
         }
         catch (Exception ex)
         {
             CrashReporter.Log($"[MainWindow.DeployOsIniFromCog] Failed for '{card.GameName}' — {ex.Message}");
-            showStatus($"Couldn't deploy OptiScaler.ini: {ex.Message}", false);
+            showStatus($"OptiScaler.ini를 배포하지 못했습니다: {ex.Message}", false);
         }
     }
 

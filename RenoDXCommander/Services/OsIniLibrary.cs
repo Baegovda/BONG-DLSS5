@@ -82,7 +82,7 @@ public static class OsIniLibrary
     public static string? Deploy(string name, string gameDir, string? hotkey)
     {
         var source = PathFor(name);
-        if (!File.Exists(source)) return $"The saved ini \"{name}\" wasn't found.";
+        if (!File.Exists(source)) return $"저장된 ini \"{name}\"을(를) 찾을 수 없습니다.";
         var dest = Path.Combine(gameDir, OptiScalerService.IniFileName);
         try
         {

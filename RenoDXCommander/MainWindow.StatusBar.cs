@@ -65,7 +65,7 @@ public sealed partial class MainWindow
 
         var vm = ViewModel;
         if (vm.IsLoading)
-            return vm.StatusText + (string.IsNullOrEmpty(vm.SubStatusText) ? "" : $"  —  {vm.SubStatusText}");
+            return KoreanBuild.Status(vm.StatusText) + (string.IsNullOrEmpty(vm.SubStatusText) ? "" : $"  —  {vm.SubStatusText}");
 
         var activity = vm.CurrentActivityText;
         if (!string.IsNullOrEmpty(activity)) return activity;
@@ -73,7 +73,7 @@ public sealed partial class MainWindow
         // Problems stay visible until the next successful scan
         if (vm.StatusText.Contains("offline mode", StringComparison.OrdinalIgnoreCase)
             || vm.StatusText.StartsWith("Error", StringComparison.OrdinalIgnoreCase))
-            return vm.StatusText + (string.IsNullOrEmpty(vm.SubStatusText) ? "" : $"  —  {vm.SubStatusText}");
+            return KoreanBuild.Status(vm.StatusText) + (string.IsNullOrEmpty(vm.SubStatusText) ? "" : $"  —  {vm.SubStatusText}");
 
         return FormatIdleStatus(vm.Settings.BackgroundUpdateChecks, vm.Settings.LastUpdateCheckUtc,
             vm.NextUpdateCheckUtc, nowUtc);
@@ -84,14 +84,14 @@ public sealed partial class MainWindow
     {
         bool minimal = string.Equals(backgroundChecks, "Minimal", StringComparison.OrdinalIgnoreCase);
         var last = SettingsHandler.FormatLastUpdateCheck(lastUtcText, nowUtc);
-        var text = (minimal ? "Last full check: " : "Last checked: ") + (last == "Just now" ? "just now" : last == "Not yet" ? "not yet" : last);
+        var text = (minimal ? "마지막 전체 확인: " : "마지막 확인: ") + (last == "Just now" ? "방금" : last == "Not yet" ? "아직 없음" : last);
         if (nextUtc != null)
         {
             var remaining = nextUtc.Value - nowUtc;
             var next = remaining <= TimeSpan.FromMinutes(1)
-                ? "under a minute"
-                : $"{(int)remaining.TotalHours}h {remaining.Minutes:00}m";
-            text += minimal ? $"  ·  Next data refresh in {next}" : $"  ·  Next check in {next}";
+                ? "1분 미만"
+                : $"{(int)remaining.TotalHours}시간 {remaining.Minutes:00}분";
+            text += minimal ? $"  ·  다음 데이터 새로 고침까지 {next}" : $"  ·  다음 확인까지 {next}";
         }
         return text;
     }

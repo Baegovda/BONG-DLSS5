@@ -166,7 +166,7 @@ internal static class OsCustomBuildService
             string input;
             if (IsUrl(source, out var uri))
             {
-                progress?.Report("Downloading...");
+                progress?.Report("다운로드 중...");
                 var fileName = Path.GetFileName(Uri.UnescapeDataString(uri!.AbsolutePath));
                 if (string.IsNullOrWhiteSpace(fileName) || fileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
                     fileName = "download";
@@ -182,7 +182,7 @@ internal static class OsCustomBuildService
                 input = Path.GetFullPath(source);
                 origin = input;
             }
-            else return new(null, "That file, folder or link couldn't be found.", null);
+            else return new(null, "해당 파일, 폴더 또는 링크를 찾을 수 없습니다.", null);
 
             // Unpack (or take the folder / DLL as it is)
             string searchRoot;
@@ -195,7 +195,7 @@ internal static class OsCustomBuildService
             }
             else
             {
-                progress?.Report("Unpacking...");
+                progress?.Report("압축 해제 중...");
                 searchRoot = Path.Combine(work, "x");
                 var err = await ExtractAsync(input, searchRoot, ct).ConfigureAwait(false);
                 if (err != null) return new(null, err, null);
@@ -203,11 +203,11 @@ internal static class OsCustomBuildService
 
             var dll = FindOptiScalerDll(searchRoot);
             if (dll == null)
-                return new(null, "No OptiScaler.dll was found in it (looked up to 3 folders deep).", null);
+                return new(null, "OptiScaler.dll을 찾을 수 없습니다 (최대 3단계 폴더까지 검색함).", null);
             var buildRoot = Path.GetDirectoryName(dll)!;
 
             // Copy into place: <slug>.tmp\build, then swap in
-            progress?.Report("Copying...");
+            progress?.Report("복사 중...");
             Directory.CreateDirectory(Root);
             var slug = replaceSlug ?? MakeSlug(name);
             var slugDir = Path.Combine(Root, slug);
@@ -236,14 +236,14 @@ internal static class OsCustomBuildService
             CrashReporter.Log($"[OsCustomBuildService.ImportAsync] {(replaceSlug != null ? "Replaced" : "Added")} '{meta.Name}' ({slug}) from {origin}: version {meta.DllVersion ?? "?"}, OptiScaler 10 layout {Directory.Exists(Path.Combine(slugDir, BuildFolder, "OptiScaler"))}, NR DLL {meta.NeedsNrDll}");
             Reload();
             var note = looksRight ? null
-                : "Note: this OptiScaler.dll doesn't identify itself as OptiScaler. It was added anyway; make sure it's the build you meant.";
+                : "참고: 이 OptiScaler.dll은 자신을 OptiScaler로 식별하지 않습니다. 그래도 추가했으니 원하는 빌드가 맞는지 확인하세요.";
             return new(Get(slug), null, note);
         }
-        catch (OperationCanceledException) { return new(null, "Cancelled.", null); }
+        catch (OperationCanceledException) { return new(null, "취소되었습니다.", null); }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or InvalidDataException or HttpRequestException)
         {
             CrashReporter.Log($"[OsCustomBuildService.ImportAsync] {source}: {ex.Message}");
-            return new(null, $"Couldn't add it: {ex.Message}", null);
+            return new(null, $"추가할 수 없습니다: {ex.Message}", null);
         }
         finally
         {
@@ -259,10 +259,10 @@ internal static class OsCustomBuildService
         var http = App.Services.GetRequiredService<HttpClient>();
         using var resp = await http.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false);
         if (!resp.IsSuccessStatusCode)
-            return ($"The download failed ({(int)resp.StatusCode} {resp.ReasonPhrase}). Discord links expire after a while: copy a fresh one.", dest);
+            return ($"다운로드에 실패했습니다 ({(int)resp.StatusCode} {resp.ReasonPhrase}). Discord 링크는 일정 시간 후 만료되니 새 링크를 복사하세요.", dest);
         var type = resp.Content.Headers.ContentType?.MediaType ?? "";
         if (type.StartsWith("text/html", StringComparison.OrdinalIgnoreCase))
-            return ("That link opens a web page, not a file. Use the direct download link (right-click the download button › Copy link).", dest);
+            return ("이 링크는 파일이 아닌 웹 페이지를 엽니다. 직접 다운로드 링크를 사용하세요 (다운로드 버튼을 마우스 오른쪽 클릭 › 링크 복사).", dest);
         // Prefer the server's file name (keeps the right extension for unpacking)
         var serverName = resp.Content.Headers.ContentDisposition?.FileNameStar ?? resp.Content.Headers.ContentDisposition?.FileName;
         if (!string.IsNullOrWhiteSpace(serverName))
@@ -286,8 +286,8 @@ internal static class OsCustomBuildService
                 {
                     lastReport = done;
                     progress?.Report(total is long t && t > 0
-                        ? $"Downloading... {done * 100 / t}%"
-                        : $"Downloading... {done / (1024 * 1024)} MB");
+                        ? $"다운로드 중... {done * 100 / t}%"
+                        : $"다운로드 중... {done / (1024 * 1024)} MB");
                 }
             }
         }
@@ -326,7 +326,7 @@ internal static class OsCustomBuildService
             return null;
         }
         var sevenZip = AppPaths.Find7Zip();
-        if (sevenZip == null) return "7-Zip wasn't found, so this archive can't be unpacked. Try a zip, or unpack it and add the folder.";
+        if (sevenZip == null) return "7-Zip을 찾을 수 없어 이 압축 파일을 풀 수 없습니다. zip 파일을 사용하거나 직접 압축을 푼 다음 폴더를 추가하세요.";
         var psi = new ProcessStartInfo
         {
             FileName = sevenZip,
@@ -340,7 +340,7 @@ internal static class OsCustomBuildService
         psi.ArgumentList.Add("-o" + dest);
         psi.ArgumentList.Add("-y");
         using var proc = Process.Start(psi);
-        if (proc == null) return "7-Zip couldn't be started.";
+        if (proc == null) return "7-Zip을 시작할 수 없습니다.";
         var stdout = proc.StandardOutput.ReadToEndAsync(ct);
         var stderr = proc.StandardError.ReadToEndAsync(ct);
         using var timeout = CancellationTokenSource.CreateLinkedTokenSource(ct);
@@ -351,13 +351,13 @@ internal static class OsCustomBuildService
             try { proc.Kill(entireProcessTree: true); }
             catch (InvalidOperationException ex) { CrashReporter.Log($"[OsCustomBuildService.ExtractAsync] Kill — {ex.Message}"); }
             if (ct.IsCancellationRequested) throw;
-            return "Unpacking took too long and was stopped.";
+            return "압축 해제가 너무 오래 걸려 중지되었습니다.";
         }
         await Task.WhenAll(stdout, stderr).ConfigureAwait(false);
         if (proc.ExitCode != 0)
         {
             CrashReporter.Log($"[OsCustomBuildService.ExtractAsync] 7z exit {proc.ExitCode}: {stderr.Result}");
-            return "The archive couldn't be unpacked (it may be damaged or password protected).";
+            return "압축 파일을 풀 수 없습니다 (손상되었거나 암호로 보호되어 있을 수 있음).";
         }
         return null;
     }

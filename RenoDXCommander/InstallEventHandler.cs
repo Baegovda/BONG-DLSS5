@@ -98,13 +98,13 @@ public class InstallEventHandler
             CrashReporter.Log($"[InstallEventHandler.EnsureGameFolderAsync] Folder missing for '{card.GameName}' ({card.Source}): '{card.InstallPath}'");
             var dialog = new ContentDialog
             {
-                Title = "Game folder not found",
-                Content = $"{card.GameName} is no longer in the folder RHI last saw. This usually means the game was updated or moved "
-                        + "(Game Pass games get a new folder with every update).\n\n"
-                        + "Refresh the game list to find it, then try again.",
-                PrimaryButtonText = "Refresh",
-                SecondaryButtonText = "Choose folder...",
-                CloseButtonText = "Cancel",
+                Title = "게임 폴더를 찾을 수 없음",
+                Content = $"{card.GameName}이(가) BONG DLSS5가 마지막으로 확인한 폴더에 더 이상 없습니다. 보통 게임이 업데이트되었거나 이동된 경우입니다 "
+                        + "(Game Pass 게임은 업데이트할 때마다 새 폴더를 사용합니다).\n\n"
+                        + "게임 목록을 새로 고쳐 찾은 후 다시 시도하세요.",
+                PrimaryButtonText = "새로 고침",
+                SecondaryButtonText = "폴더 선택...",
+                CloseButtonText = "취소",
                 DefaultButton = ContentDialogButton.Primary,
                 XamlRoot = xamlRoot,
                 RequestedTheme = ElementTheme.Dark,
@@ -114,7 +114,7 @@ public class InstallEventHandler
             {
                 CrashReporter.Log($"[InstallEventHandler.EnsureGameFolderAsync] Refreshing to find '{card.GameName}'");
                 await _window.RefreshWithScrollRestore();
-                _window.ShowStatusBarMessage($"Game list refreshed. Try {card.GameName} again.", TimeSpan.FromSeconds(8));
+                _window.ShowStatusBarMessage($"게임 목록을 새로 고쳤습니다. {card.GameName}을(를) 다시 시도하세요.", TimeSpan.FromSeconds(8));
                 return false;
             }
             if (result != ContentDialogResult.Secondary) return false;
@@ -219,10 +219,10 @@ public class InstallEventHandler
                 {
                     var warningDialog = new ContentDialog
                     {
-                        Title = "⚠ OptiScaler Setup",
-                        Content = "Before installing OptiScaler, please configure your GPU type and DLSS input (AMD/Intel only) settings in Settings → Components → OptiScaler.\n\nThis ensures OptiScaler is configured correctly for your hardware.",
-                        PrimaryButtonText = "Continue",
-                        CloseButtonText = "Cancel",
+                        Title = "⚠ OptiScaler 설정",
+                        Content = "OptiScaler를 설치하기 전에 설정 → 구성 요소 → OptiScaler에서 GPU 종류와 DLSS 입력(AMD/Intel 전용) 설정을 구성하세요.\n\n그래야 OptiScaler가 하드웨어에 맞게 올바르게 구성됩니다.",
+                        PrimaryButtonText = "계속",
+                        CloseButtonText = "취소",
                         XamlRoot = xamlRoot,
                         RequestedTheme = ElementTheme.Dark,
                     };
@@ -241,7 +241,7 @@ public class InstallEventHandler
             var osVariant = ViewModel.GetOsVariant(card.GameName, card.Source ?? "");
 
             card.OsIsInstalling = true;
-            card.OsActionMessage = "Installing OptiScaler...";
+            card.OsActionMessage = "OptiScaler 설치 중...";
             card.OsProgress = 0;
             AuxInstalledRecord? osRecord = null;
             try
@@ -274,7 +274,7 @@ public class InstallEventHandler
                 {
                     try
                     {
-                        card.OsActionMessage = "Installing PD-Upscaler REFramework...";
+                        card.OsActionMessage = "PD-Upscaler REFramework 설치 중...";
                         await _reFrameworkService.InstallPdUpscalerAsync(
                             card.GameName, card.InstallPath, pdArtifact,
                             new Progress<(string message, double percent)>(p =>
@@ -292,7 +292,7 @@ public class InstallEventHandler
                     }
                 }
 
-                card.OsActionMessage = "✅ OptiScaler installed!";
+                card.OsActionMessage = "✅ OptiScaler 설치됨!";
                 card.OsStatus = GameStatus.Installed;
                 card.NotifyAll();
                 card.FadeMessage(m => card.OsActionMessage = m, card.OsActionMessage);
@@ -345,7 +345,7 @@ public class InstallEventHandler
             }
             catch (Exception ex)
             {
-                card.OsActionMessage = $"❌ Install failed: {ex.Message}";
+                card.OsActionMessage = $"❌ 설치 실패: {ex.Message}";
             }
             finally
             {
@@ -423,14 +423,14 @@ public class InstallEventHandler
             }
             catch (Exception cleanEx) { CrashReporter.Log($"[InstallEventHandler.UninstallOptiScaler] Settings cleanup failed — {cleanEx.Message}"); }
 
-            card.OsActionMessage = "✖ OptiScaler removed.";
+            card.OsActionMessage = "✖ OptiScaler 제거됨.";
             card.OsStatus = GameStatus.Available;
             card.NotifyAll();
             card.FadeMessage(m => card.OsActionMessage = m, card.OsActionMessage);
         }
         catch (Exception ex)
         {
-            card.OsActionMessage = $"❌ Uninstall failed: {ex.Message}";
+            card.OsActionMessage = $"❌ 제거 실패: {ex.Message}";
         }
 
         _window.DispatcherQueue?.TryEnqueue(() =>
@@ -548,16 +548,16 @@ public class InstallEventHandler
 
         var dontShowCheck = new CheckBox
         {
-            Content = "Don't show this again",
+            Content = "다시 표시하지 않음",
             FontSize = 12,
             Margin = new Thickness(0, 12, 0, 0),
         };
 
         var messageText = new TextBlock
         {
-            Text = "Heads up — you're installing both RenoDX and Luma on this game.\n\n" +
-                   "There's no guarantee they'll work well together. If you're using RenoDX for HDR and just want Luma for DLAA, make sure to disable HDR in the Luma mod settings to avoid conflicts.\n\n" +
-                   "If something doesn't look right, uninstalling one of them is the first thing to try. We can't offer support for issues that come from running both together.",
+            Text = "참고 — 이 게임에 RenoDX와 Luma를 모두 설치하려고 합니다.\n\n" +
+                   "둘이 함께 잘 작동한다는 보장은 없습니다. HDR에 RenoDX를 사용하고 Luma는 DLAA용으로만 쓰려는 경우, 충돌을 피하려면 Luma 모드 설정에서 HDR을 꺼 두세요.\n\n" +
+                   "화면이 이상하다면 먼저 둘 중 하나를 제거해 보세요. 둘을 함께 사용해서 생긴 문제는 지원하지 않습니다.",
             TextWrapping = TextWrapping.Wrap,
             FontSize = 13,
             LineHeight = 22,
@@ -570,10 +570,10 @@ public class InstallEventHandler
 
         var dialog = new ContentDialog
         {
-            Title = "Installing both RenoDX and Luma",
+            Title = "RenoDX와 Luma 동시 설치",
             Content = content,
-            PrimaryButtonText = "Continue",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = "계속",
+            CloseButtonText = "취소",
             DefaultButton = ContentDialogButton.Primary,
             XamlRoot = xamlRoot,
             RequestedTheme = ElementTheme.Dark,

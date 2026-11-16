@@ -20,20 +20,20 @@ public partial class DialogService
 
         var dlg = new ContentDialog
         {
-            Title               = "⚠ Unknown dxgi.dll Detected",
+            Title               = "⚠ 알 수 없는 dxgi.dll 감지됨",
             Content             = new TextBlock
             {
                 TextWrapping = TextWrapping.Wrap,
                 Foreground   = Brush(ResourceKeys.AccentAmberBrush),
                 FontSize     = 13,
-                Text         = $"A dxgi.dll file was found in:\n{card.InstallPath}\n\n" +
-                               $"File size: {sizeKB:N0} KB\n\n" +
-                               "RHI cannot identify this file as ReShade or Display Commander. " +
-                               "It may belong to another mod (e.g. DXVK, Special K, ENB).\n\n" +
-                               "Overwriting it may break the existing mod. Do you want to proceed?",
+                Text         = $"다음 위치에서 dxgi.dll 파일이 발견되었습니다:\n{card.InstallPath}\n\n" +
+                               $"파일 크기: {sizeKB:N0} KB\n\n" +
+                               "BONG DLSS5가 이 파일을 ReShade나 Display Commander로 식별할 수 없습니다. " +
+                               "다른 모드(예: DXVK, Special K, ENB)의 파일일 수 있습니다.\n\n" +
+                               "덮어쓰면 기존 모드가 작동하지 않을 수 있습니다. 계속하시겠습니까?",
             },
-            PrimaryButtonText   = "Overwrite",
-            CloseButtonText     = "Cancel",
+            PrimaryButtonText   = "덮어쓰기",
+            CloseButtonText     = "취소",
             XamlRoot            = _window.Content.XamlRoot,
             Background          = Brush(ResourceKeys.SurfaceOverlayBrush),
             RequestedTheme      = ElementTheme.Dark,
@@ -59,36 +59,36 @@ public partial class DialogService
         {
             TextWrapping = TextWrapping.Wrap,
             FontSize     = 13,
-            Text         = $"RHI will set up RenoDX's Source engine mod for {card.GameName}:\n" +
-                           "• ReShade as d3d9.dll, loading DXVK (stable) through ReShade's proxy\n" +
-                           "• dxvk.conf in the game's main folder\n" +
-                           "• -insecure in the game's launch options in RHI",
+            Text         = $"BONG DLSS5가 {card.GameName}에 RenoDX의 Source 엔진 모드를 설정합니다:\n" +
+                           "• ReShade를 d3d9.dll로 설치하고 ReShade 프록시를 통해 DXVK(안정) 로드\n" +
+                           "• 게임 기본 폴더에 dxvk.conf\n" +
+                           "• BONG DLSS5의 게임 실행 옵션에 -insecure 추가",
         });
         panel.Children.Add(new TextBlock
         {
             TextWrapping = TextWrapping.Wrap,
             FontSize     = 13,
             Foreground   = Brush(ResourceKeys.AccentAmberBrush),
-            Text         = "-insecure turns VAC off, which the mod needs (VAC can be on even in single-player). " +
-                           "Don't join VAC-secured servers while the mod is installed, or you risk a VAC ban.\n\n" +
-                           "RHI only adds -insecure when you start the game from RHI. If you start it from Steam, " +
-                           "add -insecure to the game's launch options in Steam as well.",
+            Text         = "-insecure는 모드에 필요한 VAC 끄기 옵션입니다(싱글플레이에서도 VAC가 켜져 있을 수 있음). " +
+                           "모드가 설치된 동안 VAC 보안 서버에 접속하지 마세요. VAC 차단을 받을 수 있습니다.\n\n" +
+                           "BONG DLSS5는 BONG DLSS5에서 게임을 시작할 때만 -insecure를 추가합니다. Steam에서 시작한다면 " +
+                           "Steam의 게임 실행 옵션에도 -insecure를 추가하세요.",
         });
         panel.Children.Add(new TextBlock
         {
             TextWrapping = TextWrapping.Wrap,
             FontSize     = 13,
-            Text         = "In the game, set High Dynamic Range to Full in the advanced video settings.",
+            Text         = "게임의 고급 비디오 설정에서 High Dynamic Range를 Full로 설정하세요.",
         });
-        var dontShow = new CheckBox { Content = "Don't show this again", FontSize = 12 };
+        var dontShow = new CheckBox { Content = "다시 표시 안 함", FontSize = 12 };
         panel.Children.Add(dontShow);
 
         var dlg = new ContentDialog
         {
-            Title               = "Source engine HDR mod",
+            Title               = "Source 엔진 HDR 모드",
             Content             = panel,
-            PrimaryButtonText   = "Install",
-            CloseButtonText     = "Cancel",
+            PrimaryButtonText   = "설치",
+            CloseButtonText     = "취소",
             DefaultButton       = ContentDialogButton.Primary,
             XamlRoot            = _window.Content.XamlRoot,
             Background          = Brush(ResourceKeys.SurfaceOverlayBrush),
@@ -224,7 +224,7 @@ public partial class DialogService
             {
                 Title           = $"{addonName} — {card.GameName}",
                 Content         = scrollContent,
-                CloseButtonText = "Close",
+                CloseButtonText = "닫기",
                 XamlRoot        = _window.Content.XamlRoot,
                 Background      = Brush(ResourceKeys.SurfaceToolbarBrush),
                 RequestedTheme  = ElementTheme.Dark,
@@ -280,7 +280,7 @@ public partial class DialogService
                 BorderThickness     = new Thickness(1),
                 Child = new TextBlock
                 {
-                    Text       = "RTX HDR Enabled",
+                    Text       = "RTX HDR 켜짐",
                     FontSize   = 12,
                     Foreground = Brush(ResourceKeys.AccentGreenBrush),
                 }
@@ -289,21 +289,21 @@ public partial class DialogService
 
             panel.Children.Add(new TextBlock
             {
-                Text = "RTX HDR uses NVIDIA's driver-level HDR injection to upgrade SDR games to HDR. " +
-                       "It works at the GPU level without injecting DLLs into the game, making it compatible with anti-cheat systems.\n\n" +
-                       "Requires: NVIDIA App installed, Game Filter/Freestyle enabled, RTX GPU, driver 550+.",
+                Text = "RTX HDR은 NVIDIA 드라이버 수준의 HDR 주입으로 SDR 게임을 HDR로 업그레이드합니다. " +
+                       "게임에 DLL을 주입하지 않고 GPU 수준에서 작동하므로 안티치트 시스템과 호환됩니다.\n\n" +
+                       "요구 사항: NVIDIA 앱 설치, Game Filter/Freestyle 사용, RTX GPU, 드라이버 550 이상.",
                 TextWrapping = TextWrapping.Wrap,
                 Foreground   = textColour,
                 FontSize     = 13,
                 LineHeight   = 22,
             });
 
-            AddHyperlinkBlock(panel, "RTX HDR Calibration Guide", manifest?.RtxHdrInfoUrl ?? "https://www.reddit.com/r/nvidia/comments/1b03yfg/rtx_hdr_paper_white_gamma_reference_settings/", linkColour);
+            AddHyperlinkBlock(panel, "RTX HDR 보정 가이드", manifest?.RtxHdrInfoUrl ?? "https://www.reddit.com/r/nvidia/comments/1b03yfg/rtx_hdr_paper_white_gamma_reference_settings/", linkColour);
 
             // Still show HDR Gaming Database link if available
             if (!string.IsNullOrEmpty(result.HdrAnalysisUrl))
             {
-                AddHyperlinkBlock(panel, "HDR Analysis — HDR Gaming Database", result.HdrAnalysisUrl, linkColour);
+                AddHyperlinkBlock(panel, "HDR 분석 — HDR Gaming Database", result.HdrAnalysisUrl, linkColour);
             }
 
             return; // Skip regular RenoDX content
@@ -351,19 +351,19 @@ public partial class DialogService
         // ── Wiki page link (NameUrl) as clickable hyperlink ──────────────────
         if (!string.IsNullOrEmpty(result.Url))
         {
-            AddHyperlinkBlock(panel, result.UrlLabel ?? "View wiki page", result.Url, linkColour);
+            AddHyperlinkBlock(panel, result.UrlLabel ?? "위키 페이지 보기", result.Url, linkColour);
         }
 
         // ── "Also available on Nexus" link (Snapshot+Nexus games only) ───────
         if (!card.IsExternalOnly && card.Mod?.SnapshotUrl != null && !string.IsNullOrEmpty(card.NexusUrl))
         {
-            AddHyperlinkBlock(panel, "Also available on Nexus Mods", card.NexusUrl, linkColour);
+            AddHyperlinkBlock(panel, "Nexus Mods에서도 이용 가능", card.NexusUrl, linkColour);
         }
 
         // ── HDR Gaming Database link (supplementary) ─────────────────────────
         if (!string.IsNullOrEmpty(result.HdrAnalysisUrl))
         {
-            AddHyperlinkBlock(panel, "HDR Analysis — HDR Gaming Database", result.HdrAnalysisUrl, linkColour);
+            AddHyperlinkBlock(panel, "HDR 분석 — HDR Gaming Database", result.HdrAnalysisUrl, linkColour);
         }
 
         // ── Fallback if no content at all ────────────────────────────────────
@@ -371,7 +371,7 @@ public partial class DialogService
         {
             panel.Children.Add(new TextBlock
             {
-                Text       = "No additional RenoDX notes for this game.",
+                Text       = "이 게임에 대한 추가 RenoDX 메모가 없습니다.",
                 Foreground = dimColour,
                 FontSize   = 13,
             });
@@ -504,7 +504,7 @@ public partial class DialogService
         // ── HDR Gaming Database link (supplementary) ─────────────────────────
         if (!string.IsNullOrEmpty(result.HdrAnalysisUrl))
         {
-            AddHyperlinkBlock(panel, "HDR Analysis — HDR Gaming Database", result.HdrAnalysisUrl, linkColour);
+            AddHyperlinkBlock(panel, "HDR 분석 — HDR Gaming Database", result.HdrAnalysisUrl, linkColour);
         }
 
         // ── Fallback if no content at all ────────────────────────────────────
@@ -525,7 +525,7 @@ public partial class DialogService
             {
                 panel.Children.Add(new TextBlock
                 {
-                    Text       = "No additional Luma notes for this game.",
+                    Text       = "이 게임에 대한 추가 Luma 메모가 없습니다.",
                     Foreground = dimColour,
                     FontSize   = 13,
                 });
@@ -552,7 +552,7 @@ public partial class DialogService
             // ── Standard OptiScaler Compatibility section ─────────────────────
             if (result.OptiScalerCompat != null)
             {
-                BuildOptiScalerSection(panel, "OptiScaler Compatibility",
+                BuildOptiScalerSection(panel, "OptiScaler 호환성",
                     result.OptiScalerCompat, textColour, linkColour);
             }
 
@@ -563,7 +563,7 @@ public partial class DialogService
                 if (result.OptiScalerCompat != null)
                     panel.Children.Add(new Border { Height = 4 });
 
-                BuildOptiScalerSection(panel, "FSR4 Compatibility",
+                BuildOptiScalerSection(panel, "FSR4 호환성",
                     result.OptiScalerFsr4Compat, textColour, linkColour);
             }
 
@@ -583,7 +583,7 @@ public partial class DialogService
                 });
                 // Show URL only for the unstructured fallback path (no per-section links)
                 if (!string.IsNullOrEmpty(result.Url))
-                    AddHyperlinkBlock(panel, result.UrlLabel ?? "View wiki page", result.Url, linkColour);
+                    AddHyperlinkBlock(panel, result.UrlLabel ?? "위키 페이지 보기", result.Url, linkColour);
             }
         }
         else
@@ -596,7 +596,7 @@ public partial class DialogService
         {
             panel.Children.Add(new TextBlock
             {
-                Text       = "No OptiScaler compatibility data available for this game.",
+                Text       = "이 게임에 대한 OptiScaler 호환성 데이터가 없습니다.",
                 Foreground = dimColour,
                 FontSize   = 13,
             });
@@ -616,7 +616,7 @@ public partial class DialogService
     {
         var upscalers = entry.Upscalers.Count > 0
             ? string.Join(", ", entry.Upscalers)
-            : "None listed";
+            : "목록 없음";
 
         // Section header with status
         panel.Children.Add(new TextBlock
@@ -632,7 +632,7 @@ public partial class DialogService
         // Upscaler list
         panel.Children.Add(new TextBlock
         {
-            Text         = $"Upscalers: {upscalers}",
+            Text         = $"업스케일러: {upscalers}",
             TextWrapping = TextWrapping.Wrap,
             Foreground   = textColour,
             FontSize     = 13,
@@ -662,7 +662,7 @@ public partial class DialogService
             };
             link.Inlines.Add(new Microsoft.UI.Xaml.Documents.Run
             {
-                Text     = "View details",
+                Text     = "자세히 보기",
                 FontSize = 13,
             });
             var para = new Microsoft.UI.Xaml.Documents.Paragraph();
@@ -702,7 +702,7 @@ public partial class DialogService
 
         // ── HDR Gaming Database link (supplementary) ─────────────────────────
         if (!string.IsNullOrEmpty(result.HdrAnalysisUrl))
-            AddHyperlinkBlock(panel, "HDR Analysis — HDR Gaming Database", result.HdrAnalysisUrl, linkColour);
+            AddHyperlinkBlock(panel, "HDR 분석 — HDR Gaming Database", result.HdrAnalysisUrl, linkColour);
     }
 
     // ── Release notes content rendering (ReLimiter, Display Commander) ───────────
@@ -726,7 +726,7 @@ public partial class DialogService
         {
             panel.Children.Add(new TextBlock
             {
-                Text       = $"Installed: {installedVersion}",
+                Text       = $"설치됨: {installedVersion}",
                 Foreground = dimColour,
                 FontSize   = 12,
                 Margin     = new Thickness(0, 0, 0, 4),
@@ -790,7 +790,7 @@ public partial class DialogService
         }
 
         // Always show link to the releases page
-        AddHyperlinkBlock(panel, "View all releases on GitHub", releasesPageUrl, linkColour);
+        AddHyperlinkBlock(panel, "GitHub에서 모든 릴리스 보기", releasesPageUrl, linkColour);
     }
 
     // ── Shared helpers for dialog content ────────────────────────────────────────
@@ -886,19 +886,19 @@ public partial class DialogService
 
             var dlg = new ContentDialog
             {
-                Title = "Administrator Privileges Required",
+                Title = "관리자 권한 필요",
                 Content = new TextBlock
                 {
                     TextWrapping = TextWrapping.Wrap,
                     FontSize = 13,
-                    Text = "Installing the Vulkan ReShade layer requires writing to C:\\ProgramData\\ReShade\\ " +
-                           "and modifying system registry keys, which needs administrator privileges.\n\n" +
-                           "Enable Admin Mode — RHI will always launch elevated (no UAC prompt after setup).\n\n" +
-                           "Restart as Admin — one-time elevated restart to complete this install.",
+                    Text = "Vulkan ReShade 레이어를 설치하려면 C:\\ProgramData\\ReShade\\에 쓰고 " +
+                           "시스템 레지스트리 키를 수정해야 하므로 관리자 권한이 필요합니다.\n\n" +
+                           "관리자 모드 사용 — BONG DLSS5가 항상 관리자 권한으로 실행됩니다(설정 후 UAC 메시지 없음).\n\n" +
+                           "관리자로 다시 시작 — 이 설치를 완료하기 위해 한 번만 관리자 권한으로 다시 시작합니다.",
                 },
-                PrimaryButtonText = "Enable Admin Mode",
-                SecondaryButtonText = "Restart as Admin",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "관리자 모드 사용",
+                SecondaryButtonText = "관리자로 다시 시작",
+                CloseButtonText = "취소",
                 XamlRoot = _window.Content.XamlRoot,
                 Background = Brush(ResourceKeys.SurfaceOverlayBrush),
                 RequestedTheme = ElementTheme.Dark,

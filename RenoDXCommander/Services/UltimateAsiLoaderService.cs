@@ -134,7 +134,7 @@ public class UltimateAsiLoaderService
         }
 
         Directory.CreateDirectory(stagingDir);
-        progress?.Report(("Downloading ASI Loader...", 10));
+        progress?.Report(("ASI Loader 다운로드 중...", 10));
 
         var (version, assets, body) = await FetchLatestReleaseInfoAsync().ConfigureAwait(false);
         if (string.IsNullOrEmpty(version) || assets == null || !assets.TryGetValue(assetName, out var downloadUrl))
@@ -143,12 +143,12 @@ public class UltimateAsiLoaderService
             return;
         }
 
-        progress?.Report(("Downloading ASI Loader...", 30));
+        progress?.Report(("ASI Loader 다운로드 중...", 30));
 
         try
         {
             var zipBytes = await _http.GetByteArrayAsync(downloadUrl).ConfigureAwait(false);
-            progress?.Report(("Extracting...", 70));
+            progress?.Report(("압축 해제 중...", 70));
 
             // Extract dinput8.dll from the zip
             using var ms  = new MemoryStream(zipBytes);
@@ -179,7 +179,7 @@ public class UltimateAsiLoaderService
             _crashReporter.Log($"[UltimateAsiLoaderService.EnsureStagingAsync] Failed — {ex.Message}");
         }
 
-        progress?.Report(("ASI Loader ready", 100));
+        progress?.Report(("ASI Loader 준비 완료", 100));
     }
 
     // ── Install / Uninstall ───────────────────────────────────────────────────
@@ -262,7 +262,7 @@ public class UltimateAsiLoaderService
             }
         }
 
-        progress?.Report(("Deploying ASI Loader...", 80));
+        progress?.Report(("ASI Loader 배포 중...", 80));
 
         try
         {
@@ -294,7 +294,7 @@ public class UltimateAsiLoaderService
         };
         _auxInstaller.SaveAuxRecord(record);
 
-        progress?.Report(("ASI Loader installed!", 100));
+        progress?.Report(("ASI Loader 설치됨!", 100));
         return (true, hookedOriginal);
     }
 

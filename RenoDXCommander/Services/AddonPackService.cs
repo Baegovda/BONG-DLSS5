@@ -41,7 +41,7 @@ public class AddonPackService : IAddonPackService
     private static readonly AddonEntry RenoDxDevKitEntry = new(
         SectionId: "renodx-devkit",
         PackageName: "RenoDX DevKit",
-        PackageDescription: "RenoDX development tools addon for ReShade",
+        PackageDescription: "ReShade용 RenoDX 개발 도구 애드온",
         DownloadUrl: null,
         DownloadUrl32: "https://github.com/clshortfuse/renodx/releases/download/snapshot/renodx-devkit.addon32",
         DownloadUrl64: "https://github.com/clshortfuse/renodx/releases/download/snapshot/renodx-devkit.addon64",
@@ -52,7 +52,7 @@ public class AddonPackService : IAddonPackService
     private static readonly AddonEntry Renodx5Entry = new(
         SectionId: "renodx-dlss5",
         PackageName: "DLSS5 Tool",
-        PackageDescription: "Enables DLSS Neural Rendering in any DLSS-compatible game. Supports RTX 20, 30, 40 and 50 Series GPUs. RHI automatically deploys nvngx_dlssnr.dll to the game folder alongside this addon.",
+        PackageDescription: "DLSS 호환 게임에서 DLSS Neural Rendering을 사용할 수 있게 합니다. RTX 20, 30, 40, 50 시리즈 GPU를 지원합니다. BONG DLSS5가 이 애드온과 함께 nvngx_dlssnr.dll을 게임 폴더에 자동으로 배포합니다.",
         DownloadUrl: null,
         DownloadUrl32: null,
         DownloadUrl64: null,
@@ -65,7 +65,7 @@ public class AddonPackService : IAddonPackService
     private static readonly AddonEntry Renodx5SfEntry = new(
         SectionId: "renodx-dlss-sf",
         PackageName: "DLSS Tool (ShortFuse)",
-        PackageDescription: "ShortFuse's DLSS5 addon. Supports DX12, DX11 and DX9. For non-DLSS games enable Load DLSS Libraries and set Hook Method to On Present. Supports RTX 20-50 Series. Still WIP — fall back to DLSS5 Tool if you have issues.",
+        PackageDescription: "ShortFuse의 DLSS5 애드온. DX12, DX11, DX9를 지원합니다. DLSS 미지원 게임에서는 Load DLSS Libraries를 켜고 Hook Method를 On Present로 설정하세요. RTX 20-50 시리즈를 지원합니다. 아직 개발 중이므로 문제가 있으면 DLSS5 Tool을 사용하세요.",
         DownloadUrl: null,
         DownloadUrl32: null,
         DownloadUrl64: null,
@@ -78,7 +78,7 @@ public class AddonPackService : IAddonPackService
     private static readonly AddonEntry DlssFixEntry = new(
         SectionId: "renodx-dlssfix",
         PackageName: "DLSS Fix",
-        PackageDescription: "Makes ReShade draw on native game frames instead of frame gen frames. Also hides DLSS upscaling from ReShade.",
+        PackageDescription: "ReShade가 프레임 생성 프레임 대신 게임 원본 프레임에 그리도록 합니다. 또한 ReShade에서 DLSS 업스케일링을 숨깁니다.",
         DownloadUrl: "https://github.com/clshortfuse/renodx/releases/download/snapshot/renodx-dlssfix.addon64",
         DownloadUrl32: null,
         DownloadUrl64: "https://github.com/clshortfuse/renodx/releases/download/snapshot/renodx-dlssfix.addon64",
@@ -486,13 +486,13 @@ public class AddonPackService : IAddonPackService
             if (entry.SectionId.Equals("renodx-dlss5", StringComparison.OrdinalIgnoreCase)
                 || entry.PackageName.Equals("DLSS5 Tool", StringComparison.OrdinalIgnoreCase))
             {
-                progress?.Report(("Downloading RenoDX DLSS5 addon...", 10));
+                progress?.Report(("RenoDX DLSS5 애드온 다운로드 중...", 10));
                 var rdx5Service = App.Services.GetRequiredService<Renodx5AddonService>();
                 await rdx5Service.EnsureStagingAsync(progress).ConfigureAwait(false);
                 if (!rdx5Service.IsStagingReady)
                 {
                     CrashReporter.Log("[AddonPackService.DownloadAddonAsync] RenoDX DLSS5 staging not ready after EnsureStaging");
-                    progress?.Report(("RenoDX DLSS5 download failed", 0));
+                    progress?.Report(("RenoDX DLSS5 다운로드 실패", 0));
                 }
                 return;
             }
@@ -500,13 +500,13 @@ public class AddonPackService : IAddonPackService
             // SF variant — route to Renodx5AddonService.EnsureSfStagingAsync
             if (entry.SectionId.Equals("renodx-dlss-sf", StringComparison.OrdinalIgnoreCase))
             {
-                progress?.Report(("Downloading DLSS Tool (ShortFuse)...", 10));
+                progress?.Report(("DLSS Tool (ShortFuse) 다운로드 중...", 10));
                 var rdx5Service = App.Services.GetRequiredService<Renodx5AddonService>();
                 await rdx5Service.EnsureSfStagingAsync(progress).ConfigureAwait(false);
                 if (!rdx5Service.IsSfStagingReady)
                 {
                     CrashReporter.Log("[AddonPackService.DownloadAddonAsync] SF staging not ready after EnsureStaging");
-                    progress?.Report(("DLSS Tool (ShortFuse) download failed", 0));
+                    progress?.Report(("DLSS Tool (ShortFuse) 다운로드 실패", 0));
                 }
                 return;
             }
@@ -521,7 +521,7 @@ public class AddonPackService : IAddonPackService
                 if (resolvedUrl64 == null && resolvedUrl32 == null)
                 {
                     CrashReporter.Log($"[AddonPackService.DownloadAddonAsync] Could not resolve asset URL from API for '{entry.PackageName}'");
-                    progress?.Report(($"❌ Failed to resolve download URL for {entry.PackageName}", 0));
+                    progress?.Report(($"❌ {entry.PackageName}의 다운로드 URL을 확인하지 못했습니다", 0));
                     return;
                 }
                 versionOverride ??= resolvedTag;
@@ -565,7 +565,7 @@ public class AddonPackService : IAddonPackService
                 var pctBase = (double)i / downloads.Count * 100;
                 var pctRange = 100.0 / downloads.Count;
 
-                progress?.Report(($"Downloading {entry.PackageName}...", pctBase));
+                progress?.Report(($"{entry.PackageName} 다운로드 중...", pctBase));
                 CrashReporter.Log($"[AddonPackService.DownloadAddonAsync] Downloading '{entry.PackageName}' from {url}");
 
                 try
@@ -609,7 +609,7 @@ public class AddonPackService : IAddonPackService
 
             if (!anySucceeded)
             {
-                progress?.Report(($"❌ Download failed for {entry.PackageName}", 0));
+                progress?.Report(($"❌ {entry.PackageName} 다운로드 실패", 0));
                 return;
             }
 
@@ -617,13 +617,13 @@ public class AddonPackService : IAddonPackService
             versionToken ??= "unknown";
             SaveAddonVersion(entry.PackageName, versionToken, safeName);
 
-            progress?.Report(($"{entry.PackageName} downloaded.", 100));
+            progress?.Report(($"{entry.PackageName} 다운로드 완료.", 100));
             CrashReporter.Log($"[AddonPackService.DownloadAddonAsync] '{entry.PackageName}' download complete. Version = {versionToken}");
         }
         catch (Exception ex)
         {
             CrashReporter.Log($"[AddonPackService.DownloadAddonAsync] Failed for '{entry.PackageName}' — {ex.Message}");
-            progress?.Report(($"❌ Download failed: {ex.Message}", 0));
+            progress?.Report(($"❌ 다운로드 실패: {ex.Message}", 0));
         }
     }
 
@@ -1137,7 +1137,7 @@ public class AddonPackService : IAddonPackService
             results.Add(new AddonEntry(
                 SectionId: $"custom-{baseName}",
                 PackageName: baseName,
-                PackageDescription: "Custom addon (local file)",
+                PackageDescription: "사용자 지정 애드온 (로컬 파일)",
                 DownloadUrl: null,
                 DownloadUrl32: null,
                 DownloadUrl64: null,
@@ -1185,7 +1185,7 @@ public class AddonPackService : IAddonPackService
                     if (total > 0)
                     {
                         var filePct = pctBase + (double)received / total * pctRange;
-                        progress?.Report(($"Downloading {displayName}... {received / 1024} KB / {total / 1024} KB", filePct));
+                        progress?.Report(($"{displayName} 다운로드 중... {received / 1024} KB / {total / 1024} KB", filePct));
                     }
                 }
             }
@@ -1212,7 +1212,7 @@ public class AddonPackService : IAddonPackService
         {
             await DownloadFileAsync(url, tempZip, safeName, progress, pctBase, pctRange * 0.8);
 
-            progress?.Report(($"Extracting {safeName}...", pctBase + pctRange * 0.8));
+            progress?.Report(($"{safeName} 압축 해제 중...", pctBase + pctRange * 0.8));
 
             using var archive = ArchiveFactory.Open(tempZip);
             foreach (var archiveEntry in archive.Entries)
@@ -1274,7 +1274,7 @@ public class AddonPackService : IAddonPackService
                 CrashReporter.Log($"[AddonPackService.DownloadAndExtractZipAsync] Extracted '{fileName}' → '{destPath}' (originalName={originalName})");
             }
 
-            progress?.Report(($"Extracted {safeName}.", pctBase + pctRange));
+            progress?.Report(($"{safeName} 압축 해제 완료.", pctBase + pctRange));
         }
         finally
         {

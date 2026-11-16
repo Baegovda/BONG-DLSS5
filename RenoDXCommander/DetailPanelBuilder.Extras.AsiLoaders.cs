@@ -49,7 +49,7 @@ public partial class DetailPanelBuilder
         if (isInstalled)
         {
             var staged = card.Is32Bit ? ualSvc.StagedVersion32 : ualSvc.StagedVersion64;
-            statusText  = staged ?? "Installed";
+            statusText  = staged ?? "설치됨";
             statusColor = "#5ECB7D";
         }
         else
@@ -77,7 +77,7 @@ public partial class DetailPanelBuilder
             Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
             VerticalAlignment = VerticalAlignment.Center,
         };
-        ToolTipService.SetToolTip(label, "Ultimate ASI Loader — proxy DLL that loads .asi plugins into game processes.");
+        ToolTipService.SetToolTip(label, "Ultimate ASI Loader — 게임 프로세스에 .asi 플러그인을 로드하는 프록시 DLL입니다.");
         Grid.SetColumn(label, 0);
         row.Children.Add(label);
 
@@ -93,7 +93,7 @@ public partial class DetailPanelBuilder
         };
         if (isInstalled)
         {
-            ToolTipService.SetToolTip(statusBlock, $"Installed as: {installedAs}\nClick to open GitHub releases");
+            ToolTipService.SetToolTip(statusBlock, $"설치된 이름: {installedAs}\n클릭하여 GitHub 릴리스 열기");
             statusBlock.PointerPressed += (s, e) =>
                 _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases"));
             AttachLinkCursor(statusBlock);
@@ -104,7 +104,7 @@ public partial class DetailPanelBuilder
         // Col 2 — Info button (matches Components style)
         var infoBtn = new Button
         {
-            Content = "Info",
+            Content = "정보",
             FontSize = 11,
             Padding = new Thickness(6, 2, 6, 2),
             Width = 36,
@@ -115,7 +115,7 @@ public partial class DetailPanelBuilder
             BorderThickness = new Thickness(1),
             CornerRadius = new CornerRadius(8),
         };
-        ToolTipService.SetToolTip(infoBtn, "Open Ultimate ASI Loader GitHub releases page");
+        ToolTipService.SetToolTip(infoBtn, "Ultimate ASI Loader GitHub 릴리스 페이지 열기");
         infoBtn.Click += (s, e) =>
             _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases"));
         Grid.SetColumn(infoBtn, 2);
@@ -124,7 +124,7 @@ public partial class DetailPanelBuilder
         // Col 3 — Install button
         var installBtn = new Button
         {
-            Content = isInstalled ? "↺  Reinstall ASI Loader" : "⬇  Install ASI Loader",
+            Content = isInstalled ? "↺  ASI Loader 재설치" : "⬇  ASI Loader 설치",
             FontSize = 12,
             Height = 32,
             HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -142,8 +142,8 @@ public partial class DetailPanelBuilder
             BorderThickness = new Thickness(1),
         };
         ToolTipService.SetToolTip(installBtn, isInstalled
-            ? $"Reinstall Ultimate ASI Loader (currently '{installedAs}')"
-            : "Install Ultimate ASI Loader — choose which DLL name to use");
+            ? $"Ultimate ASI Loader 재설치 (현재 '{installedAs}')"
+            : "Ultimate ASI Loader 설치 — 사용할 DLL 이름 선택");
         installBtn.Click += async (s, e) =>
         {
             if (string.IsNullOrEmpty(installPath)) return;
@@ -151,7 +151,7 @@ public partial class DetailPanelBuilder
             if (chosen == null) return;
 
             installBtn.IsEnabled = false;
-            installBtn.Content = "Installing...";
+            installBtn.Content = "설치 중...";
             try
             {
                 var previousName = ualRecord?.InstalledAs;
@@ -167,11 +167,11 @@ public partial class DetailPanelBuilder
                         var chainedExtra = _window.ViewModel.OnUalChainedFile(card, chosen, hookedOriginal);
                         _ = DialogService.ShowSafeAsync(new ContentDialog
                         {
-                            Title = chainedExtra != null ? "Extra renamed" : "Original DLL chained",
+                            Title = chainedExtra != null ? "추가 파일 이름 변경됨" : "원본 DLL 체인 연결됨",
                             Content = chainedExtra != null
-                                ? $"{chainedExtra} was renamed to '{hookedOriginal}' so ASI Loader loads it. It keeps working alongside ASI Loader."
-                                : $"The existing '{chosen}' was renamed to '{hookedOriginal}' so ASI Loader can chain-load it automatically.",
-                            CloseButtonText = "OK",
+                                ? $"ASI Loader가 로드할 수 있도록 {chainedExtra}의 이름을 '{hookedOriginal}'(으)로 변경했습니다. ASI Loader와 함께 계속 작동합니다."
+                                : $"ASI Loader가 자동으로 체인 로드할 수 있도록 기존 '{chosen}'의 이름을 '{hookedOriginal}'(으)로 변경했습니다.",
+                            CloseButtonText = "확인",
                             XamlRoot = _window.Content.XamlRoot,
                         });
                     }
@@ -179,7 +179,7 @@ public partial class DetailPanelBuilder
                 }
                 else
                 {
-                    installBtn.Content = "❌ Install failed";
+                    installBtn.Content = "❌ 설치 실패";
                 }
             }
             finally { installBtn.IsEnabled = true; }
@@ -188,7 +188,7 @@ public partial class DetailPanelBuilder
         row.Children.Add(installBtn);
 
         // Col 4 — Cog (empty for now, matches Components cog size/position)
-        var cogBtn = CogDialog.MakeCogButton("ASI Loader settings");
+        var cogBtn = CogDialog.MakeCogButton("ASI Loader 설정");
         cogBtn.Tag = card;
         cogBtn.Click += async (s, e) =>
         {
@@ -221,7 +221,7 @@ public partial class DetailPanelBuilder
             Opacity = isInstalled ? 1.0 : 0,
             IsHitTestVisible = isInstalled,
         };
-        ToolTipService.SetToolTip(removeBtn, "Remove Ultimate ASI Loader from this game");
+        ToolTipService.SetToolTip(removeBtn, "이 게임에서 Ultimate ASI Loader 제거");
         removeBtn.Click += (s, e) =>
         {
             if (string.IsNullOrEmpty(installPath)) return;
@@ -315,23 +315,23 @@ public partial class DetailPanelBuilder
             });
 
             if (isRecommended)
-                contentRow.Children.Add(MakeBadge("Recommended", "#1A3A20", "#6AE87A", "#2A5A30"));
+                contentRow.Children.Add(MakeBadge("권장", "#1A3A20", "#6AE87A", "#2A5A30"));
             if (isTaken)
-                contentRow.Children.Add(MakeBadge("In use", "#2A1818", "#CC6666", "#5A2828"));
+                contentRow.Children.Add(MakeBadge("사용 중", "#2A1818", "#CC6666", "#5A2828"));
             if (isRhiOwned)
-                contentRow.Children.Add(MakeBadge("Used by RHI", "#2A1818", "#CC6666", "#5A2828"));
+                contentRow.Children.Add(MakeBadge("BONG DLSS5에서 사용 중", "#2A1818", "#CC6666", "#5A2828"));
             if (isRhiConflict && !isRhiOwned)
-                contentRow.Children.Add(MakeBadge("May conflict with ReShade/OS", "#2A1A10", "#CC9955", "#5A3A18"));
+                contentRow.Children.Add(MakeBadge("ReShade/OS와 충돌 가능", "#2A1A10", "#CC9955", "#5A3A18"));
             if (isCurrent)
-                contentRow.Children.Add(MakeBadge("Current", "#182840", "#7AACDD", "#2A4468"));
+                contentRow.Children.Add(MakeBadge("현재", "#182840", "#7AACDD", "#2A4468"));
 
             btn.Content = contentRow;
 
             // Tooltip for taken files
             if (isTaken)
-                ToolTipService.SetToolTip(btn, $"'{name}' already exists in the game folder. Selecting it will rename the existing file to '{Path.GetFileNameWithoutExtension(name)}Hooked.dll' so ASI Loader can chain-load it.");
+                ToolTipService.SetToolTip(btn, $"게임 폴더에 '{name}'이(가) 이미 있습니다. 선택하면 ASI Loader가 체인 로드할 수 있도록 기존 파일의 이름을 '{Path.GetFileNameWithoutExtension(name)}Hooked.dll'(으)로 변경합니다.");
             else if (isRhiOwned)
-                ToolTipService.SetToolTip(btn, "This filename is already used by an RHI-managed component (ReShade, OptiScaler, or DC). Choose a different name.");
+                ToolTipService.SetToolTip(btn, "이 파일 이름은 BONG DLSS5가 관리하는 구성 요소(ReShade, OptiScaler 또는 DC)에서 이미 사용 중입니다. 다른 이름을 선택하세요.");
 
             btn.Tag = name;
             btn.Click += (s, ev) =>
@@ -350,7 +350,7 @@ public partial class DetailPanelBuilder
 
         var dialog = new ContentDialog
         {
-            Title = "Choose ASI Loader DLL name",
+            Title = "ASI Loader DLL 이름 선택",
             Content = new StackPanel
             {
                 Spacing = 8,
@@ -358,7 +358,7 @@ public partial class DetailPanelBuilder
                 {
                     new TextBlock
                     {
-                        Text = "Select the filename for ASI Loader. Most games work with version.dll or winmm.dll.",
+                        Text = "ASI Loader의 파일 이름을 선택하세요. 대부분의 게임은 version.dll 또는 winmm.dll로 작동합니다.",
                         FontSize = 11,
                         Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush),
                         TextWrapping = TextWrapping.Wrap,
@@ -366,7 +366,7 @@ public partial class DetailPanelBuilder
                     scrollViewer,
                 }
             },
-            CloseButtonText = "Cancel",
+            CloseButtonText = "취소",
             XamlRoot = _window.Content.XamlRoot,
         };
 
@@ -388,7 +388,7 @@ public partial class DetailPanelBuilder
         bool isInstalled   = svc.IsInstalledIn(installPath, currentDllName);
         bool nrDeployed    = _window.ViewModel.GetRtxEncoreNrDllDeployed(gameName, store);
 
-        string statusText  = isInstalled ? (svc.StagedVersion ?? "Installed") : "Ready";
+        string statusText  = isInstalled ? (svc.StagedVersion ?? "설치됨") : "Ready";
         string statusColor = isInstalled ? "#5ECB7D" : "#A0AABB";
 
         _window.ViewModel.SetLastUiAction($"BuildRtxEncoreRow:BuildGrid({card.GameName})");
@@ -402,21 +402,21 @@ public partial class DetailPanelBuilder
         row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(36) });
 
         var label = new TextBlock { Text = "RTX Encore", FontSize = 12, Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush), VerticalAlignment = VerticalAlignment.Center };
-        ToolTipService.SetToolTip(label, "RTX Encore — frame generation X2-X6, Smooth Motion and Neural Rendering for RTX 20/30/40.");
+        ToolTipService.SetToolTip(label, "RTX Encore — RTX 20/30/40용 프레임 생성 X2-X6, Smooth Motion 및 Neural Rendering.");
         Grid.SetColumn(label, 0); row.Children.Add(label);
 
         var statusBlock = new TextBlock { Text = statusText, FontSize = 12, Foreground = UIFactory.GetBrush(statusColor), VerticalAlignment = VerticalAlignment.Center, HorizontalTextAlignment = Microsoft.UI.Xaml.TextAlignment.Center, TextDecorations = isInstalled ? Windows.UI.Text.TextDecorations.Underline : Windows.UI.Text.TextDecorations.None };
-        if (isInstalled) { ToolTipService.SetToolTip(statusBlock, $"Installed as: {currentDllName}\nClick to open GitHub releases"); statusBlock.PointerPressed += (s, e) => _ = Windows.System.Launcher.LaunchUriAsync(new Uri(RtxEncoreService.RepoUrl + "/releases")); AttachLinkCursor(statusBlock); }
+        if (isInstalled) { ToolTipService.SetToolTip(statusBlock, $"설치된 이름: {currentDllName}\n클릭하여 GitHub 릴리스 열기"); statusBlock.PointerPressed += (s, e) => _ = Windows.System.Launcher.LaunchUriAsync(new Uri(RtxEncoreService.RepoUrl + "/releases")); AttachLinkCursor(statusBlock); }
         Grid.SetColumn(statusBlock, 1); row.Children.Add(statusBlock);
 
-        var infoBtn = new Button { Content = "Info", FontSize = 11, Padding = new Thickness(6, 2, 6, 2), Width = 36, Height = 32, Background = UIFactory.Brush(ResourceKeys.AccentBlueBgBrush), Foreground = UIFactory.Brush(ResourceKeys.AccentBlueBrush), BorderBrush = UIFactory.Brush(ResourceKeys.AccentBlueBorderBrush), BorderThickness = new Thickness(1), CornerRadius = new CornerRadius(8) };
-        ToolTipService.SetToolTip(infoBtn, "Open RTX Encore GitHub page");
+        var infoBtn = new Button { Content = "정보", FontSize = 11, Padding = new Thickness(6, 2, 6, 2), Width = 36, Height = 32, Background = UIFactory.Brush(ResourceKeys.AccentBlueBgBrush), Foreground = UIFactory.Brush(ResourceKeys.AccentBlueBrush), BorderBrush = UIFactory.Brush(ResourceKeys.AccentBlueBorderBrush), BorderThickness = new Thickness(1), CornerRadius = new CornerRadius(8) };
+        ToolTipService.SetToolTip(infoBtn, "RTX Encore GitHub 페이지 열기");
         infoBtn.Click += (s, e) => _ = Windows.System.Launcher.LaunchUriAsync(new Uri(RtxEncoreService.RepoUrl));
         Grid.SetColumn(infoBtn, 2); row.Children.Add(infoBtn);
 
-        string installBtnLabel = isInstalled ? "↺  Reinstall RTX Encore" : "⬇  Install RTX Encore";
+        string installBtnLabel = isInstalled ? "↺  RTX Encore 재설치" : "⬇  RTX Encore 설치";
         var installBtn = new Button { Content = installBtnLabel, FontSize = 12, Height = 32, HorizontalAlignment = HorizontalAlignment.Stretch, CornerRadius = new CornerRadius(8), Background = isInstalled ? UIFactory.GetBrush("#182840") : UIFactory.Brush(ResourceKeys.AccentBlueBgBrush), Foreground = isInstalled ? UIFactory.GetBrush("#7AACDD") : UIFactory.Brush(ResourceKeys.AccentBlueBrush), BorderBrush = isInstalled ? UIFactory.GetBrush("#2A4468") : UIFactory.Brush(ResourceKeys.AccentBlueBorderBrush), BorderThickness = new Thickness(1) };
-        ToolTipService.SetToolTip(installBtn, isInstalled ? $"Reinstall RTX Encore (currently '{currentDllName}')" : "Install RTX Encore — choose which DLL name to use");
+        ToolTipService.SetToolTip(installBtn, isInstalled ? $"RTX Encore 재설치 (현재 '{currentDllName}')" : "RTX Encore 설치 — 사용할 DLL 이름 선택");
         installBtn.Click += async (s, e) =>
         {
             if (string.IsNullOrEmpty(installPath)) return;
@@ -426,7 +426,7 @@ public partial class DetailPanelBuilder
                 return;
             var chosen = await ShowRtxEncoreDllPickerAsync(card, currentDllName);
             if (chosen == null) return;
-            installBtn.IsEnabled = false; installBtn.Content = "Installing...";
+            installBtn.IsEnabled = false; installBtn.Content = "설치 중...";
             try
             {
                 var oldModDir = string.IsNullOrEmpty(currentDllName) ? null : svc.ModDir(installPath, currentDllName);
@@ -449,9 +449,9 @@ public partial class DetailPanelBuilder
                     // replaced in place, the rest go in RTX Encore's runtime folder. Not fatal: everything else works without them.
                     var mfgSvc = App.Services.GetRequiredService<Rtx40MfgService>();
                     var newModDir = svc.ModDir(installPath, chosen);
-                    installBtn.Content = mfgSvc.IsEncoreIntelStagingReady ? "Installing XeSS files..." : "Downloading XeSS files...";
+                    installBtn.Content = mfgSvc.IsEncoreIntelStagingReady ? "XeSS 파일 설치 중..." : "XeSS 파일 다운로드 중...";
                     bool staged = await mfgSvc.EnsureEncoreIntelStagingAsync();
-                    installBtn.Content = "Installing XeSS files...";
+                    installBtn.Content = "XeSS 파일 설치 중...";
                     bool xessOk = staged && await Task.Run(() =>
                     {
                         if (oldModDir != null && !string.Equals(oldModDir, newModDir, StringComparison.OrdinalIgnoreCase))
@@ -463,13 +463,13 @@ public partial class DetailPanelBuilder
 
                     RequestExtrasRebuild(card);
                 }
-                else { installBtn.Content = "Install failed"; installBtn.IsEnabled = true; }
+                else { installBtn.Content = "설치 실패"; installBtn.IsEnabled = true; }
             }
-            catch (Exception ex) { CrashReporter.Log($"[BuildRtxEncoreRow] Install failed — {ex.Message}"); installBtn.Content = "Install failed"; installBtn.IsEnabled = true; }
+            catch (Exception ex) { CrashReporter.Log($"[BuildRtxEncoreRow] Install failed — {ex.Message}"); installBtn.Content = "설치 실패"; installBtn.IsEnabled = true; }
         };
         Grid.SetColumn(installBtn, 3); row.Children.Add(installBtn);
 
-        var cogBtn = CogDialog.MakeCogButton("RTX Encore settings");
+        var cogBtn = CogDialog.MakeCogButton("RTX Encore 설정");
         cogBtn.Click += async (s, e) =>
         {
             try { await ShowRtxEncoreSettingsAsync(card, svc, installPath, isInstalled, nrDeployed); }
@@ -478,7 +478,7 @@ public partial class DetailPanelBuilder
         Grid.SetColumn(cogBtn, 4); row.Children.Add(cogBtn);
 
         var removeBtn2 = new Button { Width = 36, Height = 32, Padding = new Thickness(0), Background = UIFactory.Brush(ResourceKeys.AccentRedBgBrush), Foreground = UIFactory.Brush(ResourceKeys.AccentRedBrush), BorderBrush = UIFactory.Brush(ResourceKeys.AccentPurpleBorderBrush), BorderThickness = new Thickness(1), CornerRadius = new CornerRadius(8), Content = new TextBlock { Text = "✕", FontSize = 12, HorizontalAlignment = HorizontalAlignment.Center, Foreground = UIFactory.Brush(ResourceKeys.AccentRedBrush) }, Opacity = isInstalled ? 1.0 : 0, IsHitTestVisible = isInstalled };
-        ToolTipService.SetToolTip(removeBtn2, "Remove RTX Encore from this game");
+        ToolTipService.SetToolTip(removeBtn2, "이 게임에서 RTX Encore 제거");
         removeBtn2.Click += (s, e) =>
         {
             if (string.IsNullOrEmpty(installPath) || string.IsNullOrEmpty(currentDllName)) return;
@@ -520,8 +520,8 @@ public partial class DetailPanelBuilder
                     : System.IO.Path.Combine(card.InstallPath, name);
                 if (File.Exists(diskPath))
                 {
-                    try { var fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(diskPath); onDiskConflicts[name] = !string.IsNullOrEmpty(fvi.FileDescription) ? fvi.FileDescription : !string.IsNullOrEmpty(fvi.ProductName) ? fvi.ProductName : "existing file"; }
-                    catch { onDiskConflicts[name] = "existing file"; }
+                    try { var fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(diskPath); onDiskConflicts[name] = !string.IsNullOrEmpty(fvi.FileDescription) ? fvi.FileDescription : !string.IsNullOrEmpty(fvi.ProductName) ? fvi.ProductName : "기존 파일"; }
+                    catch { onDiskConflicts[name] = "기존 파일"; }
                 }
             }
         }
@@ -541,16 +541,16 @@ public partial class DetailPanelBuilder
             var btn = new Button { HorizontalAlignment = HorizontalAlignment.Stretch, HorizontalContentAlignment = HorizontalAlignment.Left, Padding = new Thickness(10, 6, 10, 6), CornerRadius = new CornerRadius(6), BorderThickness = new Thickness(1), IsEnabled = !isRhiOwned, Opacity = isRhiOwned ? 0.4 : 1.0, Background = isCurrent ? UIFactory.Brush(ResourceKeys.AccentBlueBgBrush) : UIFactory.Brush(ResourceKeys.SurfaceOverlayBrush), BorderBrush = isCurrent ? UIFactory.Brush(ResourceKeys.AccentBlueBorderBrush) : UIFactory.Brush(ResourceKeys.BorderDefaultBrush) };
             var contentRow = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8 };
             contentRow.Children.Add(new TextBlock { Text = name, FontSize = 12, Foreground = isRhiOwned ? UIFactory.Brush(ResourceKeys.TextTertiaryBrush) : UIFactory.Brush(ResourceKeys.TextPrimaryBrush), VerticalAlignment = VerticalAlignment.Center });
-            if (isRecommended) contentRow.Children.Add(MakeBadge("Recommended", "#1A3A20", "#6AE87A", "#2A5A30"));
-            if (isAsi)         contentRow.Children.Add(MakeBadge("ASI plugin",  "#1A2A3A", "#7AACDD", "#2A4A6A"));
+            if (isRecommended) contentRow.Children.Add(MakeBadge("권장", "#1A3A20", "#6AE87A", "#2A5A30"));
+            if (isAsi)         contentRow.Children.Add(MakeBadge("ASI 플러그인",  "#1A2A3A", "#7AACDD", "#2A4A6A"));
             AddExtraDllBadges(contentRow, btn, option, "RTX Encore");
-            if (!isRhiOwned && isOnDisk) contentRow.Children.Add(MakeBadge($"On disk: {onDiskConflicts[name]}", "#2A1A10", "#CC9955", "#5A3A18"));
-            if (isCurrent)     contentRow.Children.Add(MakeBadge("Current", "#182840", "#7AACDD", "#2A4468"));
+            if (!isRhiOwned && isOnDisk) contentRow.Children.Add(MakeBadge($"디스크에 있음: {onDiskConflicts[name]}", "#2A1A10", "#CC9955", "#5A3A18"));
+            if (isCurrent)     contentRow.Children.Add(MakeBadge("현재", "#182840", "#7AACDD", "#2A4468"));
             btn.Content = contentRow;
             // Blocked names got their tooltip from AddExtraDllBadges
             if (!isRhiOwned && isOnDisk && name.StartsWith("bink", StringComparison.OrdinalIgnoreCase))
-                ToolTipService.SetToolTip(btn, $"A '{name}' already exists ({onDiskConflicts[name]}). RTX Encore needs it beside it as '{System.IO.Path.GetFileNameWithoutExtension(name)}Hooked.dll': RHI renames it, and puts it back on uninstall.");
-            else if (!isRhiOwned && isOnDisk) ToolTipService.SetToolTip(btn, $"A '{name}' already exists ({onDiskConflicts[name]}). RHI will back it up and restore it on uninstall.");
+                ToolTipService.SetToolTip(btn, $"'{name}'이(가) 이미 있습니다({onDiskConflicts[name]}). RTX Encore는 이 파일을 '{System.IO.Path.GetFileNameWithoutExtension(name)}Hooked.dll'(으)로 옆에 두어야 합니다. BONG DLSS5가 이름을 바꾸고 제거 시 되돌립니다.");
+            else if (!isRhiOwned && isOnDisk) ToolTipService.SetToolTip(btn, $"'{name}'이(가) 이미 있습니다({onDiskConflicts[name]}). BONG DLSS5가 백업한 뒤 제거 시 복원합니다.");
             btn.Tag = name;
             btn.Click += (s, ev) => { chosen = (s as Button)?.Tag as string; if (s is FrameworkElement fe) FindParentContentDialog(fe)?.Hide(); };
             listPanel.Children.Add(btn);
@@ -558,9 +558,9 @@ public partial class DetailPanelBuilder
 
         var pickerDialog = new ContentDialog
         {
-            Title = "Choose RTX Encore DLL name",
-            Content = new StackPanel { Spacing = 8, Children = { new TextBlock { Text = "Select the filename for RTX Encore. Names in use by RHI components are disabled. Amber names already have a file on disk — RHI will back it up and restore on uninstall.", FontSize = 11, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), TextWrapping = TextWrapping.Wrap }, scrollViewer } },
-            CloseButtonText = "Cancel", XamlRoot = _window.Content.XamlRoot, RequestedTheme = ElementTheme.Dark,
+            Title = "RTX Encore DLL 이름 선택",
+            Content = new StackPanel { Spacing = 8, Children = { new TextBlock { Text = "RTX Encore의 파일 이름을 선택하세요. BONG DLSS5 구성 요소가 사용 중인 이름은 비활성화됩니다. 주황색 이름은 디스크에 이미 파일이 있습니다 — BONG DLSS5가 백업한 뒤 제거 시 복원합니다.", FontSize = 11, Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush), TextWrapping = TextWrapping.Wrap }, scrollViewer } },
+            CloseButtonText = "취소", XamlRoot = _window.Content.XamlRoot, RequestedTheme = ElementTheme.Dark,
         };
         await DialogService.ShowSafeAsync(pickerDialog);
         return chosen;

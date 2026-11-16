@@ -546,13 +546,55 @@ public class UpliftService
         try
         {
             var json = await _etagCache.GetWithETagAsync(_http, LatestApiUrl).ConfigureAwait(false);
-            if (json == null) return null;
+            if (json == null) return await FetchLatestFromPageAsync().ConfigureAwait(false);
             using var doc = JsonDocument.Parse(json);
-            return ParseRelease(doc.RootElement);
+            return ParseRelease(doc.RootElement) ?? await FetchLatestFromPageAsync().ConfigureAwait(false);
         }
         catch (Exception ex) when (ex is HttpRequestException or JsonException or TaskCanceledException or InvalidOperationException)
         {
             _crashReporter.Log($"[UpliftService.FetchLatest] Failed — {ex.Message}");
+            return await FetchLatestFromPageAsync().ConfigureAwait(false);
+        }
+    }
+
+    /// <summary>
+    /// BONG DLSS5: the latest release read from github.com's web pages instead of the API, used when the API
+    /// gives nothing (60 requests an hour without a token; RHI's startup checks can use them all up).
+    /// /releases/latest redirects to /releases/tag/{tag}; /releases/expanded_assets/{tag} lists the download links.
+    /// </summary>
+    private async Task<Release?> FetchLatestFromPageAsync()
+    {
+        try
+        {
+            using var resp = await _http.GetAsync(ReleasesPage + "/releases/latest", HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+            var finalUrl = resp.RequestMessage?.RequestUri?.AbsolutePath ?? "";
+            int at = finalUrl.LastIndexOf("/releases/tag/", StringComparison.OrdinalIgnoreCase);
+            if (!resp.IsSuccessStatusCode || at < 0)
+            {
+                _crashReporter.Log($"[UpliftService.FetchLatestFromPage] No release tag ({(int)resp.StatusCode} {finalUrl})");
+                return null;
+            }
+            var tag = Uri.UnescapeDataString(finalUrl[(at + "/releases/tag/".Length)..]);
+            var html = await _http.GetStringAsync($"{ReleasesPage}/releases/expanded_assets/{Uri.EscapeDataString(tag)}").ConfigureAwait(false);
+
+            string? zip = null, sums = null;
+            var prefix = $"/ghostinthecamera/GITC-Uplift/releases/download/{tag}/";
+            foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(html, "href=\"(/ghostinthecamera/GITC-Uplift/releases/download/[^\"]+)\""))
+            {
+                var path = System.Net.WebUtility.HtmlDecode(m.Groups[1].Value);
+                if (!path.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) continue;
+                var name = Uri.UnescapeDataString(path[prefix.Length..]);
+                var url = "https://github.com" + path;
+                if (name.StartsWith("GITC-Uplift", StringComparison.OrdinalIgnoreCase) && name.EndsWith(".zip", StringComparison.OrdinalIgnoreCase)) zip ??= url;
+                else if (name.Equals("SHA256SUMS.txt", StringComparison.OrdinalIgnoreCase)) sums = url;
+            }
+            var version = new string(tag.TrimStart('v', 'V').Where(c => char.IsLetterOrDigit(c) || c is '.' or '-' or '_').ToArray());
+            _crashReporter.Log($"[UpliftService.FetchLatestFromPage] tag={tag}, zip={(zip != null ? "found" : "missing")}, sums={(sums != null ? "found" : "missing")}");
+            return version.Length == 0 || zip == null ? null : new Release(version, zip, sums);
+        }
+        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException or InvalidOperationException or UriFormatException)
+        {
+            _crashReporter.Log($"[UpliftService.FetchLatestFromPage] Failed — {ex.Message}");
             return null;
         }
     }

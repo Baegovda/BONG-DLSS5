@@ -33,9 +33,9 @@ internal sealed partial class OverlayWindow
         _shotFolder = ScreenshotLibraryService.FindFolder(card.InstallPath, rhiFolder);
         if (_shotFolder == null)
         {
-            _shotBox.Children.Add(MakeCard("Screenshots", SmallText(
-                "No screenshot folder found for this game. Take a screenshot with ReShade (Print Screen by default), "
-              + "or set a folder in RHI's Settings › ReShade › Screenshot folder.")));
+            _shotBox.Children.Add(MakeCard("스크린샷", SmallText(
+                "이 게임의 스크린샷 폴더를 찾지 못했습니다. ReShade로 스크린샷을 찍거나(기본값 Print Screen), "
+              + "BONG DLSS5의 설정 › ReShade › 스크린샷 폴더에서 폴더를 지정하세요.")));
             StopShotWatcher();
             return;
         }
@@ -59,17 +59,17 @@ internal sealed partial class OverlayWindow
     {
         _shotBox.Children.Clear();
         var header = new StackPanel { Spacing = 10 };
-        header.Children.Add(BigText(_shots.Count == 0 ? "No screenshots yet"
-            : _shots.Count == 1 ? "1 screenshot" : $"{_shots.Count} screenshots"));
+        header.Children.Add(BigText(_shots.Count == 0 ? "아직 스크린샷이 없습니다"
+            : _shots.Count == 1 ? "스크린샷 1개" : $"스크린샷 {_shots.Count}개"));
         header.Children.Add(SmallText(_shotFolder ?? ""));
-        var openFolder = new Button { Content = "Open folder" };
+        var openFolder = new Button { Content = "폴더 열기" };
         TabsTheme.Apply(openFolder, TabsTheme.IconButton, height: 40, fontSize: 14);
         openFolder.HorizontalAlignment = HorizontalAlignment.Left;
         openFolder.Click += (_, _) => OpenInExplorer(_shotFolder!, select: null);
         header.Children.Add(openFolder);
         if (_shots.Count == 0)
-            header.Children.Add(SmallText("Take one with ReShade's screenshot key (Print Screen by default). It shows up here straight away."));
-        _shotBox.Children.Add(MakeCard("Screenshots", header, stretch: true));
+            header.Children.Add(SmallText("ReShade 스크린샷 키(기본값 Print Screen)로 찍으세요. 바로 여기에 표시됩니다."));
+        _shotBox.Children.Add(MakeCard("스크린샷", header, stretch: true));
 
         var grid = new Controls.AutoFitGrid { MinColumnWidth = ThumbMinWidth, ColumnSpacing = 14, RowSpacing = 14, StretchFewItems = false };
         _shotBox.Children.Add(grid);
@@ -88,7 +88,7 @@ internal sealed partial class OverlayWindow
             var image = new Image { Stretch = Stretch.UniformToFill };
             var fallback = new TextBlock
             {
-                Text = Path.GetExtension(file.Name).ToUpperInvariant().TrimStart('.') + " screenshot",
+                Text = Path.GetExtension(file.Name).ToUpperInvariant().TrimStart('.') + " 스크린샷",
                 FontSize = 13,
                 Foreground = TabsTheme.B(TabsTheme.TextMuted),
                 HorizontalAlignment = HorizontalAlignment.Center,
@@ -130,7 +130,7 @@ internal sealed partial class OverlayWindow
         if (_shotBox.Children.LastOrDefault() is Button oldMore && oldMore.Tag as string == "ShotMore") _shotBox.Children.Remove(oldMore);
         if (_shotsShown < _shots.Count)
         {
-            var more = new Button { Content = $"Show more ({_shots.Count - _shotsShown} left)", Tag = "ShotMore" };
+            var more = new Button { Content = $"더 보기 ({_shots.Count - _shotsShown}개 남음)", Tag = "ShotMore" };
             TabsTheme.Apply(more, TabsTheme.IconButton, height: 42, fontSize: 15);
             more.Click += (_, _) => AddThumbs(grid);
             _shotBox.Children.Add(more);
@@ -153,7 +153,7 @@ internal sealed partial class OverlayWindow
         double maxHeight = Math.Max(300, (_body.ActualHeight > 0 ? _body.ActualHeight : 700) - 110);
         int decode = (int)Math.Ceiling(Math.Max(1280, _body.ActualWidth) * Math.Max(1, Content?.XamlRoot?.RasterizationScale ?? 1));
         var image = new Image { Stretch = Stretch.Uniform, MaxHeight = maxHeight, HorizontalAlignment = HorizontalAlignment.Left };
-        var failed = SmallText("This screenshot can't be shown here (HDR .jxr screenshots often can't). Use Open to view it.");
+        var failed = SmallText("이 스크린샷은 여기에 표시할 수 없습니다(HDR .jxr 스크린샷은 대개 표시되지 않습니다). 열기를 사용해 보세요.");
         failed.Visibility = Visibility.Collapsed;
         var bmp = new BitmapImage { DecodePixelWidth = decode };
         bmp.ImageFailed += (_, _) => failed.Visibility = Visibility.Visible;
@@ -169,28 +169,28 @@ internal sealed partial class OverlayWindow
             bar.Children.Add(b);
             return b;
         }
-        Make("Back to screenshots", CloseViewer, TabsTheme.BlueButton);
-        var prev = Make("Previous", () => OpenViewer(_viewerIndex - 1, "Previous"));
-        var next = Make("Next", () => OpenViewer(_viewerIndex + 1, "Next"));
+        Make("스크린샷으로 돌아가기", CloseViewer, TabsTheme.BlueButton);
+        var prev = Make("이전", () => OpenViewer(_viewerIndex - 1, "Previous"));
+        var next = Make("다음", () => OpenViewer(_viewerIndex + 1, "Next"));
         prev.IsEnabled = index > 0;
         next.IsEnabled = index < _shots.Count - 1;
-        Make("Copy", () => _ = CopyShotAsync(file.FullName));
+        Make("복사", () => _ = CopyShotAsync(file.FullName));
         Button? delete = null;
-        delete = Make("Delete", () =>
+        delete = Make("삭제", () =>
         {
             // Second click deletes (to the Recycle Bin)
             if (delete!.Tag as string != "Confirm")
             {
                 delete.Tag = "Confirm";
-                delete.Content = "Click again to delete";
+                delete.Content = "한 번 더 클릭하면 삭제";
                 return;
             }
             DeleteShot(_viewerIndex);
         });
-        Make("Open", () => OpenShot(file.FullName));
-        Make("Show in folder", () => OpenInExplorer(file.DirectoryName ?? "", select: file.FullName));
+        Make("열기", () => OpenShot(file.FullName));
+        Make("폴더에서 보기", () => OpenInExplorer(file.DirectoryName ?? "", select: file.FullName));
 
-        var info = SmallText($"{file.Name}  ·  {file.LastWriteTime:g}  ·  {index + 1} of {_shots.Count}");
+        var info = SmallText($"{file.Name}  ·  {file.LastWriteTime:g}  ·  {index + 1} / {_shots.Count}");
         _viewerBox.Children.Add(bar);
         _viewerBox.Children.Add(info);
         _viewerBox.Children.Add(image);

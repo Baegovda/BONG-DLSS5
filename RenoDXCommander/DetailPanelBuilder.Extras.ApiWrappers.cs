@@ -44,14 +44,14 @@ public partial class DetailPanelBuilder
             Tag = card,
         };
         ToolTipService.SetToolTip(label, card.DxvkToggleTooltip
-            ?? "DXVK — translates DX8, DX9, DX10 and DX11 calls to Vulkan, enabling scRGB HDR with Lilium HDR shaders.");
+            ?? "DXVK — DX8, DX9, DX10, DX11 호출을 Vulkan으로 변환하여 Lilium HDR 셰이더로 scRGB HDR을 사용할 수 있게 합니다.");
         Grid.SetColumn(label, 0);
         row.Children.Add(label);
 
         // Col 1 — status
         var statusBlock = new TextBlock
         {
-            Text = card.DxvkStatusText,
+            Text = KoreanBuild.Tr(card.DxvkStatusText),
             FontSize = 12,
             Foreground = UIFactory.GetBrush(card.DxvkStatusColor),
             VerticalAlignment = VerticalAlignment.Center,
@@ -63,7 +63,7 @@ public partial class DetailPanelBuilder
         };
         if (card.IsDxvkInstalled && !isDisabled)
         {
-            ToolTipService.SetToolTip(statusBlock, "Click to open DXVK releases");
+            ToolTipService.SetToolTip(statusBlock, "클릭하여 DXVK 릴리스 열기");
             statusBlock.PointerPressed += (s, e) => _window.DetailDxvkStatus_PointerPressed(s, e);
             statusBlock.PointerEntered += (s, e) => _window.LinkText_PointerEntered(s, e);
             statusBlock.PointerExited  += (s, e) => _window.LinkText_PointerExited(s, e);
@@ -74,7 +74,7 @@ public partial class DetailPanelBuilder
         // Col 2 — Info button
         var infoBtn = new Button
         {
-            Content = "Info",
+            Content = "정보",
             FontSize = 11,
             Padding = new Thickness(6, 2, 6, 2),
             Width = 36,
@@ -91,7 +91,7 @@ public partial class DetailPanelBuilder
         bool hasDxvkNotes = _window.ViewModel.Manifest?.DxvkGameNotes != null
             && _window.ViewModel.Manifest.DxvkGameNotes.TryGetValue(card.GameName, out var dxvkNote)
             && !string.IsNullOrWhiteSpace(dxvkNote.Notes);
-        ToolTipService.SetToolTip(infoBtn, hasDxvkNotes ? "Per-game notes available" : "General DXVK info");
+        ToolTipService.SetToolTip(infoBtn, hasDxvkNotes ? "게임별 노트 있음" : "일반 DXVK 정보");
         infoBtn.Click += (s, e) => _window.DxvkInfoButton_Click(s, e);
         Grid.SetColumn(infoBtn, 2);
         row.Children.Add(infoBtn);
@@ -113,13 +113,13 @@ public partial class DetailPanelBuilder
             Opacity = isDisabled ? 0.35 : 1.0,
             IsHitTestVisible = !isDisabled,
         };
-        installBtn.Content = card.DxvkActionLabel;
+        installBtn.Content = KoreanBuild.Tr(card.DxvkActionLabel);
         installBtn.Click += (s, e) => _window.InstallDxvkButton_Click(s, e);
         Grid.SetColumn(installBtn, 3);
         row.Children.Add(installBtn);
 
         // Col 4 — Cog button
-        var cogBtn = CogDialog.MakeCogButton("DXVK Settings");
+        var cogBtn = CogDialog.MakeCogButton("DXVK 설정");
         cogBtn.Tag = card;
         cogBtn.IsEnabled = !isDisabled;
         cogBtn.Opacity = isDisabled ? 0.35 : 1.0;
@@ -144,7 +144,7 @@ public partial class DetailPanelBuilder
             Opacity = showDelete ? 1.0 : 0.0,
             IsHitTestVisible = showDelete,
         };
-        ToolTipService.SetToolTip(deleteBtn, "Remove DXVK");
+        ToolTipService.SetToolTip(deleteBtn, "DXVK 제거");
         deleteBtn.Click += (s, e) => _window.UninstallDxvkButton_Click(s, e);
         Grid.SetColumn(deleteBtn, 5);
         row.Children.Add(deleteBtn);
@@ -190,10 +190,10 @@ public partial class DetailPanelBuilder
         // The install button is disabled when the manifest lists no dgVoodoo2 versions and
         // disabled buttons show no tooltip, so the reason is added to this label.
         ToolTipService.SetToolTip(label,
-            "dgVoodoo2 — translates DX9 calls to DX11, enabling ReShade compute shaders and DLSS5 Feeder on DX9 games.\nDeploys D3D9.dll + dgVoodoo.conf to the game folder."
+            "dgVoodoo2 — DX9 호출을 DX11로 변환하여 DX9 게임에서 ReShade 컴퓨트 셰이더와 DLSS5 Feeder를 사용할 수 있게 합니다.\nD3D9.dll + dgVoodoo.conf를 게임 폴더에 배포합니다."
             + (manifest?.DgVoodooVersions?.Count > 0
                 ? ""
-                : "\n\nInstall isn't available right now: no dgVoodoo2 versions are listed in the online data. Try Refresh later."));
+                : "\n\n지금은 설치할 수 없습니다: 온라인 데이터에 dgVoodoo2 버전이 없습니다. 나중에 새로 고침을 시도하세요."));
         Grid.SetColumn(label, 0);
         row.Children.Add(label);
 
@@ -209,7 +209,7 @@ public partial class DetailPanelBuilder
         };
         if (isInstalled)
         {
-            ToolTipService.SetToolTip(statusBlock, "Click to open dgVoodoo2 releases page");
+            ToolTipService.SetToolTip(statusBlock, "클릭하여 dgVoodoo2 릴리스 페이지 열기");
             statusBlock.PointerPressed += (s, e) =>
                 _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/dege-diosg/dgVoodoo2/releases"));
             statusBlock.PointerEntered += (s, e) => _window.LinkText_PointerEntered(s, e);
@@ -221,7 +221,7 @@ public partial class DetailPanelBuilder
         // Col 2 — Info button
         var infoBtn = new Button
         {
-            Content = "Info",
+            Content = "정보",
             FontSize = 11,
             Padding = new Thickness(6, 2, 6, 2),
             Width = 36,
@@ -232,7 +232,7 @@ public partial class DetailPanelBuilder
             BorderThickness = new Thickness(1),
             CornerRadius = new CornerRadius(8),
         };
-        ToolTipService.SetToolTip(infoBtn, "Open dgVoodoo2 releases page");
+        ToolTipService.SetToolTip(infoBtn, "dgVoodoo2 릴리스 페이지 열기");
         infoBtn.Click += (s, e) =>
             _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/dege-diosg/dgVoodoo2/releases"));
         Grid.SetColumn(infoBtn, 2);
@@ -260,14 +260,14 @@ public partial class DetailPanelBuilder
             IsEnabled = manifest?.DgVoodooVersions?.Count > 0,
         };
         ToolTipService.SetToolTip(installBtn,
-            isInstalled ? "Redeploy dgVoodoo2 — refreshes D3D9.dll and dgVoodoo.conf from staged version"
-                        : "Install dgVoodoo2 — deploys D3D9.dll and dgVoodoo.conf to the game folder");
+            isInstalled ? "dgVoodoo2 재배포 — 스테이징된 버전에서 D3D9.dll과 dgVoodoo.conf를 새로 고칩니다"
+                        : "dgVoodoo2 설치 — D3D9.dll과 dgVoodoo.conf를 게임 폴더에 배포합니다");
 
         installBtn.Click += async (s, ev) =>
         {
             if (string.IsNullOrEmpty(installPath) || manifest?.DgVoodooVersions == null) return;
             installBtn.IsEnabled = false;
-            installBtn.Content   = "Installing...";
+            installBtn.Content   = KoreanBuild.Tr("Installing...");
             try
             {
                 // Pick version: prefer stored per-game override, then latest from manifest
@@ -330,14 +330,14 @@ public partial class DetailPanelBuilder
                 }
                 else
                 {
-                    installBtn.Content = "❌ Deploy failed";
+                    installBtn.Content = KoreanBuild.Tr("❌ Deploy failed");
                     installBtn.IsEnabled = true;
                 }
             }
             catch (Exception ex)
             {
                 CrashReporter.Log($"[BuildDgVoodooRow] Install failed for '{gameName}' — {ex.Message}");
-                installBtn.Content   = "❌ Failed";
+                installBtn.Content   = KoreanBuild.Tr("❌ Failed");
                 installBtn.IsEnabled = true;
             }
         };
@@ -345,7 +345,7 @@ public partial class DetailPanelBuilder
         row.Children.Add(installBtn);
 
         // Col 4 — Cog
-        var cogBtn = CogDialog.MakeCogButton("dgVoodoo2 Settings");
+        var cogBtn = CogDialog.MakeCogButton("dgVoodoo2 설정");
         cogBtn.Click += async (s, ev) =>
         {
             try
@@ -356,7 +356,7 @@ public partial class DetailPanelBuilder
                 var versions = manifest?.DgVoodooVersions?.Keys.ToList() ?? new List<string>();
                 if (versions.Count == 0)
                 {
-                    cog.AddEmpty("No dgVoodoo2 versions are available in the manifest.");
+                    cog.AddEmpty("매니페스트에 사용 가능한 dgVoodoo2 버전이 없습니다.");
                     await cog.ShowAsync();
                     return;
                 }
@@ -371,7 +371,7 @@ public partial class DetailPanelBuilder
                 async Task RedeployAsync(string selectedVersion, string versionUrl)
                 {
                     if (versionCombo != null) versionCombo.IsEnabled = false;
-                    cog.SetStatus($"Deploying dgVoodoo2 v{selectedVersion}...");
+                    cog.SetStatus($"dgVoodoo2 v{selectedVersion} 배포 중...");
                     try
                     {
                         await Task.Run(() => dgSvc.EnsureStagedAsync(selectedVersion, versionUrl));
@@ -379,18 +379,18 @@ public partial class DetailPanelBuilder
                         if (redeployed.Count > 0)
                         {
                             CrashReporter.Log($"[BuildDgVoodooRow] Redeployed dgVoodoo2 v{selectedVersion} for '{gameName}'");
-                            cog.SetSuccess($"dgVoodoo2 v{selectedVersion} deployed to the game folder.");
+                            cog.SetSuccess($"dgVoodoo2 v{selectedVersion}을(를) 게임 폴더에 배포했습니다.");
                         }
                         else
                         {
                             CrashReporter.Log($"[BuildDgVoodooRow] Redeploy of v{selectedVersion} deployed no files for '{gameName}'");
-                            cog.SetError($"dgVoodoo2 v{selectedVersion} couldn't be deployed. See the log for details.");
+                            cog.SetError($"dgVoodoo2 v{selectedVersion}을(를) 배포할 수 없습니다. 자세한 내용은 로그를 확인하세요.");
                         }
                     }
                     catch (Exception ex)
                     {
                         CrashReporter.Log($"[BuildDgVoodooRow] Redeploy failed — {ex.Message}");
-                        cog.SetError($"dgVoodoo2 v{selectedVersion} couldn't be deployed: {ex.Message}");
+                        cog.SetError($"dgVoodoo2 v{selectedVersion}을(를) 배포할 수 없습니다: {ex.Message}");
                     }
                     finally
                     {
@@ -399,8 +399,8 @@ public partial class DetailPanelBuilder
                     RequestExtrasRebuild(card);
                 }
 
-                versionCombo = cog.AddCombo("Version",
-                    "The dgVoodoo2 version used for this game. Older versions can work better with some games (e.g. 2.87.3 for Mass Effect).",
+                versionCombo = cog.AddCombo("버전",
+                    "이 게임에 사용할 dgVoodoo2 버전입니다. 일부 게임에서는 이전 버전이 더 잘 작동할 수 있습니다 (예: Mass Effect는 2.87.3).",
                     versions, currentIdx, i =>
                     {
                         var selectedVersion = versions[i];
@@ -410,11 +410,11 @@ public partial class DetailPanelBuilder
                         if (isInstalled && manifest?.DgVoodooVersions?.TryGetValue(selectedVersion, out var versionUrl) == true)
                             _ = RedeployAsync(selectedVersion, versionUrl);
                         else
-                            cog.SetSuccess($"Version set to {selectedVersion}. It will be used when you install dgVoodoo2.");
+                            cog.SetSuccess($"버전을 {selectedVersion}(으)로 설정했습니다. dgVoodoo2를 설치할 때 사용됩니다.");
                     });
                 versionCombo.MaxDropDownHeight = 300;
 
-                cog.AddNote("If dgVoodoo2 is installed on this game, picking a version redeploys it to the game folder straight away.");
+                cog.AddNote("이 게임에 dgVoodoo2가 설치되어 있으면 버전을 선택하는 즉시 게임 폴더에 재배포됩니다.");
 
                 await cog.ShowAsync();
             }
@@ -441,7 +441,7 @@ public partial class DetailPanelBuilder
             Opacity = isInstalled ? 1.0 : 0.0,
             IsHitTestVisible = isInstalled,
         };
-        ToolTipService.SetToolTip(removeBtn, "Remove dgVoodoo2 from this game");
+        ToolTipService.SetToolTip(removeBtn, "이 게임에서 dgVoodoo2 제거");
         removeBtn.Click += async (s, ev) =>
         {
             if (string.IsNullOrEmpty(installPath)) return;

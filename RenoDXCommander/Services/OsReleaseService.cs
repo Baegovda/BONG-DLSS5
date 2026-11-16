@@ -144,7 +144,7 @@ internal static class OsReleaseService
     internal static async Task<string?> StageAsync(OsRelease release, string slotDir, Action<string, string?> writeMeta,
         IProgress<(string message, double percent)>? progress, string label, CancellationToken ct)
     {
-        progress?.Report(($"Downloading {label} {release.Tag}...", 15));
+        progress?.Report(($"{label} {release.Tag} 다운로드 중...", 15));
         var work = Path.Combine(Path.GetTempPath(), "RHI", "osrelease-" + Guid.NewGuid().ToString("N"));
         try
         {
@@ -152,12 +152,12 @@ internal static class OsReleaseService
             var (err, saved) = await OsCustomBuildService.DownloadAsync(new Uri(release.AssetUrl),
                 Path.Combine(work, "dl", Path.GetFileName(release.AssetName)), null, ct).ConfigureAwait(false);
             if (err != null) return err;
-            progress?.Report(($"Unpacking {label}...", 40));
+            progress?.Report(($"{label} 압축 푸는 중...", 40));
             var x = Path.Combine(work, "x");
             var exErr = await OsCustomBuildService.ExtractAsync(saved, x, ct).ConfigureAwait(false);
             if (exErr != null) return exErr;
             var dll = OsCustomBuildService.FindOptiScalerDll(x);
-            if (dll == null) return $"No OptiScaler.dll in {release.AssetName}.";
+            if (dll == null) return $"{release.AssetName}에 OptiScaler.dll이 없습니다.";
 
             var tmp = slotDir.TrimEnd('\\', '/') + ".tmp";
             if (Directory.Exists(tmp)) Directory.Delete(tmp, recursive: true);

@@ -30,7 +30,7 @@ public partial class SettingsHandler
                 var row = new Grid { ColumnSpacing = 10 };
                 row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                 row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star), MaxWidth = 210 });
-                var label = new TextBlock { Text = "Interface size" };
+                var label = new TextBlock { Text = "인터페이스 크기" };
                 if (Application.Current.Resources.TryGetValue("SettingsLabelStyle", out var ls) && ls is Style labelStyle)
                     label.Style = labelStyle;
                 row.Children.Add(label);
@@ -38,12 +38,12 @@ public partial class SettingsHandler
                 var combo = new ComboBox();
                 if (Application.Current.Resources.TryGetValue("SettingsComboStyle", out var cs) && cs is Style comboStyle)
                     combo.Style = comboStyle;
-                foreach (var p in MainWindow.UiScaleOptions) combo.Items.Add(p == 100 ? "100% (normal)" : $"{p}%");
+                foreach (var p in MainWindow.UiScaleOptions) combo.Items.Add(p == 100 ? "100% (보통)" : $"{p}%");
                 ToolTipService.SetToolTip(combo,
-                    "Makes RHI's window smaller or larger without changing Windows' scaling. " +
-                    "Useful on TVs and high-DPI screens set to 200% or more. " +
-                    "You can also hold Ctrl and turn the mouse wheel anywhere in RHI. " +
-                    "Pop-ups, dropdown lists and tooltips keep the Windows size.");
+                    "Windows 배율을 바꾸지 않고 BONG DLSS5 창을 작게 또는 크게 만듭니다. " +
+                    "TV나 200% 이상으로 설정된 고DPI 화면에서 유용합니다. " +
+                    "BONG DLSS5 어디서든 Ctrl을 누른 채 마우스 휠을 돌려도 됩니다. " +
+                    "팝업, 드롭다운 목록, 툴팁은 Windows 크기를 유지합니다.");
                 Grid.SetColumn(combo, 1);
                 row.Children.Add(combo);
                 list.Children.Insert(list.Children.IndexOf(anchorRow) + 1, row);
@@ -51,14 +51,14 @@ public partial class SettingsHandler
                 combo.SelectionChanged += UiScaleCombo_SelectionChanged;
 
                 // Top bar and game list sizes, on top of the interface size
-                _topBarScaleCombo = AddSizeRow(list, list.Children.IndexOf(row) + 1, "Top bar size",
-                    "Makes the top bar smaller or larger, on top of the interface size, in every layout. " +
-                    "You can also drag the top bar's bottom edge. Double-click the edge to reset it.",
+                _topBarScaleCombo = AddSizeRow(list, list.Children.IndexOf(row) + 1, "상단 바 크기",
+                    "모든 레이아웃에서 인터페이스 크기에 더해 상단 바를 작게 또는 크게 만듭니다. " +
+                    "상단 바의 아래쪽 가장자리를 끌어서 조절할 수도 있습니다. 가장자리를 두 번 클릭하면 초기화됩니다.",
                     pct => { ViewModel.Settings.TopBarScale = pct; _window.ApplyTopBarScale(); });
-                _gameListScaleCombo = AddSizeRow(list, list.Children.IndexOf(row) + 2, "Game list size",
-                    "Makes the game list smaller or larger, on top of the interface size (Classic+ and Tabs; " +
-                    "Spotlight's covers have their own size). " +
-                    "You can also drag the list's right edge. Double-click the edge to reset it.",
+                _gameListScaleCombo = AddSizeRow(list, list.Children.IndexOf(row) + 2, "게임 목록 크기",
+                    "인터페이스 크기에 더해 게임 목록을 작게 또는 크게 만듭니다 (Classic+ 및 Tabs, " +
+                    "Spotlight 커버는 별도 크기 사용). " +
+                    "목록의 오른쪽 가장자리를 끌어서 조절할 수도 있습니다. 가장자리를 두 번 클릭하면 초기화됩니다.",
                     pct => { ViewModel.Settings.GameListScale = pct; _window.ApplyGameListScale(); });
             }
             SelectUiScale();
@@ -115,7 +115,7 @@ public partial class SettingsHandler
         var combo = new ComboBox();
         if (Application.Current.Resources.TryGetValue("SettingsComboStyle", out var cs) && cs is Style comboStyle)
             combo.Style = comboStyle;
-        foreach (var p in MainWindow.UiScaleOptions) combo.Items.Add(p == 100 ? "100% (normal)" : $"{p}%");
+        foreach (var p in MainWindow.UiScaleOptions) combo.Items.Add(p == 100 ? "100% (보통)" : $"{p}%");
         ToolTipService.SetToolTip(combo, tooltip);
         Grid.SetColumn(combo, 1);
         row.Children.Add(combo);

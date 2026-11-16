@@ -14,20 +14,20 @@ public partial class SettingsHandler
     /// <summary>VRR cap presets matching the MFG dialog pattern.</summary>
     private static readonly (int Fps, string Label)[] _ulTargetFpsPresets =
     {
-        (59,  "59 FPS (60Hz VRR Cap)"),
-        (73,  "73 FPS (75Hz VRR Cap)"),
-        (97,  "97 FPS (100Hz VRR Cap)"),
-        (116, "116 FPS (120Hz VRR Cap)"),
-        (138, "138 FPS (144Hz VRR Cap)"),
-        (157, "157 FPS (165Hz VRR Cap)"),
-        (171, "171 FPS (180Hz VRR Cap)"),
-        (189, "189 FPS (200Hz VRR Cap)"),
-        (224, "224 FPS (240Hz VRR Cap)"),
-        (258, "258 FPS (280Hz VRR Cap)"),
-        (275, "275 FPS (300Hz VRR Cap)"),
-        (324, "324 FPS (360Hz VRR Cap)"),
-        (416, "416 FPS (480Hz VRR Cap)"),
-        (431, "431 FPS (500Hz VRR Cap)"),
+        (59,  "59 FPS (60Hz VRR 상한)"),
+        (73,  "73 FPS (75Hz VRR 상한)"),
+        (97,  "97 FPS (100Hz VRR 상한)"),
+        (116, "116 FPS (120Hz VRR 상한)"),
+        (138, "138 FPS (144Hz VRR 상한)"),
+        (157, "157 FPS (165Hz VRR 상한)"),
+        (171, "171 FPS (180Hz VRR 상한)"),
+        (189, "189 FPS (200Hz VRR 상한)"),
+        (224, "224 FPS (240Hz VRR 상한)"),
+        (258, "258 FPS (280Hz VRR 상한)"),
+        (275, "275 FPS (300Hz VRR 상한)"),
+        (324, "324 FPS (360Hz VRR 상한)"),
+        (416, "416 FPS (480Hz VRR 상한)"),
+        (431, "431 FPS (500Hz VRR 상한)"),
     };
     private static readonly HashSet<int> _ulTargetFpsPresetValues = new(_ulTargetFpsPresets.Select(p => p.Fps));
 
@@ -39,7 +39,7 @@ public partial class SettingsHandler
         var combo = _window.UlTargetFpsCombo;
         combo.Items.Clear();
 
-        combo.Items.Add("Off");
+        combo.Items.Add("꺼짐");
         foreach (var preset in _ulTargetFpsPresets)
             combo.Items.Add(preset.Label);
 
@@ -83,22 +83,22 @@ public partial class SettingsHandler
                 var panel = new StackPanel { Spacing = 8 };
                 panel.Children.Add(new TextBlock
                 {
-                    Text = "Enter a custom FPS value (20-1000):",
+                    Text = "사용자 지정 FPS 값을 입력하세요 (20-1000):",
                     FontSize = 12,
                 });
                 var inputBox = new TextBox
                 {
-                    PlaceholderText = "e.g. 165",
+                    PlaceholderText = "예: 165",
                     FontSize = 12,
                 };
                 panel.Children.Add(inputBox);
 
                 var dialog = new ContentDialog
                 {
-                    Title = "Custom Target FPS",
+                    Title = "사용자 지정 목표 FPS",
                     Content = panel,
-                    PrimaryButtonText = "Set",
-                    CloseButtonText = "Cancel",
+                    PrimaryButtonText = "설정",
+                    CloseButtonText = "취소",
                     XamlRoot = _window.Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 };
@@ -176,9 +176,9 @@ public partial class SettingsHandler
         var refCheck = new CheckBox { Content = "RE Framework", IsChecked = !settings.GlobalSkipRefUpdates, FontSize = 12, Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush), Margin = new Thickness(0, 4, 0, 4) };
 
         var checkPanel = new StackPanel { Spacing = 0 };
-        var inclusionHeader = new TextBlock { Text = "Include components in Update All globally:", FontSize = 12, Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush), Margin = new Thickness(0, 0, 0, 8) };
+        var inclusionHeader = new TextBlock { Text = "모두 업데이트에 전역으로 포함할 구성 요소:", FontSize = 12, Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush), Margin = new Thickness(0, 0, 0, 8) };
         ToolTipService.SetToolTip(inclusionHeader,
-            "A component is updated in a game only when it's on here and in that game's own update inclusion.\nTurning one off here skips it for every game, whatever the per-game setting.");
+            "구성 요소는 여기와 해당 게임의 업데이트 포함 설정에서 모두 켜져 있을 때만 업데이트됩니다.\n여기서 끄면 게임별 설정과 관계없이 모든 게임에서 건너뜁니다.");
         checkPanel.Children.Add(inclusionHeader);
         checkPanel.Children.Add(rsCheck);
         checkPanel.Children.Add(rdxCheck);
@@ -189,10 +189,10 @@ public partial class SettingsHandler
 
         var dialog = new ContentDialog
         {
-            Title = "Global Update Inclusion",
+            Title = "전역 업데이트 포함",
             Content = checkPanel,
-            PrimaryButtonText = "Save",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = "저장",
+            CloseButtonText = "취소",
             XamlRoot = xamlRoot,
             RequestedTheme = ElementTheme.Dark,
         };
@@ -235,7 +235,7 @@ public partial class SettingsHandler
             });
             tb.Inlines.Add(new Microsoft.UI.Xaml.Documents.Run
             {
-                Text = isOn ? "On" : "Off",
+                Text = isOn ? "켜짐" : "꺼짐",
                 Foreground = UIFactory.Brush(isOn ? ResourceKeys.AccentGreenBrush : ResourceKeys.AccentRedBrush),
             });
             if (i < items.Length - 1)
@@ -324,9 +324,9 @@ public partial class SettingsHandler
 
             var dialog = new ContentDialog
             {
-                Title = "OptiScaler Hotkey",
-                Content = $"Updated {updatedCount} OptiScaler.ini file{(updatedCount == 1 ? "" : "s")}.",
-                CloseButtonText = "OK",
+                Title = "OptiScaler 단축키",
+                Content = $"OptiScaler.ini 파일 {updatedCount}개를 업데이트했습니다.",
+                CloseButtonText = "확인",
                 XamlRoot = _window.Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };

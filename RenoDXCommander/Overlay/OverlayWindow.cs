@@ -48,7 +48,7 @@ internal sealed partial class OverlayWindow : Window
         _settings = settings;
         _saveSettings = saveSettings;
         _screenshotFolder = screenshotFolder;
-        Title = "RHI Overlay";
+        Title = "BONG DLSS5 Overlay";
         _hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
 
         try { SystemBackdrop = new OverlayBackdrop(); }
@@ -63,7 +63,7 @@ internal sealed partial class OverlayWindow : Window
         AppWindow.SetPresenter(presenter);
         AppWindow.IsShownInSwitchers = false; // not in Alt+Tab or the taskbar
 
-        _backButton = new Button { Content = "Back to game" };
+        _backButton = new Button { Content = "게임으로 돌아가기" };
         TabsTheme.Apply(_backButton, TabsTheme.BlueButton, height: 44, fontSize: 15);
         _backButton.Click += (_, _) => Close(returnToGame: true);
 
@@ -112,7 +112,7 @@ internal sealed partial class OverlayWindow : Window
         top.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         top.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
         var titles = new StackPanel { Spacing = 4 };
-        titles.Children.Add(new TextBlock { Text = "RHI OVERLAY", FontSize = 12, CharacterSpacing = 120, Foreground = TabsTheme.B(TabsTheme.TextMuted) });
+        titles.Children.Add(new TextBlock { Text = "BONG DLSS5 OVERLAY", FontSize = 12, CharacterSpacing = 120, Foreground = TabsTheme.B(TabsTheme.TextMuted) });
         _title.FontSize = 36;
         _title.FontWeight = Microsoft.UI.Text.FontWeights.SemiBold;
         _title.Foreground = TabsTheme.B(TabsTheme.TextPrimary);
@@ -159,7 +159,7 @@ internal sealed partial class OverlayWindow : Window
         }
 
         var card = game.Card;
-        _title.Text = card?.GameName ?? (game.ExePath != null ? Path.GetFileNameWithoutExtension(game.ExePath) : "Unknown game");
+        _title.Text = card?.GameName ?? (game.ExePath != null ? Path.GetFileNameWithoutExtension(game.ExePath) : "알 수 없는 게임");
         _subtitle.Text = card?.Source ?? "";
         // Cover the game's whole monitor (not just the work area); its shape sizes the screenshot thumbnails
         var info = new OverlayNative.MONITORINFO { cbSize = System.Runtime.InteropServices.Marshal.SizeOf<OverlayNative.MONITORINFO>() };
@@ -260,8 +260,8 @@ internal sealed partial class OverlayWindow : Window
     private void UpdateHint()
     {
         _hint.Text = _padUsed
-            ? "D-pad: move    A: select    B: back    LB / RB: previous / next column (screenshot when one is open)    Right stick: scroll    Hold View + Menu: close"
-            : $"Press {_hotkeyText()} or Esc to go back to the game";
+            ? "D-pad: 이동    A: 선택    B: 뒤로    LB / RB: 이전 / 다음 열 (스크린샷이 열려 있으면 스크린샷)    오른쪽 스틱: 스크롤    View + Menu 길게 누르기: 닫기"
+            : $"게임으로 돌아가려면 {_hotkeyText()} 또는 Esc를 누르세요";
     }
 
     /// <summary>A controller action while the overlay is open (MainWindow.Overlay.cs reads the controller).</summary>
@@ -329,8 +329,8 @@ internal sealed partial class OverlayWindow : Window
     internal static string FormatDuration(TimeSpan t)
     {
         if (t < TimeSpan.Zero) t = TimeSpan.Zero;
-        if (t.TotalMinutes < 1) return "less than a minute";
-        if (t.TotalHours < 1) return $"{(int)t.TotalMinutes} min";
-        return $"{(int)t.TotalHours} h {t.Minutes} min";
+        if (t.TotalMinutes < 1) return "1분 미만";
+        if (t.TotalHours < 1) return $"{(int)t.TotalMinutes}분";
+        return $"{(int)t.TotalHours}시간 {t.Minutes}분";
     }
 }

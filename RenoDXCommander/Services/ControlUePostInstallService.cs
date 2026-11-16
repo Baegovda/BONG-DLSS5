@@ -63,7 +63,7 @@ public static class ControlUePostInstallService
 
             content.Children.Add(new Microsoft.UI.Xaml.Controls.TextBlock
             {
-                Text = "⚠ This is NOT an HDR mod.",
+                Text = "⚠ 이 모드는 HDR 모드가 아닙니다.",
                 FontSize = 14,
                 FontWeight = new Windows.UI.Text.FontWeight(700),
                 Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
@@ -71,11 +71,11 @@ public static class ControlUePostInstallService
 
             content.Children.Add(new Microsoft.UI.Xaml.Controls.TextBlock
             {
-                Text = "It fixes RT noise using Ray Reconstruction. Two strategies (pick one, they are mutually exclusive):\n"
-                     + "  •  Turn off the in-game RT denoiser and use DLSS Super Resolution preset M or L\n"
-                     + "  •  Use Ray Reconstruction with extra inputs derived from the game's shaders "
-                     + "(game denoiser is turned off here too — RR needs that)\n\n"
-                     + "⚠ DLSS, Ray Tracing, and SSAO must all be enabled in-game for Ray Reconstruction to work correctly.",
+                Text = "레이 재구성을 사용해 RT 노이즈를 해결합니다. 두 가지 방법이 있습니다 (하나만 선택, 동시 사용 불가):\n"
+                     + "  •  게임 내 RT 디노이저를 끄고 DLSS 슈퍼 해상도 프리셋 M 또는 L 사용\n"
+                     + "  •  게임 셰이더에서 얻은 추가 입력으로 레이 재구성 사용 "
+                     + "(이 경우에도 게임 디노이저는 꺼집니다 — RR에 필요)\n\n"
+                     + "⚠ 레이 재구성이 제대로 작동하려면 게임 내에서 DLSS, 레이 트레이싱, SSAO를 모두 켜야 합니다.",
                 TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
                 FontSize = 13,
                 Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
@@ -83,7 +83,7 @@ public static class ControlUePostInstallService
 
             content.Children.Add(new Microsoft.UI.Xaml.Controls.TextBlock
             {
-                Text = "Required in-game settings:",
+                Text = "필수 게임 내 설정:",
                 FontSize = 12,
                 FontWeight = new Windows.UI.Text.FontWeight(600),
                 Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
@@ -92,10 +92,10 @@ public static class ControlUePostInstallService
 
             content.Children.Add(new Microsoft.UI.Xaml.Controls.TextBlock
             {
-                Text = "  •  DLSS ON  •  SSAO ON  •  Post-processing HIGH\n"
-                     + "  •  Screen-space reflections HIGH (temporarily turn off RT to change, or set render preset to High/Ultra)\n"
-                     + "  •  RT Reflections ON  •  RT Indirect Diffuse ON\n"
-                     + "  •  Render resolution must use even integers (can be set in renderer.ini)",
+                Text = "  •  DLSS 켜짐  •  SSAO 켜짐  •  Post-processing HIGH\n"
+                     + "  •  Screen-space reflections HIGH (변경하려면 RT를 잠시 끄거나 렌더 프리셋을 High/Ultra로 설정)\n"
+                     + "  •  RT Reflections 켜짐  •  RT Indirect Diffuse 켜짐\n"
+                     + "  •  렌더 해상도는 짝수 정수여야 함 (renderer.ini에서 설정 가능)",
                 TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
                 FontSize = 12,
                 Foreground = UIFactory.Brush(ResourceKeys.InlineDescriptionBrush),
@@ -103,7 +103,7 @@ public static class ControlUePostInstallService
 
             content.Children.Add(new Microsoft.UI.Xaml.Controls.TextBlock
             {
-                Text = "Clicking Install will also:",
+                Text = "설치를 클릭하면 다음 작업도 수행합니다:",
                 FontSize = 13,
                 FontWeight = new Windows.UI.Text.FontWeight(600),
                 Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
@@ -112,11 +112,11 @@ public static class ControlUePostInstallService
 
             content.Children.Add(new Microsoft.UI.Xaml.Controls.TextBlock
             {
-                Text = "  •  Upgrade nvngx_dlss.dll to the newest available version\n"
-                     + "  •  Deploy nvngx_dlssd.dll (DLSS Ray Reconstruction runtime)\n"
-                     + "  •  Set renderer.ini HDR preset to the correct value\n"
-                     + "  •  Clear the DLSS SR preset set in the NVIDIA driver profile for this game\n"
-                     + "  •  If OptiScaler FG = Yes: installs OptiScaler Nightly build 2026-10-04 with Frame Generation pre-configured, deploys Streamline and nvngx_dlssg.dll, renames OptiScaler to winmm.dll and ReShade to dxgi.dll, and applies all required FG INI settings",
+                Text = "  •  nvngx_dlss.dll을 사용 가능한 최신 버전으로 업그레이드\n"
+                     + "  •  nvngx_dlssd.dll 배포 (DLSS 레이 재구성 런타임)\n"
+                     + "  •  renderer.ini HDR 프리셋을 올바른 값으로 설정\n"
+                     + "  •  이 게임의 NVIDIA 드라이버 프로필에 설정된 DLSS SR 프리셋 해제\n"
+                     + "  •  OptiScaler FG = Yes인 경우: 프레임 생성이 미리 구성된 OptiScaler 나이틀리 빌드 2026-10-04 설치, Streamline 및 nvngx_dlssg.dll 배포, OptiScaler 이름을 winmm.dll로, ReShade 이름을 dxgi.dll로 변경, 필요한 모든 FG INI 설정 적용",
                 TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
                 FontSize = 13,
                 Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
@@ -124,7 +124,7 @@ public static class ControlUePostInstallService
 
             content.Children.Add(new Microsoft.UI.Xaml.Controls.TextBlock
             {
-                Text = "These extra changes are not reverted when uninstalling the mod.",
+                Text = "이 추가 변경 사항은 모드를 제거해도 되돌려지지 않습니다.",
                 TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
                 FontSize = 12,
                 Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush),
@@ -147,7 +147,7 @@ public static class ControlUePostInstallService
             var optiStack = new Microsoft.UI.Xaml.Controls.StackPanel { Spacing = 4 };
             optiStack.Children.Add(new Microsoft.UI.Xaml.Controls.TextBlock
             {
-                Text = "Install OptiScaler FG",
+                Text = "OptiScaler FG 설치",
                 FontSize = 12,
                 FontWeight = new Windows.UI.Text.FontWeight(600),
                 Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
@@ -160,7 +160,7 @@ public static class ControlUePostInstallService
                 MaxDropDownHeight = 300,
             };
             Microsoft.UI.Xaml.Controls.ToolTipService.SetToolTip(optiCombo,
-                "Installs OptiScaler Nightly with Frame Generation configured for Control UE.\nRenames OptiScaler to winmm.dll and ReShade to dxgi.dll.");
+                "Control UE용으로 프레임 생성이 구성된 OptiScaler 나이틀리를 설치합니다.\nOptiScaler 이름을 winmm.dll로, ReShade 이름을 dxgi.dll로 변경합니다.");
             optiStack.Children.Add(optiCombo);
             Microsoft.UI.Xaml.Controls.Grid.SetColumn(optiStack, 0);
             comboRow.Children.Add(optiStack);
@@ -169,7 +169,7 @@ public static class ControlUePostInstallService
             var hdrStack = new Microsoft.UI.Xaml.Controls.StackPanel { Spacing = 4 };
             hdrStack.Children.Add(new Microsoft.UI.Xaml.Controls.TextBlock
             {
-                Text = "Using HDR?",
+                Text = "HDR 사용?",
                 FontSize = 12,
                 FontWeight = new Windows.UI.Text.FontWeight(600),
                 Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
@@ -184,7 +184,7 @@ public static class ControlUePostInstallService
                 Opacity = 0.45,
             };
             Microsoft.UI.Xaml.Controls.ToolTipService.SetToolTip(hdrCombo,
-                "If Yes, writes FgSlHdr10=1 to reshade.ini so the FG shader uses HDR10. Only available when installing OptiScaler FG.");
+                "Yes이면 FG 셰이더가 HDR10을 사용하도록 reshade.ini에 FgSlHdr10=1을 기록합니다. OptiScaler FG를 설치할 때만 사용할 수 있습니다.");
             hdrStack.Children.Add(hdrCombo);
             Microsoft.UI.Xaml.Controls.Grid.SetColumn(hdrStack, 1);
             comboRow.Children.Add(hdrStack);
@@ -202,10 +202,10 @@ public static class ControlUePostInstallService
 
             var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
             {
-                Title = "Control Ultimate Edition — RenoDX Mod",
+                Title = "Control Ultimate Edition — RenoDX 모드",
                 Content = content,
-                PrimaryButtonText = "Install",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "설치",
+                CloseButtonText = "취소",
                 DefaultButton = Microsoft.UI.Xaml.Controls.ContentDialogButton.Primary,
                 XamlRoot = xamlRoot,
                 RequestedTheme = Microsoft.UI.Xaml.ElementTheme.Dark,

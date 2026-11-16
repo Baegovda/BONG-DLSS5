@@ -38,11 +38,11 @@ public static class MfgDialog
             var warningPanel = new StackPanel { Spacing = 12 };
             warningPanel.Children.Add(new TextBlock
             {
-                Text = "Multi Frame Generation (MFG) and Dynamic MFG are only supported on NVIDIA 50 Series GPUs (Blackwell architecture).\n\n" +
-                       "Minimum driver requirements:\n" +
-                       "• MFG (Fixed): Driver 572.16+\n" +
-                       "• DMFG (Dynamic): Driver 595.97+\n\n" +
-                       "These settings will have no effect on 40 Series or older hardware.",
+                Text = "멀티 프레임 생성(MFG) 및 Dynamic MFG는 NVIDIA 50 시리즈 GPU(Blackwell 아키텍처)에서만 지원됩니다.\n\n" +
+                       "최소 드라이버 요구 사항:\n" +
+                       "• MFG (고정): 드라이버 572.16+\n" +
+                       "• DMFG (동적): 드라이버 595.97+\n\n" +
+                       "40 시리즈 이하 하드웨어에서는 이 설정이 적용되지 않습니다.",
                 TextWrapping = TextWrapping.Wrap,
                 FontSize = 13,
                 Foreground = TabsTheme.B(TabsTheme.AmberPill.Fg),
@@ -50,7 +50,7 @@ public static class MfgDialog
 
             var dontShowCheck = new CheckBox
             {
-                Content = "Don't show this warning again",
+                Content = "이 경고를 다시 표시하지 않음",
                 FontSize = 12,
                 Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
             };
@@ -60,10 +60,10 @@ public static class MfgDialog
             TabsTheme.Restyle(warningPanel);
             var warningDialog = new ContentDialog
             {
-                Title = CogDialog.MakeDialogTitle("Hardware Requirement"),
+                Title = CogDialog.MakeDialogTitle("하드웨어 요구 사항"),
                 Content = TabsTheme.MakeCard(warningPanel),
-                PrimaryButtonText = "OK",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "확인",
+                CloseButtonText = "취소",
                 XamlRoot = xamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -105,12 +105,12 @@ public static class MfgDialog
         // ── FG Mode ──
         panel.Children.Add(new TextBlock
         {
-            Text = "FG Mode",
+            Text = "FG 모드",
             FontSize = 12,
             Foreground = TabsTheme.B(TabsTheme.TextSecondary),
         });
 
-        var modeItems = new[] { "Default", "Fixed", "Dynamic" };
+        var modeItems = new[] { "기본값", "고정", "동적" };
         int modeIndex = currentMode switch
         {
             MODE_FIXED => 1,
@@ -126,13 +126,13 @@ public static class MfgDialog
             CornerRadius = new CornerRadius(6),
         };
         ToolTipService.SetToolTip(modeCombo,
-            "Default = application controls frame generation. Fixed = always generate a fixed multiplier of frames. Dynamic = generate up to a target frame rate.");
+            "기본값 = 애플리케이션이 프레임 생성을 제어합니다. 고정 = 항상 고정 배수만큼 프레임을 생성합니다. 동적 = 목표 프레임 레이트까지 생성합니다.");
         panel.Children.Add(modeCombo);
 
         // ── Frame Count ──
         panel.Children.Add(new TextBlock
         {
-            Text = "Frame Count",
+            Text = "프레임 수",
             FontSize = 12,
             Foreground = TabsTheme.B(TabsTheme.TextSecondary),
             Margin = new Thickness(0, 8, 0, 0),
@@ -145,13 +145,13 @@ public static class MfgDialog
             CornerRadius = new CornerRadius(6),
         };
         ToolTipService.SetToolTip(countCombo,
-            "Fixed: exact frame multiplier (2x-6x). Dynamic: maximum frames the driver may generate (Up to 3x-6x). 50 Series GPUs only for 3x+.");
+            "고정: 정확한 프레임 배수(2x-6x). 동적: 드라이버가 생성할 수 있는 최대 프레임(최대 3x-6x). 3x 이상은 50 시리즈 GPU 전용입니다.");
         panel.Children.Add(countCombo);
 
         // ── Target Frame Rate ──
         panel.Children.Add(new TextBlock
         {
-            Text = "Target Frame Rate",
+            Text = "목표 프레임 레이트",
             FontSize = 12,
             Foreground = TabsTheme.B(TabsTheme.TextSecondary),
             Margin = new Thickness(0, 8, 0, 0),
@@ -164,13 +164,13 @@ public static class MfgDialog
             CornerRadius = new CornerRadius(6),
         };
         ToolTipService.SetToolTip(fpsCombo,
-            "The target output frame rate for dynamic frame generation. Only active in Dynamic mode.");
+            "동적 프레임 생성의 목표 출력 프레임 레이트입니다. 동적 모드에서만 작동합니다.");
         panel.Children.Add(fpsCombo);
 
         // Inline custom FPS input (shown when "Custom..." is selected)
         var customFpsPanel = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8, Visibility = Visibility.Collapsed };
         var customFpsBox = new TextBox { PlaceholderText = "20-1000", FontSize = 13, MinWidth = 100 };
-        var customFpsBtn = new Button { Content = "Set", FontSize = 12 };
+        var customFpsBtn = new Button { Content = "설정", FontSize = 12 };
         customFpsPanel.Children.Add(customFpsBox);
         customFpsPanel.Children.Add(customFpsBtn);
         panel.Children.Add(customFpsPanel);
@@ -205,11 +205,11 @@ public static class MfgDialog
             }
             else if (selectedModeIndex == 2) // Dynamic
             {
-                countCombo.Items.Add("Up to 2x");
-                countCombo.Items.Add("Up to 3x");
-                countCombo.Items.Add("Up to 4x");
-                countCombo.Items.Add("Up to 5x");
-                countCombo.Items.Add("Up to 6x");
+                countCombo.Items.Add("최대 2x");
+                countCombo.Items.Add("최대 3x");
+                countCombo.Items.Add("최대 4x");
+                countCombo.Items.Add("최대 5x");
+                countCombo.Items.Add("최대 6x");
                 countCombo.IsEnabled = true;
 
                 // Select based on current dynamic max count
@@ -238,20 +238,20 @@ public static class MfgDialog
         // VRR cap values with corresponding monitor refresh rates (shown first in the list)
         var vrrCapOptions = new (uint Fps, string Label)[]
         {
-            (59,  "59 FPS (60Hz VRR Cap)"),
-            (73,  "73 FPS (75Hz VRR Cap)"),
-            (97,  "97 FPS (100Hz VRR Cap)"),
-            (116, "116 FPS (120Hz VRR Cap)"),
-            (138, "138 FPS (144Hz VRR Cap)"),
-            (157, "157 FPS (165Hz VRR Cap)"),
-            (171, "171 FPS (180Hz VRR Cap)"),
-            (189, "189 FPS (200Hz VRR Cap)"),
-            (224, "224 FPS (240Hz VRR Cap)"),
-            (258, "258 FPS (280Hz VRR Cap)"),
-            (275, "275 FPS (300Hz VRR Cap)"),
-            (324, "324 FPS (360Hz VRR Cap)"),
-            (416, "416 FPS (480Hz VRR Cap)"),
-            (431, "431 FPS (500Hz VRR Cap)"),
+            (59,  "59 FPS (60Hz VRR 상한)"),
+            (73,  "73 FPS (75Hz VRR 상한)"),
+            (97,  "97 FPS (100Hz VRR 상한)"),
+            (116, "116 FPS (120Hz VRR 상한)"),
+            (138, "138 FPS (144Hz VRR 상한)"),
+            (157, "157 FPS (165Hz VRR 상한)"),
+            (171, "171 FPS (180Hz VRR 상한)"),
+            (189, "189 FPS (200Hz VRR 상한)"),
+            (224, "224 FPS (240Hz VRR 상한)"),
+            (258, "258 FPS (280Hz VRR 상한)"),
+            (275, "275 FPS (300Hz VRR 상한)"),
+            (324, "324 FPS (360Hz VRR 상한)"),
+            (416, "416 FPS (480Hz VRR 상한)"),
+            (431, "431 FPS (500Hz VRR 상한)"),
         };
         var vrrFpsSet = new HashSet<uint>(vrrCapOptions.Select(o => o.Fps));
 
@@ -267,15 +267,15 @@ public static class MfgDialog
 
             if (selectedModeIndex == 2) // Dynamic
             {
-                fpsCombo.Items.Add("Off");
-                fpsCombo.Items.Add("Max Refresh Rate");
+                fpsCombo.Items.Add("꺼짐");
+                fpsCombo.Items.Add("최대 주사율");
                 foreach (var item in fpsItemsList)
                     fpsCombo.Items.Add(item.Label);
 
                 // If current value is a custom FPS (not in VRR presets), insert it before Custom
                 if (currentTargetFps > 0 && currentTargetFps != TARGET_FPS_MAX_REFRESH
                     && !vrrFpsSet.Contains(currentTargetFps))
-                    fpsCombo.Items.Add($"{currentTargetFps} FPS (Custom)");
+                    fpsCombo.Items.Add($"{currentTargetFps} FPS (사용자 지정)");
 
                 fpsCombo.Items.Add("Custom...");
                 fpsCombo.IsEnabled = true;
@@ -486,10 +486,10 @@ public static class MfgDialog
         customFpsBtn.Width = double.NaN;
         var dialog = new ContentDialog
         {
-            Title = CogDialog.MakeDialogTitle("Multi Frame Generation",
-                "NVIDIA driver profile settings for this game. RTX 50 Series."),
+            Title = CogDialog.MakeDialogTitle("멀티 프레임 생성",
+                "이 게임의 NVIDIA 드라이버 프로필 설정입니다. RTX 50 시리즈."),
             Content = TabsTheme.MakeCard(panel),
-            CloseButtonText = "Close",
+            CloseButtonText = "닫기",
             XamlRoot = xamlRoot,
             RequestedTheme = ElementTheme.Dark,
         };

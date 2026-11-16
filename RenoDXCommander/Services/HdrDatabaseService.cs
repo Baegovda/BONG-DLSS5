@@ -45,7 +45,7 @@ public class HdrDatabaseService : IHdrDatabaseService
         if (CachedData != null)
             return CachedData;
 
-        progress?.Report("Fetching HDR Gaming Database...");
+        progress?.Report("HDR Gaming Database 가져오는 중...");
 
         var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
@@ -64,7 +64,7 @@ public class HdrDatabaseService : IHdrDatabaseService
         }
 
         CachedData = result;
-        progress?.Report($"HDR database: {result.Count} entries");
+        progress?.Report($"HDR 데이터베이스: 항목 {result.Count}개");
         return result;
     }
 

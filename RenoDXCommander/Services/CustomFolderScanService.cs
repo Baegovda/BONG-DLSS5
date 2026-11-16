@@ -221,35 +221,35 @@ public sealed class CustomFolderScanService : ICustomFolderScanService
     public static string? ValidateFolder(string path, IEnumerable<string> existing)
     {
         var p = NormalizePath(path);
-        if (p.Length == 0) return "No folder was chosen.";
-        if (!Directory.Exists(p)) return $"The folder \"{p}\" doesn't exist.";
-        if (p.Length <= 3) return "Pick the folder that holds your games, not a whole drive.";
+        if (p.Length == 0) return "선택한 폴더가 없습니다.";
+        if (!Directory.Exists(p)) return $"\"{p}\" 폴더가 없습니다.";
+        if (p.Length <= 3) return "드라이브 전체가 아니라 게임이 들어 있는 폴더를 선택하세요.";
 
         var windows = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
         if (!string.IsNullOrEmpty(windows) && IsSameOrInside(p, windows))
-            return "The Windows folder can't be used as a game folder.";
+            return "Windows 폴더는 게임 폴더로 사용할 수 없습니다.";
 
         var segments = p.Split('\\', StringSplitOptions.RemoveEmptyEntries);
         if (segments.Any(s => s.Equals("WindowsApps", StringComparison.OrdinalIgnoreCase)))
-            return "Game Pass / Microsoft Store folders (WindowsApps) can't be used. RHI finds those games on its own.";
+            return "Game Pass / Microsoft Store 폴더(WindowsApps)는 사용할 수 없습니다. BONG DLSS5가 해당 게임을 자동으로 찾습니다.";
         if (segments.Any(s => s.Equals("steamapps", StringComparison.OrdinalIgnoreCase)))
-            return "Steam library folders can't be used. RHI finds Steam games on its own.";
+            return "Steam 라이브러리 폴더는 사용할 수 없습니다. BONG DLSS5가 Steam 게임을 자동으로 찾습니다.";
 
         foreach (var sf in new[] { Environment.SpecialFolder.ProgramFiles, Environment.SpecialFolder.ProgramFilesX86,
                                    Environment.SpecialFolder.UserProfile })
         {
             var sp = Environment.GetFolderPath(sf);
             if (!string.IsNullOrEmpty(sp) && p.Equals(NormalizePath(sp), StringComparison.OrdinalIgnoreCase))
-                return $"\"{p}\" holds far more than games. Pick the folder that holds your games.";
+                return $"\"{p}\"에는 게임 외의 항목이 너무 많습니다. 게임이 들어 있는 폴더를 선택하세요.";
         }
 
         foreach (var raw in existing)
         {
             var e = NormalizePath(raw);
             if (e.Length == 0) continue;
-            if (p.Equals(e, StringComparison.OrdinalIgnoreCase)) return "That folder is already on the list.";
-            if (IsSameOrInside(p, e)) return $"That folder is inside \"{e}\", which is already on the list.";
-            if (IsSameOrInside(e, p)) return $"That folder contains \"{e}\", which is already on the list. Remove it first.";
+            if (p.Equals(e, StringComparison.OrdinalIgnoreCase)) return "이미 목록에 있는 폴더입니다.";
+            if (IsSameOrInside(p, e)) return $"이 폴더는 이미 목록에 있는 \"{e}\" 안에 있습니다.";
+            if (IsSameOrInside(e, p)) return $"이 폴더에는 이미 목록에 있는 \"{e}\"이(가) 포함되어 있습니다. 먼저 해당 항목을 제거하세요.";
         }
         return null;
     }

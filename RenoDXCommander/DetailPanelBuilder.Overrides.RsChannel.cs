@@ -25,12 +25,12 @@ public partial class DetailPanelBuilder
 
         var channelLabel = new TextBlock
         {
-            Text = "ReShade Channel",
+            Text = "ReShade 채널",
             FontSize = 12,
             Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
         };
         ToolTipService.SetToolTip(channelLabel,
-            "Override the global ReShade build channel for this game.\nVulkan games: changing this affects ALL Vulkan games.");
+            "이 게임에 대해 전역 ReShade 빌드 채널을 재정의합니다.\nVulkan 게임: 변경하면 모든 Vulkan 게임에 적용됩니다.");
 
         var channelItems = new[] { "Stable", "Nightly", "Custom", "No Addons", "Legacy..." };
         // For Vulkan games, show the effective Vulkan-wide override (any Vulkan game's override applies to all)
@@ -76,7 +76,7 @@ public partial class DetailPanelBuilder
             HorizontalAlignment = HorizontalAlignment.Stretch,
         };
         ToolTipService.SetToolTip(channelCombo,
-            "Override the ReShade build channel for this game.\nVulkan games: changing this affects ALL Vulkan games.");
+            "이 게임의 ReShade 빌드 채널을 재정의합니다.\nVulkan 게임: 변경하면 모든 Vulkan 게임에 적용됩니다.");
 
         bool channelComboInitializing = true;
         ctx.ChannelComboInitializing = true;
@@ -119,7 +119,7 @@ public partial class DetailPanelBuilder
                 var pickerContent = new StackPanel { Spacing = 12 };
                 pickerContent.Children.Add(new TextBlock
                 {
-                    Text = "⚠ Older ReShade versions may not support newer addons.\nThe game will be excluded from automatic ReShade updates.",
+                    Text = "⚠ 이전 ReShade 버전은 최신 애드온을 지원하지 않을 수 있습니다.\n이 게임은 자동 ReShade 업데이트에서 제외됩니다.",
                     TextWrapping = TextWrapping.Wrap,
                     Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
                     FontSize = 12,
@@ -128,10 +128,10 @@ public partial class DetailPanelBuilder
 
                 var pickerDialog = new ContentDialog
                 {
-                    Title = "Select Legacy ReShade Version",
+                    Title = "레거시 ReShade 버전 선택",
                     Content = new ScrollViewer { Content = pickerContent, MaxHeight = 400 },
-                    PrimaryButtonText = "Confirm",
-                    CloseButtonText = "Cancel",
+                    PrimaryButtonText = "확인",
+                    CloseButtonText = "취소",
                     XamlRoot = _window.Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 };
@@ -148,11 +148,11 @@ public partial class DetailPanelBuilder
                 {
                     var vLegacyDialog = new ContentDialog
                     {
-                        Title = "Vulkan ReShade Channel Override",
-                        Content = "Vulkan games share a global ReShade layer.\n\n" +
-                            $"Switching to ReShade {pickedVersion} will change it for ALL Vulkan games.",
-                        PrimaryButtonText = "Apply to All Vulkan Games",
-                        CloseButtonText = "Cancel",
+                        Title = "Vulkan ReShade 채널 재정의",
+                        Content = "Vulkan 게임은 전역 ReShade 레이어를 공유합니다.\n\n" +
+                            $"ReShade {pickedVersion}(으)로 전환하면 모든 Vulkan 게임에 적용됩니다.",
+                        PrimaryButtonText = "모든 Vulkan 게임에 적용",
+                        CloseButtonText = "취소",
                         XamlRoot = _window.Content.XamlRoot,
                         RequestedTheme = ElementTheme.Dark,
                     };
@@ -266,16 +266,16 @@ public partial class DetailPanelBuilder
                     var warnContent = new StackPanel { Spacing = 8 };
                     warnContent.Children.Add(new TextBlock
                     {
-                        Text = "No custom ReShade DLLs found.\n\nPlace your .dll files in:",
+                        Text = "사용자 지정 ReShade DLL이 없습니다.\n\n.dll 파일을 다음 위치에 넣으세요:",
                         TextWrapping = TextWrapping.Wrap,
                     });
                     warnContent.Children.Add(linkBtn);
 
                     var warnDialog = new ContentDialog
                     {
-                        Title = "Custom ReShade Not Found",
+                        Title = "사용자 지정 ReShade 없음",
                         Content = warnContent,
-                        CloseButtonText = "OK",
+                        CloseButtonText = "확인",
                         XamlRoot = _window.Content.XamlRoot,
                         RequestedTheme = ElementTheme.Dark,
                     };
@@ -326,9 +326,9 @@ public partial class DetailPanelBuilder
 
                 var pickerDialog = new ContentDialog
                 {
-                    Title = "Select Custom ReShade",
-                    PrimaryButtonText = "Deploy",
-                    CloseButtonText = "Cancel",
+                    Title = "사용자 지정 ReShade 선택",
+                    PrimaryButtonText = "배포",
+                    CloseButtonText = "취소",
                     DefaultButton = ContentDialogButton.Primary,
                     XamlRoot = _window.Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
@@ -363,11 +363,11 @@ public partial class DetailPanelBuilder
                 {
                     var vDialog = new ContentDialog
                     {
-                        Title = "Vulkan ReShade Channel Override",
-                        Content = "Vulkan games share a global ReShade layer.\n\n" +
-                            "Changing the channel for this game will change it for ALL Vulkan games.",
-                        PrimaryButtonText = "Apply to All Vulkan Games",
-                        CloseButtonText = "Cancel",
+                        Title = "Vulkan ReShade 채널 재정의",
+                        Content = "Vulkan 게임은 전역 ReShade 레이어를 공유합니다.\n\n" +
+                            "이 게임의 채널을 변경하면 모든 Vulkan 게임에 적용됩니다.",
+                        PrimaryButtonText = "모든 Vulkan 게임에 적용",
+                        CloseButtonText = "취소",
                         XamlRoot = _window.Content.XamlRoot,
                         RequestedTheme = ElementTheme.Dark,
                     };
@@ -486,11 +486,11 @@ public partial class DetailPanelBuilder
                     // Setting a specific override on a Vulkan game
                     var dialog = new ContentDialog
                     {
-                        Title = "Vulkan ReShade Channel Override",
-                        Content = "Vulkan games share a global ReShade layer.\n\n" +
-                            "Changing the channel for this game will change it for ALL Vulkan games.",
-                        PrimaryButtonText = "Apply to All Vulkan Games",
-                        CloseButtonText = "Cancel",
+                        Title = "Vulkan ReShade 채널 재정의",
+                        Content = "Vulkan 게임은 전역 ReShade 레이어를 공유합니다.\n\n" +
+                            "이 게임의 채널을 변경하면 모든 Vulkan 게임에 적용됩니다.",
+                        PrimaryButtonText = "모든 Vulkan 게임에 적용",
+                        CloseButtonText = "취소",
                         XamlRoot = _window.Content.XamlRoot,
                         RequestedTheme = ElementTheme.Dark,
                     };
@@ -585,7 +585,7 @@ public partial class DetailPanelBuilder
         ctx.UpdateSummaryText = updateSummaryText; // assign for reset action to use
 
         var toggleRow = new StackPanel { Spacing = 0 };
-        ToolTipService.SetToolTip(updateInclusionBtn, "Choose which components are included in Update All for this game.");
+        ToolTipService.SetToolTip(updateInclusionBtn, "이 게임에서 모두 업데이트에 포함할 구성 요소를 선택합니다.");
         toggleRow.Children.Add(updateInclusionBtn);
         toggleRow.Children.Add(updateSummaryText);
 
@@ -593,14 +593,14 @@ public partial class DetailPanelBuilder
         var globalUpdateColumn = new StackPanel { Spacing = 0 };
         var globalUpdateHeading = new TextBlock
         {
-            Text = "Update inclusion",
+            Text = "업데이트 포함",
             FontSize = 12,
             Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
             Margin = new Thickness(0, 0, 0, 8),
         };
         ToolTipService.SetToolTip(globalUpdateHeading,
-            "Which components Update All updates for this game. This setting applies to this game only;\n"
-            + "components switched off in Settings (Components to check) are skipped for every game.");
+            "이 게임에서 모두 업데이트가 업데이트할 구성 요소입니다. 이 설정은 이 게임에만 적용되며,\n"
+            + "설정(확인할 구성 요소)에서 끈 구성 요소는 모든 게임에서 건너뜁니다.");
         globalUpdateColumn.Children.Add(globalUpdateHeading);
         globalUpdateColumn.Children.Add(toggleRow);
 

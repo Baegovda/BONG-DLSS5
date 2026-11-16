@@ -28,6 +28,7 @@ public sealed partial class MainWindow
             titleBar.ButtonPressedForegroundColor  = (Windows.UI.Color)res["TitleBarButtonPressedForeground"];
             titleBar.ButtonInactiveBackgroundColor = (Windows.UI.Color)res["TitleBarButtonInactiveBackground"];
             titleBar.ButtonInactiveForegroundColor = (Windows.UI.Color)res["TitleBarButtonInactiveForeground"];
+            ApplyGlassTitleBar(); // BONG DLSS5: no system title bar in the BongHub theme (overrides the button colours above)
         }
         catch (Exception ex) when (ex is InvalidCastException or System.Runtime.InteropServices.COMException or KeyNotFoundException)
         {

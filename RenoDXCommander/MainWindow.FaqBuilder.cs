@@ -24,133 +24,133 @@ public sealed partial class MainWindow
 
         // Welcome section
         panel.Children.Add(BuildFaqSection(
-            null, "Welcome to RHI", "AccentTealBrush",
-            "RHI finds the games on your PC and installs, updates and removes HDR mods, ReShade, shaders, frame limiters, DLSS files and more, and manages your NVIDIA driver settings, all from one place. Here's how to get started.",
-            "Recommended first step: add a free GitHub token in Settings → Accounts & Data → GitHub token. Without one, GitHub allows only 60 requests an hour, which can make downloads and update checks fail. Create a classic token at github.com/settings/tokens with no boxes ticked, paste it in and click Save."));
+            null, "BONG DLSS5에 오신 것을 환영합니다", "AccentTealBrush",
+            "BONG DLSS5는 PC에 있는 게임을 찾아 HDR 모드, ReShade, 셰이더, 프레임 제한기, DLSS 파일 등을 설치·업데이트·제거하고, NVIDIA 드라이버 설정까지 한곳에서 관리합니다. 시작하는 방법은 다음과 같습니다.",
+            "권장 첫 단계: 설정 → 계정 및 데이터 → GitHub 토큰에서 무료 GitHub 토큰을 추가하세요. 토큰이 없으면 GitHub는 시간당 60회 요청만 허용하므로 다운로드와 업데이트 확인이 실패할 수 있습니다. github.com/settings/tokens에서 아무 항목도 선택하지 않은 클래식 토큰을 만들어 붙여 넣고 저장을 클릭하세요."));
 
         // Step 1: Select a Game
         panel.Children.Add(BuildFaqStep(1,
-            "Select a Game",
-            "Your games are listed on the left. Click a game to open its detail panel. Use the search box and the filter chips (All Games, Installed, Favourites, Unreal, Unity, RenoDX, Luma…) to find games.\n\nThe detail panel is split into sections: Components, Game Overrides, Neural Rendering, DLSS / Streamline, Driver Settings, Management and Extras. Click a section heading to collapse it, or drag its ≡ handle to reorder.",
-            "Double-click a game to launch it. Right-click a game to open its folder, favourite or hide it, or create a desktop shortcut.\nThe HDR and RES buttons next to Launch turn Windows HDR on and switch resolution while the game is running.\nType a search, then click the + that appears to save it as a filter chip."));
+            "게임 선택",
+            "게임은 왼쪽에 나열됩니다. 게임을 클릭하면 상세 패널이 열립니다. 검색 상자와 필터 칩(모든 게임, 설치됨, 즐겨찾기, Unreal, Unity, RenoDX, Luma…)으로 게임을 찾을 수 있습니다.\n\n상세 패널은 구성 요소, 게임 재정의, Neural Rendering, DLSS / Streamline, 드라이버 설정, 관리, 추가 기능 섹션으로 나뉩니다. 섹션 제목을 클릭하면 접히고, ≡ 핸들을 끌면 순서를 바꿀 수 있습니다.",
+            "게임을 두 번 클릭하면 실행됩니다. 게임을 마우스 오른쪽 버튼으로 클릭하면 폴더 열기, 즐겨찾기, 숨기기, 바탕 화면 바로 가기 만들기를 할 수 있습니다.\n실행 옆의 HDR 및 RES 버튼은 게임 실행 중 Windows HDR을 켜고 해상도를 전환합니다.\n검색어를 입력한 뒤 나타나는 +를 클릭하면 필터 칩으로 저장됩니다."));
 
         // Step 2: Install ReShade
         panel.Children.Add(BuildFaqStep(2,
-            "Install ReShade",
-            "ReShade is needed for RenoDX, Luma, frame limiters and DOF Fix. Click 'Install ReShade' in the Components section. RHI picks the right file name for the game's graphics API and installs the version with addon support.",
-            "Change the ReShade version per game in Game Overrides → ReShade Channel: Stable, Nightly, Custom (your own DLL), No Addons or Legacy.\nThe ReShade ⚙ deploys reshade.ini or ReShadePreset.ini, sets per-game hotkeys, and can stop RHI changing this game's reshade.ini.\nDrag a ReShade preset (.ini) onto RHI to install it, along with the shaders it needs."));
+            "ReShade 설치",
+            "RenoDX, Luma, 프레임 제한기, DOF Fix에는 ReShade가 필요합니다. 구성 요소 섹션에서 'ReShade 설치'를 클릭하세요. BONG DLSS5가 게임의 그래픽 API에 맞는 파일 이름을 고르고 애드온을 지원하는 버전을 설치합니다.",
+            "게임별 ReShade 버전은 게임 재정의 → ReShade 채널에서 변경합니다: 안정, 나이틀리, 사용자 지정(직접 준비한 DLL), 애드온 없음, 레거시.\nReShade ⚙에서는 reshade.ini 또는 ReShadePreset.ini를 배포하고, 게임별 단축키를 설정하며, BONG DLSS5가 이 게임의 reshade.ini를 변경하지 않도록 할 수 있습니다.\nReShade 프리셋(.ini)을 BONG DLSS5로 끌어다 놓으면 필요한 셰이더와 함께 설치됩니다."));
 
         // Step 3a: RenoDX
         panel.Children.Add(BuildFaqSection(
             "3a", "RenoDX", "AccentTealBrush",
-            "RenoDX mods give games true HDR output. The RenoDX HDR row shows what's available for the game:\n\n• Named mods: game-specific HDR mods made by the community.\n• UE-Extended: for Unreal Engine games without a named mod.\n• Generic Unity: for Unity games without a named mod.\n\nA ✓ next to the installed mod means it's complete; a hammer means it's still in progress. Click 'Available Mods' in the toolbar to see every game with a RenoDX, Luma or Ultra+ mod.",
-            "The RenoDX ⚙ has per-game peak brightness, UE-Extended and Engine.ini HDR options, compatibility settings, and preset export/import.\nNo mod for your game? Turn on RTX HDR (NVIDIA) or Auto HDR (Windows 11, any GPU) from the same ⚙. Either one replaces RenoDX for that game.\nGot an .addon64 from the RenoDX Discord? Drag it onto RHI and pick the game."));
+            "RenoDX 모드는 게임에 진정한 HDR 출력을 제공합니다. RenoDX HDR 행에 해당 게임에서 사용할 수 있는 항목이 표시됩니다:\n\n• 전용 모드: 커뮤니티가 만든 게임별 HDR 모드.\n• UE-Extended: 전용 모드가 없는 Unreal Engine 게임용.\n• Generic Unity: 전용 모드가 없는 Unity 게임용.\n\n설치된 모드 옆의 ✓는 완성된 모드, 망치는 아직 작업 중인 모드를 뜻합니다. 도구 모음에서 '사용 가능한 모드'를 클릭하면 RenoDX, Luma, Ultra+ 모드가 있는 모든 게임을 볼 수 있습니다.",
+            "RenoDX ⚙에는 게임별 최대 밝기, UE-Extended 및 Engine.ini HDR 옵션, 호환성 설정, 프리셋 내보내기/가져오기가 있습니다.\n게임용 모드가 없나요? 같은 ⚙에서 RTX HDR(NVIDIA) 또는 Auto HDR(Windows 11, 모든 GPU)을 켜세요. 둘 중 하나가 해당 게임의 RenoDX를 대신합니다.\nRenoDX Discord에서 .addon64를 받았나요? BONG DLSS5로 끌어다 놓고 게임을 선택하세요."));
 
         // Step 3b: Luma
         panel.Children.Add(BuildFaqSection(
             "3b", "Luma", "AccentTealBrush",
-            "Luma is a mod framework by Pumbo. Depending on the game, a Luma mod may add HDR, DLSS, DLAA or rendering fixes. Check the Info button to see what each mod offers.\n\n• Named mods: for supported games, shown on the Luma row. Mods only on Nexus Mods open their Nexus page.\n• Generic Luma: for DX11 Unreal Engine games. RHI applies the Engine.ini tweaks and launch arguments listed on the Luma wiki.\n\nGeneric Luma can be used alongside RenoDX. Named Luma mods normally replace RenoDX.",
-            "Luma needs ReShade. The install button shows 'ReShade required' until it's installed.\nThe Luma ⚙ (Unreal games) has HDR on First Boot and TAA settings.\nLaunch arguments such as -dx11 are added on install and removed on uninstall. They only apply when you launch the game through RHI.\nDX9 Luma mods get dgVoodoo2 installed automatically."));
+            "Luma는 Pumbo가 만든 모드 프레임워크입니다. 게임에 따라 Luma 모드는 HDR, DLSS, DLAA 또는 렌더링 수정을 추가합니다. 각 모드의 기능은 정보 버튼에서 확인하세요.\n\n• 전용 모드: 지원되는 게임용으로 Luma 행에 표시됩니다. Nexus Mods에만 있는 모드는 Nexus 페이지가 열립니다.\n• Generic Luma: DX11 Unreal Engine 게임용. BONG DLSS5가 Luma 위키에 나온 Engine.ini 조정과 실행 인수를 적용합니다.\n\nGeneric Luma는 RenoDX와 함께 쓸 수 있습니다. 전용 Luma 모드는 보통 RenoDX를 대체합니다.",
+            "Luma에는 ReShade가 필요합니다. ReShade가 설치될 때까지 설치 버튼에 'ReShade required'가 표시됩니다.\nLuma ⚙(Unreal 게임)에는 첫 부팅 시 HDR 및 TAA 설정이 있습니다.\n-dx11 같은 실행 인수는 설치 시 추가되고 제거 시 삭제됩니다. BONG DLSS5를 통해 게임을 실행할 때만 적용됩니다.\nDX9 Luma 모드에는 dgVoodoo2가 자동으로 설치됩니다."));
 
         // Step 4: Choose Shaders
         panel.Children.Add(BuildFaqStep(4,
-            "Choose Shaders (Optional)",
-            "Click 'Shaders/Addons' in the toolbar, then 'Global Shaders'. Lilium's HDR shaders are selected by default. Your selection is deployed to every game with ReShade.\n\nExpand a pack to pick individual shaders, or search for one. Use the Profiles panel to save named selections, and Export to copy one as a zip you can paste into Discord.",
-            "Per-game shaders: Game Overrides → Shaders → Select.\nYour own shaders: click Open Custom Folder in the picker's Profiles panel and put them there. They appear under Custom Shaders.\nGlobal Addons, in the same toolbar menu, manages ReShade addons for all games."));
+            "셰이더 선택 (선택 사항)",
+            "도구 모음에서 '셰이더/애드온'을 클릭한 다음 '전역 셰이더'를 클릭하세요. Lilium의 HDR 셰이더가 기본으로 선택되어 있습니다. 선택한 셰이더는 ReShade가 설치된 모든 게임에 배포됩니다.\n\n팩을 펼쳐 개별 셰이더를 고르거나 검색할 수 있습니다. 프로필 패널에서 선택을 이름 붙여 저장하고, 내보내기로 Discord에 붙여 넣을 수 있는 zip으로 복사할 수 있습니다.",
+            "게임별 셰이더: 게임 재정의 → 셰이더 → 선택.\n직접 준비한 셰이더: 선택기의 프로필 패널에서 사용자 지정 폴더 열기를 클릭하고 그곳에 넣으세요. 사용자 지정 셰이더 아래에 표시됩니다.\n같은 도구 모음 메뉴의 전역 애드온에서 모든 게임의 ReShade 애드온을 관리합니다."));
 
         // Step 5: DOF Fix
         panel.Children.Add(BuildFaqStep(5,
-            "DOF Fix (Recommended for UE5)",
-            "DOF Fix backports a depth-of-field fix from Unreal Engine 5.7 to games on UE 5.0–5.6. When a game supports it, it appears under Recommended in the Components section. Install it alongside RenoDX for the best result.",
-            "DOF Fix only appears on 64-bit UE 5.0–5.6 games.\nIf a game's engine badge just says 'Unreal Engine', click the badge to mark it as Unreal Engine 5."));
+            "DOF Fix (UE5 권장)",
+            "DOF Fix는 Unreal Engine 5.7의 피사계 심도 수정을 UE 5.0–5.6 게임에 백포트합니다. 지원되는 게임에서는 구성 요소 섹션의 권장 항목에 표시됩니다. 최상의 결과를 위해 RenoDX와 함께 설치하세요.",
+            "DOF Fix는 64비트 UE 5.0–5.6 게임에만 표시됩니다.\n게임의 엔진 배지에 'Unreal Engine'만 표시되면 배지를 클릭해 Unreal Engine 5로 지정하세요."));
 
         // Step 6: Frame Limiters
         panel.Children.Add(BuildFaqStep(6,
-            "Frame Limiters (Optional)",
-            "ReLimiter and Display Commander are ReShade addons that limit frame rate precisely, which is ideal for VRR displays. Install one of them (not both) from the Components section. ReLimiter is recommended. Set your target FPS in Settings → Components, per game in the ReLimiter ⚙, or in-game.",
-            "Installing either limiter turns off the NVIDIA driver frame limit for that game.\nVRR cap presets by refresh rate (a little below max keeps VRR active):\n• 60Hz → 59 FPS\n• 120Hz → 116 FPS\n• 144Hz → 138 FPS\n• 165Hz → 157 FPS\n• 240Hz → 224 FPS\n• 360Hz → 324 FPS\nThese values are pre-configured in RHI's FPS dropdowns."));
+            "프레임 제한기 (선택 사항)",
+            "ReLimiter와 Display Commander는 프레임 속도를 정밀하게 제한하는 ReShade 애드온으로, VRR 디스플레이에 이상적입니다. 구성 요소 섹션에서 둘 중 하나만 설치하세요(둘 다 설치하지 마세요). ReLimiter를 권장합니다. 목표 FPS는 설정 → 구성 요소, 게임별로는 ReLimiter ⚙, 또는 게임 안에서 설정합니다.",
+            "어느 제한기든 설치하면 해당 게임의 NVIDIA 드라이버 프레임 제한이 꺼집니다.\n주사율별 VRR 제한 프리셋(최대치보다 약간 낮게 두면 VRR이 유지됨):\n• 60Hz → 59 FPS\n• 120Hz → 116 FPS\n• 144Hz → 138 FPS\n• 165Hz → 157 FPS\n• 240Hz → 224 FPS\n• 360Hz → 324 FPS\n이 값들은 BONG DLSS5의 FPS 드롭다운에 미리 설정되어 있습니다."));
 
         // Step 7: DLSS/Streamline
         panel.Children.Add(BuildFaqStep(7,
-            "DLSS / Streamline (Optional)",
-            "Games with DLSS or Streamline files have a DLSS / Streamline section. Pick a version for Super Resolution, Ray Reconstruction, Frame Generation, Neural Rendering or Streamline, and RHI swaps the file. Originals are backed up: choose 'Default' or click Restore DLSS/SL to put them back.\n\nYou can also set presets and render scale per game. These are written to the NVIDIA driver, so you don't need NVIDIA Profile Inspector.",
-            "NVIDIA Override in the version list tells the driver to use its newest DLSS file instead.\nSet your preferred versions and presets once in Settings → DLSS / Streamline → Configure Defaults, then use Quick Apply on any game, or Batch Deploy for many games at once.\nDLSS section missing? Use Full refresh in Settings → Tools & Maintenance."));
+            "DLSS / Streamline (선택 사항)",
+            "DLSS 또는 Streamline 파일이 있는 게임에는 DLSS / Streamline 섹션이 있습니다. 슈퍼 해상도, 레이 재구성, 프레임 생성, Neural Rendering, Streamline의 버전을 고르면 BONG DLSS5가 파일을 교체합니다. 원본은 백업되며, '기본값'을 고르거나 DLSS/SL 복원을 클릭하면 되돌립니다.\n\n게임별로 프리셋과 렌더 배율도 설정할 수 있습니다. 이 설정은 NVIDIA 드라이버에 기록되므로 NVIDIA Profile Inspector가 필요 없습니다.",
+            "버전 목록의 NVIDIA Override는 드라이버가 대신 최신 DLSS 파일을 사용하도록 합니다.\n설정 → DLSS / Streamline → 기본값 구성에서 선호하는 버전과 프리셋을 한 번 설정한 뒤, 어떤 게임에서든 빠른 적용을 사용하거나 일괄 배포로 여러 게임에 한꺼번에 적용하세요.\nDLSS 섹션이 없나요? 설정 → 도구 및 유지 관리에서 전체 새로 고침을 사용하세요."));
 
         // Neural Rendering
         panel.Children.Add(BuildFaqSpecialSection("N", "AccentGreenBrush",
-            "Neural Rendering (DLSS 5, Optional)",
-            "The Neural Rendering section installs DLSS 5 neural rendering tools. RHI picks the right method for the game, and installs ReShade too if needed:\n• ShortFuse DLSS Tool: most games with native DLSS.\n• DLSS5 Tool: DX12 games with native DLSS.\n• DLSS5 Tool + DX11 Bridge: DX11 and Vulkan games with native DLSS.\n• DLSS5 Feeder: games without DLSS, including OpenGL, DX9 and 32-bit games.",
-            "Each method's versions, and the NR DLL version, can be pinned or left on Latest.\nNR Cost Scaler runs neural rendering at reduced cost. Turn it on before installing. ShortFuse already includes it."));
+            "Neural Rendering (DLSS 5, 선택 사항)",
+            "Neural Rendering 섹션은 DLSS 5 뉴럴 렌더링 도구를 설치합니다. BONG DLSS5가 게임에 맞는 방식을 고르고, 필요하면 ReShade도 설치합니다:\n• ShortFuse DLSS Tool: 네이티브 DLSS가 있는 대부분의 게임.\n• DLSS5 Tool: 네이티브 DLSS가 있는 DX12 게임.\n• DLSS5 Tool + DX11 Bridge: 네이티브 DLSS가 있는 DX11 및 Vulkan 게임.\n• DLSS5 Feeder: OpenGL, DX9, 32비트 게임을 포함한 DLSS가 없는 게임.",
+            "각 방식의 버전과 NR DLL 버전은 고정하거나 최신으로 둘 수 있습니다.\nNR Cost Scaler는 뉴럴 렌더링을 더 적은 비용으로 실행합니다. 설치 전에 켜세요. ShortFuse에는 이미 포함되어 있습니다."));
 
         // OptiScaler
         panel.Children.Add(BuildFaqSpecialSection("⚙", "AccentAmberBrush",
-            "OptiScaler (Optional)",
-            "OptiScaler lets a game's DLSS, FSR or XeSS inputs drive a different upscaler (FSR, XeSS, DLSS), and can add or replace frame generation on any GPU. It's in the Extras section.\n\nBefore installing, set your GPU type (and DLSS inputs for AMD/Intel) in Settings → Components → OptiScaler. Then choose a variant in the OptiScaler ⚙:\n• Stable: official release.\n• Nightly: latest build, or pin a specific build.\n• DLSS NR and F5 DLSSNR: forks with DLSS Neural Rendering.\n\nThe ⚙ also sets the upscaler, frame generation, Reflex, DLSS presets, render scale, Engine.ini fixes and Neural Rendering options, and saves presets you can apply to other games.",
-            "OptiScaler and ReShade can run together. If a game crashes with both, give ReShade a different name in Game Overrides → DLL naming overrides.\n'Replace with a fresh copy...' in the ⚙ resets the game's OptiScaler.ini from your template."));
+            "OptiScaler (선택 사항)",
+            "OptiScaler는 게임의 DLSS, FSR, XeSS 입력으로 다른 업스케일러(FSR, XeSS, DLSS)를 구동하고, 어떤 GPU에서든 프레임 생성을 추가하거나 대체할 수 있습니다. 추가 기능 섹션에 있습니다.\n\n설치 전에 설정 → 구성 요소 → OptiScaler에서 GPU 종류(AMD/Intel은 DLSS 입력도)를 설정하세요. 그런 다음 OptiScaler ⚙에서 버전을 고르세요:\n• 안정: 공식 릴리스.\n• 나이틀리: 최신 빌드, 또는 특정 빌드 고정.\n• DLSS NR 및 F5 DLSSNR: DLSS Neural Rendering이 포함된 포크.\n\n⚙에서는 업스케일러, 프레임 생성, Reflex, DLSS 프리셋, 렌더 배율, Engine.ini 수정, Neural Rendering 옵션도 설정하고, 다른 게임에 적용할 수 있는 프리셋을 저장할 수 있습니다.",
+            "OptiScaler와 ReShade는 함께 실행할 수 있습니다. 둘을 함께 쓸 때 게임이 충돌하면 게임 재정의 → DLL 이름 재정의에서 ReShade에 다른 이름을 지정하세요.\n⚙의 '새 복사본으로 교체...'는 게임의 OptiScaler.ini를 템플릿으로 초기화합니다."));
 
         // Extras
         panel.Children.Add(BuildFaqSpecialSection("X", "AccentAmberBrush",
-            "Extras (Optional)",
-            "The Extras section holds optional tools:\n• Frame generation unlocks: Universal MFG Unlocker (RTX 40/30), MFG Unlock (RTX 40, RTX 20/30 experimental), 20/30 FG Unlock (RTX 20/30), RTX Encore and DLSS Enabler.\n• ASI Loader: loads .asi plugins.\n• DXVK: runs DX8–DX11 games through Vulkan. The Lilium HDR variant gives older games HDR.\n• dgVoodoo2: runs DX9 games through DX11.",
-            "Most of these ask which file name to use when you install them. Names already used by RHI's other components are disabled, and any game file that gets replaced is backed up."));
+            "추가 기능 (선택 사항)",
+            "추가 기능 섹션에는 선택형 도구가 있습니다:\n• 프레임 생성 잠금 해제: Universal MFG Unlocker(RTX 40/30), MFG Unlock(RTX 40, RTX 20/30 실험적), 20/30 FG Unlock(RTX 20/30), RTX Encore, DLSS Enabler.\n• ASI Loader: .asi 플러그인을 불러옵니다.\n• DXVK: DX8–DX11 게임을 Vulkan으로 실행합니다. Lilium HDR 버전은 오래된 게임에 HDR을 제공합니다.\n• dgVoodoo2: DX9 게임을 DX11로 실행합니다.",
+            "대부분 설치할 때 사용할 파일 이름을 묻습니다. BONG DLSS5의 다른 구성 요소가 이미 사용 중인 이름은 비활성화되며, 교체되는 게임 파일은 백업됩니다."));
 
         // NVIDIA Driver Settings
-        panel.Children.Add(BuildFaqInfoSection("NVIDIA Driver Settings",
-            "The Driver Settings section changes the game's NVIDIA profile directly. It needs Admin Mode (Settings → General → Admin Mode).",
+        panel.Children.Add(BuildFaqInfoSection("NVIDIA 드라이버 설정",
+            "드라이버 설정 섹션은 게임의 NVIDIA 프로필을 직접 변경합니다. 관리자 모드가 필요합니다(설정 → 일반 → 관리자 모드).",
             new[]
             {
-                "VSync: Mode, Tear Control and Low Latency (Off, On, Ultra)",
-                "Smooth Motion (RTX 40+): sets Low Latency to Ultra while it's on",
-                "Power Mode and G-Sync",
-                "ReBAR: Enable, Mode and Size Limit",
-                "Multi Frame Generation (RTX 50): the Multi Frame Gen button in the DLSS / Streamline section"
+                "VSync: 모드, 티어링 제어, 저지연(꺼짐, 켜짐, 울트라)",
+                "Smooth Motion(RTX 40+): 켜져 있는 동안 저지연을 울트라로 설정",
+                "전원 모드 및 G-Sync",
+                "ReBAR: 사용, 모드, 크기 제한",
+                "멀티 프레임 생성(RTX 50): DLSS / Streamline 섹션의 Multi Frame Gen 버튼"
             },
-            "Global defaults (shader cache, G-Sync, FPS limit, VSync, Power Mode, ReBAR) and profile backup/restore are in Settings → Driver Settings. Digital Vibrance is in Settings → Display & HDR."));
+            "전역 기본값(셰이더 캐시, G-Sync, FPS 제한, VSync, 전원 모드, ReBAR)과 프로필 백업/복원은 설정 → 드라이버 설정에 있습니다. 디지털 바이브런스는 설정 → 디스플레이 및 HDR에 있습니다."));
 
         // Settings Overview
-        panel.Children.Add(BuildFaqInfoSection("Settings",
-            "Click 'Settings' in the toolbar for options that apply to all games:",
+        panel.Children.Add(BuildFaqInfoSection("설정",
+            "모든 게임에 적용되는 옵션은 도구 모음에서 '설정'을 클릭하세요:",
             new[]
             {
-                "General: update checks, automatic updates (components, DLSS, Streamline), system tray and Admin Mode",
-                "Accounts & Data: your GitHub token, the mod data source and Nexus Mods",
-                "ReShade & RenoDX: hotkeys, screenshots, peak brightness (nits), shaders and the addon watch folder",
-                "Display & HDR: HDR and resolution auto-toggle, output colour and DLDSR",
-                "DLSS / Streamline: defaults for Quick Apply, the DLSS indicator, multi frame generation and Batch Deploy",
-                "Driver Settings: global NVIDIA driver defaults and profiles",
-                "Components: ReLimiter and OptiScaler",
-                "Tools & Maintenance: mass INI deploy, folders and logs, Full refresh and Purge staging files"
+                "일반: 업데이트 확인, 자동 업데이트(구성 요소, DLSS, Streamline), 시스템 트레이, 관리자 모드",
+                "계정 및 데이터: GitHub 토큰, 모드 데이터 소스, Nexus Mods",
+                "ReShade 및 RenoDX: 단축키, 스크린샷, 최대 밝기(nits), 셰이더, 애드온 감시 폴더",
+                "디스플레이 및 HDR: HDR 및 해상도 자동 전환, 출력 색상, DLDSR",
+                "DLSS / Streamline: 빠른 적용 기본값, DLSS 표시기, 멀티 프레임 생성, 일괄 배포",
+                "드라이버 설정: 전역 NVIDIA 드라이버 기본값 및 프로필",
+                "구성 요소: ReLimiter 및 OptiScaler",
+                "도구 및 유지 관리: INI 일괄 배포, 폴더 및 로그, 전체 새로 고침, 스테이징 파일 정리"
             }));
 
         // Vulkan Games
         panel.Children.Add(BuildFaqSpecialSection("V", "AccentPurpleBrush",
-            "Vulkan Games",
-            "Vulkan games (shown with a VLK badge) use a global ReShade layer installed to C:\\ProgramData\\ReShade. This needs administrator rights, so RHI asks for permission the first time.",
-            "All Vulkan games share the same ReShade, so changing the ReShade channel on one changes it for all.\nRenoDX addons and shaders are still installed to each game's own folder.\nGames that support both DirectX and Vulkan: choose one in Game Overrides → Graphics API."));
+            "Vulkan 게임",
+            "Vulkan 게임(VLK 배지로 표시)은 C:\\ProgramData\\ReShade에 설치되는 전역 ReShade 레이어를 사용합니다. 관리자 권한이 필요하므로 BONG DLSS5가 처음에 권한을 요청합니다.",
+            "모든 Vulkan 게임은 같은 ReShade를 공유하므로, 한 게임에서 ReShade 채널을 바꾸면 모든 게임에 적용됩니다.\nRenoDX 애드온과 셰이더는 여전히 각 게임 폴더에 설치됩니다.\nDirectX와 Vulkan을 모두 지원하는 게임: 게임 재정의 → 그래픽 API에서 하나를 선택하세요."));
 
         // Adding Games Manually
         panel.Children.Add(BuildFaqSpecialSection("+", "AccentAmberBrush",
-            "Adding Games Manually",
-            "If a game isn't detected, click the green + next to the search box and choose its .exe, or drag the .exe onto the RHI window. RHI adds it to your library and detects its engine.",
-            "Wrong folder? Use Management → Change install folder.\nManually added games can be removed with Management → Reset / Remove game."));
+            "게임 수동 추가",
+            "게임이 감지되지 않으면 검색 상자 옆의 녹색 +를 클릭해 .exe를 선택하거나, .exe를 BONG DLSS5 창으로 끌어다 놓으세요. BONG DLSS5가 라이브러리에 추가하고 엔진을 감지합니다.",
+            "폴더가 잘못되었나요? 관리 → 설치 폴더 변경을 사용하세요.\n수동으로 추가한 게임은 관리 → 초기화 / 게임 제거로 제거할 수 있습니다."));
 
         // Updating Everything
         panel.Children.Add(BuildFaqSpecialSection("↑", "AccentGreenBrush",
-            "Updating Everything",
-            "Click 'Update All' in the toolbar to update ReShade, RenoDX, ReLimiter, Display Commander, OptiScaler, RE Framework, DXVK, Luma and DOF Fix across all your games.",
-            "Games with updates show a green dot in the sidebar.\nChoose what Update All includes in Settings → General → Components to check, or per game in Game Overrides → Update Inclusion.\nTurn on Automatic updates in Settings → General to install updates in the background.\nThe Updates button at the bottom right shows everything that has been updated."));
+            "모두 업데이트하기",
+            "도구 모음에서 '모두 업데이트'를 클릭하면 모든 게임의 ReShade, RenoDX, ReLimiter, Display Commander, OptiScaler, RE Framework, DXVK, Luma, DOF Fix를 업데이트합니다.",
+            "업데이트가 있는 게임은 사이드바에 녹색 점이 표시됩니다.\n모두 업데이트에 포함할 항목은 설정 → 일반 → 확인할 구성 요소에서, 게임별로는 게임 재정의 → 업데이트 포함에서 선택하세요.\n설정 → 일반에서 자동 업데이트를 켜면 백그라운드에서 업데이트가 설치됩니다.\n오른쪽 아래의 업데이트 버튼에서 업데이트된 항목을 모두 볼 수 있습니다."));
 
         // Troubleshooting
         panel.Children.Add(BuildFaqSpecialSection("↻", "AccentBlueBrush",
-            "Troubleshooting",
-            "If games are missing, a game has moved, or DLSS files were added or removed, use 'Full refresh' in Settings → Tools & Maintenance to rescan everything from scratch.",
-            "Downloads or update checks failing? Add a GitHub token (Settings → Accounts & Data).\nTo report a problem, click Copy logs in Settings → Tools & Maintenance and/or Copy Report in the game's Management section, then paste it into Discord."));
+            "문제 해결",
+            "게임이 누락되었거나, 게임 위치가 바뀌었거나, DLSS 파일이 추가 또는 제거되었다면 설정 → 도구 및 유지 관리의 '전체 새로 고침'으로 처음부터 모두 다시 검색하세요.",
+            "다운로드나 업데이트 확인이 실패하나요? GitHub 토큰을 추가하세요(설정 → 계정 및 데이터).\n문제를 보고하려면 설정 → 도구 및 유지 관리의 로그 복사 및/또는 게임 관리 섹션의 보고서 복사를 클릭한 뒤 Discord에 붙여 넣으세요."));
 
         // System Tray
         panel.Children.Add(BuildFaqSpecialSection("◰", "AccentPurpleBrush",
-            "System Tray",
-            "RHI can keep running in the system tray when you close the window. Right-click the tray icon to launch recent games without opening RHI.",
-            "Turn on Close to Tray, Recent Games and Start with Windows in Settings → General → Windows.\nRecent Games also appear in the taskbar jump list.\nWhile running, RHI checks for updates every hour with a GitHub token (Settings → Accounts & Data), or every 4 hours without one."));
+            "시스템 트레이",
+            "창을 닫아도 BONG DLSS5가 시스템 트레이에서 계속 실행되도록 할 수 있습니다. 트레이 아이콘을 마우스 오른쪽 버튼으로 클릭하면 BONG DLSS5를 열지 않고 최근 게임을 실행할 수 있습니다.",
+            "설정 → 일반 → Windows에서 트레이로 닫기, 최근 게임, Windows 시작 시 실행을 켜세요.\n최근 게임은 작업 표시줄 점프 목록에도 표시됩니다.\n실행 중에는 GitHub 토큰이 있으면(설정 → 계정 및 데이터) 1시간마다, 없으면 4시간마다 업데이트를 확인합니다."));
 
         // Need More Help
         panel.Children.Add(BuildFaqLinksSection());
@@ -483,7 +483,7 @@ public sealed partial class MainWindow
 
         stack.Children.Add(new TextBlock
         {
-            Text = "Need More Help?",
+            Text = "도움이 더 필요하신가요?",
             FontSize = 14,
             FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
             Foreground = (Brush)Application.Current.Resources["AccentTealBrush"]
@@ -491,7 +491,7 @@ public sealed partial class MainWindow
 
         stack.Children.Add(new TextBlock
         {
-            Text = "Support is available on Discord — join the community for help, mod updates, and discussion.",
+            Text = "Discord에서 지원을 받을 수 있습니다. 커뮤니티에 참여해 도움, 모드 업데이트, 토론을 확인하세요.",
             TextWrapping = TextWrapping.Wrap,
             FontSize = 12,
             Foreground = (Brush)Application.Current.Resources["TextSecondaryBrush"],
@@ -507,7 +507,7 @@ public sealed partial class MainWindow
         };
         discordLink.Content = new TextBlock
         {
-            Text = "Join the Ultra+ Discord (main community)",
+            Text = "Ultra+ Discord 참여 (메인 커뮤니티)",
             Foreground = (Brush)Application.Current.Resources["AccentBlueBrush"],
             FontSize = 12
         };
@@ -520,7 +520,7 @@ public sealed partial class MainWindow
         };
         renodxDiscordLink.Content = new TextBlock
         {
-            Text = "RenoDX Discord (mod development)",
+            Text = "RenoDX Discord (모드 개발)",
             Foreground = (Brush)Application.Current.Resources["AccentBlueBrush"],
             FontSize = 12
         };
@@ -533,7 +533,7 @@ public sealed partial class MainWindow
         };
         wikiLink.Content = new TextBlock
         {
-            Text = "Browse the RenoDX Mod Wiki",
+            Text = "RenoDX 모드 위키 둘러보기",
             Foreground = (Brush)Application.Current.Resources["AccentBlueBrush"],
             FontSize = 12
         };
@@ -541,12 +541,12 @@ public sealed partial class MainWindow
 
         var githubLink = new HyperlinkButton
         {
-            NavigateUri = new Uri("https://github.com/RankFTW/RHI"),
+            NavigateUri = new Uri("https://github.com/Baegovda/BONG-DLSS5"),
             Padding = new Thickness(0)
         };
         githubLink.Content = new TextBlock
         {
-            Text = "RHI GitHub — Report issues or request features",
+            Text = "BONG DLSS5 GitHub — 문제 보고 또는 기능 요청",
             Foreground = (Brush)Application.Current.Resources["AccentBlueBrush"],
             FontSize = 12
         };

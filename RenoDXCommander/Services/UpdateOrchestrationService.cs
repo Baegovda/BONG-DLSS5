@@ -79,7 +79,7 @@ public class UpdateOrchestrationService : IUpdateOrchestrationService
         foreach (var card in targets)
         {
             card.IsInstalling  = true;
-            card.ActionMessage = "Updating...";
+            card.ActionMessage = "업데이트 중...";
 
             string? originalSnapshotUrl = card.Mod!.SnapshotUrl;
             bool swappedTo32 = card.Is32Bit && card.Mod.SnapshotUrl32 != null;
@@ -167,14 +167,14 @@ public class UpdateOrchestrationService : IUpdateOrchestrationService
                     card.InstalledAddonFileName = record.AddonFileName;
                     card.RdxInstalledVersion    = AuxInstallService.ReadInstalledVersion(record.InstallPath, record.AddonFileName);
                     card.Status                 = GameStatus.Installed;
-                    card.ActionMessage          = "✅ Updated!";
+                    card.ActionMessage          = "✅ 업데이트됨!";
                     card.NotifyAll();
                     card.FadeMessage(m => card.ActionMessage = m, card.ActionMessage);
                 });
             }
             catch (Exception ex)
             {
-                card.ActionMessage = $"❌ Failed: {ex.Message}";
+                card.ActionMessage = $"❌ 실패: {ex.Message}";
             }
             finally
             {
@@ -227,7 +227,7 @@ public class UpdateOrchestrationService : IUpdateOrchestrationService
                         _crashReporter.Log($"[UpdateOrchestrationService.UpdateAllReShade] Skipping {card.GameName} — foreign dxgi.dll detected");
                         dispatcherQueue?.TryEnqueue(() =>
                         {
-                            card.RsActionMessage = "⚠ Skipped — unknown dxgi.dll";
+                            card.RsActionMessage = "⚠ 건너뜀 — 알 수 없는 dxgi.dll";
                         });
                         continue;
                     }
@@ -235,7 +235,7 @@ public class UpdateOrchestrationService : IUpdateOrchestrationService
             }
 
             card.RsIsInstalling  = true;
-            card.RsActionMessage = "Updating...";
+            card.RsActionMessage = "업데이트 중...";
             try
             {
                 var progress = new Progress<(string msg, double pct)>(p =>
@@ -271,7 +271,7 @@ public class UpdateOrchestrationService : IUpdateOrchestrationService
                     card.RsInstalledFile    = record.InstalledAs;
                     card.RsInstalledVersion = _auxFileService.ReadInstalledVersion(record.InstallPath, record.InstalledAs);
                     card.RsStatus           = GameStatus.Installed;
-                    card.RsActionMessage    = "✅ Updated!";
+                    card.RsActionMessage    = "✅ 업데이트됨!";
                     card.NotifyAll();
                     card.FadeMessage(m => card.RsActionMessage = m, card.RsActionMessage);
                 });
@@ -279,12 +279,12 @@ public class UpdateOrchestrationService : IUpdateOrchestrationService
             catch (FileNotFoundException ex)
             {
                 // Expected when the game uses the Custom channel and its DLL was removed from the Custom folder.
-                dispatcherQueue?.TryEnqueue(() => card.RsActionMessage = "❌ ReShade DLL not found — see Custom ReShade folder");
+                dispatcherQueue?.TryEnqueue(() => card.RsActionMessage = "❌ ReShade DLL을 찾을 수 없음 — 사용자 지정 ReShade 폴더를 확인하세요");
                 _crashReporter.Log($"[UpdateOrchestrationService.UpdateAllReShade] Skipped '{card.GameName}' — {ex.Message.Replace('\n', ' ')}");
             }
             catch (Exception ex)
             {
-                card.RsActionMessage = $"❌ Failed: {ex.Message}";
+                card.RsActionMessage = $"❌ 실패: {ex.Message}";
                 _crashReporter.WriteCrashReport("UpdateAllReShade", ex, note: $"Game: {card.GameName}");
             }
             finally { dispatcherQueue?.TryEnqueue(() => card.RsIsInstalling = false); }
@@ -320,7 +320,7 @@ public class UpdateOrchestrationService : IUpdateOrchestrationService
             foreach (var vCard in vulkanTargets)
             {
                 vCard.RsIsInstalling = true;
-                vCard.RsActionMessage = "Updating Vulkan ReShade...";
+                vCard.RsActionMessage = "Vulkan ReShade 업데이트 중...";
                 try
                 {
                     if (keepRsIniUpdatedResolver == null || keepRsIniUpdatedResolver(vCard.GameName, vCard.Source ?? ""))
@@ -333,14 +333,14 @@ public class UpdateOrchestrationService : IUpdateOrchestrationService
                         vCard.RsInstalledVersion = vulkanVersion;
                         vCard.SetVulkanLayerInstalledVersion(vulkanVersion);
                         vCard.RsStatus = GameStatus.Installed;
-                        vCard.RsActionMessage = layerUpdated ? "✅ Updated!" : "✅ Up to date";
+                        vCard.RsActionMessage = layerUpdated ? "✅ 업데이트됨!" : "✅ 최신 상태";
                         vCard.NotifyAll();
                         vCard.FadeMessage(m => vCard.RsActionMessage = m, vCard.RsActionMessage);
                     });
                 }
                 catch (Exception ex)
                 {
-                    vCard.RsActionMessage = $"❌ Failed: {ex.Message}";
+                    vCard.RsActionMessage = $"❌ 실패: {ex.Message}";
                     _crashReporter.WriteCrashReport("UpdateAllReShade.Vulkan", ex, note: $"Game: {vCard.GameName}");
                 }
                 finally { dispatcherQueue?.TryEnqueue(() => vCard.RsIsInstalling = false); }
@@ -363,7 +363,7 @@ public class UpdateOrchestrationService : IUpdateOrchestrationService
         foreach (var card in targets)
         {
             card.RefIsInstalling = true;
-            card.RefActionMessage = "Updating...";
+            card.RefActionMessage = "업데이트 중...";
             try
             {
                 var progress = new Progress<(string msg, double pct)>(p =>
@@ -378,14 +378,14 @@ public class UpdateOrchestrationService : IUpdateOrchestrationService
                     card.RefRecord = record;
                     card.RefInstalledVersion = record.InstalledVersion;
                     card.RefStatus = GameStatus.Installed;
-                    card.RefActionMessage = "✅ Updated!";
+                    card.RefActionMessage = "✅ 업데이트됨!";
                     card.NotifyAll();
                     card.FadeMessage(m => card.RefActionMessage = m, card.RefActionMessage);
                 });
             }
             catch (Exception ex)
             {
-                card.RefActionMessage = $"❌ Failed: {ex.Message}";
+                card.RefActionMessage = $"❌ 실패: {ex.Message}";
                 _crashReporter.WriteCrashReport("UpdateAllREFramework", ex, note: $"Game: {card.GameName}");
             }
             finally { dispatcherQueue?.TryEnqueue(() => card.RefIsInstalling = false); }
@@ -408,7 +408,7 @@ public class UpdateOrchestrationService : IUpdateOrchestrationService
         foreach (var card in targets)
         {
             card.DofFixIsInstalling = true;
-            card.DofFixActionMessage = "Updating...";
+            card.DofFixActionMessage = "업데이트 중...";
             try
             {
                 var progress = new Progress<(string msg, double pct)>(p =>
@@ -424,19 +424,19 @@ public class UpdateOrchestrationService : IUpdateOrchestrationService
                     {
                         card.DofFixInstalledVersion = dofFixService.StagedVersion;
                         card.DofFixStatus = GameStatus.Installed;
-                        card.DofFixActionMessage = "✅ Updated!";
+                        card.DofFixActionMessage = "✅ 업데이트됨!";
                         card.NotifyAll();
                         card.FadeMessage(m => card.DofFixActionMessage = m, card.DofFixActionMessage);
                     }
                     else
                     {
-                        card.DofFixActionMessage = "❌ Update failed";
+                        card.DofFixActionMessage = "❌ 업데이트 실패";
                     }
                 });
             }
             catch (Exception ex)
             {
-                card.DofFixActionMessage = $"❌ Failed: {ex.Message}";
+                card.DofFixActionMessage = $"❌ 실패: {ex.Message}";
                 _crashReporter.WriteCrashReport("UpdateAllDofFix", ex, note: $"Game: {card.GameName}");
             }
             finally { dispatcherQueue?.TryEnqueue(() => card.DofFixIsInstalling = false); }

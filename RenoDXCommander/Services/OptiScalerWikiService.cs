@@ -41,7 +41,7 @@ public class OptiScalerWikiService : IOptiScalerWikiService
         if (CachedData != null)
             return CachedData;
 
-        progress?.Report("Fetching OptiScaler wiki...");
+        progress?.Report("OptiScaler 위키 가져오는 중...");
 
         var standardCompat = new Dictionary<string, OptiScalerCompatEntry>(StringComparer.OrdinalIgnoreCase);
         var fsr4Compat = new Dictionary<string, OptiScalerCompatEntry>(StringComparer.OrdinalIgnoreCase);
@@ -90,7 +90,7 @@ public class OptiScalerWikiService : IOptiScalerWikiService
         };
 
         CachedData = data;
-        progress?.Report($"OptiScaler wiki: {standardCompat.Count} standard + {fsr4Compat.Count} FSR4 entries");
+        progress?.Report($"OptiScaler 위키: 표준 {standardCompat.Count}개 + FSR4 {fsr4Compat.Count}개 항목");
         return data;
     }
 

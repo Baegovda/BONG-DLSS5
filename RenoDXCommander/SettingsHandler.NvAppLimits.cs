@@ -35,22 +35,22 @@ public partial class SettingsHandler
             });
             column.Children.Add(new TextBlock
             {
-                Text = "Stops the NVIDIA App resetting DLSS presets and versions on games it doesn't support. Run again after a driver or NVIDIA App update.",
+                Text = "NVIDIA App이 지원하지 않는 게임의 DLSS 프리셋과 버전을 초기화하지 못하게 합니다. 드라이버 또는 NVIDIA App 업데이트 후 다시 실행하세요.",
                 Style = FindStyle("SettingsHelpStyle"),
                 TextWrapping = TextWrapping.Wrap,
             });
 
             _nvAppLimitsButton = new Button
             {
-                Content = "Remove NVIDIA App override limits...",
+                Content = "NVIDIA App 재정의 제한 제거...",
                 Style = FindStyle("SettingsButtonStyle"),
                 Foreground = UIFactory.Brush(ResourceKeys.SettingsLabelBrush),
                 HorizontalAlignment = HorizontalAlignment.Left,
             };
             ToolTipService.SetToolTip(_nvAppLimitsButton,
-                "The NVIDIA App only allows DLSS overrides on games NVIDIA has approved, and undoes overrides set by RHI or " +
-                "NVIDIA Profile Inspector on other games. This turns that limit off in the NVIDIA App's settings files " +
-                "(a backup is kept) and restarts the NVIDIA services. Based on JPersson77's nVAppAppApp script.");
+                "NVIDIA App은 NVIDIA가 승인한 게임에서만 DLSS 재정의를 허용하고, 다른 게임에서 BONG DLSS5나 " +
+                "NVIDIA Profile Inspector로 설정한 재정의를 되돌립니다. 이 기능은 NVIDIA App 설정 파일에서 해당 제한을 끄고 " +
+                "(백업 유지) NVIDIA 서비스를 다시 시작합니다. JPersson77의 nVAppAppApp 스크립트를 기반으로 합니다.");
             _nvAppLimitsButton.Click += NvAppLimitsButton_Click;
             column.Children.Add(_nvAppLimitsButton);
         }
@@ -67,31 +67,31 @@ public partial class SettingsHandler
             var xamlRoot = (sender as FrameworkElement)?.XamlRoot ?? _window.Content.XamlRoot;
             if (!NvAppOverrideLimitService.IsNvidiaAppInstalled)
             {
-                await ShowNvAppLimitsMessageAsync(xamlRoot, "NVIDIA App not found",
-                    "The NVIDIA App isn't installed for this Windows user. Without it nothing resets your DLSS overrides, so there's nothing to change.");
+                await ShowNvAppLimitsMessageAsync(xamlRoot, "NVIDIA App을 찾을 수 없음",
+                    "이 Windows 사용자에게 NVIDIA App이 설치되어 있지 않습니다. NVIDIA App이 없으면 DLSS 재정의를 초기화하는 것도 없으므로 변경할 내용이 없습니다.");
                 return;
             }
 
             var confirm = new ContentDialog
             {
-                Title = "Remove NVIDIA App override limits?",
+                Title = "NVIDIA App 재정의 제한을 제거할까요?",
                 Content = new TextBlock
                 {
-                    Text = "RHI will change the NVIDIA App's settings files so it stops undoing DLSS overrides on games NVIDIA hasn't approved. A backup of the files is kept.\n\n" +
-                           "Then RHI restarts two NVIDIA services. Windows asks for admin permission, and your screen may go black for a second or two.\n\n" +
-                           "Close any running games first. Driver and NVIDIA App updates can bring the limits back, so run this again after updating.",
+                    Text = "BONG DLSS5가 NVIDIA App 설정 파일을 변경하여 NVIDIA가 승인하지 않은 게임에서 DLSS 재정의를 되돌리지 않도록 합니다. 파일 백업은 유지됩니다.\n\n" +
+                           "그런 다음 BONG DLSS5가 NVIDIA 서비스 두 개를 다시 시작합니다. Windows에서 관리자 권한을 요청하며, 화면이 1~2초 정도 검게 변할 수 있습니다.\n\n" +
+                           "먼저 실행 중인 게임을 모두 닫으세요. 드라이버 및 NVIDIA App 업데이트로 제한이 다시 적용될 수 있으므로 업데이트 후 다시 실행하세요.",
                     TextWrapping = TextWrapping.Wrap,
                     FontSize = 13,
                 },
-                PrimaryButtonText = "Remove limits",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "제한 제거",
+                CloseButtonText = "취소",
                 DefaultButton = ContentDialogButton.Close,
                 XamlRoot = xamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
             if (await DialogService.ShowSafeAsync(confirm) != ContentDialogResult.Primary) return;
 
-            if (_nvAppLimitsButton != null) { _nvAppLimitsButton.IsEnabled = false; _nvAppLimitsButton.Content = "Removing..."; }
+            if (_nvAppLimitsButton != null) { _nvAppLimitsButton.IsEnabled = false; _nvAppLimitsButton.Content = "제거 중..."; }
             NvAppOverrideLimitService.Result result;
             try
             {
@@ -99,12 +99,12 @@ public partial class SettingsHandler
             }
             finally
             {
-                if (_nvAppLimitsButton != null) { _nvAppLimitsButton.IsEnabled = true; _nvAppLimitsButton.Content = "Remove NVIDIA App override limits..."; }
+                if (_nvAppLimitsButton != null) { _nvAppLimitsButton.IsEnabled = true; _nvAppLimitsButton.Content = "NVIDIA App 재정의 제한 제거..."; }
             }
             CrashReporter.Log($"[SettingsHandler.NvAppLimitsButton_Click] Success={result.Success}: {result.Message}");
             if (_window.IsShuttingDown) return;
             await ShowNvAppLimitsMessageAsync(xamlRoot,
-                result.Success ? "NVIDIA App limits removed" : "NVIDIA App limits", result.Message);
+                result.Success ? "NVIDIA App 제한 제거됨" : "NVIDIA App 제한", result.Message);
         }
         catch (Exception ex)
         {
@@ -118,7 +118,7 @@ public partial class SettingsHandler
         {
             Title = title,
             Content = new TextBlock { Text = message, TextWrapping = TextWrapping.Wrap, FontSize = 13, IsTextSelectionEnabled = true },
-            CloseButtonText = "OK",
+            CloseButtonText = "확인",
             XamlRoot = xamlRoot,
             RequestedTheme = ElementTheme.Dark,
         };

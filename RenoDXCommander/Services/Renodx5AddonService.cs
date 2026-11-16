@@ -602,7 +602,7 @@ public class Renodx5AddonService
         Action<string> onComplete, Func<Task> autoRedeploy)
     {
         Directory.CreateDirectory(_stagingDir);
-        progress?.Report(($"Downloading {displayName}...", 10));
+        progress?.Report(($"{displayName} 다운로드 중...", 10));
 
         var (version, downloadUrl) = await FetchLatestReleaseInfoAsync(tagPrefix, stagedFileName, zipPrefix).ConfigureAwait(false);
         if (string.IsNullOrEmpty(version) || string.IsNullOrEmpty(downloadUrl))
@@ -611,7 +611,7 @@ public class Renodx5AddonService
             return;
         }
 
-        progress?.Report(($"Downloading {displayName}...", 30));
+        progress?.Report(($"{displayName} 다운로드 중...", 30));
 
         try
         {
@@ -661,13 +661,13 @@ public class Renodx5AddonService
         catch (Exception ex)
         {
             _crashReporter.Log($"[Renodx5AddonService.DownloadAndStageAsync] Download failed for '{tagPrefix}' — {ex.Message}");
-            progress?.Report(($"{displayName} download failed: {ex.Message}", 0));
+            progress?.Report(($"{displayName} 다운로드 실패: {ex.Message}", 0));
             return;
         }
 
-        progress?.Report(($"{displayName} ready", 90));
+        progress?.Report(($"{displayName} 준비 완료", 90));
         await autoRedeploy().ConfigureAwait(false);
-        progress?.Report(($"{displayName} ready", 100));
+        progress?.Report(($"{displayName} 준비 완료", 100));
     }
 
     private async Task<(string? version, string? downloadUrl)> FetchLatestReleaseInfoAsync(

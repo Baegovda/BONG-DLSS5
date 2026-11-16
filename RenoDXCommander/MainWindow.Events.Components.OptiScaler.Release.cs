@@ -31,9 +31,9 @@ public sealed partial class MainWindow
         if (pinned != null) items.Add(pinned);
         var combo = CogDialog.MakeCombo(items, pinned != null ? 1 : 0, isEnabled: !isInstalled);
         combo.Opacity = isInstalled ? CogDialog.DisabledOpacity : 1.0;
-        var cell = new OsCell("Release", isInstalled
-            ? "Uninstall OptiScaler first to change the release."
-            : "Pin this game to a release. Pinned games are skipped by updates. Latest always uses the newest release.",
+        var cell = new OsCell("릴리스", isInstalled
+            ? "릴리스를 변경하려면 먼저 OptiScaler를 제거하세요."
+            : "이 게임을 특정 릴리스에 고정합니다. 고정된 게임은 업데이트에서 제외됩니다. Latest는 항상 최신 릴리스를 사용합니다.",
             combo, Ungated: true);
 
         bool filling = false;
@@ -80,16 +80,16 @@ public sealed partial class MainWindow
                 // Download it now so the install doesn't wait
                 if (OsReleaseService.PinnedDir(variant, sel) == null)
                 {
-                    ctx.Cog.SetSuccess($"Downloading {sel}...");
+                    ctx.Cog.SetSuccess($"{sel} 다운로드 중...");
                     var dir = await Task.Run(() => OsReleaseService.EnsurePinnedAsync(variant, sel, null, LifetimeToken));
-                    if (dir != null) ctx.Cog.SetSuccess($"{sel} is ready to install.");
-                    else ctx.Cog.SetError($"Couldn't download {sel}. It will be tried again when you install.");
+                    if (dir != null) ctx.Cog.SetSuccess($"{sel}을(를) 설치할 준비가 되었습니다.");
+                    else ctx.Cog.SetError($"{sel}을(를) 다운로드할 수 없습니다. 설치할 때 다시 시도합니다.");
                 }
             }
             catch (Exception ex)
             {
                 CrashReporter.Log($"[OsCog] Release pin failed — {ex.Message}");
-                ctx.Cog.SetError($"Couldn't pin the release: {ex.Message}");
+                ctx.Cog.SetError($"릴리스를 고정할 수 없습니다: {ex.Message}");
             }
         };
         return cell;
@@ -110,12 +110,12 @@ public sealed partial class MainWindow
             VerticalAlignment = VerticalAlignment.Center,
             Foreground = TabsTheme.B(TabsTheme.TextSecondary),
         };
-        var check = CogDialog.StyledButton("Check now", CogButtonKind.Secondary, compact: true);
-        ToolTipService.SetToolTip(check, "Ask GitHub for the newest release now, instead of waiting for the next automatic check.");
-        var update = CogDialog.StyledButton("Update", CogButtonKind.Primary, compact: true);
+        var check = CogDialog.StyledButton("지금 확인", CogButtonKind.Secondary, compact: true);
+        ToolTipService.SetToolTip(check, "다음 자동 확인을 기다리지 않고 지금 GitHub에서 최신 릴리스를 확인합니다.");
+        var update = CogDialog.StyledButton("업데이트", CogButtonKind.Primary, compact: true);
         update.Tag = card; // the install handler reads the card from the sender's Tag
         update.Visibility = Visibility.Collapsed;
-        ToolTipService.SetToolTip(update, "Install the newest release on this game. Your OptiScaler.ini settings are kept.");
+        ToolTipService.SetToolTip(update, "이 게임에 최신 릴리스를 설치합니다. OptiScaler.ini 설정은 유지됩니다.");
 
         var row = new Grid { ColumnSpacing = 8 };
         row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -128,14 +128,14 @@ public sealed partial class MainWindow
         row.Children.Add(update);
         ctx.Ungated.Add(row);
 
-        string installed = isInstalled ? (card.OsInstalledVersion ?? "installed") : "not installed";
+        string installed = isInstalled ? (card.OsInstalledVersion ?? "설치됨") : "설치 안 됨";
         var pinned = ViewModel.GetOsPinnedRelease(card.GameName, store);
         var nightlyPin = variant == OsVariants.Nightly ? ViewModel.GetOsNightlyBuild(card.GameName, store) : "";
 
         // Custom builds are never updated: no check
         if (OsVariants.IsCustom(variant))
         {
-            text.Text = $"Installed: {installed} · Custom build, not updated by RHI (use Replace in Settings › Components).";
+            text.Text = $"설치됨: {installed} · 사용자 지정 빌드, BONG DLSS5가 업데이트하지 않음 (설정 › 구성 요소에서 교체 사용).";
             check.Visibility = Visibility.Collapsed;
             return row;
         }
@@ -144,7 +144,7 @@ public sealed partial class MainWindow
         {
             if (latest == null)
             {
-                text.Text = $"Installed: {installed} · Latest: couldn't check{(checkedNow ? " (offline or GitHub limit; a GitHub token in Settings › Accounts helps)" : "")}";
+                text.Text = $"설치됨: {installed} · 최신: 확인할 수 없음{(checkedNow ? " (오프라인 또는 GitHub 제한, 설정 › 계정의 GitHub 토큰이 도움이 됩니다)" : "")}";
                 update.Visibility = Visibility.Collapsed;
                 return;
             }
@@ -152,11 +152,11 @@ public sealed partial class MainWindow
             string state;
             bool canUpdate = false;
             if (pinned != null || !string.IsNullOrEmpty(nightlyPin))
-                state = $"pinned to {(pinned ?? nightlyPin)}, so it isn't updated";
-            else if (!isInstalled) state = "installs this release";
-            else if (same) state = "up to date";
-            else { state = "update available"; canUpdate = true; }
-            text.Text = $"Installed: {installed} · Latest: {latest} ({state})";
+                state = $"{(pinned ?? nightlyPin)}에 고정되어 업데이트되지 않음";
+            else if (!isInstalled) state = "이 릴리스를 설치함";
+            else if (same) state = "최신 상태";
+            else { state = "업데이트 있음"; canUpdate = true; }
+            text.Text = $"설치됨: {installed} · 최신: {latest} ({state})";
             update.Visibility = canUpdate ? Visibility.Visible : Visibility.Collapsed;
             if (canUpdate && checkedNow)
             {
@@ -193,14 +193,14 @@ public sealed partial class MainWindow
             return releases.FirstOrDefault()?.Tag;
         }
 
-        text.Text = $"Installed: {installed} · Latest: checking...";
+        text.Text = $"설치됨: {installed} · 최신: 확인 중...";
         _ = LoadAsync(false);
         async Task LoadAsync(bool force)
         {
             try
             {
                 check.IsEnabled = false;
-                if (force) text.Text = $"Installed: {installed} · Latest: checking...";
+                if (force) text.Text = $"설치됨: {installed} · 최신: 확인 중...";
                 var latest = await FindLatestAsync(force);
                 Show(latest, force);
                 CrashReporter.Log($"[OsCog] {card.GameName} {variant}: installed {card.OsInstalledVersion ?? "-"}, latest {latest ?? "?"}{(force ? " (Check now)" : "")}");

@@ -148,12 +148,12 @@ public static class UltraPlusFiles
     public static string? SavePreset(string dataDir, string name, string? description, IEnumerable<KeyValuePair<string, string>> values)
     {
         if (UltraPlusConfig.SafePresetName(name) is not { } safe)
-            return "Use a name of up to 60 characters without \\ / : * ? \" < > |.";
+            return "\\ / : * ? \" < > |를 제외한 60자 이내의 이름을 사용하세요.";
         var path = Path.Combine(dataDir, $"preset_{safe}.ini");
         try
         {
             if (File.Exists(path) && !UltraPlusConfig.ParsePreset(safe, File.ReadAllText(path)).IsCustom)
-                return "Ultra+ has a preset with that name. Choose another name.";
+                return "Ultra+에 같은 이름의 프리셋이 있습니다. 다른 이름을 선택하세요.";
             File.WriteAllText(path, UltraPlusConfig.BuildCustomPreset(description, values), new System.Text.UTF8Encoding(false));
             CrashReporter.Log($"[UltraPlusFiles.SavePreset] '{path}'");
             return null;
@@ -161,7 +161,7 @@ public static class UltraPlusFiles
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
             CrashReporter.Log($"[UltraPlusFiles.SavePreset] '{path}' — {ex.Message}");
-            return $"Couldn't save the preset: {ex.Message}";
+            return $"프리셋을 저장할 수 없습니다: {ex.Message}";
         }
     }
 

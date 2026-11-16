@@ -32,7 +32,7 @@ public partial class SettingsHandler
             if (Application.Current.Resources.TryGetValue("SettingsLabelBrush", out var brush) && brush is Microsoft.UI.Xaml.Media.Brush b)
                 _removedGamesBtn.Foreground = b;
             ToolTipService.SetToolTip(_removedGamesBtn,
-                "Games you took out with Management › Remove from RHI. Open the list to put one back.");
+                "관리 › BONG DLSS5에서 제거로 뺀 게임입니다. 목록을 열어 다시 추가할 수 있습니다.");
             _removedGamesBtn.Click += async (s, e) =>
             {
                 try { await ShowRemovedGamesDialogAsync(); }
@@ -66,7 +66,7 @@ public partial class SettingsHandler
     {
         if (_removedGamesBtn == null) return;
         int n = ViewModel.RemovedGameList.Count;
-        _removedGamesBtn.Content = n > 0 ? $"Removed games ({n})" : "Removed games";
+        _removedGamesBtn.Content = n > 0 ? $"제거된 게임 ({n})" : "제거된 게임";
     }
 
     private async Task ShowRemovedGamesDialogAsync()
@@ -74,14 +74,14 @@ public partial class SettingsHandler
         var list = new StackPanel { Spacing = 6 };
         var empty = new TextBlock
         {
-            Text = "No games have been removed. Use Remove from RHI on a game's Management section to take it out of the list.",
+            Text = "제거된 게임이 없습니다. 게임의 관리 섹션에서 BONG DLSS5에서 제거를 사용하면 목록에서 뺄 수 있습니다.",
             TextWrapping = TextWrapping.Wrap,
             FontSize = 12,
             Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
         };
         var note = new TextBlock
         {
-            Text = "Restore puts the game back in your list.",
+            Text = "복원하면 게임이 목록에 다시 추가됩니다.",
             TextWrapping = TextWrapping.Wrap,
             FontSize = 12,
             Margin = new Thickness(0, 0, 0, 6),
@@ -116,7 +116,7 @@ public partial class SettingsHandler
                         Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush),
                     });
                 row.Children.Add(text);
-                var restore = new Button { Content = "Restore", FontSize = 12, VerticalAlignment = VerticalAlignment.Center };
+                var restore = new Button { Content = "복원", FontSize = 12, VerticalAlignment = VerticalAlignment.Center };
                 restore.Click += (s, e) =>
                 {
                     try
@@ -143,9 +143,9 @@ public partial class SettingsHandler
 
         var dialog = new ContentDialog
         {
-            Title = "Removed games",
+            Title = "제거된 게임",
             Content = content,
-            CloseButtonText = "Close",
+            CloseButtonText = "닫기",
             XamlRoot = _window.Content.XamlRoot,
             RequestedTheme = ElementTheme.Dark,
         };

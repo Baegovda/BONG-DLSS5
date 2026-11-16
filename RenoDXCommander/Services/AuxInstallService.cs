@@ -443,7 +443,7 @@ public partial class AuxInstallService : IAuxInstallService, IAuxFileService
         Directory.CreateDirectory(destDir);
 
         var url = $"https://reshade.me/downloads/ReShade_Setup_{version}_Addon.exe";
-        progress?.Report(($"Downloading ReShade {version}...", 10));
+        progress?.Report(($"ReShade {version} 다운로드 중...", 10));
         CrashReporter.Log($"[AuxInstallService.DownloadLegacyReShadeAsync] Downloading {url}");
 
         var tempExe = Path.Combine(destDir, $"ReShade_Setup_{version}_Addon.exe");
@@ -456,7 +456,7 @@ public partial class AuxInstallService : IAuxInstallService, IAuxFileService
             using (var fileStream = File.Create(tempExe))
                 await netStream.CopyToAsync(fileStream);
 
-            progress?.Report(($"Extracting ReShade {version}...", 60));
+            progress?.Report(($"ReShade {version} 압축 해제 중...", 60));
 
             // Extract using bundled 7z.exe (same as ReShadeUpdateService)
             var sevenZipPath = AppPaths.Bundled7Zip;
@@ -491,7 +491,7 @@ public partial class AuxInstallService : IAuxInstallService, IAuxFileService
                 return false;
             }
 
-            progress?.Report(($"ReShade {version} ready!", 100));
+            progress?.Report(($"ReShade {version} 준비 완료!", 100));
             CrashReporter.Log($"[AuxInstallService.DownloadLegacyReShadeAsync] v{version} staged successfully");
             return true;
         }

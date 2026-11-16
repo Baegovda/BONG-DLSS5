@@ -39,7 +39,7 @@ public class LumaService : ILumaService
     /// </summary>
     public async Task<List<LumaMod>> FetchCompletedModsAsync(IProgress<string>? progress = null)
     {
-        progress?.Report("Fetching Luma wiki...");
+        progress?.Report("Luma 위키 가져오는 중...");
         var html = await PageFetch.GetStringAsync(_http, WikiUrl);
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
@@ -173,7 +173,7 @@ public class LumaService : ILumaService
                 mods[i].FeatureNotes = ExtractAnchorSection(doc, anchor, allAnchors);
         }
 
-        progress?.Report($"Found {mods.Count} Luma mods");
+        progress?.Report($"Luma 모드 {mods.Count}개 찾음");
         return mods;
     }
 
@@ -184,7 +184,7 @@ public class LumaService : ILumaService
     /// </summary>
     public async Task<Dictionary<string, LumaGenericGameEntry>> FetchGenericUeTableAsync(IProgress<string>? progress = null)
     {
-        progress?.Report("Fetching Luma UE wiki...");
+        progress?.Report("Luma UE 위키 가져오는 중...");
         var result = new Dictionary<string, LumaGenericGameEntry>(StringComparer.OrdinalIgnoreCase);
 
         try
@@ -603,7 +603,7 @@ public class LumaService : ILumaService
         // Download
         if (needsDownload)
         {
-        progress?.Report(("Downloading Luma mod...", 0));
+        progress?.Report(("Luma 모드 다운로드 중...", 0));
         HttpResponseMessage? response = null;
         try
         {
@@ -624,7 +624,7 @@ public class LumaService : ILumaService
                     await cacheFile.WriteAsync(buffer.AsMemory(0, read));
                     downloaded += read;
                     if (total > 0)
-                        progress?.Report(($"Downloading... {downloaded / 1024} KB",
+                        progress?.Report(($"다운로드 중... {downloaded / 1024} KB",
                                           (double)downloaded / total * 100));
                 }
                 cacheFile.Flush();
@@ -648,13 +648,13 @@ public class LumaService : ILumaService
         } // end if (needsDownload)
 
         // Extract zip to game folder, tracking all extracted file names
-        progress?.Report(("Extracting Luma files...", 80));
+        progress?.Report(("Luma 파일 압축 푸는 중...", 80));
         var installedFiles = new List<string>();
 
         // ── Deploy reshade.ini FIRST ──────────────────────────────────────────────
         // Must happen before zip extraction so that the AddonPath setting in
         // reshade.ini is available when resolving where .addon files should go.
-        progress?.Report(("Deploying ReShade config...", 75));
+        progress?.Report(("ReShade 설정 배포 중...", 75));
         try
         {
             _auxFileService.EnsureInisDir();
@@ -667,7 +667,7 @@ public class LumaService : ILumaService
         catch (Exception ex) { CrashReporter.Log($"[LumaService.Install] reshade.ini deploy failed — {ex.Message}"); }
 
         // ── Extract zip ───────────────────────────────────────────────────────────
-        progress?.Report(("Extracting Luma files...", 80));
+        progress?.Report(("Luma 파일 압축 푸는 중...", 80));
 
         if (cachePath.EndsWith(".zip", StringComparison.OrdinalIgnoreCase))
         {
@@ -727,7 +727,7 @@ public class LumaService : ILumaService
         }
 
         // ── Deploy shaders (same as normal ReShade — respects global/per-game selection) ──
-        progress?.Report(("Deploying shaders...", 95));
+        progress?.Report(("셰이더 배포 중...", 95));
         try
         {
             var exclLuma1 = selectedShaderPacks == null ? null : await Task.Run(() =>
@@ -762,7 +762,7 @@ public class LumaService : ILumaService
             InstalledBuildNumber = await GetLatestBuildNumberAsync().ConfigureAwait(false),
         };
         SaveRecord(record);
-        progress?.Report(("Luma installed!", 100));
+        progress?.Report(("Luma 설치됨!", 100));
         return record;
     }
 

@@ -28,9 +28,9 @@ public sealed partial class MainWindow
             {
                 var dlg = new ContentDialog
                 {
-                    Title = "RHI is up to date",
-                    Content = $"You're running v{Services.CrashReporter.AppVersion} — no updates available.",
-                    CloseButtonText = "OK",
+                    Title = "BONG DLSS5가 최신 상태입니다",
+                    Content = $"v{Services.CrashReporter.AppVersion} 실행 중 — 사용 가능한 업데이트가 없습니다.",
+                    CloseButtonText = "확인",
                     XamlRoot = Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 };
@@ -261,7 +261,7 @@ public sealed partial class MainWindow
         {
             DlssDefaultsSummaryPanel.Children.Add(new TextBlock
             {
-                Text = "No defaults configured yet.",
+                Text = "아직 설정된 기본값이 없습니다.",
                 FontSize = 11,
                 Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush),
             });
@@ -280,9 +280,9 @@ public sealed partial class MainWindow
 
         var srCol = new StackPanel { Spacing = 2 };
         srCol.Children.Add(new TextBlock { Text = "DLSS", FontSize = 10, FontWeight = Microsoft.UI.Text.FontWeights.SemiBold, Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush) });
-        if (s.DefaultSrDriverOverride) srCol.Children.Add(MakeSummaryText("NVIDIA Override"));
+        if (s.DefaultSrDriverOverride) srCol.Children.Add(MakeSummaryText("NVIDIA 오버라이드"));
         else if (!string.IsNullOrEmpty(s.DefaultDlssVersion)) srCol.Children.Add(MakeSummaryText(s.DefaultDlssVersion));
-        if (s.DefaultSrPreset != 0) srCol.Children.Add(MakeSummaryText($"Preset {DlssPresetService.SrPresets.FirstOrDefault(p => p.Value == s.DefaultSrPreset).Name ?? "?"}"));
+        if (s.DefaultSrPreset != 0) srCol.Children.Add(MakeSummaryText($"프리셋 {DlssPresetService.SrPresets.FirstOrDefault(p => p.Value == s.DefaultSrPreset).Name ?? "?"}"));
         if (s.DefaultSrRenderScale != 0) srCol.Children.Add(MakeSummaryText($"{s.DefaultSrRenderScale}%"));
         Grid.SetColumn(srCol, 0);
         grid.Children.Add(srCol);
@@ -291,9 +291,9 @@ public sealed partial class MainWindow
 
         var rrCol = new StackPanel { Spacing = 2 };
         rrCol.Children.Add(new TextBlock { Text = "RR", FontSize = 10, FontWeight = Microsoft.UI.Text.FontWeights.SemiBold, Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush) });
-        if (s.DefaultRrDriverOverride) rrCol.Children.Add(MakeSummaryText("NVIDIA Override"));
+        if (s.DefaultRrDriverOverride) rrCol.Children.Add(MakeSummaryText("NVIDIA 오버라이드"));
         else if (!string.IsNullOrEmpty(s.DefaultDlssdVersion)) rrCol.Children.Add(MakeSummaryText(s.DefaultDlssdVersion));
-        if (s.DefaultRrPreset != 0) rrCol.Children.Add(MakeSummaryText($"Preset {DlssPresetService.RrPresets.FirstOrDefault(p => p.Value == s.DefaultRrPreset).Name ?? "?"}"));
+        if (s.DefaultRrPreset != 0) rrCol.Children.Add(MakeSummaryText($"프리셋 {DlssPresetService.RrPresets.FirstOrDefault(p => p.Value == s.DefaultRrPreset).Name ?? "?"}"));
         if (s.DefaultRrRenderScale != 0) rrCol.Children.Add(MakeSummaryText($"{s.DefaultRrRenderScale}%"));
         Grid.SetColumn(rrCol, 2);
         grid.Children.Add(rrCol);
@@ -302,9 +302,9 @@ public sealed partial class MainWindow
 
         var fgCol = new StackPanel { Spacing = 2 };
         fgCol.Children.Add(new TextBlock { Text = "FG", FontSize = 10, FontWeight = Microsoft.UI.Text.FontWeights.SemiBold, Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush) });
-        if (s.DefaultFgDriverOverride) fgCol.Children.Add(MakeSummaryText("NVIDIA Override"));
+        if (s.DefaultFgDriverOverride) fgCol.Children.Add(MakeSummaryText("NVIDIA 오버라이드"));
         else if (!string.IsNullOrEmpty(s.DefaultDlssgVersion)) fgCol.Children.Add(MakeSummaryText(s.DefaultDlssgVersion));
-        if (s.DefaultFgPreset != 0) fgCol.Children.Add(MakeSummaryText($"Preset {DlssPresetService.FgPresets.FirstOrDefault(p => p.Value == s.DefaultFgPreset).Name ?? "?"}"));
+        if (s.DefaultFgPreset != 0) fgCol.Children.Add(MakeSummaryText($"프리셋 {DlssPresetService.FgPresets.FirstOrDefault(p => p.Value == s.DefaultFgPreset).Name ?? "?"}"));
         Grid.SetColumn(fgCol, 4);
         grid.Children.Add(fgCol);
 
@@ -443,10 +443,10 @@ public sealed partial class MainWindow
             var textBox = new TextBox { PlaceholderText = "20-1000", FontSize = 13 };
             var dialog = new ContentDialog
             {
-                Title = "Custom FPS Limit",
+                Title = "사용자 지정 FPS 제한",
                 Content = textBox,
-                PrimaryButtonText = "Set",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "설정",
+                CloseButtonText = "취소",
                 XamlRoot = this.Content.XamlRoot,
                 RequestedTheme = Microsoft.UI.Xaml.ElementTheme.Dark,
             };
@@ -538,10 +538,10 @@ public sealed partial class MainWindow
             var textBox = new TextBox { PlaceholderText = "20-1000", FontSize = 13 };
             var dialog = new ContentDialog
             {
-                Title = "Custom DMFG Target FPS",
+                Title = "사용자 지정 DMFG 목표 FPS",
                 Content = textBox,
-                PrimaryButtonText = "Set",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "설정",
+                CloseButtonText = "취소",
                 XamlRoot = this.Content.XamlRoot,
                 RequestedTheme = Microsoft.UI.Xaml.ElementTheme.Dark,
             };
@@ -651,10 +651,10 @@ public sealed partial class MainWindow
 
             var confirm = new ContentDialog
             {
-                Title = "Create missing profiles?",
-                Content = "RHI will create an NVIDIA driver profile for every game in your library that doesn't have one. Hidden games are skipped and existing profiles are not changed.",
-                PrimaryButtonText = "Create",
-                CloseButtonText = "Cancel",
+                Title = "누락된 프로필을 생성할까요?",
+                Content = "BONG DLSS5가 라이브러리에서 NVIDIA 드라이버 프로필이 없는 모든 게임에 프로필을 생성합니다. 숨김 게임은 건너뛰며 기존 프로필은 변경되지 않습니다.",
+                PrimaryButtonText = "생성",
+                CloseButtonText = "취소",
                 DefaultButton = ContentDialogButton.Close,
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
@@ -680,19 +680,19 @@ public sealed partial class MainWindow
             });
 
             var content = created.Count > 0
-                ? $"Created {created.Count} profile(s):\n\n• " + string.Join("\n• ", created)
-                : "All games already have NVIDIA profiles.";
+                ? $"프로필 {created.Count}개를 생성했습니다:\n\n• " + string.Join("\n• ", created)
+                : "모든 게임에 이미 NVIDIA 프로필이 있습니다.";
 
             var dialog = new ContentDialog
             {
-                Title = "Create Missing Profiles",
+                Title = "누락된 프로필 생성",
                 Content = new ScrollViewer
                 {
                     Content = new TextBlock { Text = content, TextWrapping = TextWrapping.Wrap, FontSize = 12 },
                     MaxHeight = 400,
                     VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
                 },
-                CloseButtonText = "OK",
+                CloseButtonText = "확인",
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -721,9 +721,9 @@ public sealed partial class MainWindow
             {
                 await DialogService.ShowSafeAsync(new ContentDialog
                 {
-                    Title = "Export",
-                    Content = "No custom profile settings found to export.",
-                    CloseButtonText = "OK",
+                    Title = "내보내기",
+                    Content = "내보낼 사용자 지정 프로필 설정이 없습니다.",
+                    CloseButtonText = "확인",
                     XamlRoot = Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 });
@@ -739,9 +739,9 @@ public sealed partial class MainWindow
 
             await DialogService.ShowSafeAsync(new ContentDialog
             {
-                Title = "Export Complete",
-                Content = $"Exported {data.Count} profile(s) to:\n{path}",
-                CloseButtonText = "OK",
+                Title = "내보내기 완료",
+                Content = $"프로필 {data.Count}개를 다음 위치로 내보냈습니다:\n{path}",
+                CloseButtonText = "확인",
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             });
@@ -751,9 +751,9 @@ public sealed partial class MainWindow
             CrashReporter.Log($"[ExportNvidiaProfiles_Click] Error: {ex.GetType().Name}: {ex.Message}");
             await DialogService.ShowSafeAsync(new ContentDialog
             {
-                Title = "Export Failed",
-                Content = $"An error occurred during export:\n{ex.Message}",
-                CloseButtonText = "OK",
+                Title = "내보내기 실패",
+                Content = $"내보내는 중 오류가 발생했습니다:\n{ex.Message}",
+                CloseButtonText = "확인",
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             });
@@ -772,9 +772,9 @@ public sealed partial class MainWindow
             {
                 await DialogService.ShowSafeAsync(new ContentDialog
                 {
-                    Title = "Import",
-                    Content = $"No backup file found at:\n{path}\n\nBackup profiles first.",
-                    CloseButtonText = "OK",
+                    Title = "가져오기",
+                    Content = $"다음 위치에서 백업 파일을 찾을 수 없습니다:\n{path}\n\n먼저 프로필을 백업하세요.",
+                    CloseButtonText = "확인",
                     XamlRoot = Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 });
@@ -787,21 +787,21 @@ public sealed partial class MainWindow
 
             // Confirm before proceeding — importing overwrites driver profile settings irreversibly
             bool isAdmin = VulkanLayerService.IsRunningAsAdmin();
-            var warningText = "This will overwrite your current NVIDIA driver profile settings with the saved backup. This cannot be undone.";
+            var warningText = "현재 NVIDIA 드라이버 프로필 설정을 저장된 백업으로 덮어씁니다. 되돌릴 수 없습니다.";
             if (!isAdmin)
-                warningText += "\n\nYou are not running as admin. Settings that require elevated privileges (e.g. ReBAR) will not be restored. Run RHI as admin to import all settings.";
+                warningText += "\n\n관리자 권한으로 실행 중이 아닙니다. 관리자 권한이 필요한 설정(예: ReBAR)은 복원되지 않습니다. 모든 설정을 가져오려면 BONG DLSS5를 관리자 권한으로 실행하세요.";
 
             var confirmResult = await DialogService.ShowSafeAsync(new ContentDialog
             {
-                Title = "Restore Profiles",
+                Title = "프로필 복원",
                 Content = new TextBlock
                 {
                     Text = warningText,
                     TextWrapping = TextWrapping.Wrap,
                     FontSize = 12,
                 },
-                PrimaryButtonText = "Import",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "가져오기",
+                CloseButtonText = "취소",
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             });
@@ -810,7 +810,7 @@ public sealed partial class MainWindow
             // Show progress dialog
             var progressText = new TextBlock
             {
-                Text = "Importing profiles...",
+                Text = "프로필 가져오는 중...",
                 FontSize = 12,
                 Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
                 TextWrapping = TextWrapping.Wrap,
@@ -821,7 +821,7 @@ public sealed partial class MainWindow
 
             var progressDialog = new ContentDialog
             {
-                Title = "Importing...",
+                Title = "가져오는 중...",
                 Content = progressPanel,
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
@@ -840,9 +840,9 @@ public sealed partial class MainWindow
 
             await DialogService.ShowSafeAsync(new ContentDialog
             {
-                Title = "Import Complete",
-                Content = $"Imported {count} profile(s) from backup.",
-                CloseButtonText = "OK",
+                Title = "가져오기 완료",
+                Content = $"백업에서 프로필 {count}개를 가져왔습니다.",
+                CloseButtonText = "확인",
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             });
@@ -863,8 +863,8 @@ public sealed partial class MainWindow
                 await DialogService.ShowSafeAsync(new ContentDialog
                 {
                     Title = "Digital Vibrance",
-                    Content = "No NVIDIA displays detected. Digital Vibrance requires an NVIDIA GPU with compatible drivers.",
-                    CloseButtonText = "OK",
+                    Content = "NVIDIA 디스플레이가 감지되지 않았습니다. Digital Vibrance에는 호환 드라이버가 설치된 NVIDIA GPU가 필요합니다.",
+                    CloseButtonText = "확인",
                     XamlRoot = Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 });
@@ -886,7 +886,7 @@ public sealed partial class MainWindow
 
             var displayLabel = new TextBlock
             {
-                Text = "Monitor",
+                Text = "모니터",
                 FontSize = 11,
                 Foreground = UIFactory.Brush(ResourceKeys.InlineDescriptionBrush),
             };
@@ -910,7 +910,7 @@ public sealed partial class MainWindow
 
             var sliderLabel = new TextBlock
             {
-                Text = "Digital Vibrance (0 = desaturated, 50 = neutral, 100 = maximum)",
+                Text = "Digital Vibrance (0 = 채도 없음, 50 = 중립, 100 = 최대)",
                 FontSize = 11,
                 Foreground = UIFactory.Brush(ResourceKeys.InlineDescriptionBrush),
                 TextWrapping = TextWrapping.Wrap,
@@ -946,7 +946,7 @@ public sealed partial class MainWindow
             // Buttons row
             var saveBtn = new Button
             {
-                Content = "Save",
+                Content = "저장",
                 Background = UIFactory.Brush(ResourceKeys.AccentBlueBgBrush),
                 Foreground = UIFactory.Brush(ResourceKeys.AccentBlueBrush),
                 BorderBrush = UIFactory.Brush(ResourceKeys.AccentBlueBorderBrush),
@@ -957,7 +957,7 @@ public sealed partial class MainWindow
             };
             var resetBtn = new Button
             {
-                Content = "Reset to 50",
+                Content = "50으로 초기화",
                 CornerRadius = new CornerRadius(6),
                 Padding = new Thickness(16, 6, 16, 6),
                 FontSize = 12,
@@ -981,7 +981,7 @@ public sealed partial class MainWindow
                     var level = (int)slider.Value;
                     settings.DigitalVibranceSettings[displays[idx].Index.ToString()] = level;
                     ViewModel.SaveSettingsPublic();
-                    statusText.Text = $"Saved: Display {displays[idx].Name} = {level}%";
+                    statusText.Text = $"저장됨: 디스플레이 {displays[idx].Name} = {level}%";
                     CrashReporter.Log($"[DigitalVibrance_Click] Saved display {displays[idx].Index} ({displays[idx].Name}) = {level}");
                 }
             };
@@ -996,7 +996,7 @@ public sealed partial class MainWindow
                     DigitalVibranceService.SetLevel(displays[idx].Index, 50);
                     settings.DigitalVibranceSettings[displays[idx].Index.ToString()] = 50;
                     ViewModel.SaveSettingsPublic();
-                    statusText.Text = $"Reset: Display {displays[idx].Name} = 50% (neutral)";
+                    statusText.Text = $"초기화됨: 디스플레이 {displays[idx].Name} = 50% (중립)";
                 }
             };
 
@@ -1021,7 +1021,7 @@ public sealed partial class MainWindow
             {
                 Title = "Digital Vibrance",
                 Content = panel,
-                CloseButtonText = "Close",
+                CloseButtonText = "닫기",
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -1040,15 +1040,15 @@ public sealed partial class MainWindow
         {
             var confirmDialog = new ContentDialog
             {
-                Title = "Reset all game profiles?",
+                Title = "모든 게임 프로필을 초기화할까요?",
                 Content = new TextBlock
                 {
-                    Text = "This will remove ALL per-game NVIDIA driver profile overrides (DLSS/Streamline versions, presets, render scales, ReBAR, VSync, Smooth Motion, Low Latency, Power Mode — everything) AND reset global settings (Shader Cache, G-Sync, Refresh Rate, ReBAR) to defaults.\n\nAll profiles will return to NVIDIA factory defaults. This cannot be undone.",
+                    Text = "게임별 NVIDIA 드라이버 프로필 오버라이드(DLSS/Streamline 버전, 프리셋, 렌더 배율, ReBAR, VSync, Smooth Motion, 저지연, 전원 모드 등 전부)를 모두 제거하고 전역 설정(셰이더 캐시, G-Sync, 주사율, ReBAR)을 기본값으로 초기화합니다.\n\n모든 프로필이 NVIDIA 공장 기본값으로 돌아갑니다. 되돌릴 수 없습니다.",
                     TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
                     FontSize = 13,
                 },
-                PrimaryButtonText = "Reset All",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "모두 초기화",
+                CloseButtonText = "취소",
                 DefaultButton = ContentDialogButton.Close,
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
@@ -1067,7 +1067,7 @@ public sealed partial class MainWindow
                 // Show progress dialog
                 var progressPanel = new StackPanel { Spacing = 8 };
                 var progressRing = new ProgressRing { IsActive = true, Width = 20, Height = 20 };
-                var progressText = new TextBlock { Text = "Preparing...", FontSize = 13, Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush) };
+                var progressText = new TextBlock { Text = "준비 중...", FontSize = 13, Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush) };
                 var progressRow = new StackPanel { Orientation = Microsoft.UI.Xaml.Controls.Orientation.Horizontal, Spacing = 12 };
                 progressRow.Children.Add(progressRing);
                 progressRow.Children.Add(progressText);
@@ -1075,7 +1075,7 @@ public sealed partial class MainWindow
 
                 var progressDialog = new ContentDialog
                 {
-                    Title = "Resetting...",
+                    Title = "초기화 중...",
                     Content = progressPanel,
                     XamlRoot = Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
@@ -1102,7 +1102,7 @@ public sealed partial class MainWindow
 
                     // Reset global profile
                     DispatcherQueue?.TryEnqueue(() =>
-                        progressText.Text = "Resetting global settings...");
+                        progressText.Text = "전역 설정 초기화 중...");
                     presetSvc.ResetGlobalProfile();
                 });
 
@@ -1124,9 +1124,9 @@ public sealed partial class MainWindow
 
                 await DialogService.ShowSafeAsync(new ContentDialog
                 {
-                    Title = "Profiles Reset",
-                    Content = $"Reset {resetCount} game profile(s) and global settings to factory defaults.",
-                    CloseButtonText = "OK",
+                    Title = "프로필 초기화됨",
+                    Content = $"게임 프로필 {resetCount}개와 전역 설정을 공장 기본값으로 초기화했습니다.",
+                    CloseButtonText = "확인",
                     XamlRoot = Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 });
@@ -1136,9 +1136,9 @@ public sealed partial class MainWindow
                 CrashReporter.Log($"[ResetAllNvidiaProfiles_Click] Error: {ex.GetType().Name}: {ex.Message}");
                 await DialogService.ShowSafeAsync(new ContentDialog
                 {
-                    Title = "Reset Failed",
-                    Content = $"Error: {ex.Message}",
-                    CloseButtonText = "OK",
+                    Title = "초기화 실패",
+                    Content = $"오류: {ex.Message}",
+                    CloseButtonText = "확인",
                     XamlRoot = Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 });
@@ -1156,10 +1156,10 @@ public sealed partial class MainWindow
         {
             var confirmDialog = new ContentDialog
             {
-                Title = "Clear NVIDIA Shader Cache",
-                Content = "This will permanently delete the NVIDIA DXCache and GLCache folders. This cannot be undone.\n\nAll games will need to rebuild their shader caches on next launch, which may cause brief stuttering or longer load times the first time. This can fix shader corruption, persistent stuttering, or graphical issues after driver updates.",
-                PrimaryButtonText = "Clear",
-                CloseButtonText = "Cancel",
+                Title = "NVIDIA 셰이더 캐시 지우기",
+                Content = "NVIDIA DXCache 및 GLCache 폴더를 영구적으로 삭제합니다. 되돌릴 수 없습니다.\n\n모든 게임이 다음 실행 시 셰이더 캐시를 다시 빌드해야 하므로 처음에는 잠깐 끊기거나 로딩이 길어질 수 있습니다. 셰이더 손상, 지속적인 끊김, 드라이버 업데이트 후의 그래픽 문제를 해결할 수 있습니다.",
+                PrimaryButtonText = "지우기",
+                CloseButtonText = "취소",
                 DefaultButton = ContentDialogButton.Close,
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
@@ -1200,14 +1200,14 @@ public sealed partial class MainWindow
             }
 
             var message = filesFailed > 0
-                ? $"Shader cache folders cleared. {filesDeleted} files deleted, {filesFailed} files skipped (in use by running games). Shaders will recompile on next game launch."
-                : $"Shader cache folders cleared. {filesDeleted} files deleted. Shaders will recompile on next game launch.";
+                ? $"셰이더 캐시 폴더를 지웠습니다. 파일 {filesDeleted}개 삭제, {filesFailed}개 건너뜀(실행 중인 게임에서 사용 중). 다음 게임 실행 시 셰이더가 다시 컴파일됩니다."
+                : $"셰이더 캐시 폴더를 지웠습니다. 파일 {filesDeleted}개 삭제됨. 다음 게임 실행 시 셰이더가 다시 컴파일됩니다.";
 
             await DialogService.ShowSafeAsync(new ContentDialog
             {
-                Title = "Shader Cache Cleared",
+                Title = "셰이더 캐시 지움",
                 Content = message,
-                CloseButtonText = "OK",
+                CloseButtonText = "확인",
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             });
@@ -1324,7 +1324,7 @@ public sealed partial class MainWindow
             {
                 var cb = new CheckBox
                 {
-                    Content = $"{display.Name}{(display.HdrSupported ? "" : " (no HDR)")}",
+                    Content = $"{display.Name}{(display.HdrSupported ? "" : " (HDR 미지원)")}",
                     IsChecked = currentSelection.Contains(display.TargetId),
                     IsEnabled = display.HdrSupported,
                     FontSize = 13,
@@ -1335,7 +1335,7 @@ public sealed partial class MainWindow
 
             panel.Children.Add(new TextBlock
             {
-                Text = "Leave all unchecked to enable HDR on the primary display only.",
+                Text = "모두 선택하지 않으면 기본 디스플레이에서만 HDR을 켭니다.",
                 FontSize = 11,
                 Foreground = UIFactory.Brush(ResourceKeys.InlineDescriptionBrush),
                 Margin = new Thickness(0, 4, 0, 0),
@@ -1343,10 +1343,10 @@ public sealed partial class MainWindow
 
             var dialog = new ContentDialog
             {
-                Title = "Select HDR Monitors",
+                Title = "HDR 모니터 선택",
                 Content = panel,
-                PrimaryButtonText = "Save",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "저장",
+                CloseButtonText = "취소",
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -1538,13 +1538,13 @@ public sealed partial class MainWindow
     private static string ColorApplyFailureText(string displayName, string depth, string range, int status) => status switch
     {
         NvColorService.NVAPI_NOT_SUPPORTED or NvColorService.NVAPI_INVALID_ARGUMENT =>
-            $"{displayName} doesn't support {depth} with {range} range at its current resolution and refresh rate. "
-            + "Pick a lower colour depth, or lower the refresh rate if the monitor only offers it at lower ones.",
+            $"{displayName}은(는) 현재 해상도와 주사율에서 {depth}, {range} 범위를 지원하지 않습니다. "
+            + "더 낮은 색 심도를 선택하거나, 모니터가 낮은 주사율에서만 지원한다면 주사율을 낮추세요.",
         NvColorService.NVAPI_INVALID_USER_PRIVILEGE =>
-            $"Couldn't apply colour settings to {displayName}: the NVIDIA driver needs RHI to run as administrator. Turn on Admin Mode in Settings.",
+            $"{displayName}에 색상 설정을 적용할 수 없습니다: NVIDIA 드라이버를 사용하려면 BONG DLSS5를 관리자 권한으로 실행해야 합니다. 설정에서 관리자 모드를 켜세요.",
         NvColorService.StatusNotAvailable =>
-            $"Couldn't apply colour settings to {displayName}: the NVIDIA driver interface isn't available.",
-        _ => $"The NVIDIA driver couldn't apply {depth}, {range} to {displayName} (error {status}).",
+            $"{displayName}에 색상 설정을 적용할 수 없습니다: NVIDIA 드라이버 인터페이스를 사용할 수 없습니다.",
+        _ => $"NVIDIA 드라이버가 {displayName}에 {depth}, {range}을(를) 적용하지 못했습니다 (오류 {status}).",
     };
 
     private async void ColorApplyBtn_Click(object sender, RoutedEventArgs e)
@@ -1569,11 +1569,11 @@ public sealed partial class MainWindow
 
             var dialog = new ContentDialog
             {
-                Title   = "Output Colour Settings",
+                Title   = "출력 색상 설정",
                 Content = ok
-                    ? $"Applied to {display.Name}: {depthLabel}, {rangeLabel}."
+                    ? $"{display.Name}에 적용됨: {depthLabel}, {rangeLabel}."
                     : ColorApplyFailureText(display.Name, depthLabel, rangeLabel, status),
-                CloseButtonText = "OK",
+                CloseButtonText = "확인",
                 XamlRoot        = Content.XamlRoot,
                 RequestedTheme  = ElementTheme.Dark,
             };
@@ -1610,7 +1610,7 @@ public sealed partial class MainWindow
 
             panel.Children.Add(new TextBlock
             {
-                Text = "Leave all unchecked to change resolution on the primary display only.",
+                Text = "모두 선택하지 않으면 기본 디스플레이에서만 해상도를 변경합니다.",
                 FontSize = 11,
                 Foreground = UIFactory.Brush(ResourceKeys.InlineDescriptionBrush),
                 Margin = new Thickness(0, 4, 0, 0),
@@ -1618,10 +1618,10 @@ public sealed partial class MainWindow
 
             var dialog = new ContentDialog
             {
-                Title = "Select Resolution Monitors",
+                Title = "해상도 변경 모니터 선택",
                 Content = panel,
-                PrimaryButtonText = "Save",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "저장",
+                CloseButtonText = "취소",
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -1695,7 +1695,7 @@ public sealed partial class MainWindow
 
             content.Children.Add(new TextBlock
             {
-                Text = "How DLDSR Control Works",
+                Text = "DLDSR 제어 작동 방식",
                 FontSize = 14,
                 FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                 Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
@@ -1703,9 +1703,9 @@ public sealed partial class MainWindow
 
             content.Children.Add(new TextBlock
             {
-                Text = "DLDSR (Deep Learning Dynamic Super Resolution) renders games at higher resolutions and downscales with AI for sharper image quality. This feature lets you switch DLDSR presets without opening NVIDIA Control Panel.\n\n" +
-                       "DLDSR uses a Lanczos algorithm — less jaggies, more stable, but can look slightly painterly. Standard DSR uses a Gaussian filter — more natural but with more aliasing. DLDSR is generally sharper than DSR at equivalent settings.\n\n" +
-                       "Recommended factors: DLDSR 2.25x offers the best balance of quality and performance. DSR 4.00x uses significantly more VRAM. DLDSR 1.78x is the most VRAM-friendly option.",
+                Text = "DLDSR(Deep Learning Dynamic Super Resolution)은 게임을 더 높은 해상도로 렌더링한 뒤 AI로 다운스케일하여 더 선명한 화질을 제공합니다. 이 기능으로 NVIDIA 제어판을 열지 않고도 DLDSR 프리셋을 전환할 수 있습니다.\n\n" +
+                       "DLDSR은 Lanczos 알고리즘을 사용합니다 — 계단 현상이 적고 안정적이지만 약간 그림처럼 보일 수 있습니다. 일반 DSR은 Gaussian 필터를 사용합니다 — 더 자연스럽지만 앨리어싱이 더 많습니다. 같은 설정에서 DLDSR이 일반적으로 DSR보다 선명합니다.\n\n" +
+                       "권장 배율: DLDSR 2.25x가 화질과 성능의 균형이 가장 좋습니다. DSR 4.00x는 VRAM을 훨씬 많이 사용합니다. DLDSR 1.78x가 VRAM 부담이 가장 적습니다.",
                 FontSize = 12,
                 TextWrapping = TextWrapping.Wrap,
                 Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
@@ -1713,7 +1713,7 @@ public sealed partial class MainWindow
 
             content.Children.Add(new TextBlock
             {
-                Text = "Initial Setup (One Time)",
+                Text = "초기 설정 (최초 1회)",
                 FontSize = 13,
                 FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                 Foreground = UIFactory.Brush(ResourceKeys.AccentTealBrush),
@@ -1722,11 +1722,11 @@ public sealed partial class MainWindow
 
             content.Children.Add(new TextBlock
             {
-                Text = "1. Open NVIDIA Control Panel → Manage 3D Settings → Global Settings\n" +
-                       "2. Find \"DSR - Factors\" and enable the DLDSR factors you want (e.g. 1.78x DL, 2.25x DL)\n" +
-                       "3. Click Apply and wait for the ~15 second display blackout\n" +
-                       "4. Come back here and click \"Capture Current\" to save this state\n" +
-                       "5. Repeat steps 2-4 for each DLDSR configuration you want to save (e.g. \"Off\", \"2.25x only\", \"1.78x + 2.25x\")",
+                Text = "1. NVIDIA 제어판 → 3D 설정 관리 → 전역 설정을 엽니다\n" +
+                       "2. \"DSR - 배율\"을 찾아 원하는 DLDSR 배율을 켭니다 (예: 1.78x DL, 2.25x DL)\n" +
+                       "3. 적용을 클릭하고 약 15초간 화면이 꺼지는 동안 기다립니다\n" +
+                       "4. 여기로 돌아와 \"현재 상태 캡처\"를 클릭해 이 상태를 저장합니다\n" +
+                       "5. 저장하려는 각 DLDSR 구성마다 2-4단계를 반복합니다 (예: \"끄기\", \"2.25x만\", \"1.78x + 2.25x\")",
                 FontSize = 12,
                 TextWrapping = TextWrapping.Wrap,
                 Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
@@ -1734,7 +1734,7 @@ public sealed partial class MainWindow
 
             content.Children.Add(new TextBlock
             {
-                Text = "Daily Use",
+                Text = "일상 사용",
                 FontSize = 13,
                 FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                 Foreground = UIFactory.Brush(ResourceKeys.AccentTealBrush),
@@ -1743,7 +1743,7 @@ public sealed partial class MainWindow
 
             content.Children.Add(new TextBlock
             {
-                Text = "Select a saved state from the dropdown and click Apply. RHI writes the registry values directly and triggers a display reset (~15 seconds of blackout while the driver reinitializes).",
+                Text = "드롭다운에서 저장된 상태를 선택하고 적용을 클릭하세요. BONG DLSS5가 레지스트리 값을 직접 기록하고 디스플레이 재설정을 실행합니다 (드라이버가 다시 초기화되는 동안 약 15초간 화면이 꺼집니다).",
                 FontSize = 12,
                 TextWrapping = TextWrapping.Wrap,
                 Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
@@ -1751,7 +1751,7 @@ public sealed partial class MainWindow
 
             content.Children.Add(new TextBlock
             {
-                Text = "DSR Smoothness",
+                Text = "DSR 부드러움",
                 FontSize = 13,
                 FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                 Foreground = UIFactory.Brush(ResourceKeys.AccentTealBrush),
@@ -1760,16 +1760,16 @@ public sealed partial class MainWindow
 
             content.Children.Add(new TextBlock
             {
-                Text = "Controls the sharpening/smoothing applied during downscale. 100 = no sharpening (pure Lanczos downscale). Lower values add sharpening — the image gets progressively sharper as you reduce it.\n\n" +
-                       "Recommended DLDSR smoothness values (from r/MotionClarity):\n" +
-                       "  • 100 — No sharpening\n" +
-                       "  • 80 — Sharp without artifacts\n" +
-                       "  • 75 — Clear\n" +
-                       "  • 65 — Clearer\n" +
-                       "  • 55-65 — Similar clarity to DSR 4.00x at 0% (recommended range)\n" +
-                       "  • 45 — As sharp as DSR 4.00x everywhere\n\n" +
-                       "Note: DLDSR uses a Lanczos algorithm — it is naturally much sharper than standard DSR (Gaussian), so it requires higher smoothness values for a comparable look.\n\n" +
-                       "Changing smoothness causes the same ~15 second display blackout as applying a full state. Tip: set smoothness first, then click Apply — both will apply together in a single restart.",
+                Text = "다운스케일 시 적용되는 선명화/부드러움 정도를 조절합니다. 100 = 선명화 없음 (순수 Lanczos 다운스케일). 값이 낮을수록 선명화가 추가되어 이미지가 점점 선명해집니다.\n\n" +
+                       "권장 DLDSR 부드러움 값 (r/MotionClarity 기준):\n" +
+                       "  • 100 — 선명화 없음\n" +
+                       "  • 80 — 아티팩트 없이 선명함\n" +
+                       "  • 75 — 깨끗함\n" +
+                       "  • 65 — 더 깨끗함\n" +
+                       "  • 55-65 — DSR 4.00x 0%와 비슷한 선명도 (권장 범위)\n" +
+                       "  • 45 — 모든 부분에서 DSR 4.00x만큼 선명함\n\n" +
+                       "참고: DLDSR은 Lanczos 알고리즘을 사용하므로 일반 DSR(Gaussian)보다 본래 훨씬 선명합니다. 따라서 비슷한 느낌을 내려면 더 높은 부드러움 값이 필요합니다.\n\n" +
+                       "부드러움을 변경하면 상태 전체를 적용할 때와 마찬가지로 약 15초간 화면이 꺼집니다. 팁: 부드러움을 먼저 설정한 뒤 적용을 클릭하면 한 번의 재시작으로 함께 적용됩니다.",
                 FontSize = 12,
                 TextWrapping = TextWrapping.Wrap,
                 Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
@@ -1785,9 +1785,9 @@ public sealed partial class MainWindow
 
             var dialog = new ContentDialog
             {
-                Title = "DLDSR Control",
+                Title = "DLDSR 제어",
                 Content = scrollViewer,
-                CloseButtonText = "Got it",
+                CloseButtonText = "확인",
                 XamlRoot = Content.XamlRoot,
             };
             await DialogService.ShowSafeAsync(dialog);
@@ -1807,10 +1807,10 @@ public sealed partial class MainWindow
 
             var confirm = new ContentDialog
             {
-                Title = "Apply DLDSR state?",
-                Content = $"Your screen will go black for about 15 seconds while the driver applies '{selectedLabel}'.",
-                PrimaryButtonText = "Apply",
-                CloseButtonText = "Cancel",
+                Title = "DLDSR 상태를 적용할까요?",
+                Content = $"드라이버가 '{selectedLabel}'을(를) 적용하는 동안 약 15초간 화면이 꺼집니다.",
+                PrimaryButtonText = "적용",
+                CloseButtonText = "취소",
                 DefaultButton = ContentDialogButton.Close,
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
@@ -1818,7 +1818,7 @@ public sealed partial class MainWindow
             if (await DialogService.ShowSafeAsync(confirm) != ContentDialogResult.Primary) return;
 
             DldsrApplyBtn.IsEnabled = false;
-            DldsrApplyBtn.Content = "Applying...";
+            DldsrApplyBtn.Content = "적용 중...";
 
             try
             {
@@ -1849,9 +1849,9 @@ public sealed partial class MainWindow
                     _crashReporter.Log($"[DLDSR] Failed to apply state '{selectedLabel}'");
                     var dlg = new ContentDialog
                     {
-                        Title = "DLDSR Apply Failed",
-                        Content = "Failed to apply DLDSR state. Check logs for details.",
-                        CloseButtonText = "OK",
+                        Title = "DLDSR 적용 실패",
+                        Content = "DLDSR 상태를 적용하지 못했습니다. 자세한 내용은 로그를 확인하세요.",
+                        CloseButtonText = "확인",
                         XamlRoot = Content.XamlRoot,
                     };
                     await DialogService.ShowSafeAsync(dlg);
@@ -1862,9 +1862,9 @@ public sealed partial class MainWindow
                 _crashReporter.Log($"[DLDSR] Exception applying state — {ex.Message}");
                 var dlg = new ContentDialog
                 {
-                    Title = "DLDSR Apply Failed",
+                    Title = "DLDSR 적용 실패",
                     Content = ex.Message,
-                    CloseButtonText = "OK",
+                    CloseButtonText = "확인",
                     XamlRoot = Content.XamlRoot,
                 };
                 await DialogService.ShowSafeAsync(dlg);
@@ -1872,7 +1872,7 @@ public sealed partial class MainWindow
             finally
             {
                 DldsrApplyBtn.IsEnabled = true;
-                DldsrApplyBtn.Content = "Apply";
+                DldsrApplyBtn.Content = "적용";
             }
         }
         catch (Exception ex)
@@ -1888,13 +1888,13 @@ public sealed partial class MainWindow
             // Show input dialog to get a label for the capture
             var inputBox = new TextBox
             {
-                PlaceholderText = "e.g. DLDSR 2.25x + 1.78x",
+                PlaceholderText = "예: DLDSR 2.25x + 1.78x",
                 FontSize = 12,
                 Width = 300,
             };
             var dialog = new ContentDialog
             {
-                Title = "Capture DLDSR State",
+                Title = "DLDSR 상태 캡처",
                 Content = new StackPanel
                 {
                     Spacing = 8,
@@ -1902,7 +1902,7 @@ public sealed partial class MainWindow
                     {
                         new TextBlock
                         {
-                            Text = "Enter a label for this DLDSR configuration.\nFirst enable the DLDSR factors you want in NVIDIA Control Panel, then capture here.",
+                            Text = "이 DLDSR 구성의 이름을 입력하세요.\n먼저 NVIDIA 제어판에서 원하는 DLDSR 배율을 켠 다음 여기서 캡처하세요.",
                             FontSize = 12,
                             TextWrapping = TextWrapping.Wrap,
                             Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
@@ -1910,8 +1910,8 @@ public sealed partial class MainWindow
                         inputBox,
                     },
                 },
-                PrimaryButtonText = "Capture",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "캡처",
+                CloseButtonText = "취소",
                 XamlRoot = Content.XamlRoot,
             };
 
@@ -1923,9 +1923,9 @@ public sealed partial class MainWindow
             {
                 var errDlg = new ContentDialog
                 {
-                    Title = "Invalid Label",
-                    Content = "Please enter a label for the capture.",
-                    CloseButtonText = "OK",
+                    Title = "잘못된 이름",
+                    Content = "캡처 이름을 입력하세요.",
+                    CloseButtonText = "확인",
                     XamlRoot = Content.XamlRoot,
                 };
                 await DialogService.ShowSafeAsync(errDlg);
@@ -1945,9 +1945,9 @@ public sealed partial class MainWindow
                 _crashReporter.Log($"[DLDSR] Failed to capture state — {ex.Message}");
                 var errDlg = new ContentDialog
                 {
-                    Title = "DLDSR Capture Failed",
+                    Title = "DLDSR 캡처 실패",
                     Content = ex.Message,
-                    CloseButtonText = "OK",
+                    CloseButtonText = "확인",
                     XamlRoot = Content.XamlRoot,
                 };
                 await DialogService.ShowSafeAsync(errDlg);
@@ -1968,10 +1968,10 @@ public sealed partial class MainWindow
 
             var confirm = new ContentDialog
             {
-                Title = "Delete DLDSR Capture",
-                Content = $"Delete the capture '{selectedLabel}'?",
-                PrimaryButtonText = "Delete",
-                CloseButtonText = "Cancel",
+                Title = "DLDSR 캡처 삭제",
+                Content = $"캡처 '{selectedLabel}'을(를) 삭제할까요?",
+                PrimaryButtonText = "삭제",
+                CloseButtonText = "취소",
                 DefaultButton = ContentDialogButton.Close,
                 XamlRoot = Content.XamlRoot,
             };
@@ -2010,7 +2010,7 @@ public sealed partial class MainWindow
             var smoothness = (int)DldsrSmoothnessSlider.Value;
 
             DldsrSmoothnessApplyBtn.IsEnabled = false;
-            DldsrSmoothnessApplyBtn.Content = "Setting...";
+            DldsrSmoothnessApplyBtn.Content = "설정 중...";
 
             try
             {
@@ -2029,9 +2029,9 @@ public sealed partial class MainWindow
                     _crashReporter.Log($"[DLDSR] Failed to set smoothness to {smoothness}%");
                     var dlg = new ContentDialog
                     {
-                        Title = "Smoothness Apply Failed",
-                        Content = "Failed to set DSR smoothness. Check logs for details.",
-                        CloseButtonText = "OK",
+                        Title = "부드러움 적용 실패",
+                        Content = "DSR 부드러움을 설정하지 못했습니다. 자세한 내용은 로그를 확인하세요.",
+                        CloseButtonText = "확인",
                         XamlRoot = Content.XamlRoot,
                     };
                     await DialogService.ShowSafeAsync(dlg);
@@ -2042,9 +2042,9 @@ public sealed partial class MainWindow
                 _crashReporter.Log($"[DLDSR] Exception setting smoothness — {ex.Message}");
                 var dlg = new ContentDialog
                 {
-                    Title = "Smoothness Apply Failed",
+                    Title = "부드러움 적용 실패",
                     Content = ex.Message,
-                    CloseButtonText = "OK",
+                    CloseButtonText = "확인",
                     XamlRoot = Content.XamlRoot,
                 };
                 await DialogService.ShowSafeAsync(dlg);
@@ -2052,7 +2052,7 @@ public sealed partial class MainWindow
             finally
             {
                 DldsrSmoothnessApplyBtn.IsEnabled = true;
-                DldsrSmoothnessApplyBtn.Content = "Set";
+                DldsrSmoothnessApplyBtn.Content = "설정";
             }
         }
         catch (Exception ex)
@@ -2158,14 +2158,14 @@ public sealed partial class MainWindow
             var enablePanel = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 10 };
             enablePanel.Children.Add(new TextBlock
             {
-                Text = "Auto-apply peak nits on deploy",
+                Text = "배포 시 최대 니트 자동 적용",
                 FontSize = 12,
                 Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
                 VerticalAlignment = VerticalAlignment.Center,
             });
             var enableCombo = new ComboBox { FontSize = 12, VerticalAlignment = VerticalAlignment.Center };
-            enableCombo.Items.Add("Off");
-            enableCombo.Items.Add("On");
+            enableCombo.Items.Add("꺼짐");
+            enableCombo.Items.Add("켜짐");
             enableCombo.SelectedIndex = settings.PeakNitsEnabled ? 1 : 0;
             enablePanel.Children.Add(enableCombo);
             content.Children.Add(enablePanel);
@@ -2173,22 +2173,22 @@ public sealed partial class MainWindow
             // Preset checkboxes
             content.Children.Add(new TextBlock
             {
-                Text = "Apply to presets:",
+                Text = "적용할 프리셋:",
                 FontSize = 12,
                 Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
                 Margin = new Thickness(0, 4, 0, 0),
             });
 
-            var cb1 = new CheckBox { Content = "Preset 1", IsChecked = settings.PeakNitsPresets.Contains(1), FontSize = 12 };
-            var cb2 = new CheckBox { Content = "Preset 2", IsChecked = settings.PeakNitsPresets.Contains(2), FontSize = 12 };
-            var cb3 = new CheckBox { Content = "Preset 3", IsChecked = settings.PeakNitsPresets.Contains(3), FontSize = 12 };
+            var cb1 = new CheckBox { Content = "프리셋 1", IsChecked = settings.PeakNitsPresets.Contains(1), FontSize = 12 };
+            var cb2 = new CheckBox { Content = "프리셋 2", IsChecked = settings.PeakNitsPresets.Contains(2), FontSize = 12 };
+            var cb3 = new CheckBox { Content = "프리셋 3", IsChecked = settings.PeakNitsPresets.Contains(3), FontSize = 12 };
             content.Children.Add(cb1);
             content.Children.Add(cb2);
             content.Children.Add(cb3);
 
             content.Children.Add(new TextBlock
             {
-                Text = "Unchecked presets keep their existing per-preset values.",
+                Text = "선택하지 않은 프리셋은 기존 프리셋별 값을 유지합니다.",
                 FontSize = 11,
                 Foreground = UIFactory.Brush(ResourceKeys.InlineDescriptionBrush),
                 TextWrapping = TextWrapping.Wrap,
@@ -2196,10 +2196,10 @@ public sealed partial class MainWindow
 
             var dialog = new ContentDialog
             {
-                Title = "Peak Nits Settings",
+                Title = "최대 니트 설정",
                 Content = content,
-                PrimaryButtonText = "Save",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = "저장",
+                CloseButtonText = "취소",
                 DefaultButton = ContentDialogButton.Primary,
                 XamlRoot = (sender as FrameworkElement)?.XamlRoot ?? Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
@@ -2233,7 +2233,7 @@ public sealed partial class MainWindow
 
     private void AboutButton_Click(object sender, RoutedEventArgs e)
     {
-        AboutVersionText.Text = $"v{CrashReporter.AppVersion}  ·  Simplified PC Gaming by RankFTW";
+        AboutVersionText.Text = $"v{CrashReporter.AppVersion}  ·  RankFTW가 만든 간편한 PC 게이밍";
         // Show installed Windows App Runtime version — scan WindowsApps for the installed runtime folder
         try
         {
@@ -2275,7 +2275,7 @@ public sealed partial class MainWindow
                 {
                     wikiListPanel.Children.Add(new TextBlock
                     {
-                        Text = $"... and {newWikiMods.Count - 30} more",
+                        Text = $"... 외 {newWikiMods.Count - 30}개",
                         FontSize = 12,
                         FontStyle = Windows.UI.Text.FontStyle.Italic,
                         Foreground = (SolidColorBrush)Application.Current.Resources["TextTertiaryBrush"],
@@ -2285,7 +2285,7 @@ public sealed partial class MainWindow
                 var wikiSection = new StackPanel { Spacing = 8 };
                 wikiSection.Children.Add(new TextBlock
                 {
-                    Text = $"🖥️ {newWikiMods.Count} new RenoDX mod{(newWikiMods.Count == 1 ? "" : "s")}:",
+                    Text = $"🖥️ 새 RenoDX 모드 {newWikiMods.Count}개:",
                     FontSize = 13,
                     FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                     Foreground = (SolidColorBrush)Application.Current.Resources["TextPrimaryBrush"],
@@ -2316,7 +2316,7 @@ public sealed partial class MainWindow
                 {
                     ultraPlusListPanel.Children.Add(new TextBlock
                     {
-                        Text = $"... and {newUltraPlusMods.Count - 30} more",
+                        Text = $"... 외 {newUltraPlusMods.Count - 30}개",
                         FontSize = 12,
                         FontStyle = Windows.UI.Text.FontStyle.Italic,
                         Foreground = (SolidColorBrush)Application.Current.Resources["TextTertiaryBrush"],
@@ -2336,7 +2336,7 @@ public sealed partial class MainWindow
                 });
                 ultraPlusHeader.Children.Add(new TextBlock
                 {
-                    Text = $"{newUltraPlusMods.Count} new Ultra+ mod{(newUltraPlusMods.Count == 1 ? "" : "s")}:",
+                    Text = $"새 Ultra+ 모드 {newUltraPlusMods.Count}개:",
                     FontSize = 13,
                     FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                     Foreground = (SolidColorBrush)Application.Current.Resources["TextPrimaryBrush"],
@@ -2369,7 +2369,7 @@ public sealed partial class MainWindow
                 {
                     lumaListPanel.Children.Add(new TextBlock
                     {
-                        Text = $"... and {newLumaMods.Count - 30} more",
+                        Text = $"... 외 {newLumaMods.Count - 30}개",
                         FontSize = 12,
                         FontStyle = Windows.UI.Text.FontStyle.Italic,
                         Foreground = (SolidColorBrush)Application.Current.Resources["TextTertiaryBrush"],
@@ -2379,7 +2379,7 @@ public sealed partial class MainWindow
                 var lumaSection = new StackPanel { Spacing = 8 };
                 lumaSection.Children.Add(new TextBlock
                 {
-                    Text = $"🌙 {newLumaMods.Count} new Luma mod{(newLumaMods.Count == 1 ? "" : "s")}:",
+                    Text = $"🌙 새 Luma 모드 {newLumaMods.Count}개:",
                     FontSize = 13,
                     FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                     Foreground = (SolidColorBrush)Application.Current.Resources["TextPrimaryBrush"],
@@ -2396,10 +2396,10 @@ public sealed partial class MainWindow
             var totalCount = newWikiMods.Count + newUltraPlusMods.Count + newLumaMods.Count;
             var dialog = new ContentDialog
             {
-                Title = "New Mods Available",
+                Title = "새 모드 있음",
                 Content = contentPanel,
-                PrimaryButtonText = "Dismiss",
-                CloseButtonText = "Close",
+                PrimaryButtonText = "무시",
+                CloseButtonText = "닫기",
                 XamlRoot = Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
             };
@@ -2440,7 +2440,7 @@ public sealed partial class MainWindow
             // ── Search box ────────────────────────────────────────────────────────
             var searchBox = new TextBox
             {
-                PlaceholderText = "Search games, or type RenoDX, Luma or Ultra+ to filter…",
+                PlaceholderText = "게임 검색 또는 RenoDX, Luma, Ultra+ 입력으로 필터…",
                 FontSize        = 13,
                 Margin          = new Thickness(0, 0, 0, 10),
             };
@@ -2464,11 +2464,11 @@ public sealed partial class MainWindow
                     VerticalAlignment   = VerticalAlignment.Center,
                 };
                 if (text == "Ultra+")
-                    ToolTipService.SetToolTip(tb, "Games with an Ultra+ graphics mod on theultraplace.com.");
+                    ToolTipService.SetToolTip(tb, "theultraplace.com에 Ultra+ 그래픽 모드가 있는 게임입니다.");
                 Grid.SetColumn(tb, col);
                 headerGrid.Children.Add(tb);
             }
-            AddHeader("Game",   0);
+            AddHeader("게임",   0);
             AddHeader("RenoDX", 1);
             AddHeader("Luma",   2);
             AddHeader("Ultra+", 3);
@@ -2501,9 +2501,9 @@ public sealed partial class MainWindow
                     VerticalAlignment   = VerticalAlignment.Center,
                 };
 
-                var statusTip = status == "Done" ? $"{modName} mod available."
-                              : status == "WIP"  ? $"{modName} mod work in progress."
-                              : $"{modName} mod not available.";
+                var statusTip = status == "Done" ? $"{modName} 모드 사용 가능."
+                              : status == "WIP"  ? $"{modName} 모드 작업 중."
+                              : $"{modName} 모드 없음.";
 
                 FrameworkElement cell = tick;
                 if (status != null && !string.IsNullOrEmpty(url)
@@ -2519,7 +2519,7 @@ public sealed partial class MainWindow
                         HorizontalAlignment = HorizontalAlignment.Center,
                         VerticalAlignment   = VerticalAlignment.Center,
                     };
-                    ToolTipService.SetToolTip(link, $"{statusTip} Click to open its page.");
+                    ToolTipService.SetToolTip(link, $"{statusTip} 클릭하면 해당 페이지를 엽니다.");
                     cell = link;
                 }
                 else
@@ -2610,7 +2610,7 @@ public sealed partial class MainWindow
             // ── Assemble dialog content ───────────────────────────────────────────
             var countLabel = new TextBlock
             {
-                Text       = $"{allEntries.Count(m => m.HasRenoDX)} RenoDX Mods, {allEntries.Count(m => m.HasLuma)} Luma Mods, {allEntries.Count(m => m.HasUltraPlus)} Ultra+ Mods",
+                Text       = $"RenoDX 모드 {allEntries.Count(m => m.HasRenoDX)}개, Luma 모드 {allEntries.Count(m => m.HasLuma)}개, Ultra+ 모드 {allEntries.Count(m => m.HasUltraPlus)}개",
                 FontSize   = 11,
                 Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush),
                 Margin     = new Thickness(0, 0, 0, 10),
@@ -2630,9 +2630,9 @@ public sealed partial class MainWindow
 
             var dlg = new ContentDialog
             {
-                Title           = "Available Mods",
+                Title           = "사용 가능한 모드",
                 Content         = content,
-                CloseButtonText = "Close",
+                CloseButtonText = "닫기",
                 XamlRoot        = Content.XamlRoot,
                 RequestedTheme  = ElementTheme.Dark,
                 DefaultButton   = ContentDialogButton.Close,

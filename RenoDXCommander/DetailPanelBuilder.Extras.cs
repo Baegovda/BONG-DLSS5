@@ -39,7 +39,7 @@ public partial class DetailPanelBuilder
         };
         var exTitle = new TextBlock
         {
-            Text       = "Extras",
+            Text       = "추가 기능",
             FontSize   = 13,
             FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
             Foreground = UIFactory.Brush(ResourceKeys.TextPrimaryBrush),
@@ -74,17 +74,17 @@ public partial class DetailPanelBuilder
         bool dgvInstalled = !string.IsNullOrEmpty(installPath) && dgSvc.IsDeployed(installPath);
         var exSummaryEntries = new List<(string, string?)>();
         if (!string.IsNullOrEmpty(vm.GetUalInstalledAs(gn, gs)))                           exSummaryEntries.Add(("ASI Loader", vm.GetUalInstalledAs(gn, gs)));
-        if (vm.GetRtx40MfgInstalled(gn, gs))                                               exSummaryEntries.Add(("Universal MFG", "On"));
-        if (card.MfgAdaInstalled)                                                          exSummaryEntries.Add(("MFG Unlock", "On"));
-        if (vm.GetDlssg2030Installed(gn, gs))                                              exSummaryEntries.Add(("20/30 FG", "On"));
+        if (vm.GetRtx40MfgInstalled(gn, gs))                                               exSummaryEntries.Add(("Universal MFG", "켜짐"));
+        if (card.MfgAdaInstalled)                                                          exSummaryEntries.Add(("MFG Unlock", "켜짐"));
+        if (vm.GetDlssg2030Installed(gn, gs))                                              exSummaryEntries.Add(("20/30 FG", "켜짐"));
         if (card.IsOsInstalled)                                                             exSummaryEntries.Add(("OptiScaler", card.OsInstalledVersion));
-        if (HsfService.IsInstalledIn(installPath, card.Is32Bit))                           exSummaryEntries.Add(("HSF", "On"));
+        if (HsfService.IsInstalledIn(installPath, card.Is32Bit))                           exSummaryEntries.Add(("HSF", "켜짐"));
         var encoreSvc = App.Services.GetRequiredService<RtxEncoreService>();
-        if (encoreSvc.IsInstalledIn(installPath, vm.GetRtxEncoreInstalledAs(gn, gs)))      exSummaryEntries.Add(("RTX Encore", encoreSvc.StagedVersion ?? "On"));
-        if (!string.IsNullOrEmpty(vm.GetDeInstalledAs(gn, gs)))                            exSummaryEntries.Add(("DLSS Enabler", "On"));
-        if (card.IsDxvkInstalled)                                                           exSummaryEntries.Add(("DXVK", card.DxvkInstalledVersion ?? "On"));
+        if (encoreSvc.IsInstalledIn(installPath, vm.GetRtxEncoreInstalledAs(gn, gs)))      exSummaryEntries.Add(("RTX Encore", encoreSvc.StagedVersion ?? "켜짐"));
+        if (!string.IsNullOrEmpty(vm.GetDeInstalledAs(gn, gs)))                            exSummaryEntries.Add(("DLSS Enabler", "켜짐"));
+        if (card.IsDxvkInstalled)                                                           exSummaryEntries.Add(("DXVK", card.DxvkInstalledVersion ?? "켜짐"));
         if (dgvInstalled)                                                                   exSummaryEntries.Add(("dgVoodoo2", vm.GetDgVoodooVersion(gn, gs) ?? _window.ViewModel.Manifest?.DgVoodooVersions?.Keys.FirstOrDefault()));
-        var exSummary = DetailPanelBuilder.MakeSectionSummaryInlines(exSummaryEntries, "Extras installed for this game.");
+        var exSummary = DetailPanelBuilder.MakeSectionSummaryInlines(exSummaryEntries, "이 게임에 설치된 추가 기능.");
         if (exSummary != null)
         {
             exSummary.Visibility = exCollapsed ? Visibility.Visible : Visibility.Collapsed;
@@ -112,7 +112,7 @@ public partial class DetailPanelBuilder
         CrashReporter.Log($"[BuildExtrasSection] OsRow: {__exSw.ElapsedMilliseconds - __t0}ms '{card.GameName}'");
 
         // ── MFG Unlocks separator ─────────────────────────────────────────────
-        exBody.Children.Add(MakeExtrasSeparator("MFG Unlocks"));
+        exBody.Children.Add(MakeExtrasSeparator("MFG 잠금 해제"));
 
         // ── RTX Encore row ────────────────────────────────────────────────────
         __t0 = __exSw.ElapsedMilliseconds;
@@ -148,7 +148,7 @@ public partial class DetailPanelBuilder
         // ── API Upgrades sub-header + DXVK row ────────────────────────────────
         if (card.IsDxvkToggleVisible)
         {
-            exBody.Children.Add(MakeExtrasSeparator("API Upgrades"));
+            exBody.Children.Add(MakeExtrasSeparator("API 업그레이드"));
             __t0 = __exSw.ElapsedMilliseconds;
             BuildDxvkRow(card, exBody);
             CrashReporter.Log($"[BuildExtrasSection] DxvkRow: {__exSw.ElapsedMilliseconds - __t0}ms '{card.GameName}'");
@@ -160,7 +160,7 @@ public partial class DetailPanelBuilder
         if (isDx9ForDgv || dgvInstalled)
         {
             if (!card.IsDxvkToggleVisible) // Show separator only if DXVK row wasn't shown
-                exBody.Children.Add(MakeExtrasSeparator("API Upgrades"));
+                exBody.Children.Add(MakeExtrasSeparator("API 업그레이드"));
             __t0 = __exSw.ElapsedMilliseconds;
             BuildDgVoodooRow(card, exBody);
             CrashReporter.Log($"[BuildExtrasSection] DgVoodooRow: {__exSw.ElapsedMilliseconds - __t0}ms '{card.GameName}'");
@@ -278,15 +278,15 @@ public partial class DetailPanelBuilder
         };
         // osGreyed == 32-bit: the install button and cog are disabled (no tooltips), so say why here.
         ToolTipService.SetToolTip(label, osGreyed
-            ? "OptiScaler: upscaler and frame generation injector.\nNot available for 32-bit games."
-            : "OptiScaler: upscaler and frame generation injector.");
+            ? "OptiScaler: 업스케일러 및 프레임 생성 인젝터.\n32비트 게임에서는 사용할 수 없습니다."
+            : "OptiScaler: 업스케일러 및 프레임 생성 인젝터.");
         Grid.SetColumn(label, 0);
         row.Children.Add(label);
 
         // Col 1 — status
         var statusBlock = new TextBlock
         {
-            Text = card.OsStatusText,
+            Text = KoreanBuild.Tr(card.OsStatusText),
             FontSize = 12,
             Foreground = UIFactory.GetBrush(card.OsStatusColor),
             VerticalAlignment = VerticalAlignment.Center,
@@ -311,7 +311,7 @@ public partial class DetailPanelBuilder
             if (OsVariants.IsCustom(osVariant) && OsCustomBuildService.Get(osVariant) is { } customOs)
             {
                 // Custom build: no releases page, open its folder instead
-                ToolTipService.SetToolTip(statusBlock, $"{customOs.Label}{(customOs.DllVersion != null ? $" ({customOs.DllVersion})" : "")}. Click to open its folder.");
+                ToolTipService.SetToolTip(statusBlock, $"{customOs.Label}{(customOs.DllVersion != null ? $" ({customOs.DllVersion})" : "")}. 클릭하면 해당 폴더가 열립니다.");
                 var dir = customOs.Dir;
                 statusBlock.PointerPressed += (s, e) =>
                 {
@@ -322,7 +322,7 @@ public partial class DetailPanelBuilder
             }
             else
             {
-                ToolTipService.SetToolTip(statusBlock, "Click to open OptiScaler releases");
+                ToolTipService.SetToolTip(statusBlock, "클릭하여 OptiScaler 릴리스 열기");
                 statusBlock.PointerPressed += async (s, e) =>
                     await Windows.System.Launcher.LaunchUriAsync(new Uri(osWikiUrl));
             }
@@ -334,7 +334,7 @@ public partial class DetailPanelBuilder
         // Col 2 — Info button
         var infoBtn = new Button
         {
-            Content = "Info",
+            Content = "정보",
             FontSize = 11,
             Padding = new Thickness(6, 2, 6, 2),
             Width = 36,
@@ -347,7 +347,7 @@ public partial class DetailPanelBuilder
         var osVariantForInfo = _window.ViewModel.GetOsVariant(card.GameName, card.Source ?? "");
         if (OsForkService.Get(osVariantForInfo) is { RepoUrl: { } forkPage } forkInfo)
         {
-            ToolTipService.SetToolTip(infoBtn, $"Open {forkInfo.Label} GitHub page");
+            ToolTipService.SetToolTip(infoBtn, $"{forkInfo.Label} GitHub 페이지 열기");
             infoBtn.Click += (s, e) => _ = Windows.System.Launcher.LaunchUriAsync(new Uri(forkPage));
         }
         else if (osVariantForInfo == "DlssNr" || osVariantForInfo == "F5" || osVariantForInfo == "Nightly")
@@ -358,7 +358,7 @@ public partial class DetailPanelBuilder
                 ? "https://github.com/wilsjo2/OptiScaler-DLSSNR-PreSR-Multipass"
                 : "https://github.com/optiscaler/OptiScaler-nightly";
             var forkLabel = osVariantForInfo == "F5" ? "F5 DLSSNR" : osVariantForInfo == "DlssNr" ? "DLSS NR" : "OptiScaler Nightly";
-            ToolTipService.SetToolTip(infoBtn, $"Open {forkLabel} GitHub page");
+            ToolTipService.SetToolTip(infoBtn, $"{forkLabel} GitHub 페이지 열기");
             infoBtn.Click += (s, e) => _ = Windows.System.Launcher.LaunchUriAsync(new Uri(forkUrl));
         }
         else
@@ -397,7 +397,7 @@ public partial class DetailPanelBuilder
         row.Children.Add(installBtn);
 
         // Col 4 — Cog (⚙) button
-        var cogBtn = CogDialog.MakeCogButton("OptiScaler settings");
+        var cogBtn = CogDialog.MakeCogButton("OptiScaler 설정");
         cogBtn.Tag = card;
         cogBtn.IsEnabled = !osGreyed;
         cogBtn.Opacity = osGreyed ? 0.35 : 1.0;
@@ -422,7 +422,7 @@ public partial class DetailPanelBuilder
             Opacity = (osGreyed || !osShow) ? 0 : 1.0,
             IsHitTestVisible = osShow && !osGreyed,
         };
-        ToolTipService.SetToolTip(deleteBtn, "Remove OptiScaler");
+        ToolTipService.SetToolTip(deleteBtn, "OptiScaler 제거");
         deleteBtn.Click += (s, e) => _window.UninstallOsButton_Click(s, e);
         Grid.SetColumn(deleteBtn, 5);
         row.Children.Add(deleteBtn);

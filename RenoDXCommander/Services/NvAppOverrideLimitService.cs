@@ -39,7 +39,7 @@ public static class NvAppOverrideLimitService
         try
         {
             if (!Directory.Exists(NvBackendDir))
-                return new Result(false, "The NVIDIA App isn't installed for this Windows user, so there's nothing to change.");
+                return new Result(false, "이 Windows 사용자에게 NVIDIA App이 설치되어 있지 않아 변경할 내용이 없습니다.");
 
             var files = new List<(string Path, bool IsJson)>();
             var json = Path.Combine(NvBackendDir, "ApplicationStorage.json");
@@ -47,7 +47,7 @@ public static class NvAppOverrideLimitService
             foreach (var db in Directory.EnumerateFiles(NvBackendDir, "fingerprint.db", SearchOption.AllDirectories))
                 files.Add((db, false));
             if (files.Count == 0)
-                return new Result(false, "Couldn't find the NVIDIA App's settings files. Open the NVIDIA App once, then try again.");
+                return new Result(false, "NVIDIA App의 설정 파일을 찾을 수 없습니다. NVIDIA App을 한 번 연 후 다시 시도하세요.");
 
             string? backupDir = null;
             int changedFlags = 0, changedFiles = 0, skipped = 0;
@@ -88,28 +88,28 @@ public static class NvAppOverrideLimitService
             if (changedFlags == 0)
             {
                 return skipped > 0
-                    ? new Result(false, "The NVIDIA App's files are in a format RHI doesn't recognise, so nothing was changed. A newer NVIDIA App may have changed how it stores these settings.")
-                    : new Result(true, "The limits are already removed. Nothing needed changing.");
+                    ? new Result(false, "NVIDIA App의 파일 형식을 BONG DLSS5가 인식하지 못해 아무것도 변경하지 않았습니다. 최신 NVIDIA App에서 설정 저장 방식이 바뀌었을 수 있습니다.")
+                    : new Result(true, "제한이 이미 해제되어 있습니다. 변경할 내용이 없습니다.");
             }
 
             PruneBackups(5);
             var restart = RestartServices();
             CrashReporter.Log($"[NvAppOverrideLimitService.RemoveLimits] {changedFlags} flag(s) cleared in {changedFiles} file(s), backup in {backupDir}");
-            var msg = "The NVIDIA App will no longer reset DLSS overrides on games it doesn't support. " +
-                      $"A backup of its original files is in {backupDir}.";
+            var msg = "이제 NVIDIA App이 지원하지 않는 게임의 DLSS 재정의를 초기화하지 않습니다. " +
+                      $"원본 파일의 백업은 {backupDir}에 있습니다.";
             return restart == null
-                ? new Result(true, msg + "\n\nThe NVIDIA services were restarted. Run this again after a driver or NVIDIA App update.")
+                ? new Result(true, msg + "\n\nNVIDIA 서비스를 다시 시작했습니다. 드라이버 또는 NVIDIA App 업데이트 후 다시 실행하세요.")
                 : new Result(false, msg + "\n\n" + restart);
         }
         catch (UnauthorizedAccessException ex)
         {
             CrashReporter.Log($"[NvAppOverrideLimitService.RemoveLimits] Access denied: {ex.Message}");
-            return new Result(false, "Windows didn't allow RHI to change the NVIDIA App's files. Close the NVIDIA App and try again.");
+            return new Result(false, "Windows에서 BONG DLSS5의 NVIDIA App 파일 변경을 허용하지 않았습니다. NVIDIA App을 닫고 다시 시도하세요.");
         }
         catch (IOException ex)
         {
             CrashReporter.Log($"[NvAppOverrideLimitService.RemoveLimits] IO error: {ex.Message}");
-            return new Result(false, "A file was in use and couldn't be changed. Close the NVIDIA App and try again.\n\n" + ex.Message);
+            return new Result(false, "파일이 사용 중이어서 변경할 수 없습니다. NVIDIA App을 닫고 다시 시도하세요.\n\n" + ex.Message);
         }
     }
 
@@ -133,13 +133,13 @@ public static class NvAppOverrideLimitService
         try
         {
             using var p = Process.Start(psi);
-            if (p == null) return "The NVIDIA services couldn't be restarted. Restart your PC for the change to take effect.";
+            if (p == null) return "NVIDIA 서비스를 다시 시작할 수 없습니다. 변경 사항을 적용하려면 PC를 다시 시작하세요.";
             if (!p.WaitForExit(60_000))
-                return "Restarting the NVIDIA services took too long. Restart your PC for the change to take effect.";
+                return "NVIDIA 서비스 재시작이 너무 오래 걸렸습니다. 변경 사항을 적용하려면 PC를 다시 시작하세요.";
             if (p.ExitCode != 0)
             {
                 CrashReporter.Log($"[NvAppOverrideLimitService.RestartServices] Exit code {p.ExitCode}");
-                return "The NVIDIA services couldn't be restarted. Restart your PC for the change to take effect.";
+                return "NVIDIA 서비스를 다시 시작할 수 없습니다. 변경 사항을 적용하려면 PC를 다시 시작하세요.";
             }
             CrashReporter.Log("[NvAppOverrideLimitService.RestartServices] Services restarted");
             return null;
@@ -147,12 +147,12 @@ public static class NvAppOverrideLimitService
         catch (System.ComponentModel.Win32Exception ex) when (ex.NativeErrorCode == 1223)
         {
             CrashReporter.Log("[NvAppOverrideLimitService.RestartServices] UAC prompt cancelled");
-            return "The NVIDIA services weren't restarted because the Windows admin prompt was cancelled. Restart your PC for the change to take effect.";
+            return "Windows 관리자 확인이 취소되어 NVIDIA 서비스를 다시 시작하지 않았습니다. 변경 사항을 적용하려면 PC를 다시 시작하세요.";
         }
         catch (System.ComponentModel.Win32Exception ex)
         {
             CrashReporter.Log($"[NvAppOverrideLimitService.RestartServices] {ex.Message}");
-            return "The NVIDIA services couldn't be restarted. Restart your PC for the change to take effect.";
+            return "NVIDIA 서비스를 다시 시작할 수 없습니다. 변경 사항을 적용하려면 PC를 다시 시작하세요.";
         }
     }
 

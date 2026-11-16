@@ -35,17 +35,17 @@ public static class Program
         const uint MB_YESNO = 0x4, MB_ICONWARNING = 0x30, MB_SETFOREGROUND = 0x10000;
         const int IDYES = 6;
         var text =
-            "RHI couldn't start because the Windows App Runtime 2.5 is missing or damaged.\n\n" +
-            "Download and install it now? Then open RHI again.\n\n" +
-            $"Details: {ex.GetType().Name}: {ex.Message}";
-        if (MessageBoxW(IntPtr.Zero, text, "RHI", MB_YESNO | MB_ICONWARNING | MB_SETFOREGROUND) != IDYES) return;
+            "Windows App Runtime 2.5가 없거나 손상되어 BONG DLSS5를 시작할 수 없습니다.\n\n" +
+            "지금 다운로드하여 설치할까요? 설치 후 BONG DLSS5를 다시 실행하세요.\n\n" +
+            $"세부 정보: {ex.GetType().Name}: {ex.Message}";
+        if (MessageBoxW(IntPtr.Zero, text, "BONG DLSS5", MB_YESNO | MB_ICONWARNING | MB_SETFOREGROUND) != IDYES) return;
         try
         {
             Process.Start(new ProcessStartInfo(RuntimeDownloadUrl) { UseShellExecute = true });
         }
         catch (Exception openEx) when (openEx is System.ComponentModel.Win32Exception or InvalidOperationException)
         {
-            MessageBoxW(IntPtr.Zero, $"Couldn't open the browser. Download the runtime from:\n{RuntimeDownloadUrl}", "RHI", MB_ICONWARNING);
+            MessageBoxW(IntPtr.Zero, $"브라우저를 열 수 없습니다. 다음에서 런타임을 다운로드하세요:\n{RuntimeDownloadUrl}", "BONG DLSS5", MB_ICONWARNING);
         }
     }
 

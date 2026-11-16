@@ -49,9 +49,9 @@ public partial class SettingsHandler
             {
                 await DialogService.ShowSafeAsync(new ContentDialog
                 {
-                    Title = "Game Data Copied",
-                    Content = $"Data for {ViewModel.AllCards.Count} games has been gathered and copied to your clipboard. Paste directly into Discord to share.",
-                    CloseButtonText = "OK",
+                    Title = "게임 데이터 복사됨",
+                    Content = $"게임 {ViewModel.AllCards.Count}개의 데이터를 수집하여 클립보드에 복사했습니다. Discord에 바로 붙여 넣어 공유하세요.",
+                    CloseButtonText = "확인",
                     XamlRoot = fe.XamlRoot,
                     RequestedTheme = Microsoft.UI.Xaml.ElementTheme.Dark,
                 });
@@ -214,9 +214,9 @@ public partial class SettingsHandler
             {
                 await DialogService.ShowSafeAsync(new ContentDialog
                 {
-                    Title = "Logs Copied",
-                    Content = "All session logs have been archived and copied to your clipboard. Paste directly into Discord to share.",
-                    CloseButtonText = "OK",
+                    Title = "로그 복사됨",
+                    Content = "모든 세션 로그를 압축하여 클립보드에 복사했습니다. Discord에 바로 붙여 넣어 공유하세요.",
+                    CloseButtonText = "확인",
                     XamlRoot = fe.XamlRoot,
                 });
             }
@@ -234,10 +234,10 @@ public partial class SettingsHandler
             // Show warning dialog
             var warningDialog = new ContentDialog
             {
-                Title = "⚠ Purge Staging Files",
-                Content = "This will delete cached DLSS, Streamline, and component staging files to free disk space.\n\nShaders, installed RenoDX addons, and version metadata are preserved.\n\nThese files will be re-downloaded automatically when needed.\n\nContinue?",
-                PrimaryButtonText = "Purge",
-                CloseButtonText = "Cancel",
+                Title = "⚠ 스테이징 파일 정리",
+                Content = "디스크 공간을 확보하기 위해 캐시된 DLSS, Streamline 및 구성 요소 스테이징 파일을 삭제합니다.\n\n셰이더, 설치된 RenoDX 애드온 및 버전 메타데이터는 유지됩니다.\n\n이 파일들은 필요할 때 자동으로 다시 다운로드됩니다.\n\n계속할까요?",
+                PrimaryButtonText = "정리",
+                CloseButtonText = "취소",
                 DefaultButton = ContentDialogButton.Close,
                 XamlRoot = _window.Content.XamlRoot,
                 RequestedTheme = ElementTheme.Dark,
@@ -350,16 +350,16 @@ public partial class SettingsHandler
                     >= 1_073_741_824 => $"{bytesFreed / 1_073_741_824.0:F1} GB",
                     >= 1_048_576 => $"{bytesFreed / 1_048_576.0:F1} MB",
                     >= 1024 => $"{bytesFreed / 1024.0:F1} KB",
-                    _ => $"{bytesFreed} bytes"
+                    _ => $"{bytesFreed}바이트"
                 };
 
                 CrashReporter.Log($"[SettingsHandler.PurgeCachedFiles_Click] Purged {filesDeleted} files, freed {sizeStr}");
 
                 var resultDialog = new ContentDialog
                 {
-                    Title = "✅ Cache Purged",
-                    Content = $"Deleted {filesDeleted} files, freed {sizeStr} of disk space.",
-                    CloseButtonText = "OK",
+                    Title = "✅ 캐시 정리됨",
+                    Content = $"파일 {filesDeleted}개를 삭제하여 디스크 공간 {sizeStr}을(를) 확보했습니다.",
+                    CloseButtonText = "확인",
                     XamlRoot = _window.Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 };
@@ -370,9 +370,9 @@ public partial class SettingsHandler
                 CrashReporter.Log($"[SettingsHandler.PurgeCachedFiles_Click] Failed: {ex.Message}");
                 var errDialog = new ContentDialog
                 {
-                    Title = "❌ Purge Failed",
-                    Content = $"An error occurred: {ex.Message}",
-                    CloseButtonText = "OK",
+                    Title = "❌ 정리 실패",
+                    Content = $"오류가 발생했습니다: {ex.Message}",
+                    CloseButtonText = "확인",
                     XamlRoot = _window.Content.XamlRoot,
                     RequestedTheme = ElementTheme.Dark,
                 };

@@ -38,18 +38,18 @@ public partial class DetailPanelBuilder
 
         var dontShowCheck = new CheckBox
         {
-            Content = "Don't show this again",
+            Content = "다시 표시 안 함",
             FontSize = 12,
             Margin = new Thickness(0, 12, 0, 0),
         };
         var content = new StackPanel { Spacing = 4 };
         content.Children.Add(new TextBlock
         {
-            Text = "ReShade is installed in this game. Universal MFG Unlocker's XeSS frame generation (\"XeMFG standalone\" in its menu) "
-                 + "doesn't start while ReShade is loaded: the mod's menu shows \"Waiting menu_factory_not_dxgi\". "
-                 + "This happens whether ReShade is installed as a DLL or as an ASI.\n\n"
-                 + "DLSS multi frame generation works as normal. To use XeMFG with ReShade, install OptiScaler (nightly, F5 or DLSS NR) "
-                 + "and set FG Output to XeFG in OptiScaler's settings; RHI then installs the mod as an OptiScaler plugin.",
+            Text = "이 게임에 ReShade가 설치되어 있습니다. Universal MFG Unlocker의 XeSS 프레임 생성(메뉴의 \"XeMFG standalone\")은 "
+                 + "ReShade가 로드된 동안 시작되지 않으며, 모드 메뉴에 \"Waiting menu_factory_not_dxgi\"가 표시됩니다. "
+                 + "ReShade가 DLL로 설치되었든 ASI로 설치되었든 마찬가지입니다.\n\n"
+                 + "DLSS 멀티 프레임 생성은 정상적으로 작동합니다. ReShade와 함께 XeMFG를 사용하려면 OptiScaler(나이틀리, F5 또는 DLSS NR)를 설치하고 "
+                 + "OptiScaler 설정에서 FG Output을 XeFG로 설정하세요. 그러면 BONG DLSS5가 모드를 OptiScaler 플러그인으로 설치합니다.",
             TextWrapping = TextWrapping.Wrap,
             FontSize = 13,
             LineHeight = 22,
@@ -59,10 +59,10 @@ public partial class DetailPanelBuilder
 
         var dialog = new ContentDialog
         {
-            Title = "XeMFG and ReShade",
+            Title = "XeMFG와 ReShade",
             Content = content,
-            PrimaryButtonText = "Continue",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = "계속",
+            CloseButtonText = "취소",
             DefaultButton = ContentDialogButton.Primary,
             XamlRoot = xamlRoot,
             RequestedTheme = ElementTheme.Dark,
@@ -109,7 +109,7 @@ public partial class DetailPanelBuilder
             Foreground = UIFactory.Brush(ResourceKeys.TextSecondaryBrush),
             VerticalAlignment = VerticalAlignment.Center,
         };
-        ToolTipService.SetToolTip(label, "20/30 FG Unlock — enables DLSS Frame Generation (up to 6X) on RTX 20 and 30 series GPUs. D3D12. Needs NVIDIA driver R580 or newer. No ASI Loader or ReShade required.");
+        ToolTipService.SetToolTip(label, "20/30 FG Unlock — RTX 20 및 30 시리즈 GPU에서 DLSS 프레임 생성(최대 6X)을 활성화합니다. D3D12. NVIDIA 드라이버 R580 이상이 필요합니다. ASI Loader나 ReShade는 필요 없습니다.");
         Grid.SetColumn(label, 0);
         row.Children.Add(label);
 
@@ -125,7 +125,7 @@ public partial class DetailPanelBuilder
         };
         if (isInstalled)
         {
-            ToolTipService.SetToolTip(statusBlock, $"Installed as: {currentDllName}\nClick to open GitHub releases");
+            ToolTipService.SetToolTip(statusBlock, $"설치된 이름: {currentDllName}\n클릭하면 GitHub 릴리스가 열립니다");
             statusBlock.PointerPressed += (s, e) =>
                 _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sdli1995/dlssg_for_sm86"));
             AttachLinkCursor(statusBlock);
@@ -147,7 +147,7 @@ public partial class DetailPanelBuilder
             BorderThickness = new Thickness(1),
             CornerRadius = new CornerRadius(8),
         };
-        ToolTipService.SetToolTip(infoBtn, "Open 20/30 FG Unlock GitHub page");
+        ToolTipService.SetToolTip(infoBtn, "20/30 FG Unlock GitHub 페이지 열기");
         infoBtn.Click += (s, e) =>
             _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sdli1995/dlssg_for_sm86"));
         Grid.SetColumn(infoBtn, 2);
@@ -171,14 +171,14 @@ public partial class DetailPanelBuilder
         {
             installBtn.IsEnabled = false;
             installBtn.Opacity   = 0.35;
-            installBtn.Content   = "Uninstall MFG Unlock first";
-            ToolTipService.SetToolTip(installBtn, "MFG Unlock (addon) is installed and conflicts. Remove it from the addon picker first.");
+            installBtn.Content   = KoreanBuild.Tr("Uninstall MFG Unlock first");
+            ToolTipService.SetToolTip(installBtn, "MFG Unlock(애드온)이 설치되어 있어 충돌합니다. 먼저 애드온 선택기에서 제거하세요.");
         }
         else
         {
             ToolTipService.SetToolTip(installBtn, isInstalled
-                ? $"Reinstall 20/30 FG Unlock (currently deployed as {currentDllName})"
-                : "Install 20/30 FG Unlock — deploys the proxy DLL you choose, dlssg_sm86.ini and the dlssg_sm86 folder");
+                ? $"20/30 FG Unlock 재설치 (현재 {currentDllName}(으)로 배포됨)"
+                : "20/30 FG Unlock 설치 — 선택한 프록시 DLL, dlssg_sm86.ini, dlssg_sm86 폴더를 배포합니다");
         }
 
         installBtn.Click += async (s, e) =>
@@ -194,7 +194,7 @@ public partial class DetailPanelBuilder
             if (chosen == null) return;
 
             installBtn.IsEnabled = false;
-            installBtn.Content   = "Installing...";
+            installBtn.Content   = KoreanBuild.Tr("Installing...");
             try
             {
                 // Only one proxy may be in the folder: if reinstalling under a different name,
@@ -217,14 +217,14 @@ public partial class DetailPanelBuilder
                 }
                 else
                 {
-                    installBtn.Content   = "Download failed — try again";
+                    installBtn.Content   = KoreanBuild.Tr("Download failed — try again");
                     installBtn.IsEnabled = true;
                 }
             }
             catch (Exception ex)
             {
                 CrashReporter.Log($"[BuildDlssg2030Row] Install failed — {ex.Message}");
-                installBtn.Content   = "Install failed";
+                installBtn.Content   = KoreanBuild.Tr("Install failed");
                 installBtn.IsEnabled = true;
             }
         };
@@ -232,7 +232,7 @@ public partial class DetailPanelBuilder
         row.Children.Add(installBtn);
 
         // Col 4 — Cog button
-        var cogBtn = CogDialog.MakeCogButton("20/30 FG Unlock settings");
+        var cogBtn = CogDialog.MakeCogButton("20/30 FG Unlock 설정");
         cogBtn.Click += async (s, e) =>
         {
             try { await ShowDlssg2030SettingsAsync(installPath, isInstalled); }
@@ -254,7 +254,7 @@ public partial class DetailPanelBuilder
             Opacity = isInstalled ? 1.0 : 0,
             IsHitTestVisible = isInstalled,
         };
-        ToolTipService.SetToolTip(removeBtn, "Remove 20/30 FG Unlock from this game");
+        ToolTipService.SetToolTip(removeBtn, "이 게임에서 20/30 FG Unlock 제거");
         removeBtn.Click += (s, e) =>
         {
             if (string.IsNullOrEmpty(installPath)) return;
@@ -313,10 +313,10 @@ public partial class DetailPanelBuilder
                 VerticalAlignment = VerticalAlignment.Center,
             });
             if (isRecommended)
-                contentRow.Children.Add(MakeBadge("Recommended", "#1A3A20", "#6AE87A", "#2A5A30"));
+                contentRow.Children.Add(MakeBadge("권장", "#1A3A20", "#6AE87A", "#2A5A30"));
             AddExtraDllBadges(contentRow, btn, option, "20/30 FG Unlock");
             if (isCurrent)
-                contentRow.Children.Add(MakeBadge("Current", "#182840", "#7AACDD", "#2A4468"));
+                contentRow.Children.Add(MakeBadge("현재", "#182840", "#7AACDD", "#2A4468"));
 
             btn.Content = contentRow;
 
@@ -335,7 +335,7 @@ public partial class DetailPanelBuilder
 
         var pickerDialog = new ContentDialog
         {
-            Title = "Choose 20/30 FG Unlock DLL name",
+            Title = "20/30 FG Unlock DLL 이름 선택",
             Content = new StackPanel
             {
                 Spacing = 8,
@@ -343,7 +343,7 @@ public partial class DetailPanelBuilder
                 {
                     new TextBlock
                     {
-                        Text = "Choose which proxy DLL the game loads. Start with version.dll; if frame generation doesn't appear in the game, reinstall with the next name in the list. dxgi.dll and d3d12.dll are a last resort and don't work in Vulkan games.",
+                        Text = "게임이 불러올 프록시 DLL을 선택하세요. version.dll부터 시작하고, 게임에 프레임 생성이 나타나지 않으면 목록의 다음 이름으로 재설치하세요. dxgi.dll과 d3d12.dll은 최후의 수단이며 Vulkan 게임에서는 작동하지 않습니다.",
                         FontSize = 11,
                         Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush),
                         TextWrapping = TextWrapping.Wrap,
@@ -351,7 +351,7 @@ public partial class DetailPanelBuilder
                     scrollViewer,
                 }
             },
-            CloseButtonText = "Cancel",
+            CloseButtonText = "취소",
             XamlRoot        = _window.Content.XamlRoot,
         };
 
@@ -397,7 +397,7 @@ public partial class DetailPanelBuilder
             VerticalAlignment = VerticalAlignment.Center,
             TextWrapping = TextWrapping.Wrap, // long name; wraps instead of clipping in the 120 px column
         };
-        ToolTipService.SetToolTip(label, "Universal MFG Unlocker (formerly RTX 40 MFG Unlock) — DLSS Multi Frame Generation beyond 2x (up to 6x) on RTX 40 and RTX 30 Series GPUs (RTX 20 experimental), plus XeSS frame generation (XeMFG) on any GPU. Standalone DLL, no ASI Loader required. RHI also installs Intel's XeSS files that XeMFG needs.");
+        ToolTipService.SetToolTip(label, "Universal MFG Unlocker(이전 RTX 40 MFG Unlock) — RTX 40 및 RTX 30 시리즈 GPU(RTX 20은 실험적)에서 2x를 넘는(최대 6x) DLSS 멀티 프레임 생성과, 모든 GPU에서 XeSS 프레임 생성(XeMFG)을 제공합니다. 단독 DLL이며 ASI Loader가 필요 없습니다. BONG DLSS5는 XeMFG에 필요한 Intel XeSS 파일도 설치합니다.");
         Grid.SetColumn(label, 0);
         row.Children.Add(label);
 
@@ -413,7 +413,7 @@ public partial class DetailPanelBuilder
         };
         if (isInstalled)
         {
-            ToolTipService.SetToolTip(statusBlock, $"Installed as: {currentDllName}\nClick to open GitHub releases page");
+            ToolTipService.SetToolTip(statusBlock, $"설치된 이름: {currentDllName}\n클릭하면 GitHub 릴리스 페이지가 열립니다");
             statusBlock.PointerPressed += (s, e) =>
                 _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/dashdogy/MFG-Unlocker/releases"));
             AttachLinkCursor(statusBlock);
@@ -435,7 +435,7 @@ public partial class DetailPanelBuilder
             BorderThickness = new Thickness(1),
             CornerRadius = new CornerRadius(8),
         };
-        ToolTipService.SetToolTip(infoBtn, "Open the Universal MFG Unlocker GitHub page");
+        ToolTipService.SetToolTip(infoBtn, "Universal MFG Unlocker GitHub 페이지 열기");
         infoBtn.Click += (s, e) =>
             _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/dashdogy/MFG-Unlocker"));
         Grid.SetColumn(infoBtn, 2);
@@ -465,8 +465,8 @@ public partial class DetailPanelBuilder
         {
             installBtn.IsEnabled = false;
             installBtn.Opacity   = 0.35;
-            installBtn.Content   = "Uninstall MFG Unlock first";
-            ToolTipService.SetToolTip(installBtn, "MFG Unlock (addon) is already installed and conflicts with Universal MFG Unlocker. Remove it from the addon picker first.");
+            installBtn.Content   = KoreanBuild.Tr("Uninstall MFG Unlock first");
+            ToolTipService.SetToolTip(installBtn, "MFG Unlock(애드온)이 이미 설치되어 있어 Universal MFG Unlocker와 충돌합니다. 먼저 애드온 선택기에서 제거하세요.");
         }
         else
         {
@@ -474,13 +474,13 @@ public partial class DetailPanelBuilder
             bool osPluginLikely = card.IsOsInstalled && !string.IsNullOrEmpty(installPath)
                 && System.IO.Directory.Exists(System.IO.Path.Combine(installPath, "OptiScaler"));
             ToolTipService.SetToolTip(installBtn,
-                isHsfMods ? "Reinstall Universal MFG Unlocker in HSF_streamline\\mods (loaded by HSF's helper)"
-                : isPluginInstall ? $"Reinstall Universal MFG Unlocker (loaded by OptiScaler from {currentDllName})"
+                isHsfMods ? "HSF_streamline\\mods에 Universal MFG Unlocker 재설치 (HSF 도우미가 불러옴)"
+                : isPluginInstall ? $"Universal MFG Unlocker 재설치 (OptiScaler가 {currentDllName}에서 불러옴)"
                 : osPluginLikely ? (isInstalled
-                    ? $"Reinstall Universal MFG Unlocker. OptiScaler is installed, so it moves from {currentDllName} into OptiScaler\\plugins."
-                    : "Install Universal MFG Unlocker as an OptiScaler plugin (OptiScaler\\plugins\\MFGUnlocker.asi), as its author recommends with OptiScaler.")
-                : isInstalled ? $"Reinstall Universal MFG Unlocker (currently deployed as {currentDllName})"
-                : "Install Universal MFG Unlocker — deploys the unlock DLL under a name you choose");
+                    ? $"Universal MFG Unlocker를 재설치합니다. OptiScaler가 설치되어 있으므로 {currentDllName}에서 OptiScaler\\plugins로 이동합니다."
+                    : "제작자가 OptiScaler와 함께 쓸 때 권장하는 대로 Universal MFG Unlocker를 OptiScaler 플러그인(OptiScaler\\plugins\\MFGUnlocker.asi)으로 설치합니다.")
+                : isInstalled ? $"Universal MFG Unlocker 재설치 (현재 {currentDllName}(으)로 배포됨)"
+                : "Universal MFG Unlocker 설치 — 선택한 이름으로 잠금 해제 DLL을 배포합니다");
         }
 
         installBtn.Click += async (s, e) =>
@@ -499,7 +499,7 @@ public partial class DetailPanelBuilder
             if ((liveInstalled && Rtx40MfgService.IsHsfModsInstall(liveDllName)) || (hasHsf && card.Is32Bit))
             {
                 installBtn.IsEnabled = false;
-                installBtn.Content   = "Installing...";
+                installBtn.Content   = KoreanBuild.Tr("Installing...");
                 var hsfError = await vm.InstallMfgForHsfAsync(card, null);
                 if (hsfError != null) CrashReporter.Log($"[BuildRtx40MfgRow] HSF mods reinstall failed — {hsfError}");
                 RequestExtrasRebuild(card);
@@ -523,7 +523,7 @@ public partial class DetailPanelBuilder
             }
 
             installBtn.IsEnabled = false;
-            installBtn.Content   = "Installing...";
+            installBtn.Content   = KoreanBuild.Tr("Installing...");
             try
             {
                 // Proxy → plugin: move it so the old proxy name is remembered for when OptiScaler is removed
@@ -556,14 +556,14 @@ public partial class DetailPanelBuilder
                 }
                 else
                 {
-                    installBtn.Content   = "Download failed — try again";
+                    installBtn.Content   = KoreanBuild.Tr("Download failed — try again");
                     installBtn.IsEnabled = true;
                 }
             }
             catch (Exception ex)
             {
                 CrashReporter.Log($"[BuildRtx40MfgRow] Install failed — {ex.Message}");
-                installBtn.Content   = "Install failed";
+                installBtn.Content   = KoreanBuild.Tr("Install failed");
                 installBtn.IsEnabled = true;
             }
         };
@@ -571,61 +571,61 @@ public partial class DetailPanelBuilder
         row.Children.Add(installBtn);
 
         // Col 4 — Cog button
-        var cogBtn = CogDialog.MakeCogButton("Universal MFG Unlocker settings");
+        var cogBtn = CogDialog.MakeCogButton("Universal MFG Unlocker 설정");
         cogBtn.Click += async (s, e) =>
         {
             try
             {
                 var cog = new CogDialog("Universal MFG Unlocker", _window.Content.XamlRoot);
-                cog.AddIntro("Press Backspace in-game to open the Universal MFG Unlocker menu. It offers these modes:");
-                cog.AddNote("• Follow game: uses the game's own MFG setting");
-                cog.AddNote("• Fixed 2x to 6x: forces a specific multiplier");
-                cog.AddNote("• Dynamic: targets the display refresh rate or a custom FPS value");
-                cog.AddIntro("If frames freeze above 2x, set the Frame Generation preset to B in this game's DLSS / Streamline section.");
+                cog.AddIntro("게임 중 Backspace를 누르면 Universal MFG Unlocker 메뉴가 열립니다. 제공되는 모드:");
+                cog.AddNote("• Follow game: 게임 자체 MFG 설정 사용");
+                cog.AddNote("• Fixed 2x~6x: 특정 배수 강제");
+                cog.AddNote("• Dynamic: 디스플레이 주사율 또는 사용자 지정 FPS 값을 목표로 함");
+                cog.AddIntro("2x 초과에서 프레임이 멈추면 이 게임의 DLSS / Streamline 섹션에서 프레임 생성 프리셋을 B로 설정하세요.");
                 if (isInstalled)
-                    cog.AddNote($"Currently installed as: {currentDllName}");
+                    cog.AddNote($"현재 설치된 이름: {currentDllName}");
 
                 if (isPluginInstall)
                 {
-                    cog.AddSection("Loaded by OptiScaler");
-                    cog.AddIntro("OptiScaler loads the mod as a plugin, as its author recommends. Frame generation is chosen in OptiScaler, not here: "
-                        + "open OptiScaler's ⚙ and set FG Output to DLSSG for DLSS multi frame generation, or XeFG for XeMFG. "
-                        + "OptiScaler's default (Auto) runs no frame generation.");
-                    cog.AddNote("The mod's own menu still opens beside OptiScaler's for the DLSS presets and DLSS 5. If OptiScaler is removed, RHI moves the mod back next to the game's exe.");
+                    cog.AddSection("OptiScaler가 불러옴");
+                    cog.AddIntro("제작자의 권장대로 OptiScaler가 모드를 플러그인으로 불러옵니다. 프레임 생성은 여기가 아니라 OptiScaler에서 선택합니다. "
+                        + "OptiScaler ⚙를 열고 DLSS 멀티 프레임 생성은 FG Output을 DLSSG로, XeMFG는 XeFG로 설정하세요. "
+                        + "OptiScaler 기본값(Auto)은 프레임 생성을 실행하지 않습니다.");
+                    cog.AddNote("DLSS 프리셋과 DLSS 5를 위해 모드 자체 메뉴도 OptiScaler 메뉴 옆에 계속 열립니다. OptiScaler를 제거하면 BONG DLSS5가 모드를 게임 exe 옆으로 다시 옮깁니다.");
                 }
 
                 if (isHsfMods || hasHsf)
                 {
-                    cog.AddSection("Used with HSF");
+                    cog.AddSection("HSF와 함께 사용");
                     cog.AddIntro(isHsfMods
-                        ? "Installed in HSF_streamline\\mods: HSF's helper loads the unlocker from there (32-bit games). "
-                          + "Pick the multiplier in HSF's tab in ReShade's overlay. Removing HSF removes this copy too."
-                        : "HSF is installed in this game. Pick the multiplier in HSF's tab in ReShade's overlay.");
-                    cog.AddNote("No RTXMFG-XeSS folder: HSF's frame generation is DLSS, so XeMFG isn't used.");
+                        ? "HSF_streamline\\mods에 설치됨: HSF 도우미가 그곳에서 언락커를 불러옵니다(32비트 게임). "
+                          + "배수는 ReShade 오버레이의 HSF 탭에서 고르세요. HSF를 제거하면 이 사본도 제거됩니다."
+                        : "이 게임에 HSF가 설치되어 있습니다. 배수는 ReShade 오버레이의 HSF 탭에서 고르세요.");
+                    cog.AddNote("RTXMFG-XeSS 폴더 없음: HSF의 프레임 생성은 DLSS이므로 XeMFG를 사용하지 않습니다.");
                 }
 
-                cog.AddSection("XeSS frame generation (XeMFG)");
+                cog.AddSection("XeSS 프레임 생성 (XeMFG)");
                 if (isHsfMods || hasHsf)
-                    cog.AddIntro("Not installed in games with HSF. If you want XeMFG here instead, remove HSF and reinstall the mod.");
+                    cog.AddIntro("HSF가 있는 게임에는 설치되지 않습니다. 대신 XeMFG를 사용하려면 HSF를 제거하고 모드를 재설치하세요.");
                 else if (isPluginInstall)
-                    cog.AddIntro("Through OptiScaler, XeMFG is OptiScaler's FG Output set to XeFG. It uses the XeSS files OptiScaler installs, so nothing else is needed.");
+                    cog.AddIntro("OptiScaler를 통해 사용할 때 XeMFG는 OptiScaler의 FG Output을 XeFG로 설정한 것입니다. OptiScaler가 설치하는 XeSS 파일을 사용하므로 다른 것은 필요 없습니다.");
                 else
-                    cog.AddIntro("The mod can also use Intel's XeSS frame generation, 2x to 6x on any GPU (experimental). Tick \"XeMFG standalone\" in the in-game menu and restart the game. "
-                        + "It needs Intel's libxess_fg.dll and libxell.dll in an RTXMFG-XeSS folder next to the mod; RHI installs them with the mod.");
+                    cog.AddIntro("이 모드는 모든 GPU에서 Intel XeSS 프레임 생성(2x~6x, 실험적)도 사용할 수 있습니다. 게임 내 메뉴에서 \"XeMFG standalone\"을 체크하고 게임을 다시 시작하세요. "
+                        + "모드 옆 RTXMFG-XeSS 폴더에 Intel의 libxess_fg.dll과 libxell.dll이 필요하며, BONG DLSS5가 모드와 함께 설치합니다.");
                 if (isInstalled && !isPluginInstall && !isHsfMods && !hasHsf && !string.IsNullOrEmpty(installPath))
                 {
                     var xessDir = System.IO.Path.Combine(installPath, Rtx40MfgService.XessFolderName);
                     bool xessPresent = System.IO.File.Exists(System.IO.Path.Combine(xessDir, "libxess_fg.dll"))
                                     && System.IO.File.Exists(System.IO.Path.Combine(xessDir, "libxell.dll"));
                     if (xessPresent)
-                        cog.AddNote("XeSS files: installed.");
+                        cog.AddNote("XeSS 파일: 설치됨.");
                     else
-                        cog.AddWarning("XeSS files: missing. Reinstall the mod to add them.");
+                        cog.AddWarning("XeSS 파일: 없음. 추가하려면 모드를 재설치하세요.");
                 }
                 if (string.Equals(card.RsInstalledFile, "dxgi.dll", StringComparison.OrdinalIgnoreCase))
-                    cog.AddWarning("ReShade is installed as dxgi.dll in this game. With XeMFG at 5x and 6x, some generated frames may not reach the screen. "
-                        + "If that happens, give ReShade a different DLL name in Game Overrides › DLL naming overrides.");
-                cog.AddButtons(cog.MakeButton("Open GitHub page", CogButtonKind.Secondary,
+                    cog.AddWarning("이 게임에는 ReShade가 dxgi.dll로 설치되어 있습니다. XeMFG 5x 및 6x에서는 일부 생성 프레임이 화면에 표시되지 않을 수 있습니다. "
+                        + "그런 경우 게임 재정의 › DLL 이름 재정의에서 ReShade에 다른 DLL 이름을 지정하세요.");
+                cog.AddButtons(cog.MakeButton("GitHub 페이지 열기", CogButtonKind.Secondary,
                     async () => { await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/dashdogy/MFG-Unlocker")); }));
                 await cog.ShowAsync();
             }
@@ -652,7 +652,7 @@ public partial class DetailPanelBuilder
             Opacity = isInstalled ? 1.0 : 0,
             IsHitTestVisible = isInstalled,
         };
-        ToolTipService.SetToolTip(removeBtn, "Remove Universal MFG Unlocker from this game");
+        ToolTipService.SetToolTip(removeBtn, "이 게임에서 Universal MFG Unlocker 제거");
         removeBtn.Click += (s, e) =>
         {
             if (string.IsNullOrEmpty(installPath)) return;
@@ -715,17 +715,17 @@ public partial class DetailPanelBuilder
                 VerticalAlignment = VerticalAlignment.Center,
             });
             if (isRecommended)
-                contentRow.Children.Add(MakeBadge("Recommended", "#1A3A20", "#6AE87A", "#2A5A30"));
+                contentRow.Children.Add(MakeBadge("권장", "#1A3A20", "#6AE87A", "#2A5A30"));
             AddExtraDllBadges(contentRow, btn, option, "Universal MFG Unlocker");
             if (!isRhiOwned && isDxgiConflict)
-                contentRow.Children.Add(MakeBadge("May conflict with ReShade/OS", "#2A1A10", "#CC9955", "#5A3A18"));
+                contentRow.Children.Add(MakeBadge("ReShade/OS와 충돌 가능", "#2A1A10", "#CC9955", "#5A3A18"));
             if (isCurrent)
-                contentRow.Children.Add(MakeBadge("Current", "#182840", "#7AACDD", "#2A4468"));
+                contentRow.Children.Add(MakeBadge("현재", "#182840", "#7AACDD", "#2A4468"));
 
             btn.Content = contentRow;
 
             if (!isRhiOwned && isDxgiConflict)
-                ToolTipService.SetToolTip(btn, "dxgi.dll may conflict with ReShade or OptiScaler if they also use this name.");
+                ToolTipService.SetToolTip(btn, "ReShade나 OptiScaler도 이 이름을 사용하면 dxgi.dll이 충돌할 수 있습니다.");
 
             btn.Tag    = name;
             btn.Click += (s, ev) =>
@@ -743,7 +743,7 @@ public partial class DetailPanelBuilder
 
         var pickerDialog = new ContentDialog
         {
-            Title = "Choose Universal MFG Unlocker DLL name",
+            Title = "Universal MFG Unlocker DLL 이름 선택",
             Content = new StackPanel
             {
                 Spacing = 8,
@@ -751,7 +751,7 @@ public partial class DetailPanelBuilder
                 {
                     new TextBlock
                     {
-                        Text = "Select the filename to deploy the Universal MFG Unlocker DLL as. Choose a name the game loads early, and avoid names already used by other mods.",
+                        Text = "Universal MFG Unlocker DLL을 배포할 파일 이름을 선택하세요. 게임이 일찍 불러오는 이름을 고르고, 다른 모드가 이미 사용 중인 이름은 피하세요.",
                         FontSize = 11,
                         Foreground = UIFactory.Brush(ResourceKeys.TextTertiaryBrush),
                         TextWrapping = TextWrapping.Wrap,
@@ -759,7 +759,7 @@ public partial class DetailPanelBuilder
                     scrollViewer,
                 }
             },
-            CloseButtonText = "Cancel",
+            CloseButtonText = "취소",
             XamlRoot        = _window.Content.XamlRoot,
         };
 

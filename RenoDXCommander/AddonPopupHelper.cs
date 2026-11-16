@@ -45,14 +45,14 @@ public static class AddonPopupHelper
         {
             var emptyDlg = new ContentDialog
             {
-                Title = "Select Addons",
+                Title = "애드온 선택",
                 Content = new TextBlock
                 {
-                    Text = "No addons available.",
+                    Text = "사용 가능한 애드온이 없습니다.",
                     FontSize = 13,
                     Foreground = Brush(ResourceKeys.TextPrimaryBrush),
                 },
-                CloseButtonText = "Close",
+                CloseButtonText = "닫기",
                 XamlRoot = xamlRoot,
                 Background = Brush(ResourceKeys.SurfaceOverlayBrush),
                 MinWidth = 750,
@@ -73,7 +73,7 @@ public static class AddonPopupHelper
             "RHI", "Custom", "Addons");
         var folderLink = new HyperlinkButton
         {
-            Content = "Place custom .addon64/.addon32 files here",
+            Content = "사용자 지정 .addon64/.addon32 파일을 여기에 넣으세요",
             FontSize = 11,
             Foreground = Brush(ResourceKeys.AccentBlueBrush),
             Padding = new Thickness(0),
@@ -133,7 +133,7 @@ public static class AddonPopupHelper
                 VerticalAlignment = VerticalAlignment.Center,
                 Visibility = isDownloaded ? Visibility.Visible : Visibility.Collapsed,
             };
-            ToolTipService.SetToolTip(tickMark, "Downloaded.");
+            ToolTipService.SetToolTip(tickMark, "다운로드됨.");
             nameRow.Children.Add(tickMark);
             textPanel.Children.Add(nameRow);
 
@@ -155,7 +155,7 @@ public static class AddonPopupHelper
             {
                 textPanel.Children.Add(new HyperlinkButton
                 {
-                    Content = "How to use",
+                    Content = "사용 방법",
                     NavigateUri = new Uri(entry.RepositoryUrl),
                     FontSize = 11,
                     Foreground = Brush(ResourceKeys.AccentBlueBrush),
@@ -197,16 +197,16 @@ public static class AddonPopupHelper
             var toggle = new ToggleSwitch
             {
                 IsOn = isSelected,
-                OnContent = "On",
-                OffContent = "Off",
+                OnContent = "켜짐",
+                OffContent = "꺼짐",
                 VerticalAlignment = VerticalAlignment.Center,
                 IsEnabled = !peerIsSelected,
                 Opacity = peerIsSelected ? 0.35 : 1.0,
             };
             if (peerIsSelected)
                 ToolTipService.SetToolTip(toggle, rtx40MfgConflict
-                    ? "Universal MFG Unlocker is already installed and conflicts with this addon. Remove it from the Extras section first."
-                    : $"Disable {mutualExclusivePeer} first to enable this addon.");
+                    ? "Universal MFG Unlocker가 이미 설치되어 있어 이 애드온과 충돌합니다. 먼저 추가 기능 섹션에서 제거하세요."
+                    : $"이 애드온을 사용하려면 먼저 {mutualExclusivePeer}을(를) 끄세요.");
 
             // Capture for the lambda
             var capturedEntry = entry;
@@ -254,7 +254,7 @@ public static class AddonPopupHelper
                         peer.Toggle.IsEnabled = !toggle.IsOn;
                         peer.Toggle.Opacity = toggle.IsOn ? 0.35 : 1.0;
                         if (toggle.IsOn)
-                            ToolTipService.SetToolTip(peer.Toggle, $"Disable {entry.PackageName} first to enable this addon.");
+                            ToolTipService.SetToolTip(peer.Toggle, $"이 애드온을 사용하려면 먼저 {entry.PackageName}을(를) 끄세요.");
                         else
                             ToolTipService.SetToolTip(peer.Toggle, null);
                     }
@@ -308,7 +308,7 @@ public static class AddonPopupHelper
         {
             panel.Children.Add(new TextBlock
             {
-                Text = "Custom Addons",
+                Text = "사용자 지정 애드온",
                 FontSize = 12,
                 FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                 Foreground = Brush(ResourceKeys.TextPrimaryBrush),
@@ -338,7 +338,7 @@ public static class AddonPopupHelper
                     Foreground = Brush(ResourceKeys.AccentGreenBrush),
                     VerticalAlignment = VerticalAlignment.Center,
                 };
-                ToolTipService.SetToolTip(localTick, "Local file.");
+                ToolTipService.SetToolTip(localTick, "로컬 파일.");
                 nameRow.Children.Add(localTick);
                 textPanel.Children.Add(nameRow);
 
@@ -359,8 +359,8 @@ public static class AddonPopupHelper
                 var toggle = new ToggleSwitch
                 {
                     IsOn = isSelected,
-                    OnContent = "On",
-                    OffContent = "Off",
+                    OnContent = "켜짐",
+                    OffContent = "꺼짐",
                     VerticalAlignment = VerticalAlignment.Center,
                 };
                 toggle.Toggled += (s, ev) => { if (suppressToggle) return; };
@@ -395,10 +395,10 @@ public static class AddonPopupHelper
 
         var dlg = new ContentDialog
         {
-            Title = "Select Addons",
+            Title = "애드온 선택",
             Content = scrollViewer,
-            PrimaryButtonText = "Deploy",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = "배포",
+            CloseButtonText = "취소",
             XamlRoot = xamlRoot,
             Background = Brush(ResourceKeys.SurfaceOverlayBrush),
             MinWidth = 750,
