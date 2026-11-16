@@ -76,6 +76,7 @@ public sealed partial class MainWindow : Window
         if (App._startMinimized)
             AppWindow.Hide();
         InitializeSkeletons();
+        ApplyGlassLook(); // BONG DLSS5: acrylic window + see-through surfaces (BongHub theme)
         _detailPanelBuilder = new DetailPanelBuilder(
             this,
             App.Services.GetRequiredService<IGameNameService>(),
