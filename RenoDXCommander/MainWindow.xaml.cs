@@ -98,7 +98,7 @@ public sealed partial class MainWindow : Window
         AuxInstallService.EnsureReShadeStaging(); // create staging dir (DLLs downloaded by ReShadeUpdateService)
         App.Services.GetRequiredService<CustomReShadeHashService>().EnsureInitialized(); // seed hash file on first run
         App.Services.GetRequiredService<IOptiScalerService>().SeedUserInis(); // seed OptiScaler INIs if missing
-        Title = "RHI";
+        Title = "BONG DLSS5";
         // Fire-and-forget: check/download shader packs in the background
         // When CacheAllShaders is off, new packs are fetched on demand, but packs already
         // downloaded are still checked for updates (otherwise an unused one stays stale forever).
